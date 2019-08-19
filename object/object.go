@@ -42,3 +42,8 @@ func FromJson(jsonData []byte) (*Instance, error) {
 func InstanceFromSpec(specification Specification) Instance {
 	return Instance{Kind: specification.GetKind(), MetaData: MetaData{}, Spec: specification, SpecVersion: specification.GetVersion()}
 }
+
+type InstanceHolder interface {
+	Instance() *Instance
+	MarshalJSON() ([]byte, error)
+}
