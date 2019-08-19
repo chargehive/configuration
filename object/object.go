@@ -8,6 +8,8 @@ import (
 
 type Kind string
 
+const KindNone Kind = ""
+
 type Instance struct {
 	Kind        Kind              `json:"kind" yaml:"kind"`
 	MetaData    MetaData          `json:"metadata" yaml:"metadata"`
