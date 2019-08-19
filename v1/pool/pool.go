@@ -1,6 +1,8 @@
 package pool
 
 import (
+	"encoding/json"
+	"errors"
 	"github.com/chargehive/configuration/object"
 )
 
@@ -21,6 +23,20 @@ type ConnectorPool struct {
 
 func (ConnectorPool) GetKind() object.Kind { return KindConnectorPool }
 func (ConnectorPool) GetVersion() string   { return "v1" }
+
+func NewConnectorPoolInstance(i *object.Instance) (*ConnectorPoolInstance, error) {
+	if _, ok := i.Spec.(*ConnectorPool); ok {
+		return &ConnectorPoolInstance{i: i}, nil
+	}
+	return nil, errors.New("invalid connector pool object")
+}
+
+type ConnectorPoolInstance struct{ i *object.Instance }
+
+func (i *ConnectorPoolInstance) MarshalJSON() ([]byte, error) { return json.Marshal(i.i) }
+func (i *ConnectorPoolInstance) ConnectorPool() *ConnectorPool {
+	return i.i.Spec.(*ConnectorPool)
+}
 
 type ConnectorPoolItem struct {
 	ConnectorID string `json:"connectorId,omitempty" yaml:"connectorId,omitempty"`
