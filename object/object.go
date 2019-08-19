@@ -3,13 +3,17 @@ package object
 import (
 	"encoding/json"
 	"errors"
+	"github.com/chargehive/configuration/selector"
 )
 
+type Kind string
+
 type Instance struct {
-	Kind        Kind        `json:"kind" yaml:"kind"`
-	MetaData    MetaData    `json:"metadata" yaml:"metadata"`
-	SpecVersion string      `json:"specVersion,omitempty" yaml:"specVersion,omitempty"`
-	Spec        interface{} `json:"spec" yaml:"spec"`
+	Kind        Kind              `json:"kind" yaml:"kind"`
+	MetaData    MetaData          `json:"metadata" yaml:"metadata"`
+	SpecVersion string            `json:"specVersion,omitempty" yaml:"specVersion,omitempty"`
+	Spec        interface{}       `json:"spec" yaml:"spec"`
+	Selector    selector.Selector `json:"selector,omitempty" yaml:"selector,omitempty"`
 }
 
 func Unmarshall(jsonData []byte) (*Instance, error) {
