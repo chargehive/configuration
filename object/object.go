@@ -12,15 +12,18 @@ type Instance struct {
 	Kind        Kind              `json:"kind" yaml:"kind"`
 	MetaData    MetaData          `json:"metadata" yaml:"metadata"`
 	SpecVersion string            `json:"specVersion,omitempty" yaml:"specVersion,omitempty"`
-	Spec        interface{}       `json:"spec" yaml:"spec"`
 	Selector    selector.Selector `json:"selector,omitempty" yaml:"selector,omitempty"`
+	Spec        interface{}       `json:"spec" yaml:"spec"`
 }
 
-func Unmarshall(jsonData []byte) (*Instance, error) {
+func (i *Instance) GetKind() Kind          { return i.Kind }
+func (i *Instance) GetSpecVersion() string { return i.SpecVersion }
+
+func FromJson(jsonData []byte) (*Instance, error) {
 	var raw json.RawMessage
 	obj := &Instance{Spec: &raw}
 
-	if err := json.Unmarshal(jsonData, &obj); err != nil {
+	if err := json.Unmarshal(jsonData, obj); err != nil {
 		return nil, err
 	}
 
