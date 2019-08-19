@@ -24,6 +24,7 @@ func NewOnDemandSchedulerInstance(i *object.Instance) (*OnDemandSchedulerInstanc
 
 type OnDemandSchedulerInstance struct{ i *object.Instance }
 
+func (i *OnDemandSchedulerInstance) Instance() *object.Instance   { return i.i }
 func (i *OnDemandSchedulerInstance) MarshalJSON() ([]byte, error) { return json.Marshal(i.i) }
 func (i *OnDemandSchedulerInstance) OnDemandScheduler() *OnDemandScheduler {
 	return i.i.Spec.(*OnDemandScheduler)

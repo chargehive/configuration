@@ -33,6 +33,7 @@ func NewConnectorPoolInstance(i *object.Instance) (*ConnectorPoolInstance, error
 
 type ConnectorPoolInstance struct{ i *object.Instance }
 
+func (i *ConnectorPoolInstance) Instance() *object.Instance   { return i.i }
 func (i *ConnectorPoolInstance) MarshalJSON() ([]byte, error) { return json.Marshal(i.i) }
 func (i *ConnectorPoolInstance) ConnectorPool() *ConnectorPool {
 	return i.i.Spec.(*ConnectorPool)

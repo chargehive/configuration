@@ -27,5 +27,6 @@ func NewInitiatorInstance(i *object.Instance) (*InitiatorInstance, error) {
 
 type InitiatorInstance struct{ i *object.Instance }
 
+func (i *InitiatorInstance) Instance() *object.Instance   { return i.i }
 func (i *InitiatorInstance) MarshalJSON() ([]byte, error) { return json.Marshal(i.i) }
 func (i *InitiatorInstance) Initiator() *Initiator        { return i.i.Spec.(*Initiator) }

@@ -25,6 +25,7 @@ func NewAttemptSchedulerInstance(i *object.Instance) (*AttemptSchedulerInstance,
 
 type AttemptSchedulerInstance struct{ i *object.Instance }
 
+func (i *AttemptSchedulerInstance) Instance() *object.Instance   { return i.i }
 func (i *AttemptSchedulerInstance) MarshalJSON() ([]byte, error) { return json.Marshal(i.i) }
 func (i *AttemptSchedulerInstance) AttemptScheduler() *AttemptScheduler {
 	return i.i.Spec.(*AttemptScheduler)
