@@ -13,8 +13,8 @@ type AttemptScheduler struct {
 
 const KindAttemptScheduler object.Kind = "AttemptScheduler"
 
-func (i AttemptScheduler) GetKind() object.Kind { return KindAttemptScheduler }
-func (i AttemptScheduler) GetVersion() string   { return "v1" }
+func (AttemptScheduler) GetKind() object.Kind { return KindAttemptScheduler }
+func (AttemptScheduler) GetVersion() string   { return "v1" }
 
 func NewAttemptSchedulerInstance(i *object.Instance) (*AttemptSchedulerInstance, error) {
 	if _, ok := i.Spec.(*AttemptScheduler); ok {

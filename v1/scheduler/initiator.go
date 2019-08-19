@@ -15,8 +15,8 @@ type Initiator struct {
 	AttemptConfig *AttemptConfig
 }
 
-func (i Initiator) GetKind() object.Kind { return KindInitiator }
-func (i Initiator) GetVersion() string   { return "v1" }
+func (Initiator) GetKind() object.Kind { return KindInitiator }
+func (Initiator) GetVersion() string   { return "v1" }
 
 func NewInitiatorInstance(i *object.Instance) (*InitiatorInstance, error) {
 	if _, ok := i.Spec.(*Initiator); ok {

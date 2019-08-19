@@ -12,8 +12,8 @@ type OnDemandScheduler struct {
 
 const KindOnDemandScheduler object.Kind = "OnDemandScheduler"
 
-func (i OnDemandScheduler) GetKind() object.Kind { return KindOnDemandScheduler }
-func (i OnDemandScheduler) GetVersion() string   { return "v1" }
+func (OnDemandScheduler) GetKind() object.Kind { return KindOnDemandScheduler }
+func (OnDemandScheduler) GetVersion() string   { return "v1" }
 
 func NewOnDemandSchedulerInstance(i *object.Instance) (*OnDemandSchedulerInstance, error) {
 	if _, ok := i.Spec.(*OnDemandScheduler); ok {
