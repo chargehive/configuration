@@ -18,15 +18,15 @@ type Initiator struct {
 func (Initiator) GetKind() object.Kind { return KindInitiator }
 func (Initiator) GetVersion() string   { return "v1" }
 
-func NewInitiatorInstance(i *object.Instance) (*InitiatorInstance, error) {
-	if _, ok := i.Spec.(*Initiator); ok {
-		return &InitiatorInstance{i: i}, nil
+func NewInitiatorDefinition(d *object.Definition) (*InitiatorDefinition, error) {
+	if _, ok := d.Spec.(*Initiator); ok {
+		return &InitiatorDefinition{def: d}, nil
 	}
 	return nil, errors.New("invalid initiator object")
 }
 
-type InitiatorInstance struct{ i *object.Instance }
+type InitiatorDefinition struct{ def *object.Definition }
 
-func (i *InitiatorInstance) Instance() *object.Instance   { return i.i }
-func (i *InitiatorInstance) MarshalJSON() ([]byte, error) { return json.Marshal(i.i) }
-func (i *InitiatorInstance) Initiator() *Initiator        { return i.i.Spec.(*Initiator) }
+func (d *InitiatorDefinition) Definition() *object.Definition { return d.def }
+func (d *InitiatorDefinition) MarshalJSON() ([]byte, error)   { return json.Marshal(d.def) }
+func (d *InitiatorDefinition) Spec() *Initiator               { return d.def.Spec.(*Initiator) }

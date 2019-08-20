@@ -6,7 +6,7 @@ import (
 
 func AddHandlers() {
 	initiator()
-	attemptScheduler()
+	sequentialScheduler()
 	onDemandScheduler()
 }
 
@@ -16,14 +16,14 @@ func initiator() {
 	object.AddKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &Initiator{} })
 }
 
-func attemptScheduler() {
-	o := AttemptScheduler{}
-	object.AddKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &AttemptScheduler{} })
-	object.AddKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &AttemptScheduler{} })
+func sequentialScheduler() {
+	o := Sequential{}
+	object.AddKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &Sequential{} })
+	object.AddKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &Sequential{} })
 }
 
 func onDemandScheduler() {
-	o := OnDemandScheduler{}
-	object.AddKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &OnDemandScheduler{} })
-	object.AddKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &OnDemandScheduler{} })
+	o := OnDemand{}
+	object.AddKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &OnDemand{} })
+	object.AddKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &OnDemand{} })
 }

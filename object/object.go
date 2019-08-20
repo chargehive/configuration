@@ -10,7 +10,7 @@ type Kind string
 
 const KindNone Kind = ""
 
-type Instance struct {
+type Definition struct {
 	Kind        Kind              `json:"kind" yaml:"kind"`
 	MetaData    MetaData          `json:"metadata" yaml:"metadata"`
 	SpecVersion string            `json:"specVersion,omitempty" yaml:"specVersion,omitempty"`
@@ -18,12 +18,11 @@ type Instance struct {
 	Spec        interface{}       `json:"spec" yaml:"spec"`
 }
 
-func (i *Instance) GetKind() Kind          { return i.Kind }
-func (i *Instance) GetSpecVersion() string { return i.SpecVersion }
+func (d *Definition) GetID() string { return d.MetaData.Name }
 
-func FromJson(jsonData []byte) (*Instance, error) {
+func FromJson(jsonData []byte) (*Definition, error) {
 	var raw json.RawMessage
-	obj := &Instance{Spec: &raw}
+	obj := &Definition{Spec: &raw}
 
 	if err := json.Unmarshal(jsonData, obj); err != nil {
 		return nil, err
@@ -41,11 +40,11 @@ func FromJson(jsonData []byte) (*Instance, error) {
 	return nil, errors.New("kind " + string(obj.Kind) + ", version " + obj.SpecVersion + " has not yet been implemented")
 }
 
-func InstanceFromSpec(specification Specification) *Instance {
-	return &Instance{Kind: specification.GetKind(), MetaData: MetaData{}, Spec: specification, SpecVersion: specification.GetVersion()}
+func DefinitionFromSpec(specification Specification) *Definition {
+	return &Definition{Kind: specification.GetKind(), MetaData: MetaData{}, Spec: specification, SpecVersion: specification.GetVersion()}
 }
 
-type InstanceHolder interface {
-	Instance() *Instance
+type DefinitionHolder interface {
+	Definition() *Definition
 	MarshalJSON() ([]byte, error)
 }

@@ -16,17 +16,15 @@ type Connector struct {
 func (Connector) GetKind() object.Kind { return KindConnector }
 func (Connector) GetVersion() string   { return "v1" }
 
-func NewInstance(i *object.Instance) (*Instance, error) {
-	if _, ok := i.Spec.(*Connector); ok {
-		return &Instance{i: i}, nil
+func NewDefinition(d *object.Definition) (*Definition, error) {
+	if _, ok := d.Spec.(*Connector); ok {
+		return &Definition{def: d}, nil
 	}
 	return nil, errors.New("invalid connector object")
 }
 
-type Instance struct{ i *object.Instance }
+type Definition struct{ def *object.Definition }
 
-func (i *Instance) Instance() *object.Instance   { return i.i }
-func (i *Instance) MarshalJSON() ([]byte, error) { return json.Marshal(i.i) }
-func (i *Instance) Connector() *Connector {
-	return i.i.Spec.(*Connector)
-}
+func (d *Definition) Definition() *object.Definition { return d.def }
+func (d *Definition) MarshalJSON() ([]byte, error)   { return json.Marshal(d.def) }
+func (d *Definition) Spec() *Connector               { return d.def.Spec.(*Connector) }
