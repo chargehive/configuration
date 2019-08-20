@@ -16,7 +16,7 @@ const KindSequentialScheduler object.Kind = "SchedulerSequential"
 func (Sequential) GetKind() object.Kind { return KindSequentialScheduler }
 func (Sequential) GetVersion() string   { return "v1" }
 
-func NewAttemptSchedulerDefinition(d *object.Definition) (*SequentialDefinition, error) {
+func NewSequentialDefinition(d *object.Definition) (*SequentialDefinition, error) {
 	if _, ok := d.Spec.(*Sequential); ok {
 		return &SequentialDefinition{def: d}, nil
 	}
