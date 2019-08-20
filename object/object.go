@@ -28,16 +28,23 @@ func FromJson(jsonData []byte) (*Definition, error) {
 		return nil, err
 	}
 
-	if handler, ok := getKindHandler(obj.Kind, obj.SpecVersion); ok {
-		spec := handler()
-		if err := json.Unmarshal(raw, spec); err != nil {
-			return obj, err
-		}
-		obj.Spec = spec
-		return obj, nil
+	spec := SpecFromJson(obj.Kind, obj.SpecVersion, raw)
+	if spec == nil {
+		return nil, errors.New("kind " + string(obj.Kind) + ", version " + obj.SpecVersion + " has not yet been implemented")
 	}
+	obj.Spec = spec
+	return obj, nil
+}
 
-	return nil, errors.New("kind " + string(obj.Kind) + ", version " + obj.SpecVersion + " has not yet been implemented")
+func SpecFromJson(kind Kind, version string, jsonData []byte) Specification {
+	if handler, ok := getKindHandler(kind, version); ok {
+		spec := handler()
+		if err := json.Unmarshal(jsonData, spec); err != nil {
+			return nil
+		}
+		return spec
+	}
+	return nil
 }
 
 func DefinitionFromSpec(specification Specification) *Definition {
