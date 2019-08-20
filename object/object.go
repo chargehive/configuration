@@ -41,8 +41,8 @@ func FromJson(jsonData []byte) (*Instance, error) {
 	return nil, errors.New("kind " + string(obj.Kind) + ", version " + obj.SpecVersion + " has not yet been implemented")
 }
 
-func InstanceFromSpec(specification Specification) Instance {
-	return Instance{Kind: specification.GetKind(), MetaData: MetaData{}, Spec: specification, SpecVersion: specification.GetVersion()}
+func InstanceFromSpec(specification Specification) *Instance {
+	return &Instance{Kind: specification.GetKind(), MetaData: MetaData{}, Spec: specification, SpecVersion: specification.GetVersion()}
 }
 
 type InstanceHolder interface {
