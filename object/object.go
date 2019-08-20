@@ -18,7 +18,8 @@ type Definition struct {
 	Spec        interface{}       `json:"spec" yaml:"spec"`
 }
 
-func (d *Definition) GetID() string { return d.MetaData.Name }
+func (d *Definition) Definition() *Definition { return d }
+func (d *Definition) GetID() string           { return d.MetaData.Name }
 
 func FromJson(jsonData []byte) (*Definition, error) {
 	var raw json.RawMessage
@@ -53,5 +54,4 @@ func DefinitionFromSpec(specification Specification) *Definition {
 
 type DefinitionHolder interface {
 	Definition() *Definition
-	MarshalJSON() ([]byte, error)
 }
