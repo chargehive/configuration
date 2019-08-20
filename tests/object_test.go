@@ -12,7 +12,7 @@ import (
 func TestUnmarshall(t *testing.T) {
 	configuration.Initialise()
 
-	o := object.InstanceFromSpec(scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorStickyAny})
+	o := object.DefinitionFromSpec(scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorStickyAny})
 
 	jsn, err := json.Marshal(o)
 	if err != nil {
@@ -22,7 +22,7 @@ func TestUnmarshall(t *testing.T) {
 	log.Print(string(jsn))
 
 	obj, err := object.FromJson([]byte(`{"kind":"Initiator","metadata":{"projectId":"","name":""},"specVersion":"v1","selector":{},"spec":{"Type":"auth","InitialConnector":"sticky-any","AttemptConfig":null}}`))
-	ii, err := scheduler.NewInitiatorInstance(obj)
+	ii, err := scheduler.NewInitiatorDefinition(obj)
 	if err != nil {
 		t.Error(err)
 	}
