@@ -11,7 +11,7 @@ type Kind string
 const KindNone Kind = ""
 
 type Definition struct {
-	Kind        Kind              `json:"kind" yaml:"kind"`
+	Kind        Kind              `json:"Kind" yaml:"Kind"`
 	MetaData    MetaData          `json:"metadata" yaml:"metadata"`
 	SpecVersion string            `json:"specVersion,omitempty" yaml:"specVersion,omitempty"`
 	Selector    selector.Selector `json:"selector,omitempty" yaml:"selector,omitempty"`
@@ -31,14 +31,14 @@ func FromJson(jsonData []byte) (*Definition, error) {
 
 	spec := SpecFromJson(obj.Kind, obj.SpecVersion, raw)
 	if spec == nil {
-		return nil, errors.New("kind " + string(obj.Kind) + ", version " + obj.SpecVersion + " has not yet been implemented")
+		return nil, errors.New("Kind " + string(obj.Kind) + ", Version " + obj.SpecVersion + " has not yet been implemented")
 	}
 	obj.Spec = spec
 	return obj, nil
 }
 
 func SpecFromJson(kind Kind, version string, jsonData []byte) Specification {
-	if handler, ok := getKindHandler(kind, version); ok {
+	if handler, ok := getKindHandlerFunc(kind, version); ok {
 		spec := handler()
 		if err := json.Unmarshal(jsonData, spec); err != nil {
 			return nil

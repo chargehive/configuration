@@ -2,19 +2,25 @@ package connector
 
 import "github.com/chargehive/configuration/object"
 
-func AddHandlers() {
-	connector()
-	connectorPool()
+func GetHandlers() []object.KindHandler {
+	funcs := make([]object.KindHandler, 0)
+	funcs = append(funcs, connector()...)
+	funcs = append(funcs, connectorPool()...)
+	return funcs
 }
 
-func connectorPool() {
+func connectorPool() []object.KindHandler {
 	o := Pool{}
-	object.AddKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &Pool{} })
-	object.AddKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &Pool{} })
+	return []object.KindHandler{
+		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &Pool{} }),
+		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &Pool{} }),
+	}
 }
 
-func connector() {
+func connector() []object.KindHandler {
 	o := Connector{}
-	object.AddKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &Connector{} })
-	object.AddKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &Connector{} })
+	return []object.KindHandler{
+		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &Connector{} }),
+		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &Connector{} }),
+	}
 }

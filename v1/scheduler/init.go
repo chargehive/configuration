@@ -4,26 +4,34 @@ import (
 	"github.com/chargehive/configuration/object"
 )
 
-func AddHandlers() {
-	initiator()
-	sequentialScheduler()
-	onDemandScheduler()
+func GetHandlers() []object.KindHandler {
+	funcs := make([]object.KindHandler, 0)
+	funcs = append(funcs, initiator()...)
+	funcs = append(funcs, sequentialScheduler()...)
+	funcs = append(funcs, onDemandScheduler()...)
+	return funcs
 }
 
-func initiator() {
+func initiator() []object.KindHandler {
 	o := Initiator{}
-	object.AddKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &Initiator{} })
-	object.AddKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &Initiator{} })
+	return []object.KindHandler{
+		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &Initiator{} }),
+		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &Initiator{} }),
+	}
 }
 
-func sequentialScheduler() {
+func sequentialScheduler() []object.KindHandler {
 	o := Sequential{}
-	object.AddKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &Sequential{} })
-	object.AddKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &Sequential{} })
+	return []object.KindHandler{
+		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &Sequential{} }),
+		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &Sequential{} }),
+	}
 }
 
-func onDemandScheduler() {
+func onDemandScheduler() []object.KindHandler {
 	o := OnDemand{}
-	object.AddKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &OnDemand{} })
-	object.AddKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &OnDemand{} })
+	return []object.KindHandler{
+		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &OnDemand{} }),
+		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &OnDemand{} }),
+	}
 }
