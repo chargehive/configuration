@@ -17,9 +17,10 @@ const (
 )
 
 type ScaPolicy struct {
-	ShouldIdentify          bool
-	ShouldChallengeOptional bool          //If the challenge is optional, setting this to false will not display the challenge
-	ShouldByPassChallenge   SCABypassMode //If the challenge is required, bypassing this will attempt an auth without displaying the challenge
+	ShouldIdentify            bool
+	ShouldChallengeOptional   bool          //If the challenge is optional, setting this to false will not display the challenge
+	ShouldByPassChallenge     SCABypassMode //If the challenge is required, bypassing this will attempt an auth without displaying the challenge
+	ShouldChallenge3dSecureV1 bool
 }
 
 func (ScaPolicy) GetKind() object.Kind { return KindPolicySCA }
