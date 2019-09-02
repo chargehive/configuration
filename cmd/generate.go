@@ -3,19 +3,25 @@ package main
 import (
 	"encoding/json"
 	"flag"
+	"github.com/LucidCube/chargehive-transport-config/connectorconfig"
 	"github.com/chargehive/configuration/object"
-	"github.com/chargehive/configuration/v1/policy"
 	"io/ioutil"
 	"log"
 	"os"
+	"path"
 )
 
 var outputFile = flag.String("out", "", "Output File Path")
+var outputDir = flag.String("outd", "", "Output File Directory")
 var id = flag.String("id", "test-spec", "Spec ID")
-var projectID = flag.String("project", "test-project", "Project ID")
+var projectID = flag.String("project", "", "Project ID")
 
 func buildSpec() object.Specification {
-	return policy.ScaPolicy{ShouldIdentify: true}
+	creds := connectorconfig.SandboxCredentials{
+		Mode:                connectorconfig.SandboxModeDynamic,
+		TransactionIDPrefix: "staging-",
+	}
+	return creds.ToConnector()
 }
 
 func main() {
@@ -35,14 +41,25 @@ func main() {
 		return
 	}
 
-	if outputFile == nil || *outputFile == "" {
+	outputLocation := ""
+	if outputDir != nil {
+		outputLocation = *outputDir
+	}
+
+	if outputFile != nil && *outputFile != "" {
+		outputLocation = path.Join(outputLocation, *outputFile)
+	} else if outputLocation != "" {
+		outputLocation = path.Join(outputLocation, def.GetID()+".json")
+	}
+
+	if outputLocation == "" {
 		log.Print(string(data))
 	} else {
-		err := ioutil.WriteFile(*outputFile, data, os.ModePerm)
+		err := ioutil.WriteFile(outputLocation, data, os.ModePerm)
 		if err != nil {
 			log.Print(err)
 		} else {
-			log.Print("Written data to ", *outputFile)
+			log.Print("Written data to ", outputLocation)
 		}
 	}
 }
