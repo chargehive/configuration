@@ -110,6 +110,8 @@ const (
 	KeyChargeItemSkuType                Key = "charge.meta.item.skuType"
 	KeyChargeItemQuantity               Key = "charge.meta.item.quantity"
 	KeyChargeItemUnitPrice              Key = "charge.meta.item.unitPrice"
+	KeyChargeItemUnitPriceUnits         Key = "charge.meta.item.unitPrice.units"
+	KeyChargeItemUnitPriceCurrency      Key = "charge.meta.item.unitPrice.currency"
 	KeyChargeItemTaxAmount              Key = "charge.meta.item.taxAmount"
 	KeyChargeItemTaxAmountUnits         Key = "charge.meta.item.taxAmount.units"
 	KeyChargeItemTaxAmountCurrency      Key = "charge.meta.item.taxAmount.currency"
