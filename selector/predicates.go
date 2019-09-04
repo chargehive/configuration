@@ -25,7 +25,7 @@ const (
 )
 
 type Predicate struct {
-	Key        string             `json:"key" yaml:"key"`
+	Key        Key                `json:"key" yaml:"key"`
 	Operator   PredicateOperator  `json:"operator" yaml:"operator"`
 	Conversion OperatorConversion `json:"conversion,omitempty" yaml:"conversion,omitempty"`
 	Values     []string           `json:"values,omitempty" yaml:"values,omitempty"`
