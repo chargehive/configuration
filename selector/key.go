@@ -25,7 +25,6 @@ const (
 
 	//Charge Definition
 	KeyChargeIntent            Key = "charge.intent"
-	KeyChargeLanguage          Key = "charge.language"
 	KeyChargeContract          Key = "charge.contract"
 	KeyChargeAmount            Key = "charge.amount"
 	KeyChargeExpiryTime        Key = "charge.expiryTime"
