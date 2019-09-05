@@ -128,3 +128,12 @@ const (
 	KeyChargeItemDeliveryTrackingCode   Key = "charge.meta.item.delivery.trackingCode"
 	KeyChargeItemDeliveryCourier        Key = "charge.meta.item.delivery.courier"
 )
+
+const (
+	KeyMethodName          Key = "method.name"
+	KeyMethodPaymentScheme Key = "method.paymentScheme"
+	KeyMethodValidFrom     Key = "method.validFrom"
+	KeyMethodExpiry        Key = "method.expiry"
+	KeyMethodType          Key = "method.type"
+	KeyMethodInfo          Key = "method.info"
+)
