@@ -27,7 +27,7 @@ func buildSpec() object.Specification {
 
 func buildSelector() selector.Selector {
 	return selector.Selector{Priority: 50, Expressions: []selector.Predicate{
-		{Key: string(selector.RequestKeyCurrency), Operator: selector.PredicateOperatorEqual, Conversion: selector.OperatorConversionDefault, Values: []string{"GBP"}},
+		{Key: selector.KeyChargeAmountCurrency, Operator: selector.PredicateOperatorEqual, Conversion: selector.OperatorConversionDefault, Values: []string{"GBP"}},
 	}}
 }
 
