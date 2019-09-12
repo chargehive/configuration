@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"flag"
+	"github.com/LucidCube/chargehive-transport-config/methodconfig"
 	"github.com/chargehive/configuration/object"
 	"github.com/chargehive/configuration/selector"
 	"github.com/chargehive/configuration/v1/scheduler"
@@ -27,7 +28,8 @@ func buildSpec() object.Specification {
 
 func buildSelector() selector.Selector {
 	return selector.Selector{Priority: 50, Expressions: []selector.Predicate{
-		{Key: selector.KeyChargeAmountCurrency, Operator: selector.PredicateOperatorEqual, Conversion: selector.OperatorConversionDefault, Values: []string{"GBP"}},
+		{Key: selector.KeyChargeAmountCurrency, Operator: selector.PredicateOperatorEqual, Values: []string{"GBP"}},
+		{Key: selector.KeyMethodPaymentScheme, Operator: selector.PredicateOperatorEqual, Values: []string{string(methodconfig.PaymentMethodInfoSchemeTypeCardVisa)}},
 	}}
 }
 
