@@ -2,6 +2,7 @@ package policy
 
 import (
 	"encoding/json"
+	"errors"
 	"github.com/chargehive/configuration/object"
 	"time"
 )
@@ -19,6 +20,12 @@ func (ChargeExpiryPolicy) GetVersion() string   { return "v1" }
 
 type ChargeExpiryDefinition struct{ def *object.Definition }
 
+func NewChargeExpiryDefinition(d *object.Definition) (*ChargeExpiryDefinition, error) {
+	if _, ok := d.Spec.(*ChargeExpiryPolicy); ok {
+		return &ChargeExpiryDefinition{def: d}, nil
+	}
+	return nil, errors.New("invalid Charge Expiry policy object")
+}
 func (d *ChargeExpiryDefinition) Definition() *object.Definition { return d.def }
 func (d *ChargeExpiryDefinition) MarshalJSON() ([]byte, error)   { return json.Marshal(d.def) }
 func (d *ChargeExpiryDefinition) Spec() *ChargeExpiryPolicy      { return d.def.Spec.(*ChargeExpiryPolicy) }
