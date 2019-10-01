@@ -11,16 +11,17 @@ const KindPolicySCA object.Kind = "PolicySCA"
 type SCABypassMode string
 
 const (
-	SCABypassModeNone    SCABypassMode = ""        //Do not bypass a required challenge
-	SCABypassModeCascade SCABypassMode = "cascade" //Attempt the auth on the next connector
-	SCABypassModeCurrent SCABypassMode = "current" //Bypass, but stay on the current connector
+	SCABypassModeNone    SCABypassMode = ""        // Do not bypass a required challenge
+	SCABypassModeCascade SCABypassMode = "cascade" // Attempt the auth on the next connector
+	SCABypassModeCurrent SCABypassMode = "current" // Bypass, but stay on the current connector
 )
 
 type ScaPolicy struct {
 	ShouldIdentify            bool
-	ShouldChallengeOptional   bool          //If the challenge is optional, setting this to false will not display the challenge
-	ShouldByPassChallenge     SCABypassMode //If the challenge is required, bypassing this will attempt an auth without displaying the challenge
+	ShouldChallengeOptional   bool          // If the challenge is optional, setting this to false will not display the challenge
+	ShouldByPassChallenge     SCABypassMode // If the challenge is required, bypassing this will attempt an auth without displaying the challenge
 	ShouldChallenge3dSecureV1 bool
+	ShouldAuthOnError         bool
 }
 
 func (ScaPolicy) GetKind() object.Kind { return KindPolicySCA }
