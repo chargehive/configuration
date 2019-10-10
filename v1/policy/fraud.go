@@ -11,17 +11,17 @@ const KindPolicyFraud object.Kind = "PolicyFraud"
 type FraudCheckType string
 
 const (
-	FraudCheckTypeAll      FraudCheckType = "all"      //Perform a fraud check on all provided connectors
-	FraudCheckTypeFailover FraudCheckType = "failover" //Perform a fraud check on one connector ID at a time, stopping at the first success
+	FraudCheckTypeAll      FraudCheckType = "all"      // Perform a fraud check on all provided connectors
+	FraudCheckTypeFailover FraudCheckType = "failover" // Perform a fraud check on one connector ID at a time, stopping at the first success
 )
 
 type FraudCheckTime string
 
 const (
-	FraudCheckTimePreFirstAuth FraudCheckTime = "preauth-first" //Run fraud check before the first auth
-	FraudCheckTimePreEveryAuth FraudCheckTime = "preauth-every" //Run fraud check before every auth
-	FraudCheckTimeAuthSuccess  FraudCheckTime = "auth-success"  //Run after a successful auth
-	FraudCheckTimeOnDemand     FraudCheckTime = "ondemand"      //Run on demand only
+	FraudCheckTimePreFirstAuth FraudCheckTime = "preauth-first" // Run fraud check before the first auth
+	FraudCheckTimePreEveryAuth FraudCheckTime = "preauth-every" // Run fraud check before every auth
+	FraudCheckTimeAuthSuccess  FraudCheckTime = "auth-success"  // Run after a successful auth
+	FraudCheckTimeOnDemand     FraudCheckTime = "ondemand"      // Run on demand only
 )
 
 type FraudPolicy struct {

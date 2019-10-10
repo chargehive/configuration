@@ -9,7 +9,7 @@ import (
 // MaxMindMinFraudServiceType is the maxmind minFraud service type
 type MaxMindMinFraudServiceType int
 
-//MaxMindMinFraudServiceTypes minFraud Score, minFraud Insights, and minFraud Factors
+// MaxMindMinFraudServiceTypes minFraud Score, minFraud Insights, and minFraud Factors
 const (
 	MaxMindMinFraudServiceTypeScore MaxMindMinFraudServiceType = iota
 	MaxMindMinFraudServiceTypeInsights

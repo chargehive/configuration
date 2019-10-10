@@ -16,7 +16,7 @@ func getKindHandlerFunc(kind Kind, version string) (func() Specification, bool) 
 		return handler, true
 	}
 
-	//Look for the default Version
+	// Look for the default Version
 	if handler, ok := kindHandlers[kind][KindHandlerDefaultVersion]; ok {
 		return handler, true
 	}

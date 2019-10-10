@@ -14,8 +14,8 @@ type Credentials interface {
 type Library string
 
 const (
-	//Payment Libraries
-	LibrarySandbox                  Library = "sandbox" //Connector for testing Charge hive
+	// Payment Libraries
+	LibrarySandbox                  Library = "sandbox" // Connector for testing Charge hive
 	LibraryAuthorize                Library = "authorize"
 	LibraryBraintree                Library = "braintree"
 	LibraryQualPay                  Library = "qualpay"
@@ -24,7 +24,7 @@ const (
 	LibraryWorldpay                 Library = "worldpay"
 	LibraryPayPalWebsitePaymentsPro Library = "paypal-websitepaymentspro"
 
-	//Fraud Libraries
+	// Fraud Libraries
 	LibraryChargeHive  Library = "chargehive"
 	LibraryMaxMind     Library = "maxmind"
 	LibraryCyberSource Library = "cybersource"

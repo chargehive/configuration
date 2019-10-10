@@ -6,7 +6,7 @@ import (
 	"github.com/chargehive/configuration/v1/connector"
 )
 
-//CreateCredentials create credentials from json
+// CreateCredentials create credentials from json
 func GetCredentials(c *connector.Connector) (Credentials, error) {
 	switch Library(c.Library) {
 	case LibraryAuthorize:
@@ -41,7 +41,7 @@ func GetCredentials(c *connector.Connector) (Credentials, error) {
 		creds := &SandboxCredentials{}
 		err := json.Unmarshal(c.Configuration, creds)
 		return creds, err
-		//Fraud Libraries
+		// Fraud Libraries
 	case LibraryMaxMind:
 		creds := &MaxMindCredentials{}
 		err := json.Unmarshal(c.Configuration, creds)

@@ -8,7 +8,7 @@ const (
 )
 
 const (
-	//Assemble Properties
+	// Assemble Properties
 	KeyChargeLabel                    Key = "charge.label"
 	KeyChargeCurrentTransactionNumber Key = "charge.currentTransactionNumber"
 	KeyChargeCurrentAttemptNumber     Key = "charge.currentAttemptNumber"
@@ -23,7 +23,7 @@ const (
 	KeyChargeRegion                   Key = "charge.region"
 	KeyChargePeriod                   Key = "charge.period"
 
-	//Charge Definition
+	// Charge Definition
 	KeyChargeIntent            Key = "charge.intent"
 	KeyChargeContract          Key = "charge.contract"
 	KeyChargeAmount            Key = "charge.amount"
@@ -36,7 +36,7 @@ const (
 	KeyChargeUserLocation      Key = "charge.userLocation"
 	KeyChargeEnvironment       Key = "charge.environment"
 
-	//Charge Meta
+	// Charge Meta
 	KeyChargeInvoiceDate                Key = "charge.meta.invoiceDate"
 	KeyChargeDueDate                    Key = "charge.meta.dueDate"
 	KeyChargeDiscountAmount             Key = "charge.meta.discountAmount"
