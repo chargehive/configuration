@@ -8,6 +8,7 @@ func GetHandlers() []object.KindHandler {
 	funcs = append(funcs, fraudPolicy()...)
 	funcs = append(funcs, chargeExpiryPolicy()...)
 	funcs = append(funcs, methodUpgradePolicy()...)
+	funcs = append(funcs, cascadePolicy()...)
 	return funcs
 }
 
@@ -40,5 +41,13 @@ func methodUpgradePolicy() []object.KindHandler {
 	return []object.KindHandler{
 		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &MethodUpgradePolicy{} }),
 		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &MethodUpgradePolicy{} }),
+	}
+}
+
+func cascadePolicy() []object.KindHandler {
+	o := CascadePolicy{}
+	return []object.KindHandler{
+		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &CascadePolicy{} }),
+		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &CascadePolicy{} }),
 	}
 }
