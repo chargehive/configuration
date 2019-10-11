@@ -8,6 +8,10 @@ const (
 )
 
 const (
+	KeyTransactionType Key = "transaction.type"
+)
+
+const (
 	// Assemble Properties
 	KeyChargeLabel                    Key = "charge.label"
 	KeyChargeCurrentTransactionNumber Key = "charge.currentTransactionNumber"
