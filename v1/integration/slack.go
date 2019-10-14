@@ -9,20 +9,20 @@ import (
 const KindSlack object.Kind = "Integration.Slack"
 
 type Slack struct {
-	AccessToken string
-	Scopes      []string
-	TeamName    string
-	TeamID      string
-	Webhook     *SlackWebhook
+	AccessToken string        `json:"accessToken"`
+	Scopes      []string      `json:"scopes"`
+	TeamName    string        `json:"teamName"`
+	TeamID      string        `json:"teamID"`
+	Webhook     *SlackWebhook `json:"webhook"`
 
 	// What to do
-	TransactionNotifications bool
+	TransactionNotifications bool `json:"transactionNotifications"`
 }
 
 type SlackWebhook struct {
-	Url              string
-	Channel          string
-	ConfigurationUrl string
+	Url              string `json:"url"`
+	Channel          string `json:"channel"`
+	ConfigurationUrl string `json:"configurationUrl"`
 }
 
 func (Slack) GetKind() object.Kind { return KindSlack }
