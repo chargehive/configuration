@@ -9,7 +9,8 @@ import (
 const KindSlackWebhook object.Kind = "Integration.SlackWebhook"
 
 type SlackWebhook struct {
-	WebhookUrl string
+	WebhookUrl               string
+	TransactionNotifications bool
 }
 
 func (SlackWebhook) GetKind() object.Kind { return KindSlackWebhook }
