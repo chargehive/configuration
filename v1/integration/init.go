@@ -9,9 +9,9 @@ func GetHandlers() []object.KindHandler {
 }
 
 func slack() []object.KindHandler {
-	o := SlackWebhook{}
+	o := Slack{}
 	return []object.KindHandler{
-		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &SlackWebhook{} }),
-		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &SlackWebhook{} }),
+		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &Slack{} }),
+		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &Slack{} }),
 	}
 }

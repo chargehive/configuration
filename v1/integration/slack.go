@@ -6,25 +6,37 @@ import (
 	"github.com/chargehive/configuration/object"
 )
 
-const KindSlackWebhook object.Kind = "Integration.SlackWebhook"
+const KindSlack object.Kind = "Integration.Slack"
 
-type SlackWebhook struct {
-	WebhookUrl               string
+type Slack struct {
+	AccessToken string
+	Scopes      []string
+	TeamName    string
+	TeamID      string
+	Webhook     *SlackWebhook
+
+	// What to do
 	TransactionNotifications bool
 }
 
-func (SlackWebhook) GetKind() object.Kind { return KindSlackWebhook }
-func (SlackWebhook) GetVersion() string   { return "v1" }
-
-func NewSlackWebhookDefinition(d *object.Definition) (*SlackWebhookDefinition, error) {
-	if _, ok := d.Spec.(*SlackWebhook); ok {
-		return &SlackWebhookDefinition{def: d}, nil
-	}
-	return nil, errors.New("invalid slack webhook")
+type SlackWebhook struct {
+	Url              string
+	Channel          string
+	ConfigurationUrl string
 }
 
-type SlackWebhookDefinition struct{ def *object.Definition }
+func (Slack) GetKind() object.Kind { return KindSlack }
+func (Slack) GetVersion() string   { return "v1" }
 
-func (d *SlackWebhookDefinition) Definition() *object.Definition { return d.def }
-func (d *SlackWebhookDefinition) MarshalJSON() ([]byte, error)   { return json.Marshal(d.def) }
-func (d *SlackWebhookDefinition) Spec() *SlackWebhook            { return d.def.Spec.(*SlackWebhook) }
+func NewSlackDefinition(d *object.Definition) (*SlackDefinition, error) {
+	if _, ok := d.Spec.(*Slack); ok {
+		return &SlackDefinition{def: d}, nil
+	}
+	return nil, errors.New("invalid slack configuration")
+}
+
+type SlackDefinition struct{ def *object.Definition }
+
+func (d *SlackDefinition) Definition() *object.Definition { return d.def }
+func (d *SlackDefinition) MarshalJSON() ([]byte, error)   { return json.Marshal(d.def) }
+func (d *SlackDefinition) Spec() *Slack                   { return d.def.Spec.(*Slack) }
