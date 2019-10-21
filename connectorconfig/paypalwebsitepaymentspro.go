@@ -17,6 +17,7 @@ type PayPalWebsitePaymentsProCredentials struct {
 	APIUsername            *string
 	APIPassword            *string
 	APISignature           *string
+	SupportedCurrencies    []string
 	CardinalProcessorID    *string
 	CardinalMerchantID     *string
 	CardinalTransactionPw  *string
