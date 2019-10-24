@@ -16,6 +16,7 @@ const (
 type BraintreeCredentials struct {
 	PublicKey         *string
 	PrivateKey        *string
+	MerchantID        string
 	MerchantAccountID string
 	Currency          string
 	Environment       BraintreeEnvironment
