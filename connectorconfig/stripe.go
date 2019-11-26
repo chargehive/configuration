@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"encoding/json"
+
 	"github.com/chargehive/configuration/v1/connector"
 )
 

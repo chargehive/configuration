@@ -8,6 +8,7 @@ import (
 	"github.com/chargehive/configuration/v1/scheduler"
 )
 
+// GetHandlers returns v1 handlers
 func GetHandlers() []object.KindHandler {
 	funcs := make([]object.KindHandler, 0)
 	funcs = append(funcs, scheduler.GetHandlers()...)

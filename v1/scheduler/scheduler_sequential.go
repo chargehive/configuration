@@ -6,16 +6,25 @@ import (
 	"github.com/chargehive/configuration/object"
 )
 
+// Sequential scheduler is a schedule that is ran based on factors such as attempt number
 type Sequential struct {
+	// DefaultSchedule is the schedule to use if there is no specific entry in Schedules
 	DefaultSchedule Schedule
-	Schedules       map[int]Schedule // attempt number > Schedule
+
+	// Schedules to use based on attempt number map[attempt number > Schedule]
+	Schedules map[int]Schedule
 }
 
+// KindSequentialScheduler is the identifier for an KindSequentialScheduler scheduler config
 const KindSequentialScheduler object.Kind = "SchedulerSequential"
 
+// GetKind returns the Sequential kind
 func (Sequential) GetKind() object.Kind { return KindSequentialScheduler }
-func (Sequential) GetVersion() string   { return "v1" }
 
+// GetVersion returns the Sequential version
+func (Sequential) GetVersion() string { return "v1" }
+
+// NewSequentialDefinition creates a new SequentialDefinition
 func NewSequentialDefinition(d *object.Definition) (*SequentialDefinition, error) {
 	if _, ok := d.Spec.(*Sequential); ok {
 		return &SequentialDefinition{def: d}, nil
@@ -23,8 +32,14 @@ func NewSequentialDefinition(d *object.Definition) (*SequentialDefinition, error
 	return nil, errors.New("invalid sequential scheduler object")
 }
 
+// SequentialDefinition is the Sequential object definition
 type SequentialDefinition struct{ def *object.Definition }
 
+// Definition returns the SequentialDefinition structure
 func (d *SequentialDefinition) Definition() *object.Definition { return d.def }
-func (d *SequentialDefinition) MarshalJSON() ([]byte, error)   { return json.Marshal(d.def) }
-func (d *SequentialDefinition) Spec() *Sequential              { return d.def.Spec.(*Sequential) }
+
+// MarshalJSON returns the JSON value for the SequentialDefinition
+func (d *SequentialDefinition) MarshalJSON() ([]byte, error) { return json.Marshal(d.def) }
+
+// Spec returns the Sequential structure contained within the SequentialDefinition
+func (d *SequentialDefinition) Spec() *Sequential { return d.def.Spec.(*Sequential) }

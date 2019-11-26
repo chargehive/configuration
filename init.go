@@ -5,7 +5,7 @@ import (
 	v1 "github.com/chargehive/configuration/v1"
 )
 
-var buildInKinds = make(map[object.Kind]map[string]bool, 0)
+var buildInKinds = make(map[object.Kind]map[string]bool)
 
 func Initialise() {
 	handlers := v1.GetHandlers()

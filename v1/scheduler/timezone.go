@@ -1,5 +1,6 @@
 package scheduler
 
+// TimeZone represents a three character timezone
 type TimeZone string
 
 const (

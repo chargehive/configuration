@@ -6,28 +6,49 @@ import (
 	"github.com/chargehive/configuration/object"
 )
 
+// KindSlack indicates that the configuration is a slack integration
 const KindSlack object.Kind = "Integration.Slack"
 
+// Slack configuration structure
 type Slack struct {
-	AccessToken string        `json:"accessToken"`
-	Scopes      []string      `json:"scopes"`
-	TeamName    string        `json:"teamName"`
-	TeamID      string        `json:"teamID"`
-	Webhook     *SlackWebhook `json:"webhook"`
+	// AccessToken slack access token
+	AccessToken string `json:"accessToken"`
 
-	// What to do
+	// Scopes for OAuth authentication
+	Scopes []string `json:"scopes"`
+
+	// TeamName for posting
+	TeamName string `json:"teamName"`
+
+	// TeamID for posting
+	TeamID string `json:"teamID"`
+
+	// Webhook endpoint
+	Webhook *SlackWebhook `json:"webhook"`
+
+	// TransactionNotifications indicates the action to perform
 	TransactionNotifications bool `json:"transactionNotifications"`
 }
 
+// SlackWebhook structure
 type SlackWebhook struct {
-	Url              string `json:"url"`
-	Channel          string `json:"channel"`
+	// Url is the slack webhook URL
+	Url string `json:"url"`
+
+	// Channel is the slack channel to post in
+	Channel string `json:"channel"`
+
+	// ConfigurationUrl is the slack endpoint for configuration
 	ConfigurationUrl string `json:"configurationUrl"`
 }
 
+// GetKind returns the Slack kind
 func (Slack) GetKind() object.Kind { return KindSlack }
-func (Slack) GetVersion() string   { return "v1" }
 
+// GetVersion returns the Slack version
+func (Slack) GetVersion() string { return "v1" }
+
+// NewSlackDefinition returns a new slack config definition
 func NewSlackDefinition(d *object.Definition) (*SlackDefinition, error) {
 	if _, ok := d.Spec.(*Slack); ok {
 		return &SlackDefinition{def: d}, nil
@@ -35,8 +56,14 @@ func NewSlackDefinition(d *object.Definition) (*SlackDefinition, error) {
 	return nil, errors.New("invalid slack configuration")
 }
 
+// SlackDefinition is the full slack definition config structure
 type SlackDefinition struct{ def *object.Definition }
 
+// Definition returns the slack config definition
 func (d *SlackDefinition) Definition() *object.Definition { return d.def }
-func (d *SlackDefinition) MarshalJSON() ([]byte, error)   { return json.Marshal(d.def) }
-func (d *SlackDefinition) Spec() *Slack                   { return d.def.Spec.(*Slack) }
+
+// MarshalJSON returns the JSON value for the given slack definition
+func (d *SlackDefinition) MarshalJSON() ([]byte, error) { return json.Marshal(d.def) }
+
+// Spec returns the slack specification from within the slack definition
+func (d *SlackDefinition) Spec() *Slack { return d.def.Spec.(*Slack) }

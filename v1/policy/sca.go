@@ -6,27 +6,48 @@ import (
 	"github.com/chargehive/configuration/object"
 )
 
+// KindPolicySCA is the identifier for a ScaPolicy config
 const KindPolicySCA object.Kind = "PolicySCA"
 
+// SCABypassMode indicates the action to be perfomed when a verification result is returned by a connector
 type SCABypassMode string
 
 const (
-	SCABypassModeNone    SCABypassMode = ""        // Do not bypass a required challenge
-	SCABypassModeCascade SCABypassMode = "cascade" // Attempt the auth on the next connector
-	SCABypassModeCurrent SCABypassMode = "current" // Bypass, but stay on the current connector
+	// SCABypassModeNone indicates to not bypass a required challenge
+	SCABypassModeNone SCABypassMode = ""
+
+	// SCABypassModeCascade indicates to auth on the next connector
+	SCABypassModeCascade SCABypassMode = "cascade"
+
+	// SCABypassModeCurrent indicate to bypass, but stay on the current connector (attempt auth anyway)
+	SCABypassModeCurrent SCABypassMode = "current"
 )
 
+// ScaPolicy options determine how to handle 3DS on connector requests
 type ScaPolicy struct {
-	ShouldIdentify            bool
-	ShouldChallengeOptional   bool          // If the challenge is optional, setting this to false will not display the challenge
-	ShouldByPassChallenge     SCABypassMode // If the challenge is required, bypassing this will attempt an auth without displaying the challenge
+	// ShouldIdentify indicates if the identification stages should take place
+	ShouldIdentify bool
+
+	// ShouldChallengeOptional challenge based on an optional response from the connector (setting this to false will not display the challenge)
+	ShouldChallengeOptional bool
+
+	// ShouldByPassChallenge if the challenge is required, bypassing this will attempt an auth without displaying the challenge
+	ShouldByPassChallenge SCABypassMode
+
+	// ShouldChallenge3dSecureV1 determines if the connector can fallback to 3DS v1 when 3DS v2 is not availabe
 	ShouldChallenge3dSecureV1 bool
-	ShouldAuthOnError         bool
+
+	// ShouldAuthOnError if true and an error response is returned from the connector; proceed to auth anyway
+	ShouldAuthOnError bool
 }
 
+// GetKind returns the ScaPolicy kind
 func (ScaPolicy) GetKind() object.Kind { return KindPolicySCA }
-func (ScaPolicy) GetVersion() string   { return "v1" }
 
+// GetVersion returns the ScaPolicy version
+func (ScaPolicy) GetVersion() string { return "v1" }
+
+// NewScaDefinition creates a new ScaDefinition
 func NewScaDefinition(d *object.Definition) (*ScaDefinition, error) {
 	if _, ok := d.Spec.(*ScaPolicy); ok {
 		return &ScaDefinition{def: d}, nil
@@ -34,8 +55,14 @@ func NewScaDefinition(d *object.Definition) (*ScaDefinition, error) {
 	return nil, errors.New("invalid sca policy object")
 }
 
+// ScaDefinition is the SCA config object definition
 type ScaDefinition struct{ def *object.Definition }
 
+// Definition returns the ScaDefinition structure
 func (d *ScaDefinition) Definition() *object.Definition { return d.def }
-func (d *ScaDefinition) MarshalJSON() ([]byte, error)   { return json.Marshal(d.def) }
-func (d *ScaDefinition) Spec() *ScaPolicy               { return d.def.Spec.(*ScaPolicy) }
+
+// MarshalJSON returns the JSON value for the ScaDefinition
+func (d *ScaDefinition) MarshalJSON() ([]byte, error) { return json.Marshal(d.def) }
+
+// Spec returns the ScaPolicy contained within the ScaDefinition
+func (d *ScaDefinition) Spec() *ScaPolicy { return d.def.Spec.(*ScaPolicy) }

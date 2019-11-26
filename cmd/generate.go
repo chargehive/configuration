@@ -6,24 +6,28 @@ import (
 	"github.com/chargehive/configuration/object"
 	"github.com/chargehive/configuration/paymentmethod"
 	"github.com/chargehive/configuration/selector"
-	"github.com/chargehive/configuration/v1/scheduler"
+	"github.com/chargehive/configuration/v1/policy"
 	"io/ioutil"
 	"log"
 	"os"
 	"path"
 )
 
-var outputFile = flag.String("out", "", "Output File Path")
-var outputDir = flag.String("outd", "", "Output File Directory")
-var id = flag.String("id", "test-spec", "Spec ID")
-var projectID = flag.String("project", "", "Project ID")
+var (
+	outputFile = flag.String("out", "", "Output File Path")
+	outputDir  = flag.String("outd", "", "Output File Directory")
+	id         = flag.String("id", "test-spec", "Spec ID")
+	projectID  = flag.String("project", "", "Project ID")
+)
 
 func buildSpec() object.Specification {
-	return scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorConfig,
-		AttemptConfig: &scheduler.AttemptConfig{
-			PoolType:                 scheduler.PoolTypeCascade,
-			MethodSelector:           scheduler.MethodSelectorPrimaryMethod,
-			OverridePoolConnectorIDs: []string{"paysafe-connector"}}}
+	return policy.ChargeExpiryPolicy{}
+
+	/*return scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorConfig,
+	AttemptConfig: &scheduler.AttemptConfig{
+		PoolType:                 scheduler.PoolTypeCascade,
+		MethodSelector:           scheduler.MethodSelectorPrimaryMethod,
+		OverridePoolConnectorIDs: []string{"paysafe-connector"}}}*/
 }
 
 func buildSelector() selector.Selector {

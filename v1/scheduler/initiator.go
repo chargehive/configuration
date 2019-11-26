@@ -6,18 +6,28 @@ import (
 	"github.com/chargehive/configuration/object"
 )
 
+// KindInitiator is the identifier for an initiator config
 const KindInitiator object.Kind = "Initiator"
 
+// Initiator is a config that specifies actions for an initial transaction
 type Initiator struct {
-	Type             InitiatorType
+	// Type indicates the type of this initiator
+	Type InitiatorType
+
+	// InitialConnector is the selection method for the initial selector (only used on renewal)
 	InitialConnector ConnectorSelector
-	// AttemptConfig to be used when using ConnectorSelectorConfig
+
+	// AttemptConfig to be used when ConnectorSelectorConfig is set as InitialConnector
 	AttemptConfig *AttemptConfig
 }
 
+// GetKind returns the Initiator kind
 func (Initiator) GetKind() object.Kind { return KindInitiator }
-func (Initiator) GetVersion() string   { return "v1" }
 
+// GetVersion returns the Initiator version
+func (Initiator) GetVersion() string { return "v1" }
+
+// NewInitiatorDefinition creates a new InitiatorDefinition
 func NewInitiatorDefinition(d *object.Definition) (*InitiatorDefinition, error) {
 	if _, ok := d.Spec.(*Initiator); ok {
 		return &InitiatorDefinition{def: d}, nil
@@ -25,8 +35,14 @@ func NewInitiatorDefinition(d *object.Definition) (*InitiatorDefinition, error) 
 	return nil, errors.New("invalid initiator object")
 }
 
+// InitiatorDefinition is the Initiator config object definition
 type InitiatorDefinition struct{ def *object.Definition }
 
+// Definition returns the InitiatorDefinition structure
 func (d *InitiatorDefinition) Definition() *object.Definition { return d.def }
-func (d *InitiatorDefinition) MarshalJSON() ([]byte, error)   { return json.Marshal(d.def) }
-func (d *InitiatorDefinition) Spec() *Initiator               { return d.def.Spec.(*Initiator) }
+
+// MarshalJSON returns the JSON value for the InitiatorDefinition
+func (d *InitiatorDefinition) MarshalJSON() ([]byte, error) { return json.Marshal(d.def) }
+
+// Spec returns the CascadePolicy contained within the InitiatorDefinition
+func (d *InitiatorDefinition) Spec() *Initiator { return d.def.Spec.(*Initiator) }

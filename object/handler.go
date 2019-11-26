@@ -6,7 +6,7 @@ const KindHandlerDefaultVersion = "_DEFAULT_"
 
 func AddKindHandler(handler KindHandler) {
 	if _, ok := kindHandlers[handler.Kind]; !ok {
-		kindHandlers[handler.Kind] = make(map[string]func() Specification, 0)
+		kindHandlers[handler.Kind] = make(map[string]func() Specification)
 	}
 	kindHandlers[handler.Kind][handler.Version] = handler.handler
 }

@@ -3,19 +3,26 @@ package connector
 import (
 	"encoding/json"
 	"errors"
+
 	"github.com/chargehive/configuration/object"
 )
 
+// KindConnector is the identifier for a Connector config
 const KindConnector object.Kind = "Connector"
 
+// Connector is a configuration file for a single payment processing entity
 type Connector struct {
 	Library       string
 	Configuration []byte
 }
 
+// GetKind returns the Connector kind
 func (Connector) GetKind() object.Kind { return KindConnector }
-func (Connector) GetVersion() string   { return "v1" }
 
+// GetVersion returns the Connector version
+func (Connector) GetVersion() string { return "v1" }
+
+// NewDefinition returns a new connector definition
 func NewDefinition(d *object.Definition) (*Definition, error) {
 	if _, ok := d.Spec.(*Connector); ok {
 		return &Definition{def: d}, nil
@@ -23,8 +30,14 @@ func NewDefinition(d *object.Definition) (*Definition, error) {
 	return nil, errors.New("invalid connector object")
 }
 
+// Definition is the connector definition structure
 type Definition struct{ def *object.Definition }
 
+// Definition returns the Definition for a connector
 func (d *Definition) Definition() *object.Definition { return d.def }
-func (d *Definition) MarshalJSON() ([]byte, error)   { return json.Marshal(d.def) }
-func (d *Definition) Spec() *Connector               { return d.def.Spec.(*Connector) }
+
+// MarshalJSON returns the JSON value for a connector
+func (d *Definition) MarshalJSON() ([]byte, error) { return json.Marshal(d.def) }
+
+// Spec returns the connector specification from within a definition
+func (d *Definition) Spec() *Connector { return d.def.Spec.(*Connector) }

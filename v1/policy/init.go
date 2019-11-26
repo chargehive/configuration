@@ -2,6 +2,7 @@ package policy
 
 import "github.com/chargehive/configuration/object"
 
+// GetHandlers returns policy handlers
 func GetHandlers() []object.KindHandler {
 	funcs := make([]object.KindHandler, 0)
 	funcs = append(funcs, scaPolicy()...)
