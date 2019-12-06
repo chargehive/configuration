@@ -16,22 +16,22 @@ type MethodLockPolicy struct {
 	Duration int64
 }
 
-// GetKind returns the MethodUpgradePolicy kind
+// GetKind returns the MethodLockPolicy kind
 func (MethodLockPolicy) GetKind() object.Kind { return KindPolicyMethodLock }
 
-// GetVersion returns the MethodUpgradePolicy version
+// GetVersion returns the MethodLockPolicy version
 func (MethodLockPolicy) GetVersion() string { return "v1" }
+
+// MethodLockDefinition is the Lock config object definition
+type MethodLockDefinition struct{ def *object.Definition }
 
 // NewMethodLockDefinition creates a new MethodLockDefinition
 func NewMethodLockDefinition(d *object.Definition) (*MethodLockDefinition, error) {
-	if _, ok := d.Spec.(*MethodLockDefinition); ok {
+	if _, ok := d.Spec.(*MethodLockPolicy); ok {
 		return &MethodLockDefinition{def: d}, nil
 	}
 	return nil, errors.New("invalid method lock policy object")
 }
-
-// MethodLockDefinition is the Lock config object definition
-type MethodLockDefinition struct{ def *object.Definition }
 
 // Definition returns the MethodLockDefinition structure
 func (d *MethodLockDefinition) Definition() *object.Definition { return d.def }
