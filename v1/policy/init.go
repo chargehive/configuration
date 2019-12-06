@@ -4,12 +4,13 @@ import "github.com/chargehive/configuration/object"
 
 // GetHandlers returns policy handlers
 func GetHandlers() []object.KindHandler {
-	funcs := make([]object.KindHandler, 0)
+	funcs := []object.KindHandler{}
 	funcs = append(funcs, scaPolicy()...)
 	funcs = append(funcs, fraudPolicy()...)
 	funcs = append(funcs, chargeExpiryPolicy()...)
 	funcs = append(funcs, methodUpgradePolicy()...)
 	funcs = append(funcs, cascadePolicy()...)
+	funcs = append(funcs, methodLockPolicy()...)
 	return funcs
 }
 
@@ -50,5 +51,13 @@ func cascadePolicy() []object.KindHandler {
 	return []object.KindHandler{
 		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &CascadePolicy{} }),
 		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &CascadePolicy{} }),
+	}
+}
+
+func methodLockPolicy() []object.KindHandler {
+	o := MethodLockPolicy{}
+	return []object.KindHandler{
+		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &MethodLockPolicy{} }),
+		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &MethodLockPolicy{} }),
 	}
 }

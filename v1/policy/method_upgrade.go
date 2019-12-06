@@ -3,10 +3,11 @@ package policy
 import (
 	"encoding/json"
 	"errors"
+
 	"github.com/chargehive/configuration/object"
 )
 
-// KindPolicyMethodUpgrade is the identifier for a PolicyFraud config
+// KindPolicyMethodUpgrade is the identifier for a method upgrade policy config
 const KindPolicyMethodUpgrade object.Kind = "PolicyMethodUpgrade"
 
 // MethodUpgradePolicy is used to temporarily alter the existing payment method information
@@ -29,13 +30,13 @@ func NewMethodUpgradeDefinition(d *object.Definition) (*MethodUpgradeDefinition,
 	return nil, errors.New("invalid method upgrade policy object")
 }
 
-// MethodUpgradeDefinition is the Fraud config object definition
+// MethodUpgradeDefinition is the method upgrade config object definition
 type MethodUpgradeDefinition struct{ def *object.Definition }
 
-// Definition returns the ChargeExpiryDefinition structure
+// Definition returns the MethodUpgradeDefinition structure
 func (d *MethodUpgradeDefinition) Definition() *object.Definition { return d.def }
 
-// MarshalJSON returns the JSON value for the FraudDefinition
+// MarshalJSON returns the JSON value for the MethodUpgradeDefinition
 func (d *MethodUpgradeDefinition) MarshalJSON() ([]byte, error) { return json.Marshal(d.def) }
 
 // Spec returns the MethodUpgradePolicy contained within the MethodUpgradeDefinition

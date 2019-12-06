@@ -3,14 +3,15 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"github.com/chargehive/configuration/object"
-	"github.com/chargehive/configuration/paymentmethod"
-	"github.com/chargehive/configuration/selector"
-	"github.com/chargehive/configuration/v1/policy"
 	"io/ioutil"
 	"log"
 	"os"
 	"path"
+
+	"github.com/chargehive/configuration/object"
+	"github.com/chargehive/configuration/paymentmethod"
+	"github.com/chargehive/configuration/selector"
+	"github.com/chargehive/configuration/v1/scheduler"
 )
 
 var (
@@ -21,13 +22,11 @@ var (
 )
 
 func buildSpec() object.Specification {
-	return policy.ChargeExpiryPolicy{}
-
-	/*return scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorConfig,
-	AttemptConfig: &scheduler.AttemptConfig{
-		PoolType:                 scheduler.PoolTypeCascade,
-		MethodSelector:           scheduler.MethodSelectorPrimaryMethod,
-		OverridePoolConnectorIDs: []string{"paysafe-connector"}}}*/
+	return scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorConfig,
+		AttemptConfig: &scheduler.AttemptConfig{
+			PoolType:                 scheduler.PoolTypeCascade,
+			MethodSelector:           scheduler.MethodSelectorPrimaryMethod,
+			OverridePoolConnectorIDs: []string{"paysafe-connector"}}}
 }
 
 func buildSelector() selector.Selector {
