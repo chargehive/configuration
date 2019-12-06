@@ -8,10 +8,6 @@ const (
 )
 
 const (
-	KeyTransactionType Key = "transaction.type"
-)
-
-const (
 	// Assemble Properties
 	KeyChargeLabel                    Key = "charge.label"
 	KeyChargeCurrentTransactionNumber Key = "charge.currentTransactionNumber"
@@ -132,6 +128,24 @@ const (
 	KeyChargeItemDeliveryType           Key = "charge.meta.item.delivery.type"
 	KeyChargeItemDeliveryTrackingCode   Key = "charge.meta.item.delivery.trackingCode"
 	KeyChargeItemDeliveryCourier        Key = "charge.meta.item.delivery.courier"
+
+	// Transaction
+	KeyTransactionType          Key = "transaction.type"
+	KeyTransactionPaymentType   Key = "transaction.payment.type"
+	KeyTransactionPaymentScheme Key = "transaction.payment.scheme"
+	KeyTransactionContract      Key = "transaction.contract"
+	KeyTransactionFailureType   Key = "transaction.failure.type"
+	KeyTransactionVerified      Key = "transaction.verified"
+	KeyTransactionLiability     Key = "transaction.liability"
+	KeyTransactionSubType       Key = "transaction.sub.type"
+	KeyTransactionResult        Key = "transaction.result"
+
+	// Transaction response
+	KeyTransactionResponseCode            Key = "transaction.response.code"
+	KeyTransactionResponseFailureType     Key = "transaction.response.failure.type"
+	KeyTransactionResponseCategory        Key = "transaction.response.category"
+	KeyTransactionResponseErrorType       Key = "transaction.response.error.type"
+	KeyTransactionResponseOriginatingCode Key = "transaction.response.originating.code"
 )
 
 const (
