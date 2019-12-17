@@ -23,6 +23,7 @@ const (
 	LibraryPaySafe                  Library = "paysafe"
 	LibraryWorldpay                 Library = "worldpay"
 	LibraryPayPalWebsitePaymentsPro Library = "paypal-websitepaymentspro"
+	LibraryPayPalExpressCheckout    Library = "paypal-expresscheckout"
 
 	// Fraud Libraries
 	LibraryChargeHive  Library = "chargehive"
