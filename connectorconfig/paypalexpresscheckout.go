@@ -6,19 +6,12 @@ import (
 	"github.com/chargehive/configuration/v1/connector"
 )
 
-type PayPalExpressCheckoutEnvironment string
-
-const (
-	PayPalExpressCheckoutEnvironmentSandbox PayPalExpressCheckoutEnvironment = "sandbox"
-	PayPalExpressCheckoutEnvironmentLive    PayPalExpressCheckoutEnvironment = "live"
-)
-
 type PayPalExpressCheckoutCredentials struct {
 	APIUsername         *string
 	APIPassword         *string
 	APISignature        *string
 	SupportedCurrencies []string
-	Environment         PayPalExpressCheckoutEnvironment
+	Environment         PayPalEnvironment
 }
 
 func (c PayPalExpressCheckoutCredentials) GetLibrary() Library {

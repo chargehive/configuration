@@ -6,13 +6,6 @@ import (
 	"github.com/chargehive/configuration/v1/connector"
 )
 
-type PayPalWebsitePaymentsProEnvironment string
-
-const (
-	PayPalWebsitePaymentsProEnvironmentSandbox PayPalWebsitePaymentsProEnvironment = "sandbox"
-	PayPalWebsitePaymentsProEnvironmentLive    PayPalWebsitePaymentsProEnvironment = "live"
-)
-
 type PayPalWebsitePaymentsProCredentials struct {
 	APIUsername            *string
 	APIPassword            *string
@@ -25,7 +18,7 @@ type PayPalWebsitePaymentsProCredentials struct {
 	CardinalAPIIdentifier  *string
 	CardinalAPIKey         *string
 	CardinalOrgUnitID      *string
-	Environment            PayPalWebsitePaymentsProEnvironment
+	Environment            PayPalEnvironment
 }
 
 func (c PayPalWebsitePaymentsProCredentials) GetLibrary() Library {
