@@ -10,6 +10,8 @@ import (
 // CreateCredentials create credentials from json
 func GetCredentials(c *connector.Connector) (Credentials, error) {
 	switch Library(c.Library) {
+
+	// Payment Libraries
 	case LibraryAuthorize:
 		creds := &AuthorizeCredentials{}
 		err := json.Unmarshal(c.Configuration, creds)
@@ -30,6 +32,10 @@ func GetCredentials(c *connector.Connector) (Credentials, error) {
 		creds := &PaySafeCredentials{}
 		err := json.Unmarshal(c.Configuration, creds)
 		return creds, err
+	case LibraryPayPalExpressCheckout:
+		creds := &PayPalExpressCheckoutCredentials{}
+		err := json.Unmarshal(c.Configuration, creds)
+		return creds, err
 	case LibraryPayPalWebsitePaymentsPro:
 		creds := &PayPalWebsitePaymentsProCredentials{}
 		err := json.Unmarshal(c.Configuration, creds)
@@ -42,7 +48,8 @@ func GetCredentials(c *connector.Connector) (Credentials, error) {
 		creds := &SandboxCredentials{}
 		err := json.Unmarshal(c.Configuration, creds)
 		return creds, err
-		// Fraud Libraries
+
+	// Fraud Libraries
 	case LibraryMaxMind:
 		creds := &MaxMindCredentials{}
 		err := json.Unmarshal(c.Configuration, creds)
