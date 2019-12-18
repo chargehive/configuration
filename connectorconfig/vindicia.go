@@ -33,7 +33,7 @@ func (c *VindiciaCredentials) Validate() error {
 }
 
 func (c *VindiciaCredentials) GetSecureFields() []*string {
-	return []*string{c.TransactionKey}
+	return []*string{c.Password}
 }
 
 func (c *VindiciaCredentials) ToConnector() connector.Connector {
