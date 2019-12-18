@@ -15,9 +15,9 @@ const (
 )
 
 type VindiciaCredentials struct {
-	MerchantID     string
-	TransactionKey *string
-	Environment    VindiciaEnvironment
+	Login       string
+	Password    *string
+	Environment VindiciaEnvironment
 }
 
 func (c VindiciaCredentials) GetLibrary() Library {
