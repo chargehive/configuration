@@ -22,6 +22,7 @@ const (
 	KeyChargeCountry                  Key = "charge.country"
 	KeyChargeRegion                   Key = "charge.region"
 	KeyChargePeriod                   Key = "charge.period"
+	KeyChargePreferredMethodType      Key = "charge.preferredMethodType"
 
 	// Charge Definition
 	KeyChargeIntent            Key = "charge.intent"
