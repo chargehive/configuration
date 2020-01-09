@@ -15,9 +15,11 @@ const (
 )
 
 type VindiciaCredentials struct {
-	Login       string
-	Password    *string
-	Environment VindiciaEnvironment
+	Login         string
+	Password      *string
+	HMACKey       *string
+	PGPPrivateKey *string
+	Environment   VindiciaEnvironment
 }
 
 func (c VindiciaCredentials) GetLibrary() Library {
@@ -33,7 +35,7 @@ func (c *VindiciaCredentials) Validate() error {
 }
 
 func (c *VindiciaCredentials) GetSecureFields() []*string {
-	return []*string{c.Password}
+	return []*string{c.Password, c.HMACKey, c.PGPPrivateKey}
 }
 
 func (c *VindiciaCredentials) ToConnector() connector.Connector {
