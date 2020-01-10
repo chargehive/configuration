@@ -6,14 +6,6 @@ import (
 	"github.com/chargehive/configuration/v1/connector"
 )
 
-type PaySafeApplePayEnvironment string
-
-const (
-	PaySafeApplePayEnvironmentMock PaySafeEnvironment = "MOCK"
-	PaySafeApplePayEnvironmentTest PaySafeEnvironment = "TEST"
-	PaySafeApplePayEnvironmentLive PaySafeEnvironment = "LIVE"
-)
-
 type PaysafeApplePayLocale string
 
 const (
@@ -39,7 +31,7 @@ type PaySafeApplePayCredentials struct {
 	AccountID              string
 	APIUsername            *string
 	APIPassword            *string
-	Environment            PaySafeApplePayEnvironment
+	Environment            PaySafeEnvironment
 	Country                string
 	Currency               string
 	SingleUseTokenUsername *string
