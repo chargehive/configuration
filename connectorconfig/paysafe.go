@@ -14,6 +14,14 @@ const (
 	PaySafeEnvironmentLive PaySafeEnvironment = "LIVE"
 )
 
+type PaysafeLocale string
+
+const (
+	PaysafeLocaleENGB PaysafeLocale = "en_GB"
+	PaysafeLocaleENUS PaysafeLocale = "en_US"
+	PaysafeLocaleFRCA PaysafeLocale = "fr_CA"
+)
+
 type PaySafeCredentials struct {
 	Acquirer               string
 	AccountID              string

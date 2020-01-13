@@ -22,6 +22,7 @@ const (
 	LibraryStripe                   Library = "stripe"
 	LibraryPaySafe                  Library = "paysafe"
 	LibraryPaySafeApplePay          Library = "paysafe-applepay"
+	LibraryPaySafeGooglePay         Library = "paysafe-googlepay"
 	LibraryWorldpay                 Library = "worldpay"
 	LibraryPayPalWebsitePaymentsPro Library = "paypal-websitepaymentspro"
 	LibraryPayPalExpressCheckout    Library = "paypal-expresscheckout"

@@ -6,14 +6,6 @@ import (
 	"github.com/chargehive/configuration/v1/connector"
 )
 
-type PaysafeApplePayLocale string
-
-const (
-	PaysafeApplePayLocaleENGB PaysafeApplePayLocale = "en_GB"
-	PaysafeApplePayLocaleENUS PaysafeApplePayLocale = "en_US"
-	PaysafeApplePayLocaleFRCA PaysafeApplePayLocale = "fr_CA"
-)
-
 type PaysafeApplePayInitiative string
 
 const (
@@ -36,7 +28,7 @@ type PaySafeApplePayCredentials struct {
 	Currency               string
 	SingleUseTokenUsername *string
 	SingleUseTokenPassword *string
-	Locale                 PaysafeApplePayLocale
+	Locale                 PaysafeLocale
 
 	ApplePayMerchantIdentityCert string
 	ApplePayMerchantIdentityKey  string
