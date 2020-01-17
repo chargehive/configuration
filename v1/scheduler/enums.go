@@ -70,6 +70,10 @@ const (
 
 	// AttemptOriginTypeLastFailure indicates that the time is based from the last transaction failure
 	AttemptOriginTypeLastFailure AttemptOriginType = "last-failure"
+
+	// AttemptOriginTypeNow indicates that the time is based on 'now' this should be used
+	// for actions such as refunds that are not relative to historical transaction times
+	AttemptOriginTypeNow AttemptOriginType = "now"
 )
 
 // MethodSelector is used to indicate the payment method that should be used
