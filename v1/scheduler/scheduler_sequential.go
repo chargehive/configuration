@@ -8,9 +8,6 @@ import (
 
 // Sequential scheduler is a schedule that is ran based on factors such as attempt number
 type Sequential struct {
-	// DefaultSchedule is the schedule to use if there is no specific entry in Schedules
-	DefaultSchedule Schedule
-
 	// Schedules to use based on attempt number map[attempt number > Schedule]
 	Schedules map[int]Schedule
 }
