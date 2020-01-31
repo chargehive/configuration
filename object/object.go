@@ -11,10 +11,10 @@ type Kind string
 const KindNone Kind = ""
 
 type Definition struct {
-	Kind        Kind              `json:"Kind" yaml:"Kind"`
-	MetaData    MetaData          `json:"metadata" yaml:"metadata"`
+	Kind        Kind              `json:"Kind" yaml:"Kind" validate:"kind"`
+	MetaData    MetaData          `json:"metadata" yaml:"metadata" validate:"dive"`
 	SpecVersion string            `json:"specVersion,omitempty" yaml:"specVersion,omitempty"`
-	Selector    selector.Selector `json:"selector,omitempty" yaml:"selector,omitempty"`
+	Selector    selector.Selector `json:"selector,omitempty" yaml:"selector,omitempty" validate:"dive"`
 	Spec        interface{}       `json:"spec" yaml:"spec"`
 }
 

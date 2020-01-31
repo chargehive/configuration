@@ -8,7 +8,7 @@ import (
 
 // OnDemand is a schedule that is run on demand
 type OnDemand struct {
-	Schedule Schedule
+	Schedule Schedule `validation:"dive"`
 }
 
 // KindOnDemandScheduler is the identifier for an OnDemand scheduler config

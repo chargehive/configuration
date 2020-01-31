@@ -13,6 +13,17 @@ const (
 	PredicateOperatorLessThan      PredicateOperator = "Lt"
 )
 
+var PredicateOperatorRegister = map[PredicateOperator]bool{
+	PredicateOperatorEqual:         true,
+	PredicateOperatorNotEqual:      true,
+	PredicateOperatorIn:            true,
+	PredicateOperatorNotIn:         true,
+	PredicateOperatorExists:        true,
+	PredicateOperatorDoesNotExists: true,
+	PredicateOperatorGreaterThan:   true,
+	PredicateOperatorLessThan:      true,
+}
+
 type OperatorConversion string
 
 const (
@@ -24,9 +35,18 @@ const (
 	OperatorConversionDurationDays    OperatorConversion = "DurationDays"    // Duration in Days
 )
 
+var OperatorConversionRegister = map[OperatorConversion]bool{
+	OperatorConversionDefault:         true,
+	OperatorConversionTimeDayOfWeek:   true,
+	OperatorConversionTimeMonth:       true,
+	OperatorConversionDurationSeconds: true,
+	OperatorConversionDurationHours:   true,
+	OperatorConversionDurationDays:    true,
+}
+
 type Predicate struct {
-	Key        Key                `json:"key" yaml:"key"`
-	Operator   PredicateOperator  `json:"operator" yaml:"operator"`
-	Conversion OperatorConversion `json:"conversion,omitempty" yaml:"conversion,omitempty"`
+	Key        Key                `json:"key" yaml:"key" validate:"predicate-key"`
+	Operator   PredicateOperator  `json:"operator" yaml:"operator" validate:"predicate-operator"`
+	Conversion OperatorConversion `json:"conversion,omitempty" yaml:"conversion,omitempty" validate:"predicate-operator-conversion"`
 	Values     []string           `json:"values,omitempty" yaml:"values,omitempty"`
 }

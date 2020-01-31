@@ -9,7 +9,7 @@ import (
 // Sequential scheduler is a schedule that is ran based on factors such as attempt number
 type Sequential struct {
 	// Schedules to use based on attempt number map[attempt number > Schedule]
-	Schedules map[int]Schedule
+	Schedules map[int]Schedule `validation:"dive"`
 }
 
 // KindSequentialScheduler is the identifier for an KindSequentialScheduler scheduler config

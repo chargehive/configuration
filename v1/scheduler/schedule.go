@@ -22,3 +22,7 @@ type Schedule struct {
 	// TimeSyncZone indicates the timezone that the TimeSyncHour is relative to
 	TimeSyncZone TimeZone
 }
+
+func (Schedule) Validate() {
+
+}
