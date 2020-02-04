@@ -9,6 +9,7 @@ const (
 	InfoKeyCardBrand     InfoKey = "card_brand"
 	InfoKeyCardSubbrand  InfoKey = "card_subbrand"
 	InfoKeyIssuer        InfoKey = "issuer"
+	InfoKeyIssueNumber   InfoKey = "issue_number"
 	InfoKeyCardType      InfoKey = "card_type"
 	InfoKeyCardLastFour  InfoKey = "card_last_four"
 	InfoKeyDisplayName   InfoKey = "display_name"
