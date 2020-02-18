@@ -26,3 +26,5 @@ As with all configs, the standard wrapper is used.
   }
 }
 ```   
+
+###Spec Definition

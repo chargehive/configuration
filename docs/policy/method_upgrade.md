@@ -1,18 +1,17 @@
-# Cascade Policy
-The cascade policy defines the behaviour of how failed attempts are retried through different connectors
+# Method Upgrade Policy
 
-##Format
+## Format
 As with all configs, the standard wrapper is used.
 
 ```json5
 
 ```
-###Definition
+### Definition
 FieldName | Required | Definition 
 ---:|---|:---
 
 
-##Full Example
+## Full Example
 
 ```json
 ```

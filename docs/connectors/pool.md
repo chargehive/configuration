@@ -24,7 +24,7 @@ As with all configs, the standard wrapper is used.
   }
 }
 ```
-###Definition
+###Spec Definition
 FieldName | Required | Definition 
 ---:|---|:---
 restriction | false | "unrestricted" (Default) , "noRepeat" or "lowestUsage"

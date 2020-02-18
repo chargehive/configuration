@@ -22,7 +22,7 @@ As with all configs, the standard wrapper is used.
 }
 ```
 
-###Definition
+###Spec Definition
 FieldName | Required | Definition 
 ---:|---|:---
 rules | true | Contains a non-empty list of cascade rules.
@@ -30,11 +30,11 @@ rules | true | Contains a non-empty list of cascade rules.
 ###Rules Definition
 FieldName | Required | Definition 
 ---:|---|:---
-library | true | string value representing the library
+library | true | string value representing the library (see below)
 originalResponseCode | true | string representation of the response code from the connector
 cascade | true | boolean flag, true will cascade to another connector
 
-###Libraries:
+###Available Libraries:
 Library Name | Value to use 
 ---:|:---
 Sandbox | "sandbox"
