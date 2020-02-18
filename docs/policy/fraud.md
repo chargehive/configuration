@@ -1,5 +1,5 @@
 # Fraud Policy
-
+The fraud policy defines
 
 ## Format
 As with all configs, the standard wrapper is used.
@@ -26,7 +26,7 @@ FieldName | Required | Definition
 ---:|---|:---
 connectorIDs|true|List of fraud connector IDs to apply the policy to. These must be **fraud** connectors
 checkTime|true| Sets when to fraud check
-checkType|true|Sets how it works through the connectors
+checkType|true| Sets how it works through the connectors
 
 ### FraudCheckTime
 value | Definition 
