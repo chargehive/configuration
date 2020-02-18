@@ -12,8 +12,8 @@ As with all configs, the standard wrapper is used.
     "name": "braintree-connector" //Set this to a memorable name for the connector, no spaces, all lowercase
   },
   "spec": {
-    "Library": "braintree", //Set this to the name of the library you wish to use
-    "Configuration": "eyJQdWJsaWN..." //Set this to the Base64 Encoded configuration json as featured below
+    "library": "braintree", //Set this to the name of the library you wish to use
+    "configuration": "eyJQdWJsaWN..." //Set this to the Base64 Encoded configuration json as featured below
   }
 }
 ```
