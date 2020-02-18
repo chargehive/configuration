@@ -10,6 +10,8 @@ As with all configs, the standard wrapper is used.
     "projectId": "test-project",          // Must be set to the ChargeHive Project ID you were issued with
     "name": "test-slack-integration"      // Set this to a memorable name for the slack integration, no spaces, all lowercase
   },
+  "specVersion": "v1",                    // Must be set to the correct version
+  "selector": {},                         // May be used to apply this to a subset of charges
   "spec": {
     "accessToken": "xxxxxxxxxxx",         // AccessToken slack access token
     "scopes": [

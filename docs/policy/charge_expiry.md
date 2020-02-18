@@ -6,14 +6,16 @@ As with all configs, the standard wrapper is used.
 
 ```json5
 {
-  "kind": "PolicyChargeExpiry",               // Must be set to "PolicyChargeExpiry"
+  "kind": "PolicyChargeExpiry",     // Must be set to "PolicyChargeExpiry"
   "metadata": {
-    "projectId": "test-project",              // Must be set to the ChargeHive Project ID you were issued with
-    "name": "test-cascade-policy",            // Set this to a memorable name for the cascade policy, no spaces, all lowercase
+    "projectId": "test-project",    // Must be set to the ChargeHive Project ID you were issued with
+    "name": "test-cascade-policy",  // Set this to a memorable name for the cascade policy, no spaces, all lowercase
   },
+  "specVersion": "v1",              // Must be set to the correct version
+  "selector": {},                   // May be used to apply this to a subset of charges
   "spec": {
-    "timeout": 604800000000000,               // Length of time before charge expires 
-    "attempts": 10                            // Number of attempts before the charge expires
+    "timeout": 604800000000000,     // Length of time before charge expires 
+    "attempts": 10                  // Number of attempts before the charge expires
   }
 }
 ```
@@ -33,6 +35,8 @@ Example which limits charges to a maximum of 10 attempts or 1 week, whichever co
     "projectId": "test-project",
     "name": "test-cascade-policy",
   },
+  "specVersion": "v1",
+  "selector": {},
   "spec": {
     "timeout": 604800000000000, 
     "attempts": 10

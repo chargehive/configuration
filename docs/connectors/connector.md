@@ -6,14 +6,16 @@ The connector config defines the account and connection information to communica
 As with all configs, the standard wrapper is used.
 ```json5
 {
-  "kind": "Connector", //Must be set to "Connector"
+  "kind": "Connector",                // Must be set to "Connector"
   "metadata": {
-    "projectId": "test-project", //Must be set to the ChargeHive Project ID you were issued with
-    "name": "braintree-connector" //Set this to a memorable name for the connector, no spaces, all lowercase
+    "projectId": "test-project",      // Must be set to the ChargeHive Project ID you were issued with
+    "name": "braintree-connector"     // Set this to a memorable name for the connector, no spaces, all lowercase
   },
+  "specVersion": "v1",                // Must be set to the correct version
+  "selector": {},                     // May be used to apply this to a subset of charges
   "spec": {
-    "library": "braintree", //Set this to the name of the library you wish to use
-    "configuration": "eyJQdWJsaWN..." //Set this to the Base64 Encoded configuration json as featured below
+    "library": "braintree",           // Set this to the name of the library you wish to use
+    "configuration": "eyJQdWJsaWN..." // Set this to the Base64 Encoded configuration json as featured below
   }
 }
 ```
@@ -103,6 +105,8 @@ Here's an working example using the sandbox connector with the configuration set
     "projectId": "test-project",
     "name": "sandbox-connector"
   },
+  "specVersion": "v1",
+  "selector": {},
   "spec": {
     "Library": "sandbox",
     "Configuration": "eyJNb2RlIjoiZHluYW1pYyIsIlRyYW5zYWN0aW9uSURQcmVmaXgiOiIxMjM0In0="

@@ -11,6 +11,8 @@ As with all configs, the standard wrapper is used.
     "projectId": "test-project", // Must be set to the ChargeHive Project ID you were issued with
     "name": "test-method-lock"   // Set this to a memorable name for the method lock policy, no spaces, all lowercase
   },
+  "specVersion": "v1",           // Must be set to the correct version
+  "selector": {},                // May be used to apply this to a subset of charges
   "spec": {
     "duration": 300              // Duration to lock the payment method
   }
@@ -35,6 +37,7 @@ See the section on selectors for more information
     "projectId": "test-project",
     "name": "test-method-lock"
   },
+  "specVersion": "v1",
   "selector": {
     "priority": 50,
     "expressions": [

@@ -11,6 +11,8 @@ As with all configs, the standard wrapper is used.
     "projectId": "test-project",              // Must be set to the ChargeHive Project ID you were issued with
     "name": "test-pool-x",                    // Set this to a memorable name for the slack integration, no spaces, all lowercase
   },
+  "specVersion": "v1",                        // Must be set to the correct version
+  "selector": {},                             // May be used to apply this to a subset of charges
   "spec": {
     "restriction": "unrestricted",            // Can be set to: "unrestricted", "noRepeat" or "lowestUsage"
     "connectors": [                           // Connectors contains the list of connectors in the pool
@@ -48,6 +50,8 @@ Here is a working example to create a connector pool called `test-pool-x` which 
     "projectId": "test-project",              
     "name": "test-pool-x"                 
   },
+  "specVersion": "v1",
+  "selector": {},
   "spec": {
     "restriction": "unrestricted",            
     "connectors": [                           

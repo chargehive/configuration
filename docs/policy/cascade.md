@@ -5,11 +5,13 @@ The cascade policy defines whether or not a failed attempt will cascade to a dif
 As with all configs, the standard wrapper is used.
 ```json5
 {
-  "kind": "PolicyCascade",                    // Must be set to "PolicyCascade"
+  "kind": "PolicyCascade",                // Must be set to "PolicyCascade"
   "metadata": {
-    "projectId": "test-project",              // Must be set to the ChargeHive Project ID you were issued with
-    "name": "test-cascade-policy",            // Set this to a memorable name for the cascade policy, no spaces, all lowercase
+    "projectId": "test-project",          // Must be set to the ChargeHive Project ID you were issued with
+    "name": "test-cascade-policy",        // Set this to a memorable name for the cascade policy, no spaces, all lowercase
   },
+  "specVersion": "v1",                    // Must be set to the correct version
+  "selector": {},                         // May be used to apply this to a subset of charges
   "spec": {
     "rules": [                            // list of the cascade policy rules
       {
@@ -62,6 +64,8 @@ CyberSource | "cybersource"
     "projectId": "test-project",
     "name": "test-cascade-policy",
   },
+  "specVersion": "v1",
+  "selector": {},
   "spec": {
     "rules": [
       {
