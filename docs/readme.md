@@ -1,27 +1,25 @@
 # Intro
 Charge Hive is controlled though configuration files
 
-## Configuration Files
+## Configuration File Structure
 All configs used in ChargeHive follow the same wrapper pattern:
-
-```json
+```json5
 {
-  "kind": "KindOfConfig",
-  "metaData": {
-    "projectId": "",
-    "name": "",
-    "uuid": "",
-    "displayName": "",
-    "description": "",
-    "annotations": {
+  "kind": "KindOfConfig",      // [Required] Must be set to the kind of config as detailed in each config section below
+  "metaData": {                // Contains general info about this config
+    "projectId": "",           // [Required] Use the projectId you have been issued with from ChargeHive
+    "name": "",                // [Required] Unique name of this configuration (string, no spaces, all lowercase)
+    "displayName": "",         // Display name which will be shown in the front end
+    "description": "",         // Long description of the config item
+    "annotations": {           // Key value pairs for additional processing
       "key": "value"
     },
-    "labels": {
+    "labels": {                // Key value pairs for front end grouping
       "key": "value"
     }
   },
-  "specVersion": "",
-  "selector": {
+  "specVersion": "v1",         // [Required] Must specify an API version
+  "selector": {                // See the section below on selectors
     "priority": 0,
     "expressions": [
       {
@@ -35,10 +33,13 @@ All configs used in ChargeHive follow the same wrapper pattern:
       }
     ]
   },
-  "spec": {}
+  "spec": {}                   // Configuration details specific to the kind of config
 }
 ```
 
+## Configuration Selectors
+Selectors allow the config to only be applied to a subset of charges based on whether they match the set criteria.
+For more information see the [Selectors](selectors.md) section
 
 ## Configuration Types
 #### Connectors
