@@ -11,6 +11,7 @@ func GetHandlers() []object.KindHandler {
 	funcs = append(funcs, methodUpgradePolicy()...)
 	funcs = append(funcs, cascadePolicy()...)
 	funcs = append(funcs, methodLockPolicy()...)
+	funcs = append(funcs, methodVerifyPolicy()...)
 	return funcs
 }
 
@@ -59,5 +60,13 @@ func methodLockPolicy() []object.KindHandler {
 	return []object.KindHandler{
 		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &MethodLockPolicy{} }),
 		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &MethodLockPolicy{} }),
+	}
+}
+
+func methodVerifyPolicy() []object.KindHandler {
+	o := MethodVerifyPolicy{}
+	return []object.KindHandler{
+		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &MethodVerifyPolicy{} }),
+		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &MethodVerifyPolicy{} }),
 	}
 }
