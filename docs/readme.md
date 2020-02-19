@@ -54,6 +54,7 @@ All configs used in ChargeHive follow the same wrapper pattern:
 + [Fraud Policy](policy/fraud.md) defines how and when a charge is check for fraudulent characteristics 
 + [Method Lock Policy](policy/method_lock.md) defines how long to block a payment method in the event of a decline or failure
 + [Method Upgrade Policy](policy/method_upgrade.md) defines what modifications can be made to a payment method in order to complete a transaction 
++ [Method Verify Policy](policy/method_verify.md) defines how and when a card should be verified
 + [SCA (Secure Customer Authentication) Policy](policy/sca.md) defines PSD2 SCA policy for transactions
 
 #### Schedulers
