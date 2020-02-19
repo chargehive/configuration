@@ -106,7 +106,7 @@ CardinalTransactionURL | The Transaction URL obtained from your Cardinal integra
 CardinalAPIIdentifier | The Cardinal API Identifier obtained from the CardinalCommerce Integration Payments settings  
 CardinalAPIKey | The Cardinal API Key obtained from the CardinalCommerce Integration Payments settings  
 CardinalOrgUnitID | The Cardinal API OrgUnitID obtained from the CardinalCommerce Integration Payments settings  
-Environment | Either "sandbox" or "live"  
+Environment | Must be either "sandbox" or "live"  
   
 ### Paysafe  
 Library: `paysafe`  
@@ -173,13 +173,8 @@ To be confirmed
 
 ### Vindicia  
 Library: `vindicia`  
-```json
-{
-  
-}
-```
-FieldName | Definition  
----:|:---  
+
+To be confirmed
 
 ### WorldPay  
 Library: `worldpay` 
@@ -210,34 +205,37 @@ FieldName | Definition
 
 ### ChargeHive  
 Library: `chargehive`
-```json
-{
-  
-}
-```
-FieldName | Definition  
----:|:---    
+
+To be confirmed
 
 ### CyberSource  
 Library: `cybersource` 
 ```json
 {
-  
+ "MerchantID": "xxxxxxxxxxxx",
+ "TransactionKey": "xxxxxxxxxxxx",
+ "Environment": "test" 
 }
 ```
 FieldName | Definition  
 ---:|:---   
+MerchantID | The Merchant ID on your Cybersource Account
+TransactionKey | The Transaction Key generated in Cybersource on Payment Configuration -> Key Management
+Environment | Must be either "test" or "live" 
 
 ### MaxMind  
 Library: `maxmind` 
 ```json
 {
-  
+  "AccountID": "xxxxxxxxxxxx",
+  "LicenceKey": "xxxxxxxxxxxx"
 }
 ```
 FieldName | Definition  
 ---:|:---   
-
+AccountID | The Account Id found in your MaxMind account Services -> My Licence Key
+LicenceKey | The Licence Key from your MaxMind account under Services -> My Licence Key
+  
 ##Full Example
 Here's an working example using the sandbox connector with the configuration set to : `{"Mode":"dynamic","TransactionIDPrefix":"1234"}`
 ```json
