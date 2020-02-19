@@ -1,7 +1,7 @@
 # Charge Expiry Policy
 This policy defines how long a charge lasts until it expires
 
-##Format
+## Format
 As with all configs, the standard wrapper is used.
 
 ```json5
@@ -19,21 +19,20 @@ As with all configs, the standard wrapper is used.
   }
 }
 ```
-###Spec Definition
+## Spec Definition
 FieldName | Required | Definition 
 ---:|---|:---
 timeout | false | Int64 Number of nanoseconds before the charge expires. The representation limits the largest representable duration to approximately 290 years
 attempts | false | Int64 value representing the number of times to attempt a charge before expiring
 
-##Full Example
-
+## Full Example
 Example which limits charges to a maximum of 10 attempts or 1 week, whichever comes first.
 ```json
 {
   "kind": "PolicyChargeExpiry",
   "metadata": {
     "projectId": "test-project",
-    "name": "test-cascade-policy",
+    "name": "test-cascade-policy"
   },
   "specVersion": "v1",
   "selector": {},

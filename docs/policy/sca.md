@@ -6,7 +6,7 @@ As with all configs, the standard wrapper is used.
 
 ```json5
 {
-  "Kind": "PolicySCA",                  // Must be set to "PolicyMethodUpgrade"
+  "kind": "PolicySCA",                  // Must be set to "PolicyMethodUpgrade"
   "metadata": {
     "projectId": "test-project",        // Must be set to the ChargeHive Project ID you were issued with
     "name": "sca-policy"                // Set this to a memorable name for the method lock policy, no spaces, all lowercase
@@ -21,17 +21,17 @@ As with all configs, the standard wrapper is used.
   }
 }
 ```
-### Definition
+## Definition
 FieldName | Required | Default | Definition 
 ---:|---|---|:---
 shouldIdentify |false| false | Indicates if the identification stages should take place
 shouldChallengeOptional|false| false | Challenge based on an optional response from the connector (setting this to false will not display the challenge)
-shouldByPassChallenge|false| false | If the challenge is required, bypassing this will attempt an auth without displaying the challenge
+[shouldByPassChallenge](#shouldbypasschallenge-definition)|false| false | If the challenge is required, bypassing this will attempt an auth without displaying the challenge
 shouldChallenge3dSecureV1|false| false | Determines if the connector can fallback to 3DS v1 when 3DS v2 is not available
 shouldAuthOnError|false| false | If true and an error response is returned from the connector; proceed to auth anyway
 
 
-#### ShouldByPassChallenge Definition
+### ShouldByPassChallenge Definition
 Value | Description 
 ---:|:---
 "" | Indicates to not bypass a required challenge
@@ -42,7 +42,7 @@ Value | Description
 
 ```json
 {
-  "Kind": "PolicySCA",
+  "kind": "PolicySCA",
   "metadata": {
     "projectId": "test-project",
     "name": "sca-policy"

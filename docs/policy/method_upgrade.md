@@ -6,7 +6,7 @@ As with all configs, the standard wrapper is used.
 
 ```json5
 {
-  "Kind": "PolicyMethodUpgrade",    // Must be set to "PolicyMethodUpgrade"
+  "kind": "PolicyMethodUpgrade",    // Must be set to "PolicyMethodUpgrade"
   "metadata": {
     "projectId": "test-project",    // Must be set to the ChargeHive Project ID you were issued with
     "name": "test-method-lock"      // Set this to a memorable name for the method lock policy, no spaces, all lowercase
@@ -19,7 +19,7 @@ As with all configs, the standard wrapper is used.
 }
 
 ```
-### Definition
+## Definition
 FieldName | Required | Definition 
 ---:|---|:---
 extendExpiry|true| ExtendExpiry date on payment methods to the next likely expiry date
@@ -32,7 +32,7 @@ See the section on selectors for more information
 
 ```json
 {
-  "Kind": "PolicyMethodUpgrade",
+  "kind": "PolicyMethodUpgrade",
   "metadata": {
     "projectId": "test-project",
     "name": "test-method-upgrade"

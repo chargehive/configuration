@@ -1,7 +1,7 @@
-#Slack Integration
+# Slack Integration
 The Slack integration config defines the slack account and settings in order to get updates from ChargeHive to be sent to slack.
 
-##Format
+## Format
 As with all configs, the standard wrapper is used.
 ```json5
 {
@@ -24,9 +24,34 @@ As with all configs, the standard wrapper is used.
       "channel": "",                      // Channel is the slack channel to post in
       "configurationUrl": ""              // ConfigurationUrl is the slack endpoint for configuration
     },
-    "transactionNotifications": true,     // TransactionNotifications indicates the action to perform
+    "transactionNotifications": true     // TransactionNotifications indicates the action to perform
   }
 }
 ```   
 
-###Spec Definition
+## Full Example
+```json
+{
+  "kind": "Integration.Slack",
+  "metadata": {
+    "projectId": "test-project",
+    "name": "test-slack-integration"
+  },
+  "specVersion": "v1",
+  "selector": {},
+  "spec": {
+    "accessToken": "xxxxxxxxxxx",
+    "scopes": [
+      "xxxxxxxxxxx"
+    ],
+    "teamName": "xxxxxxxxxxx",
+    "teamID": "xxxxxxxxxxx",
+    "webhook": {
+      "url": "",
+      "channel": "",
+      "configurationUrl": ""
+    },
+    "transactionNotifications": true
+  }
+}
+```

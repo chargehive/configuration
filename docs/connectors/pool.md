@@ -1,7 +1,7 @@
 # Connector Pool
 The Slack integration config defines the slack account and settings in order to get updates from ChargeHive to be sent to slack.
 
-##Format
+## Format
 As with all configs, the standard wrapper is used.
 
 ```json5
@@ -26,13 +26,13 @@ As with all configs, the standard wrapper is used.
   }
 }
 ```
-###Spec Definition
+## Spec Definition
 FieldName | Required | Definition 
 ---:|---|:---
 restriction | false | "unrestricted" (Default) , "noRepeat" or "lowestUsage"
-connectors  | false | Non-empty list of the connectors in the pool
+[connectors](#connector-definition) | false | Non-empty list of the connectors in the pool
 
-####Connector definition
+### Connector definition
 FieldName | Required | Definition 
 ---:|---|:---
 connectorId | true | Identifier for a connector, must match a previously defined connector id
@@ -40,7 +40,7 @@ priority | false | Highest priority item has the lowest integer value (0 is the 
 weighting | false | Weighting is used to weigh items of the same priority, secondary to priority (0-1000)
 uses | false | Uses is the maximum times a connector can be used in a single charge
 
-##Full Example
+## Full Example
 Here is a working example to create a connector pool called `test-pool-x` which contains two connectors.
 
 ```json

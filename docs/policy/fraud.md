@@ -6,7 +6,7 @@ As with all configs, the standard wrapper is used.
 
 ```json5
 {
-  "Kind": "PolicyFraud",            // Must be set to "PolicyFraud"
+  "kind": "PolicyFraud",            // Must be set to "PolicyFraud"
   "metadata": {
     "projectId": "test-project",    // Must be set to the ChargeHive Project ID you were issued with
     "name": "ondemand-fraud"        // Set this to a memorable name for the fraud policy, no spaces, all lowercase
@@ -23,12 +23,12 @@ As with all configs, the standard wrapper is used.
 }
 ```
 
-### Definition
+### Spec Definition
 FieldName | Required | Definition 
 ---:|---|:---
 connectorIDs|true|List of fraud connector IDs to apply the policy to. These must be **fraud** connectors
-checkTime|true| Sets when to fraud check
-checkType|true| Sets how it works through the connectors
+[checkTime](#fraudchecktime)|true| Sets when to fraud check
+[checkType](#fraudchecktype)|true| Sets how it works through the connectors
 
 ### FraudCheckTime
 value | Definition 

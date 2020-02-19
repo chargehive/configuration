@@ -6,7 +6,7 @@ As with all configs, the standard wrapper is used.
 
 ```json5
 {
-  "Kind": "PolicyMethodLock",    // Must be set to "PolicyMethodLock"
+  "kind": "PolicyMethodLock",    // Must be set to "PolicyMethodLock"
   "metadata": {
     "projectId": "test-project", // Must be set to the ChargeHive Project ID you were issued with
     "name": "test-method-lock"   // Set this to a memorable name for the method lock policy, no spaces, all lowercase
@@ -19,7 +19,7 @@ As with all configs, the standard wrapper is used.
 }
 
 ```
-### Definition
+## Definition
 FieldName | Required | Definition 
 ---:|---|:---
 duration|true|Duration is the duration of time (in seconds) that a payment method should be locked for on application of this policy
@@ -32,7 +32,7 @@ See the section on selectors for more information
 
 ```json
 {
-  "Kind": "PolicyMethodLock",
+  "kind": "PolicyMethodLock",
   "metadata": {
     "projectId": "test-project",
     "name": "test-method-lock"

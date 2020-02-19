@@ -1,7 +1,7 @@
 # Cascade Policy
 The cascade policy defines whether or not a failed attempt will cascade to a different connector based on specific error response codes from that connector
 
-##Format
+## Format
 As with all configs, the standard wrapper is used.
 ```json5
 {
@@ -24,19 +24,19 @@ As with all configs, the standard wrapper is used.
 }
 ```
 
-###Spec Definition
+## Spec Definition
 FieldName | Required | Definition 
 ---:|---|:---
-rules | true | Contains a non-empty list of cascade rules.
+[rules](#rules-definition) | true | Contains a non-empty list of cascade rules.
 
-###Rules Definition
+### Rules Definition
 FieldName | Required | Definition 
 ---:|---|:---
-library | true | string value representing the library (see below)
+[library](#available-libraries) | true | string value representing the library (see below)
 originalResponseCode | true | string representation of the response code from the connector
 cascade | true | boolean flag, true will cascade to another connector
 
-###Available Libraries:
+### Available Libraries:
 Library Name | Value to use 
 ---:|:---
 Sandbox | "sandbox"
@@ -56,7 +56,7 @@ MaxMind | "maxmind"
 CyberSource | "cybersource"
 
 
-##Full Example
+## Full Example
 ```json5
 {
   "kind": "PolicyCascade",
