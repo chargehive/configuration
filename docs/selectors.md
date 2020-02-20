@@ -1,5 +1,11 @@
 # Configuration Selectors
 
+Selectors allow each config to be applied to a all (if the selector is empty), or a specific subset of charges based on whether or not they match the patterns 
+provided in the expressions section. 
+A selector has a `priority` which is used to select a config if there are multiple matches. Higher the priority, then the more
+likely that config will be selected. 
+A selector also has a list of one or more `expressions`. These allow the config to be applied to only those charges which match the expression patterns
+
 ```json
 {
   "priority": 0,
@@ -16,12 +22,6 @@
   ]
 }
 ```
-
-Selectors allow each config to be applied to a all (if the selector is empty), or a specific subset of charges based on whether or not they match the patterns 
-provided in the expressions section. 
-A selector has a `priority` which is used to select a config if there are multiple matches. Higher the priority, then the more
-likely that config will be selected. 
-A selector also has a list of one or more `expressions`. These allow the config to be applied to only those charges which match the expression patterns
 
 ## Expression Definition
 FieldName | Required | Definition 
@@ -43,7 +43,7 @@ Assemble Keys | Definition
 "charge.label"|
 "charge.currentTransactionNumber"|
 "charge.currentAttemptNumber"|
-"charge.renewalNumber"|
+"charge.renewalNumber"| (int) Number of renewals this charge has completed.
 "charge.initiatedTime"|
 "charge.lastAttemptTime"|
 "charge.scheduleAttempts"|
@@ -54,7 +54,7 @@ Assemble Keys | Definition
 "charge.region"|
 "charge.period"|
 
-Assemble Keys | Definition 
+Charge Definition Keys | Definition 
 ---:|:---
 "charge.intent"|
 "charge.contract"|

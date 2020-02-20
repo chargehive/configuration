@@ -93,6 +93,35 @@ You can use the `.chive.yaml` config by any of these methods:
 Once this is done, you should run `chive health` to check that your credentials are correct.
 If you receive an error, please get in contact for support.
 
+Options for the `chive` command are as follows:
+```
+❯ chive --help
+chive allows communication with the Charge Hive API via CLI
+
+Usage:
+  chive [command]
+
+Available Commands:
+  apply       Apply a configuration file
+  backup      Backup current project configurations
+  delete      Delete a specific configuration
+  get         Get a configuration
+  health      Check your project and access token details are correct
+  help        Help about any command
+  list        List stored configurations
+  verify      Verify a configuration
+
+Flags:
+      --access-token string   Access Token
+      --api-host string       API Host
+      --config-file string    configuration file (default is $HOME/.chive.yaml)
+  -h, --help                  help for chive
+      --project-id string     project ID
+
+Use "chive [command] --help" for more information about a command.
+```
+
+
 ### Creating a new configuration
 Once you're happy with the configuration you have created, run the following command to apply it:
 ```
@@ -100,6 +129,9 @@ chive apply ./path/to/config.json
 ```
 
 ### Retrieving an existing configuration
+
+
+
 ### Updating an existing configuration
 ### Deleting an existing configuration
 
