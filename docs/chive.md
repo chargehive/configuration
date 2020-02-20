@@ -59,7 +59,7 @@ Use "chive [command] --help" for more information about a command.
 
 ## Usage
 
-#### Apply a file or directory of configuration files to your project.
+### Apply a file or directory of configuration files to your project.
 ```
 Usage:
   chive apply -f <file> [flags]
@@ -69,37 +69,122 @@ Flags:
   -f, --file strings   config-file.json file location
   -h, --help           help for apply
   -R, --recursive      process sub directories (when using -d)
+
+Global Flags:
+      --access-token string   Access Token
+      --api-host string       API Host
+      --config-file string    configuration file (default is $HOME/.chive.yaml)
+      --project-id string     project ID
 ```
-#### Backup all your stored chargehive configuration files
+Examples:
+* Apply a single configuration file: `chive apply -f ./path/to/config.json`
+* Apply all files in a directory: `chive apply -d ./path/to/directory/`
+* Apply add files in a directory and subdirectories: `chive apply -dR ./path/to/directory/`
+
+### Backup all your stored ChargeHive configuration files
 ```
 Usage:
   chive backup <kind> [flags]
+
+Flags:
+  -h, --help   help for backup
+
+Global Flags:
+      --access-token string   Access Token
+      --api-host string       API Host
+      --config-file string    configuration file (default is $HOME/.chive.yaml)
+      --project-id string     project ID
 ```
-#### Delete a configuration based on its configuration kind and ID
+Examples:
+* Backup all configs: `chive backup`
+* Backup only PolicyChargeExpiry configs: `chive backup PolicyChargeExpiry`
+
+### Delete a configuration based on its configuration kind and ID
 ```
 Usage:
   chive delete <kind> <id> [flags]
+
+Flags:
+  -h, --help   help for delete
+
+Global Flags:
+      --access-token string   Access Token
+      --api-host string       API Host
+      --config-file string    configuration file (default is $HOME/.chive.yaml)
+      --project-id string     project ID
 ```
-#### Retrieve a specific ChargeHive configuration JSON file
+Examples:
+* Delete a PolicyChargeExpiry config called "my-config": `chive delete PolicyChargeExpiry my-config`
+N.B. you cannot delete more than one config at a time.
+
+### Retrieve a specific ChargeHive configuration JSON file
 ```
 Usage:
   chive get <kind> <id> [flags]
-```
 
-#### Connect to the ChargeHive API, and verify your credentials
+Flags:
+  -h, --help   help for get
+
+Global Flags:
+      --access-token string   Access Token
+      --api-host string       API Host
+      --config-file string    configuration file (default is $HOME/.chive.yaml)
+      --project-id string     project ID
+```
+Examples:
+* Retrieve a PolicyChargeExpiry config called "my-config": `chive get PolicyChargeExpiry my-config`
+
+### Connect to the ChargeHive API, and verify your credentials
 ```   
 Usage:
      chive health [flags]
+   
+   Flags:
+     -h, --help   help for health
+   
+   Global Flags:
+         --access-token string   Access Token
+         --api-host string       API Host
+         --config-file string    configuration file (default is $HOME/.chive.yaml)
+         --project-id string     project ID
 ```
+Examples:
+* Check that the connection and credentials are working: `chive health`
 
-#### List all your stored ChargeHive configuration files
+
+### List all your stored ChargeHive configuration files
 ```
 Usage:
   chive list <kind> [flags]
-```
 
-#### Verify a configuration
+Flags:
+  -h, --help   help for list
+
+Global Flags:
+      --access-token string   Access Token
+      --api-host string       API Host
+      --config-file string    configuration file (default is $HOME/.chive.yaml)
+      --project-id string     project ID
+```
+Examples:
+* List all configs: `chive list`
+* List all PolicyChargeExpiry configs: `chive list PolicyChargeExpiry`
+
+### Verify a configuration
 ```
 Usage:
   chive verify <kind> <id> [flags]
+
+Flags:
+  -h, --help   help for verify
+
+Global Flags:
+      --access-token string   Access Token
+      --api-host string       API Host
+      --config-file string    configuration file (default is $HOME/.chive.yaml)
+      --project-id string     project ID
 ```
+Examples:
+* Send a test webhook: `chive verify`
+* Verify that a Connector called my-connector works: `chive verify Connector my-connector`
+  N.B. Only connectors can be verified!
