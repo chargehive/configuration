@@ -14,6 +14,9 @@ const KindPolicyMethodLock object.Kind = "PolicyMethodLock"
 type MethodLockPolicy struct {
 	// Duration is the duration of time (in seconds) that a payment method should be locked for on application of this policy
 	Duration int64
+
+	// Reason is a description of why a card locked due to this poilicy was locked.
+	Reason string
 }
 
 // GetKind returns the MethodLockPolicy kind
