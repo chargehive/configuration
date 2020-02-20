@@ -1,8 +1,9 @@
-# Intro
-Charge Hive is controlled though configuration files
+# ChargeHive Configuration
+Charge Hive is controlled though configuration files which are applied using the `chive` tool. 
+Configurations can be saved, updated, loaded and deleted using the tool.
 
 ## Configuration File Structure
-All configs used in ChargeHive follow the same wrapper pattern:
+All configurations used in ChargeHive follow the same wrapper pattern:
 ```json5
 {
   "kind": "KindOfConfig",      // [Required] Must be set to the kind of config as detailed in each config section below
@@ -67,10 +68,39 @@ For more information see the [Selectors](selectors.md) section
 
 ## Handling Configurations
 
-#### Using Chive - the configuration tool
-#### Creating a new configuration
-#### Retrieving an existing configuration
-#### Updating an existing configuration
-#### Deleting an existing configuration
+### Installing `chive` - the configuration tool
+
+You should have received an access token from ChargeHive, then you'll need to download the tool:
++ [Windows](https://cdn.chargehive.com/tools/chive/dist/windows/chive.exe)
++ [Mac](https://cdn.chargehive.com/tools/chive/dist/mac/chive)
+
+To use the `chive` tool, you can either call it directly with your credentials:
+```
+chive --project-id="your-project-id" --access-token="your-access-token"
+```
+
+Or you can create a credentials file `.chive.yaml` with the following structure:
+```yaml
+projectID: your-project-id
+accessToken: your-access-token
+```
+
+You can use the `.chive.yaml` config by any of these methods:
+- storing it in the same directory as the `chive` executable
+- storing it in the `$HOME` directory
+- set where `chive` looks for the file: `chive --config-file="/path/to/your/config/.chive.yaml` and put it there
+
+Once this is done, you should run `chive health` to check that your credentials are correct.
+If you receive an error, please get in contact for support.
+
+### Creating a new configuration
+Once you're happy with the configuration you have created, run the following command to apply it:
+```
+chive apply ./path/to/config.json
+```
+
+### Retrieving an existing configuration
+### Updating an existing configuration
+### Deleting an existing configuration
 
 
