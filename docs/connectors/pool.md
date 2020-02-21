@@ -1,5 +1,5 @@
 # Connector Pool
-The Slack integration config defines the slack account and settings in order to get updates from ChargeHive to be sent to slack.
+The Connector Pool is used when processing a transaction and contains a number of Connectors. When a pool is selected to process a transaction, each connector in that pool will be attempted according to the pool configuration.
 
 ## Format
 As with all configs, the standard wrapper is used.
@@ -9,7 +9,7 @@ As with all configs, the standard wrapper is used.
   "kind": "ConnectorPool",                    // Must be set to "ConnectorPool"
   "metadata": {
     "projectId": "test-project",              // Must be set to the ChargeHive Project ID you were issued with
-    "name": "test-pool-x",                    // Set this to a memorable name for the slack integration, no spaces, all lowercase
+    "name": "test-pool-x",                    // Set this to a memorable name for the pool typically giving an indicator of the charges that will be attempted by this pool, no spaces, all lowercase
   },
   "specVersion": "v1",                        // Must be set to the correct version
   "selector": {},                             // May be used to apply this to a subset of charges

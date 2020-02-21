@@ -1,10 +1,13 @@
 # Configuration Selectors
 
-Selectors allow each config to be applied to a all (if the selector is empty), or a specific subset of charges based on whether or not they match the patterns 
+Selectors allow each config to be applied to all (if the selector is empty), or a specific subset of charges based on whether or not they match the filters 
 provided in the expressions section. 
-A selector has a `priority` which is used to select a config if there are multiple matches. Higher the priority, then the more
-likely that config will be selected. 
-A selector also has a list of one or more `expressions`. These allow the config to be applied to only those charges which match the expression patterns
+A Selector has a `priority` which is used to determine a config to use if there are multiple matches. The higher the priority, then the more
+likely that config will be used. 
+A Selector also has a list of one or more `expressions`. These act as filters and ensure the config will only be applied to charges which match the expression filters.
+
+Every config can optionally have selectors. For example a Connector Pool might have Selector Expressions to ensure it is only used if the Charge Currency is USD and the Charge amount is greater than $50.00.
+Connectors within that pool would not need a selector as the Connector Pool has already filtered the Charges for those Connectors.
 
 ```json
 {

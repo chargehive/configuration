@@ -1,4 +1,4 @@
-# Initiator Scheduler
+# Initiator
 
 
 ## Format

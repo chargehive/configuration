@@ -37,15 +37,47 @@ All configurations used in ChargeHive follow the same wrapper pattern:
   "spec": {}                   // Configuration details specific to the kind of config
 }
 ```
+# ChargeHive Operation Overview
+ChargeHive operates by an Initiator or Scheduler attempting a Charge.
+Each Initiator or Scheduler will have an Attempt Config defined within it which will determine the Connector or Connector Pool that will be used for this Charge. 
+
+This Attempt Config has an 'overridePoolConnectorIds' property. 
+If this is set the Attempt Config will return the specific Connectors set in this property.
+If this is not set the Attempt Config will determine a Connector Pool to use based on the Selector Properties on Connector Pools matching the Properties on the Charge. 
+
+ChargeHive will attempt the Charge through the Connectors specifically defined or defined within the selected Connector Pool.
+
+Configuration settings on the Attempt Config, Connector Pool and Connector will determine which Payment Methods to attempt, whether to Cascade to other Connectors, how many times to attempt the Charge on each Connector etc.
+
+Policies setup within Chargehive control what happens to charges throughout the charging process, for instance Fraud checking, Locking Payment Methods, when to stop attempting the Charge etc.
+
+# Getting started on ChargeHive
+* To get started on ChargeHive first create at least one Connector for a Payment Processor (WorldPay, Stripe etc).
+You can create a Connector for each Merchant Account you have with each Payment Processor.
+
+* Next create Connector Pools which contain some or all of these Connectors, for instance putting all Connectors of one Currency in a Connector Pool for that Currency.
+Set the Selector on each Connector Pool to ensure it will only be selected for the Attempt Config if the Charge matches those filters (for instance Currency = USD).
+If you are creating multiple Connector Pools for similar criteria ensure you set the Priority in the Selector as well (with the lowest priority being selected first).
+
+* Finally create an Attempt Config within an Initiator, setting this to use a Connector Pool or specific Connector or Connectors.
+
+At this point any Charges sent through to ChargeHive will run through the Initiator and process based on the Attempt Config, select the Connectors to attempt the Charge.  
 
 ## Configuration Selectors
-Selectors allow the config to only be applied to a subset of charges based on whether they match the set criteria.
+Selectors are optional configurations at the heart of all ChargeHive objects. A priority value is available for pushing objects higher in the list. They provide a list of rules to match against a charge.
 For more information see the [Selectors](selectors.md) section
 
 ## Configuration Types
+
+#### Schedulers
++ [Initiator Scheduler](initiator.md) defines the first scheduler on a charge
++ [On Demand Scheduler](scheduler/on_demand.md) defines schedules for arbitrary billing requests like always charge days
++ [Refund Scheduler](scheduler/refund.md) defines the schedule of retrying refunds and the maximum number of attempts
++ [Sequential Scheduler](scheduler/sequential.md) defines which connectors to attempt, in what order when processing a charge - usually used for Renewal charges.
+
 #### Connectors
-+ [Connector](connectors/connector.md) is an external api services like payment gateways or fraud services
-+ [ConnectorPool](connectors/pool.md) is a pool of connectors ... 
++ [Connector](connectors/connector.md) is an external api service like payment gateways or fraud services
++ [ConnectorPool](connectors/pool.md) is a pool of connectors that can be used in an Attempt Config 
 
 #### Integration
 + [Slack](integration/slack.md) is an integration with the slack messaging service for service/event notifications
@@ -58,13 +90,6 @@ For more information see the [Selectors](selectors.md) section
 + [Method Upgrade Policy](policy/method_upgrade.md) defines what modifications can be made to a payment method in order to complete a transaction 
 + [Method Verify Policy](policy/method_verify.md) defines how and when a card should be verified
 + [SCA (Secure Customer Authentication) Policy](policy/sca.md) defines PSD2 SCA policy for transactions
-
-#### Schedulers
-+ [Initiator Scheduler](initiator.md) defines the first scheduler on a charge
-+ [On Demand Scheduler](scheduler/on_demand.md) defines schedules for arbitrary billing requests like golden days
-+ [Refund Scheduler](scheduler/refund.md) defines refund retries at max attempts
-+ [Sequential Scheduler](scheduler/sequential.md) defines which connectors to attempt, in what order when processing a charge
-
 
 ## Applying Configuration files
 The json config files are applied to your project by using the ChargeHive command line tool "`chive`"
