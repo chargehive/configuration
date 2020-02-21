@@ -198,10 +198,10 @@ Value | Definition
 ---:|:---
 "Equal"|Match if the key is exactly the same as first value
 "NotEqual"|Match if the key is anything but the first value
-"In"|Match if key is in the list of values
-"NotIn"|Match if the key is not in the list of values
-"Exists"|Match if the key is non empty
-"DoesNotExists"|Match if the key is empty
+"In"|Match if key is in the list of values (should only be used when there are multiple values)
+"NotIn"|Match if the key is not in the list of values (should only be used when there are multiple values)
+"Exists"|Match if the key is an array, and the value is in that array 
+"DoesNotExists"|Match if the key is an array, and the value is not in that array
 "Gt"|Match if the key is greater than the value (only works if the key and value are numeric)
 "Lt"|Match if the key is less than the value (only works if the key and value are numeric)
 

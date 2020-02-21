@@ -60,7 +60,7 @@ For more information see the [Selectors](selectors.md) section
 + [SCA (Secure Customer Authentication) Policy](policy/sca.md) defines PSD2 SCA policy for transactions
 
 #### Schedulers
-+ [Initiator Scheduler](scheduler/initiator.md) defines the first scheduler on a charge
++ [Initiator Scheduler](initiator.md) defines the first scheduler on a charge
 + [On Demand Scheduler](scheduler/on_demand.md) defines schedules for arbitrary billing requests like golden days
 + [Refund Scheduler](scheduler/refund.md) defines refund retries at max attempts
 + [Sequential Scheduler](scheduler/sequential.md) defines which connectors to attempt, in what order when processing a charge
