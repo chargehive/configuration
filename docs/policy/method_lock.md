@@ -14,7 +14,8 @@ As with all configs, the standard wrapper is used.
   "specVersion": "v1",           // Must be set to the correct version
   "selector": {},                // May be used to apply this to a subset of charges
   "spec": {
-    "duration": 300              // Duration to lock the payment method
+    "duration": 300,             // Duration to lock the payment method
+    "reason": "Description"      // Definition of why the payment was locked
   }
 }
 
@@ -23,7 +24,7 @@ As with all configs, the standard wrapper is used.
 FieldName | Required | Definition 
 ---:|---|:---
 duration|true|Duration is the duration of time (in seconds) that a payment method should be locked for on application of this policy
-
+reason|false|Description of why the payment method was locked at this time.
 
 ## Full Example
 
@@ -51,7 +52,8 @@ See the section on selectors for more information
     ]
   },
   "spec": {
-    "Duration": 300
+    "duration": 300,
+    "reason": "No available funds on last attempt"
   }
 }
 ```
