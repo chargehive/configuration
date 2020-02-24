@@ -115,7 +115,8 @@ Global Flags:
 ```
 Examples:
 * Delete a PolicyChargeExpiry config called "my-config": `chive delete PolicyChargeExpiry my-config`
-N.B. you cannot delete more than one config at a time.
+
+Please note you cannot delete more than one config at a time.
 
 ### Retrieve a specific ChargeHive configuration JSON file
 ```
@@ -170,7 +171,7 @@ Examples:
 * List all configs: `chive list`
 * List all PolicyChargeExpiry configs: `chive list PolicyChargeExpiry`
 
-### Verify a configuration
+### Verify a Connector configuration
 ```
 Usage:
   chive verify <kind> <id> [flags]
@@ -187,4 +188,5 @@ Global Flags:
 Examples:
 * Send a test webhook: `chive verify`
 * Verify that a Connector called my-connector works: `chive verify Connector my-connector`
-  N.B. Only connectors can be verified!
+
+  Please note only **connectors** can be verified

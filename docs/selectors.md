@@ -1,13 +1,15 @@
 # Configuration Selectors
 
-Selectors allow each config to be applied to all (if the selector is empty), or a specific subset of charges based on whether or not they match the filters 
+Selectors are optional configurations that can be defined against all objects in ChargeHive and allow setting a series of Rules that much match against charge.
+
+Selectors allow each config to be applied to all (if the selector is empty), or a specific subset of charges based on whether or not they match the Rules 
 provided in the expressions section. 
+
 A Selector has a `priority` which is used to determine a config to use if there are multiple matches. The higher the priority, then the more
 likely that config will be used. 
-A Selector also has a list of one or more `expressions`. These act as filters and ensure the config will only be applied to charges which match the expression filters.
+A Selector also has a list of one or more `expressions`. These act as rules and ensure the config will only be applied to charges which match the expression rules.
 
-Every config can optionally have selectors. For example a Connector Pool might have Selector Expressions to ensure it is only used if the Charge Currency is USD and the Charge amount is greater than $50.00.
-Connectors within that pool would not need a selector as the Connector Pool has already filtered the Charges for those Connectors.
+If two or more configurations have Selector Rules in the expressions section which are matched to the Charge, the most specific Configuration will be selected (the one with the most Rules defined which match the charge).
 
 ```json
 {

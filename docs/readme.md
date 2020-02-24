@@ -41,15 +41,19 @@ All configurations used in ChargeHive follow the same wrapper pattern:
 ChargeHive operates by an Initiator or Scheduler attempting a Charge.
 Each Initiator or Scheduler will have an Attempt Config defined within it which will determine the Connector or Connector Pool that will be used for this Charge. 
 
-This Attempt Config has an 'overridePoolConnectorIds' property. 
+This Attempt Config has an `overridePoolConnectorIds` property. 
 If this is set the Attempt Config will return the specific Connectors set in this property.
 If this is not set the Attempt Config will determine a Connector Pool to use based on the Selector Properties on Connector Pools matching the Properties on the Charge. 
 
-ChargeHive will attempt the Charge through the Connectors specifically defined or defined within the selected Connector Pool.
+ChargeHive will attempt the Charge through the Connectors specifically defined in the Attempt Config, or work through the Connectors within the defined Connector Pool.
 
 Configuration settings on the Attempt Config, Connector Pool and Connector will determine which Payment Methods to attempt, whether to Cascade to other Connectors, how many times to attempt the Charge on each Connector etc.
 
 Policies setup within Chargehive control what happens to charges throughout the charging process, for instance Fraud checking, Locking Payment Methods, when to stop attempting the Charge etc.
+
+# Applying Configuration files
+The json config files are applied to your project by using the ChargeHive command line tool "`chive`"
+For further information about how this is done, see the [chive](chive.md) documentation page.
 
 # Getting started on ChargeHive
 * To get started on ChargeHive first create at least one Connector for a Payment Processor (WorldPay, Stripe etc).
@@ -65,9 +69,10 @@ At this point any Charges sent through to ChargeHive will run through the Initia
 
 ## Configuration Selectors
 Selectors are optional configurations at the heart of all ChargeHive objects. A priority value is available for pushing objects higher in the list. They provide a list of rules to match against a charge.
-For more information see the [Selectors](selectors.md) section
+For more information see the [Selectors](selectors.md) section.
 
 ## Configuration Types
+As all objects in ChargeHive use the same wrapper pattern, the `Kind` property is used to define what type of Configuration you are setting up. Below each Type of configuration is defined, and each will have a different Kind value to defined them.
 
 #### Schedulers
 + [Initiator Scheduler](initiator.md) defines the first scheduler on a charge
@@ -90,7 +95,3 @@ For more information see the [Selectors](selectors.md) section
 + [Method Upgrade Policy](policy/method_upgrade.md) defines what modifications can be made to a payment method in order to complete a transaction 
 + [Method Verify Policy](policy/method_verify.md) defines how and when a card should be verified
 + [SCA (Secure Customer Authentication) Policy](policy/sca.md) defines PSD2 SCA policy for transactions
-
-## Applying Configuration files
-The json config files are applied to your project by using the ChargeHive command line tool "`chive`"
-For further information about how this is done, see the [chive](chive.md) documentation page.

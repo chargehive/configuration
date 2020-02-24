@@ -1,6 +1,6 @@
 # Connector Config  
   
-The connector config defines the account and connection information to communicate with external payment gateways and fraud checking services  
+The connector config defines the account and connection information to communicate with external payment gateways and fraud checking services.  
   
 ## Format  
 As with all configs, the standard wrapper is used.  
@@ -18,10 +18,15 @@ As with all configs, the standard wrapper is used.
 ```  
   
 ## Payment Libraries  
-Below is a list of the configuration options for each of the connectors for the payments gateways and fraud services.  
-The library configuration json needs to be Base64 encoded and inserted into the `Configuration` property of the library as a string  
+To create a Payment Provider Connector you need to define the `spec` properties in the config of the Connector.
+* The `Library` property needs to be set to the Library value defined below for the Payment Processor you are setting up.
+* The `Configuration` property must have the library configuration json as defined below Base64 encoded and inserted as a string.
+
+Below is a list of the configuration options for each of the connectors for the payments gateways and fraud services. 
+ 
 ### Authorize.net
 Library: `authorize`  
+Configuration:
 ```json  
 {  
   "APILoginID": "xxxxxxxxxxxx",  
@@ -37,6 +42,7 @@ Environment | Must be either "sandbox" or "production"
   
 ### Braintree  
 Library: `braintree`  
+Configuration:
 ```json  
 {  
   "PublicKey": "xxxxxxxxxxxx",  
@@ -56,6 +62,7 @@ Environment | Must be either "sandbox" or "production"
   
 ### Paypal - Express Checkout  
 Library: `paypal-expresscheckout`  
+Configuration:
 ```json  
 {  
   "APIUsername": "xxxxxxxxxxxx",  
@@ -75,6 +82,7 @@ Environment | Must be either "sandbox" or "live"
   
 ### Paypal - Website Payments Pro  
 Library: `paypal-websitepaymentspro`  
+Configuration:
 ```json  
 {  
   "APIUsername": "xxxxxxxxxxxx",  
@@ -110,6 +118,7 @@ Environment | Must be either "sandbox" or "live"
   
 ### Paysafe  
 Library: `paysafe`  
+Configuration:
 ```json
 {
   "Acquirer":"xxxxxxxxxxxx",  
@@ -138,7 +147,8 @@ SingleUseTokenPassword | The Single Use Token Password in your account settings 
 SingleUseTokenUsername | The Single Use Token Username in your account settings API page
 
 ### QualPay  
-Library: `qualpay` 
+Library: `qualpay`  
+Configuration:
 ```json
 {
   "APIKey" : "xxxxxxxxxxxx",  
@@ -154,6 +164,7 @@ Environment | Must be "test" or "live"
 
 ### SandBox  
 Library: `sandbox`  
+Configuration:
 ```json  
 {  
   "Mode": "dynamic",  
@@ -167,17 +178,17 @@ TransactionIDPrefix | Prepends transactions with this prefix
   
 ### Stripe  
 Library: `stripe`  
-
+Configuration:
 To be confirmed
-
 
 ### Vindicia  
 Library: `vindicia`  
-
+Configuration:
 To be confirmed
 
 ### WorldPay  
-Library: `worldpay` 
+Library: `worldpay`  
+Configuration:
 ```json
 {
   "Username": "xxxxxxxxxxxx",
@@ -204,12 +215,13 @@ FieldName | Definition
 ## Fraud Libraries  
 
 ### ChargeHive  
-Library: `chargehive`
-
+Library: `chargehive`  
+Configuration:
 To be confirmed
 
 ### CyberSource  
-Library: `cybersource` 
+Library: `cybersource`  
+Configuration:
 ```json
 {
  "MerchantID": "xxxxxxxxxxxx",
@@ -224,7 +236,8 @@ TransactionKey | The Transaction Key generated in Cybersource on Payment Configu
 Environment | Must be either "test" or "live" 
 
 ### MaxMind  
-Library: `maxmind` 
+Library: `maxmind`  
+Configuration:
 ```json
 {
   "AccountID": "xxxxxxxxxxxx",
@@ -235,9 +248,9 @@ FieldName | Definition
 ---:|:---   
 AccountID | The Account Id found in your MaxMind account Services -> My Licence Key
 LicenceKey | The Licence Key from your MaxMind account under Services -> My Licence Key
-  
-##Full Example
-Here's an working example using the sandbox connector with the configuration set to : `{"Mode":"dynamic","TransactionIDPrefix":"1234"}`
+
+## Full Example
+This is a working example using the sandbox connector with the base 64 encoded configuration set to : `{"Mode":"dynamic","TransactionIDPrefix":"1234"}`
 ```json
 {
   "kind": "Connector",
