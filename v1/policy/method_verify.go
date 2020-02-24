@@ -24,6 +24,10 @@ type MethodVerifyPolicy struct {
 	// This is the currency code for the specified amount i.e GBP
 	// [Required]
 	AmountCurrency string
+
+	// This is the ID of the connector that is used to verify payment methods
+	// [Required]
+	ConnectorID string
 }
 
 // GetKind returns the MethodVerifyPolicy kind
