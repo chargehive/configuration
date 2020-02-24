@@ -17,7 +17,8 @@ As with all configs, the standard wrapper is used.
   "spec": {
     "verifyMethodOnTokenization": true,  // Verify at the same time as verify
     "amount": 1999,                      // Amount to auth and void if verify not available
-    "amountCurrency": "USD"              // Currency to auth with
+    "amountCurrency": "USD",             // Currency to auth with
+    "connectorID": "conn1"               // ID of the connector to validate against
   }
 }
 
@@ -28,6 +29,7 @@ FieldName | Required | Definition
 verifyMethodOnTokenization|false|If true the payment method will be verified at the same time it is tokenized
 amount|true|Amount is a monetary value integer that will be authorized on a card to verify its ability to make payments this should be an amount in the currencies smallest denomination i.e a value of 44 would equate to 0.44 GBP
 amountCurrency|true|This is the currency code for the specified amount i.e GBP
+connectorId|true|This is the ID of the connector that is used to verify payment methods
 
 ## Full Example
 
@@ -43,7 +45,8 @@ amountCurrency|true|This is the currency code for the specified amount i.e GBP
   "spec": {
     "verifyMethodOnTokenization": true,
     "amount": 1999,
-    "amountCurrency": "USD"
+    "amountCurrency": "USD",
+    "connectorId": "conn1"
   }
 }
 ```
