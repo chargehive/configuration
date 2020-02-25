@@ -12,13 +12,13 @@ const KindInitiator object.Kind = "Initiator"
 // Initiator is a config that specifies actions for an initial transaction
 type Initiator struct {
 	// Type indicates the type of this initiator
-	Type InitiatorType
+	Type InitiatorType `json:"type" yaml:"type"`
 
 	// InitialConnector is the selection method for the initial selector (only used on renewal)
-	InitialConnector ConnectorSelector
+	InitialConnector ConnectorSelector `json:"initialConnector" yaml:"initialConnector"`
 
 	// AttemptConfig to be used when ConnectorSelectorConfig is set as InitialConnector
-	AttemptConfig *AttemptConfig
+	AttemptConfig *AttemptConfig `json:"attemptConfig:" yaml:"attemptConfig"`
 }
 
 // GetKind returns the Initiator kind

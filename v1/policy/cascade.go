@@ -11,21 +11,21 @@ import (
 // KindPolicyCascade is the identifier for a PolicyCascade config
 const KindPolicyCascade object.Kind = "PolicyCascade"
 
-// CascadePolicy is a collection of rules for connector casscading
+// CascadePolicy is a collection of rules for connector cascading
 type CascadePolicy struct {
-	Rules []CascadeRule
+	Rules []CascadeRule `json:"rules" yaml:"rules"`
 }
 
 // CascadeRule is a single cascade rule (all fields are required)
 type CascadeRule struct {
 	// Library designates the library that this cascade rule is applied to
-	Library connectorconfig.Library
+	Library connectorconfig.Library `json:"library,omitempty" yaml:"library,omitempty"`
 
 	// OriginalResponseCode is the raw error code returned by the library to be matched
-	OriginalResponseCode string
+	OriginalResponseCode string `json:"originalResponseCode,omitempty" yaml:"originalResponseCode,omitempty"`
 
 	// Cascade determines if this rule results in a cascade or not
-	Cascade bool
+	Cascade bool `json:"cascade,omitempty" yaml:"cascade,omitempty"`
 }
 
 // GetKind returns the CascadePolicy Kind
@@ -37,7 +37,7 @@ func (CascadePolicy) GetVersion() string { return "v1" }
 // CascadePolicyDefinition is the CascadePolicy config object definition
 type CascadePolicyDefinition struct{ def *object.Definition }
 
-// NewCascadePolicyDefinition creares a new CascadePolicyDefinition
+// NewCascadePolicyDefinition creates a new CascadePolicyDefinition
 func NewCascadePolicyDefinition(d *object.Definition) (*CascadePolicyDefinition, error) {
 	if _, ok := d.Spec.(*CascadePolicy); ok {
 		return &CascadePolicyDefinition{def: d}, nil

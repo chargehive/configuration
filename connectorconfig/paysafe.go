@@ -23,16 +23,16 @@ const (
 )
 
 type PaySafeCredentials struct {
-	Acquirer               string
-	AccountID              string
-	APIUsername            *string
-	APIPassword            *string
-	Environment            PaySafeEnvironment
-	Country                string
-	Currency               string
-	UseVault               bool
-	SingleUseTokenPassword *string
-	SingleUseTokenUsername string
+	Acquirer               string             `json:"acquirer" yaml:"acquirer"`
+	AccountID              string             `json:"accountID" yaml:"accountID"`
+	APIUsername            *string            `json:"apiUsername" yaml:"apiUsername"`
+	APIPassword            *string            `json:"apiPassword" yaml:"apiPassword"`
+	Environment            PaySafeEnvironment `json:"environment" yaml:"environment"`
+	Country                string             `json:"country" yaml:"country"`
+	Currency               string             `json:"currency" yaml:"currency"`
+	UseVault               bool               `json:"useVault" yaml:"useVault"`
+	SingleUseTokenPassword *string            `json:"singleUseTokenPassword" yaml:"singleUseTokenPassword"`
+	SingleUseTokenUsername string             `json:"singleUseTokenUsername" yaml:"singleUseTokenUsername"`
 }
 
 func (c PaySafeCredentials) GetLibrary() Library {

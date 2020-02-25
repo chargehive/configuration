@@ -14,12 +14,12 @@ const (
 )
 
 type BraintreeCredentials struct {
-	PublicKey         *string
-	PrivateKey        *string
-	MerchantID        string
-	MerchantAccountID string
-	Currency          string
-	Environment       BraintreeEnvironment
+	PublicKey         *string              `json:"publicKey" yaml:"publicKey"`
+	PrivateKey        *string              `json:"privateKey" yaml:"privateKey"`
+	MerchantID        string               `json:"merchantID" yaml:"merchantID"`
+	MerchantAccountID string               `json:"merchantAccountID" yaml:"merchantAccountID"`
+	Currency          string               `json:"currency" yaml:"currency"`
+	Environment       BraintreeEnvironment `json:"environment" yaml:"environment"`
 }
 
 func (c BraintreeCredentials) GetLibrary() Library {

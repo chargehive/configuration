@@ -9,11 +9,11 @@ const (
 	ConnectorSelectorNone ConnectorSelector = "none"
 
 	// ConnectorSelectorStickyFirst indicates the connector should stick to the first connector
-	// that was sucessful for that payment method
+	// that was successful for that payment method
 	ConnectorSelectorStickyFirst ConnectorSelector = "sticky-first"
 
 	// ConnectorSelectorStickyLast indicates the connector should stick to the most recent connector
-	// that was sucessful for that payment method
+	// that was successful for that payment method
 	ConnectorSelectorStickyLast ConnectorSelector = "sticky-last"
 
 	// ConnectorSelectorStickyAny indicates to use any connector that has a past success for that payment method

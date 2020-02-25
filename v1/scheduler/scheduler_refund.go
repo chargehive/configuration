@@ -6,14 +6,14 @@ import (
 	"github.com/chargehive/configuration/object"
 )
 
+// KindRefundScheduler is the identifier for an KindRefundScheduler scheduler config
+const KindRefundScheduler object.Kind = "SchedulerRefund"
+
 // Refund scheduler is a schedule that defines when refunds should be attempted
 type Refund struct {
 	// Schedules to use based on attempt number map[attempt number > Schedule]
-	Schedules map[int]ScheduleRefund
+	Schedules map[int]ScheduleRefund `json:"schedules" yaml:"schedules"`
 }
-
-// KindRefundScheduler is the identifier for an KindRefundScheduler scheduler config
-const KindRefundScheduler object.Kind = "SchedulerRefund"
 
 // GetKind returns the schedule kind
 func (Refund) GetKind() object.Kind { return KindRefundScheduler }

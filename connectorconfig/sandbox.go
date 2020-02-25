@@ -17,8 +17,8 @@ const (
 )
 
 type SandboxCredentials struct {
-	Mode                SandboxMode
-	TransactionIDPrefix string
+	Mode                SandboxMode `json:"mode" yaml:"mode"`
+	TransactionIDPrefix string      `json:"yransactionIDPrefix" yaml:"transactionIDPrefix"`
 }
 
 func (c SandboxCredentials) GetLibrary() Library {

@@ -7,11 +7,11 @@ import (
 )
 
 type PayPalExpressCheckoutCredentials struct {
-	APIUsername         *string
-	APIPassword         *string
-	APISignature        *string
-	SupportedCurrencies []string
-	Environment         PayPalEnvironment
+	APIUsername         *string           `json:"apiUsername" yaml:"apiUsername"`
+	APIPassword         *string           `json:"apiPassword" yaml:"apiPassword"`
+	APISignature        *string           `json:"apiSignature" yaml:"apiSignature"`
+	SupportedCurrencies []string          `json:"supportedCurrencies" yaml:"supportedCurrencies"`
+	Environment         PayPalEnvironment `json:"environment" yaml:"environment"`
 }
 
 func (c PayPalExpressCheckoutCredentials) GetLibrary() Library {

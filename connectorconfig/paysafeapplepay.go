@@ -19,27 +19,26 @@ const (
 )
 
 type PaySafeApplePayCredentials struct {
-	Acquirer               string
-	AccountID              string
-	APIUsername            *string
-	APIPassword            *string
-	Environment            PaySafeEnvironment
-	Country                string
-	Currency               string
-	SingleUseTokenUsername *string
-	SingleUseTokenPassword *string
-	Locale                 PaysafeLocale
+	Acquirer               string             `json:"acquirer" yaml:"acquirer"`
+	AccountID              string             `json:"accountID" yaml:"accountID"`
+	APIUsername            *string            `json:"apiUsername" yaml:"apiUsername"`
+	APIPassword            *string            `json:"apiPassword" yaml:"apiPassword"`
+	Environment            PaySafeEnvironment `json:"environment" yaml:"environment"`
+	Country                string             `json:"country" yaml:"country"`
+	Currency               string             `json:"currency" yaml:"currency"`
+	SingleUseTokenUsername *string            `json:"singleUseTokenUsername" yaml:"singleUseTokenUsername"`
+	SingleUseTokenPassword *string            `json:"singleUseTokenPassword" yaml:"singleUseTokenPassword"`
+	Locale                 PaysafeLocale      `json:"locale" yaml:"locale"`
 
-	ApplePayMerchantIdentityCert string
-	ApplePayMerchantIdentityKey  string
-	ApplePayMerchantIdentifier   string
+	ApplePayMerchantIdentityCert string `json:"applePayMerchantIdentityCert" yaml:"applePayMerchantIdentityCert"`
+	ApplePayMerchantIdentityKey  string `json:"applePayMerchantIdentityKey" yaml:"applePayMerchantIdentityKey"`
+	ApplePayMerchantIdentifier   string `json:"applePayMerchantIdentifier" yaml:"applePayMerchantIdentifier"`
 
 	// On supported models of MacBook Pro, the Touch Bar displays the value you supply for the ApplePayDisplayName parameter.
-	ApplePayDisplayName string
-	ApplePayInitiative  string
-
+	ApplePayDisplayName string `json:"applePayDisplayName" yaml:"applePayDisplayName"`
+	ApplePayInitiative  string `json:"applePayInitiative" yaml:"applePayInitiative"`
 	// Domain i.e cubernetes.io
-	ApplePayInitiativeContext string
+	ApplePayInitiativeContext string `json:"applePayInitiativeContext" yaml:"applePayInitiativeContext"`
 }
 
 func (c PaySafeApplePayCredentials) GetLibrary() Library {

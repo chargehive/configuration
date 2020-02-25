@@ -7,16 +7,16 @@ import (
 )
 
 type PaySafeGooglePayCredentials struct {
-	Acquirer               string
-	AccountID              string
-	APIUsername            *string
-	APIPassword            *string
-	Environment            PaySafeEnvironment
-	Country                string
-	Currency               string
-	SingleUseTokenUsername *string
-	SingleUseTokenPassword *string
-	Locale                 PaysafeLocale
+	Acquirer               string             `json:"acquirer" yaml:"acquirer"`
+	AccountID              string             `json:"accountID" yaml:"accountID"`
+	APIUsername            *string            `json:"apiUsername" yaml:"apiUsername"`
+	APIPassword            *string            `json:"apiPassword" yaml:"apiPassword"`
+	Environment            PaySafeEnvironment `json:"environment" yaml:"environment"`
+	Country                string             `json:"country" yaml:"country"`
+	Currency               string             `json:"currency" yaml:"currency"`
+	SingleUseTokenUsername *string            `json:"singleUseTokenUsername" yaml:"singleUseTokenUsername"`
+	SingleUseTokenPassword *string            `json:"singleUseTokenPassword" yaml:"singleUseTokenPassword"`
+	Locale                 PaysafeLocale      `json:"locale" yaml:"locale"`
 
 	// Pending implementation <additional parameters TBC>
 }

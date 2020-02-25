@@ -14,20 +14,20 @@ const KindPolicyMethodVerify object.Kind = "PolicyMethodVerify"
 type MethodVerifyPolicy struct {
 	// If true the payment method will be verified at the same time it is tokenized
 	// [Optional. Defaults to false]
-	VerifyMethodOnTokenization bool
+	VerifyMethodOnTokenization bool `json:"verifyMethodOnTokenization" yaml:"verifyMethodOnTokenization"`
 
 	// Amount is a monetary value integer that will be authorized on a card to verify its ability to make payments
 	// this should be an amount in the currencies smallest denomination i.e a value of 44 would equate to 0.44 GBP
 	// [Required]
-	Amount int64
+	Amount int64 `json:"amount" yaml:"amount"`
 
 	// This is the currency code for the specified amount i.e GBP
 	// [Required]
-	AmountCurrency string
+	AmountCurrency string `json:"amountCurrency" yaml:"amountCurrency"`
 
 	// This is the ID of the connector that is used to verify payment methods
 	// [Required]
-	ConnectorID string
+	ConnectorID string `json:"connectorID" yaml:"connectorID"`
 }
 
 // GetKind returns the MethodVerifyPolicy kind
