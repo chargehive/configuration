@@ -1,9 +1,12 @@
-# Connector Config  
+# Connectors
   
-The connector config defines the account and connection information to communicate with external payment gateways and fraud checking services.  
+Connectors in ChargeHive are external services like Payment Providers or Fraud Services.
+The connector config defines the account and connection information to communicate with these external payment gateways and fraud checking services.  
+
+[Here](#full-example) is a working example of a Payment Provider Connector config using the Sandbox Connector.
   
 ## Format  
-As with all configs, the standard wrapper is used.  
+As with all configs, the standard wrapper is used:  
 ```json5  
 {  
   "kind": "Connector", //Must be set to "Connector"  
@@ -19,10 +22,10 @@ As with all configs, the standard wrapper is used.
   
 ## Payment Libraries  
 To create a Payment Provider Connector you need to define the `spec` properties in the config of the Connector.
-* The `Library` property needs to be set to the Library value defined below for the Payment Processor you are setting up.
+* The `Library` property needs to be set to the Library value defined below for the Payment Provider or Fraud Service you are setting up.
 * The `Configuration` property must have the library configuration json as defined below Base64 encoded and inserted as a string.
 
-Below is a list of the configuration options for each of the connectors for the payments gateways and fraud services. 
+Below is a list of the configuration options for each of the connectors for the Payment Provider and Fraud Services. 
  
 ### Authorize.net
 Library: `authorize`  
@@ -55,7 +58,7 @@ Configuration:
 FieldName | Definition   
 ---:|:---  
 PublicKey | The Public encryption key from your Braintree Settings -> API page 
-PrivateKey | The Private encryption key from your Braintree Settins -> API page 
+PrivateKey | The Private encryption key from your Braintree Settings -> API page 
 MerchantAccountID | The Merchant Account ID defined in Braintree Settings -> Business  
 Currency | The Account currency for the defined Merchant Account ID, in standard three character format (e.g. "GBP", "EUR", "USD")  
 Environment | Must be either "sandbox" or "production"  
@@ -74,9 +77,9 @@ Configuration:
 ```  
 FieldName | Definition  
 ---:|:---  
-APIUsername | API Username from PayPal API settings  
-APIPassword | API Password from PayPal API settings  
-APISignature | API Signature from PayPal API settings  
+APIUsername | API Username from your PayPal API settings  
+APIPassword | API Password from your PayPal API settings  
+APISignature | API Signature from your PayPal API settings  
 SupportedCurrencies | The currencies setup to be accepted in your PayPal account in an array (e.g. ["GBP", "USD", "EUR"])  
 Environment | Must be either "sandbox" or "live"  
   
@@ -99,13 +102,13 @@ Configuration:
   "Environment":"sandbox"  
 }  
 ```  
-*CardinalCommerce* is the PayPal partner for Strong Customer Authentication (SCA) which provides 3-D Secure (3DS) authentication for your PayPal Website Payments Pro account. As such the Cardinal authentication details are required as well.  
+*CardinalCommerce* is the PayPal partner for Strong Customer Authentication (SCA) which provides 3-D Secure (3DS) authentication for your PayPal Website Payments Pro account. As such the Cardinal authentication details are required in this config as well.  
   
 FieldName | Definition  
 ---:|:---  
-APIUsername | API Username from PayPal API settings  
-APIPassword | API Password from PayPal API settings  
-APISignature | API Signature from PayPal API settings  
+APIUsername | API Username from your PayPal API settings  
+APIPassword | API Password from your PayPal API settings  
+APISignature | API Signature from your PayPal API settings  
 SupportedCurrencies | The currencies setup to be accepted in your PayPal account in an array (e.g. ["GBP", "USD", "EUR"])  
 CardinalProcessorID | Your Processor Identification Code assigned by Cardinal when you registered  
 CardinalMerchantID | Your Merchant Identification Code assigned by Cardinal when you registered  
@@ -201,6 +204,9 @@ Configuration:
   "CardinalApiKey": "xxxxxxxxxxxx"
 }
 ```
+
+*CardinalCommerce* is the Worldpay partner for Strong Customer Authentication (SCA) which provides 3-D Secure (3DS) authentication for your Worldpay account. As such the Cardinal authentication details are required in this config as well.  
+
 FieldName | Definition  
 ---:|:---   
   Username | The Username for this account in Worldpay

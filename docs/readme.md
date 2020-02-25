@@ -1,12 +1,14 @@
 # ChargeHive Operation Overview
 Here is a basic overview of how ChargeHive attempts Charges.
 
-First an [Initiator or Scheduler](#schedulers) is selected based on the charge information.
-This Initiator of Scheduler has an Attempt Config defined within it which will determine the [Connector or Connector Pool](#connectors) that will be used for this Charge. 
+First an [Initiator or Scheduler](#schedulers) is selected based on the Charge information.
+Each Initiator or Scheduler has an *Attempt Config* defined within it which will determine the [Connector or Connector Pool](#connectors) that will be used for this Charge. 
 
-This Attempt Config has an `overridePoolConnectorIds` property. 
+This *Attempt Config* has an `overridePoolConnectorIds` property. 
+
 If this is set the Attempt Config will return the specific Connectors set in this property.
-If this is not set the Attempt Config will determine a Connector Pool to use based on the Selector Properties on Connector Pools matching the Properties on the Charge. 
+
+If this is not set the Attempt Config will determine a Connector Pool to use based on the [Selector](#configuration-selectors) Properties on Connector Pools matching the Properties on the Charge:
 
 
 ![overview image](img/ChargeHiveOverview.png "Overview of the ChargeHive process")
@@ -14,7 +16,7 @@ If this is not set the Attempt Config will determine a Connector Pool to use bas
 
 ChargeHive will attempt the Charge through the Connectors specifically defined in the Attempt Config, or work through the Connectors within the defined Connector Pool and return a result.
 
----
+
 
 Configuration settings on the Attempt Config, Connector Pool and Connector will determine which Payment Methods to attempt, whether to Cascade to other Connectors, how many times to attempt the Charge on each Connector etc.
 
@@ -23,12 +25,12 @@ Configuration settings on the Attempt Config, Connector Pool and Connector will 
 [Policies](#policies) setup within ChargeHive control what happens to charges throughout the charging process, for instance Fraud checking, Locking Payment Methods, when to stop attempting the Charge etc.
 
 # Getting started on ChargeHive
-* To get started on ChargeHive first create at least one [Connector](#connectors) for a Payment Processor (WorldPay, Stripe etc).
-You can create a Connector for each Merchant Account you have with each Payment Processor.
+* To get started on ChargeHive first create at least one [Connector](connectors/connector.md) for a Payment Provider (WorldPay, Stripe etc).
+You can create a Connector for each Merchant Account you have with each Payment Provider.
 
-* Next create Connector Pools which contain some or all of these Connectors, for instance putting all Connectors of one Currency in a Connector Pool for that Currency.
+* Next create [Connector Pools](connectors/pool.md) which contain some or all of these Connectors, for instance putting all Connectors of one Currency in a Connector Pool for that Currency.
 
-  Set the Selector on each Connector Pool to ensure it will only be selected for the Attempt Config if the Charge matches those filters (for instance Currency = USD).
+  Set the [Selector](selectors.md) on each Connector Pool to ensure it will only be selected for Initiator or Scheduler *Attempt Config* if the Charge matches those filters (for instance Currency = USD).
 
   If you are creating multiple Connector Pools for similar criteria ensure you set the Priority in the Selector as well (with the lowest priority being selected first).
 
@@ -37,7 +39,7 @@ You can create a Connector for each Merchant Account you have with each Payment 
 At this point any Charges sent through to ChargeHive will run through the Initiator or Scheduler and based on the Attempt Config, get a list of Connectors to attempt the Charge, then attempt the Charge and return a result.  
 
 ## ChargeHive Configuration
-Every object in ChargeHive, from *Initiators*, *ConnectorPools* to *Connectors* have a configuration file which is applied using the `chive` tool. 
+Every object in ChargeHive, from *Initiators*, *Connector Pools* to *Connectors* have a configuration file which is applied using the `chive` tool. 
 Configurations can be saved, updated, loaded and deleted using the tool.
 
 ### Configuration File Structure
@@ -84,7 +86,7 @@ Selectors are optional configurations at the heart of all ChargeHive objects. A 
 For more information see the [Selectors](selectors.md) section.
 
 ## Configuration Types
-As all objects in ChargeHive use the same wrapper pattern, the `Kind` property is used to define what type of Configuration you are setting up. Below each Type of configuration is defined, and each will have a different `Kind` value to define them.
+As all objects in ChargeHive use the same wrapper pattern, the `Kind` property is used to define what type of object Configuration you are setting up. Below each Type of configuration is defined, and each will have a different `Kind` value to differentiate them.
 
 ## Schedulers
 + [Initiator Scheduler](initiator.md) defines the first scheduler for a charge.
@@ -93,7 +95,7 @@ As all objects in ChargeHive use the same wrapper pattern, the `Kind` property i
 + [Sequential Scheduler](scheduler/sequential.md) defines which connectors to attempt, in what order when processing a charge - usually used for Renewal charges.
 
 ## Connectors
-+ [Connector](connectors/connector.md) is a configured external service like payment gateways or fraud services.
++ [Connector](connectors/connector.md) is a configured external service like Payment Providers or Fraud Services.
 + [ConnectorPool](connectors/pool.md) is a pool of connectors that can be used in an Attempt Config. 
 
 ## Policies
