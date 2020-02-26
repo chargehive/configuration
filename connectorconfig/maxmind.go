@@ -17,9 +17,9 @@ const (
 )
 
 type MaxMindCredentials struct {
-	AccountID   string                     `json:"accountID" yaml:"accountID"`
-	LicenceKey  *string                    `json:"licenceKey" yaml:"licenceKey"`
-	ServiceType MaxMindMinFraudServiceType `json:"serviceType" yaml:"serviceType"`
+	AccountID   string                     `json:"accountID" yaml:"accountID" validate:"required"`
+	LicenceKey  *string                    `json:"licenceKey" yaml:"licenceKey" validate:"required"`
+	ServiceType MaxMindMinFraudServiceType `json:"serviceType" yaml:"serviceType" validate:"required"`
 }
 
 func (c MaxMindCredentials) GetLibrary() Library {

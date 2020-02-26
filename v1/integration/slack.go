@@ -12,34 +12,34 @@ const KindSlack object.Kind = "Integration.Slack"
 // Slack configuration structure
 type Slack struct {
 	// AccessToken slack access token
-	AccessToken string `json:"accessToken" yaml:"accessToken"`
+	AccessToken string `json:"accessToken" yaml:"accessToken" validate:"required"`
 
 	// Scopes for OAuth authentication
-	Scopes []string `json:"scopes" yaml:"scopes"`
+	Scopes []string `json:"scopes" yaml:"scopes" validate:"required"`
 
 	// TeamName for posting
-	TeamName string `json:"teamName" yaml:"teamName"`
+	TeamName string `json:"teamName" yaml:"teamName" validate:"required"`
 
 	// TeamID for posting
-	TeamID string `json:"teamID" yaml:"teamID"`
+	TeamID string `json:"teamID" yaml:"teamID" validate:"required"`
 
 	// Webhook endpoint
-	Webhook *SlackWebhook `json:"webhook" yaml:"webhook"`
+	Webhook *SlackWebhook `json:"webhook" yaml:"webhook" validate:"required"`
 
 	// TransactionNotifications indicates the action to perform
-	TransactionNotifications bool `json:"transactionNotifications" yaml:"transactionNotifications"`
+	TransactionNotifications bool `json:"transactionNotifications" yaml:"transactionNotifications" validate:"required"`
 }
 
 // SlackWebhook structure
 type SlackWebhook struct {
 	// Url is the slack webhook URL
-	Url string `json:"url" yaml:"url"`
+	Url string `json:"url" yaml:"url" validate:"required"`
 
 	// Channel is the slack channel to post in
-	Channel string `json:"channel" yaml:"channel"`
+	Channel string `json:"channel" yaml:"channel" validate:"required"`
 
 	// ConfigurationUrl is the slack endpoint for configuration
-	ConfigurationUrl string `json:"configurationUrl" yaml:"configurationUrl"`
+	ConfigurationUrl string `json:"configurationUrl" yaml:"configurationUrl" validate:"required"`
 }
 
 // GetKind returns the Slack kind

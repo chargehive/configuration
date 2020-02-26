@@ -7,10 +7,10 @@ import (
 )
 
 type PayPalWebsitePaymentsProCredentials struct {
-	APIUsername            *string           `json:"apiUsername" yaml:"apiUsername"`
-	APIPassword            *string           `json:"apiPassword" yaml:"apiPassword"`
-	APISignature           *string           `json:"apiSignature" yaml:"apiSignature"`
-	SupportedCurrencies    []string          `json:"supportedCurrencies" yaml:"supportedCurrencies"`
+	APIUsername            *string           `json:"apiUsername" yaml:"apiUsername" validate:"required"`
+	APIPassword            *string           `json:"apiPassword" yaml:"apiPassword" validate:"required"`
+	APISignature           *string           `json:"apiSignature" yaml:"apiSignature" validate:"required"`
+	SupportedCurrencies    []string          `json:"supportedCurrencies" yaml:"supportedCurrencies" validate:"required"`
 	CardinalProcessorID    *string           `json:"cardinalProcessorID" yaml:"cardinalProcessorID"`
 	CardinalMerchantID     *string           `json:"cardinalMerchantID" yaml:"cardinalMerchantID"`
 	CardinalTransactionPw  *string           `json:"cardinalTransactionPw" yaml:"cardinalTransactionPw"`
@@ -18,7 +18,7 @@ type PayPalWebsitePaymentsProCredentials struct {
 	CardinalAPIIdentifier  *string           `json:"cardinalAPIIdentifier" yaml:"cardinalAPIIdentifier"`
 	CardinalAPIKey         *string           `json:"cardinalAPIKey" yaml:"cardinalAPIKey"`
 	CardinalOrgUnitID      *string           `json:"cardinalOrgUnitID" yaml:"cardinalOrgUnitID"`
-	Environment            PayPalEnvironment `json:"environment" yaml:"environment"`
+	Environment            PayPalEnvironment `json:"environment" yaml:"environment" validate:"required"`
 }
 
 func (c PayPalWebsitePaymentsProCredentials) GetLibrary() Library {

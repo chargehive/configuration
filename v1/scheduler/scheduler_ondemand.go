@@ -11,7 +11,7 @@ const KindOnDemandScheduler object.Kind = "SchedulerOnDemand"
 
 // OnDemand is a schedule that is run on demand
 type OnDemand struct {
-	Schedule Schedule `json:"schedule" yaml:"schedule"`
+	Schedule Schedule `json:"schedule" yaml:"schedule" validate:"required,dive"`
 }
 
 // GetKind returns the OnDemand kind

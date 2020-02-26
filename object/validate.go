@@ -2,22 +2,38 @@ package object
 
 import (
 	"github.com/chargehive/configuration/selector"
+	"github.com/go-playground/locales/en"
+	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
+	en_translations "github.com/go-playground/validator/v10/translations/en"
 )
 
-var validate *validator.Validate
+var (
+	uni      *ut.UniversalTranslator
+	validate *validator.Validate
+)
 
-func (d *Definition) Validate() error {
+func (d *Definition) Validate() validator.ValidationErrorsTranslations {
 	validate = validator.New()
 	err := validate.RegisterValidation("predicate-key", PredicateKeysValidator)
 	err = validate.RegisterValidation("predicate-operator", PredicateOperatorValidator)
 	err = validate.RegisterValidation("predicate-operator-conversion", OperatorConversionValidator)
-	err = validate.RegisterValidation("kind", KindValidator)
 	if err != nil {
-		return err
+		return map[string]string{}
 	}
 
-	return validate.Struct(d)
+	enLocale := en.New()
+	uni = ut.New(enLocale, enLocale)
+	trans, _ := uni.GetTranslator("en")
+
+	_ = en_translations.RegisterDefaultTranslations(validate, trans)
+
+	err = validate.Struct(d)
+	if err != nil {
+		errs := err.(validator.ValidationErrors)
+		return errs.Translate(trans)
+	}
+	return map[string]string{}
 }
 
 func PredicateKeysValidator(fl validator.FieldLevel) bool {
@@ -33,24 +49,4 @@ func PredicateOperatorValidator(fl validator.FieldLevel) bool {
 func OperatorConversionValidator(fl validator.FieldLevel) bool {
 	_, ok := selector.OperatorConversionRegister[selector.OperatorConversion(fl.Field().String())]
 	return ok
-}
-
-func KindValidator(fl validator.FieldLevel) bool {
-	_, ok := KindRegister[fl.Field().String()]
-	return ok
-}
-
-var KindRegister = map[string]bool{
-	"Connector":           true,
-	"ConnectorPool":       true,
-	"Integration.Slack":   true,
-	"PolicyCascade":       true,
-	"PolicyChargeExpiry":  true,
-	"PolicyFraud":         true,
-	"PolicyMethodLock":    true,
-	"PolicyMethodUpgrade": true,
-	"PolicySCA":           true,
-	"Initiator":           true,
-	"SchedulerOnDemand":   true,
-	"SchedulerSequential": true,
 }

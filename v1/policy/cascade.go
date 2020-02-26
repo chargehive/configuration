@@ -19,7 +19,7 @@ type CascadePolicy struct {
 // CascadeRule is a single cascade rule (all fields are required)
 type CascadeRule struct {
 	// Library designates the library that this cascade rule is applied to
-	Library connectorconfig.Library `json:"library,omitempty" yaml:"library,omitempty"`
+	Library connectorconfig.Library `json:"library,omitempty" yaml:"library,omitempty" validate:"required"`
 
 	// OriginalResponseCode is the raw error code returned by the library to be matched
 	OriginalResponseCode string `json:"originalResponseCode,omitempty" yaml:"originalResponseCode,omitempty"`

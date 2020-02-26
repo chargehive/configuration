@@ -25,8 +25,8 @@ const (
 
 // Pool is used to select a group of connectors and the order that they should be used in
 type Pool struct {
-	Restriction Restriction `json:"restriction,omitempty" yaml:"restriction,omitempty"`
-	Connectors  []PoolItem  `json:"connectors,omitempty" yaml:"connectors,omitempty"`
+	Restriction Restriction `json:"restriction" yaml:"restriction" validate:"required,oneof=unrestricted noRepeat lowestUsage"`
+	Connectors  []PoolItem  `json:"connectors,omitempty" yaml:"connectors,omitempty" validate:"dive"`
 }
 
 // GetKind returns the pool kind
@@ -58,15 +58,15 @@ func (d *PoolDefinition) Spec() *Pool { return d.def.Spec.(*Pool) }
 // PoolItem is a single entry into a pool used to determine the connector that should be used
 type PoolItem struct {
 	// ConnectorID is the identifier for a connector
-	ConnectorID string `json:"connectorId,omitempty" yaml:"connectorId,omitempty"`
+	ConnectorID string `json:"connectorId,omitempty" yaml:"connectorId,omitempty" validate:"required"`
 
 	// Priority is a integer value where the item with the highest priority has lowest value
 	// (zero is the highest priority number possible)
-	Priority int32 `json:"priority,omitempty" yaml:"priority,omitempty"` // for specific ordering
+	Priority int32 `json:"priority,omitempty" yaml:"priority,omitempty" validate:"min=0"` // for specific ordering
 
 	// Weighting is used to weigh items of the same priority, secondary to priority
-	Weighting int32 `json:"weighting,omitempty" yaml:"weighting,omitempty"` // 0 - 1000
+	Weighting int32 `json:"weighting,omitempty" yaml:"weighting,omitempty" validate:"min=0,max=1000"` // 0 - 1000
 
 	// Uses is the maximum times a connector can be used in a single charge
-	Uses int32 `json:"uses,omitempty" yaml:"uses,omitempty"`
+	Uses int32 `json:"uses,omitempty" yaml:"uses,omitempty" validate:"min=0"`
 }

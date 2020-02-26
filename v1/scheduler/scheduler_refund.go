@@ -12,7 +12,7 @@ const KindRefundScheduler object.Kind = "SchedulerRefund"
 // Refund scheduler is a schedule that defines when refunds should be attempted
 type Refund struct {
 	// Schedules to use based on attempt number map[attempt number > Schedule]
-	Schedules map[int]ScheduleRefund `json:"schedules" yaml:"schedules"`
+	Schedules map[int]ScheduleRefund `json:"schedules" yaml:"schedules" validate:"required,dive"`
 }
 
 // GetKind returns the schedule kind

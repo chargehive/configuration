@@ -23,11 +23,11 @@ const (
 )
 
 type PaySafeCredentials struct {
-	Acquirer               string             `json:"acquirer" yaml:"acquirer"`
-	AccountID              string             `json:"accountID" yaml:"accountID"`
-	APIUsername            *string            `json:"apiUsername" yaml:"apiUsername"`
-	APIPassword            *string            `json:"apiPassword" yaml:"apiPassword"`
-	Environment            PaySafeEnvironment `json:"environment" yaml:"environment"`
+	Acquirer               string             `json:"acquirer" yaml:"acquirer" validate:"required"`
+	AccountID              string             `json:"accountID" yaml:"accountID" validate:"required"`
+	APIUsername            *string            `json:"apiUsername" yaml:"apiUsername" validate:"required"`
+	APIPassword            *string            `json:"apiPassword" yaml:"apiPassword" validate:"required"`
+	Environment            PaySafeEnvironment `json:"environment" yaml:"environment" validate:"required"`
 	Country                string             `json:"country" yaml:"country"`
 	Currency               string             `json:"currency" yaml:"currency"`
 	UseVault               bool               `json:"useVault" yaml:"useVault"`

@@ -1,68 +1,23 @@
 package tests
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/chargehive/configuration"
 	"github.com/chargehive/configuration/object"
-	"github.com/go-playground/assert/v2"
-	"github.com/go-playground/validator/v10"
 	"testing"
 )
 
 func TestValidation(t *testing.T) {
 	configuration.Initialise()
-	obj := &object.Definition{}
-	rawJson := []byte(`{
-  "kind": "SchedulerSequential-bad",
-  "metadata": {
-    "projectId": "test-project",
-    "name": "refund-scheduler"
-  },
-  "selector": {
-    "priority": 10,
-    "expressions": [
-      {
-        "key": "transaction.type-bad",
-        "operator": "Equal-bad",
-        "values": [
-          "TRANSACTION_TYPE_REFUND"
-        ]
-      }
-    ]
-  },
-  "spec": {
-    "Schedules": {
-      "0": {
-        "TimeDelayOrigin": "now",
-        "TimeDelaySync": "",
-        "TimeDelay": 60000000000,
-        "TimeSyncHour": 0,
-        "TimeSyncZone": ""
-      },
-      "1": {
-        "TimeDelayOrigin": "now",
-        "TimeDelaySync": "",
-        "TimeDelay": 60000000000,
-        "TimeSyncHour": 0,
-        "TimeSyncZone": ""
-      },
-      "2": {
-        "TimeDelayOrigin": "now",
-        "TimeDelaySync": "",
-        "TimeDelay": 60000000000,
-        "TimeSyncHour": 0,
-        "TimeSyncZone": ""
-      }
-    }
-  }
-}`)
+	rawJson := []byte(`{"Kind":"ConnectorPool","metadata":{"projectId":"pcprotect","name":"pool-eur","uuid":"84ae2bc3-367e-4dc0-b007-e78a36ca53d5"},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","values":["EUR"]}]},"spec":{"restriction":"noRepeat","connectors":[{"connectorId":"chain-eur-1002417380","weighting":35},{"connectorId":"paysafe-eur-1002448944","weighting":65}]}}`)
 
-	jsonErr := json.Unmarshal(rawJson, obj)
-	assert.Equal(t, nil, jsonErr)
-	err := obj.Validate()
-	vErrs, ok := err.(validator.ValidationErrors)
-	assert.Equal(t, ok, true)
-	assert.Equal(t, len(vErrs), 3)
-	fmt.Println(vErrs)
+	def, err := object.FromJson(rawJson)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	if errs := def.Validate(); len(errs) > 0 {
+		fmt.Println(errs)
+	}
 }

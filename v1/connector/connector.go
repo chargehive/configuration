@@ -12,8 +12,8 @@ const KindConnector object.Kind = "Connector"
 
 // Connector is a configuration file for a single payment processing entity
 type Connector struct {
-	Library       string `json:"library" yaml:"library"`
-	Configuration []byte `json:"configuration" yaml:"configuration"`
+	Library       string `json:"library" yaml:"library" validate:"required,oneof=sandbox authorize braintree qualpay stripe paysafe paysafe-applepay paysafe-googlepay worldpay paypal-websitepaymentspro paypal-expresscheckout vindicia chargehive maxmind cybersource"`
+	Configuration []byte `json:"configuration" yaml:"configuration" validate:"required"`
 }
 
 // GetKind returns the Connector kind

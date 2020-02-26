@@ -14,9 +14,9 @@ const (
 )
 
 type AuthorizeCredentials struct {
-	APILoginID     *string              `json:"apiLoginId" yaml:"apiLoginId"`
-	TransactionKey *string              `json:"transactionKey" yaml:"transactionKey"`
-	Environment    AuthorizeEnvironment `json:"environment" yaml:"environment"`
+	APILoginID     *string              `json:"apiLoginId" yaml:"apiLoginId" validate:"required"`
+	TransactionKey *string              `json:"transactionKey" yaml:"transactionKey" validate:"required"`
+	Environment    AuthorizeEnvironment `json:"environment" yaml:"environment" validate:"required"`
 }
 
 func (c AuthorizeCredentials) GetLibrary() Library {

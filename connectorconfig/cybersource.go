@@ -14,9 +14,9 @@ const (
 )
 
 type CyberSourceCredentials struct {
-	MerchantID     string                 `json:"merchantID" yaml:"merchantID"`
-	TransactionKey *string                `json:"transactionKey" yaml:"transactionKey"`
-	Environment    CyberSourceEnvironment `json:"environment" yaml:"environment"`
+	MerchantID     string                 `json:"merchantID" yaml:"merchantID" validate:"required"`
+	TransactionKey *string                `json:"transactionKey" yaml:"transactionKey" validate:"required"`
+	Environment    CyberSourceEnvironment `json:"environment" yaml:"environment" validate:"required"`
 }
 
 func (c CyberSourceCredentials) GetLibrary() Library {

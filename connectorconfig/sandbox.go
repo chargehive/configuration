@@ -17,7 +17,7 @@ const (
 )
 
 type SandboxCredentials struct {
-	Mode                SandboxMode `json:"mode" yaml:"mode"`
+	Mode                SandboxMode `json:"mode" yaml:"mode" validate:"required"`
 	TransactionIDPrefix string      `json:"yransactionIDPrefix" yaml:"transactionIDPrefix"`
 }
 
