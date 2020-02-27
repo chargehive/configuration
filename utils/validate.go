@@ -1,4 +1,4 @@
-package validation
+package utils
 
 import (
 	"github.com/chargehive/configuration/connectorconfig"
@@ -16,10 +16,11 @@ var (
 	validate *validator.Validate
 )
 
-func Validate(rawJson []byte) validator.ValidationErrorsTranslations {
+// Validate will check all structs for structural and invalid parameters
+func Validate(rawJson []byte) map[string]string {
 	result := map[string]string{}
 
-	d, err := object.FromJson(rawJson)
+	o, err := object.FromJson(rawJson)
 	if err != nil {
 		result["json"] = err.Error()
 		return result
@@ -28,8 +29,9 @@ func Validate(rawJson []byte) validator.ValidationErrorsTranslations {
 	validate = validator.New()
 	// register custom validators
 	err = validate.RegisterValidation("predicate-key", PredicateKeysValidator)
-	err = validate.RegisterValidation("connector-library", ConnectorLibraryValidator)
-
+	if err == nil {
+		err = validate.RegisterValidation("connector-library", ConnectorLibraryValidator)
+	}
 	if err != nil {
 		result["validation registration"] = err.Error()
 		return result
@@ -46,8 +48,8 @@ func Validate(rawJson []byte) validator.ValidationErrorsTranslations {
 	}
 
 	// validate serialized connector credentials
-	if d.Kind == "Connector" {
-		c, ok := d.Spec.(*connector.Connector)
+	if o.Kind == "Connector" {
+		c, ok := o.Spec.(*connector.Connector)
 		if !ok {
 			result["connector error"] = "spec is not a connector"
 			return result
@@ -65,7 +67,7 @@ func Validate(rawJson []byte) validator.ValidationErrorsTranslations {
 	}
 
 	// validate main struct
-	err = validate.Struct(d)
+	err = validate.Struct(o)
 	if err != nil {
 		errs := err.(validator.ValidationErrors)
 		transErrs := errs.Translate(trans)

@@ -1,0 +1,193 @@
+package utils
+
+import (
+	"encoding/json"
+	"errors"
+	"github.com/chargehive/configuration/connectorconfig"
+	"github.com/chargehive/configuration/object"
+	"github.com/chargehive/configuration/selector"
+	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/configuration/v1/integration"
+	"github.com/chargehive/configuration/v1/policy"
+	"github.com/chargehive/configuration/v1/scheduler"
+)
+
+type Conf string
+
+const (
+	// connectors
+	confConnAuthorize        Conf = "con_authorize"
+	confConnBrainTree        Conf = "con_brainTree"
+	confConnChargeHive       Conf = "con_chargeHive"
+	confConnCyberSource      Conf = "con_cyberSource"
+	confConnMaxMind          Conf = "con_maxMind"
+	confConnPayPalExpress    Conf = "con_payPalExpressCheckout"
+	confConnPayPalWPP        Conf = "con_payPalWPP"
+	confConnPaysafe          Conf = "con_paysafe"
+	confConnPaysafeApplePay  Conf = "con_paysafeApplePay"
+	confConnPaysafeGooglePay Conf = "con_paysafeGooglePay"
+	confConnQualPay          Conf = "con_qualPay"
+	confConnSandbox          Conf = "con_sandbox"
+	confConnStripe           Conf = "con_stripe"
+	confConnVindicia         Conf = "con_vindicia"
+	confConnWorldPay         Conf = "con_worldPay"
+
+	// connector Pool
+	confConnectorPool Conf = "con_pool"
+
+	// integration
+	confSlack Conf = "int_slack"
+
+	// policy
+	confPolCascade       Conf = "pol_cascade"
+	confPolChargeExpiry  Conf = "pol_chargeExpiry"
+	confPolFraud         Conf = "pol_fraud"
+	confPolMethodLock    Conf = "pol_methodLock"
+	confPolMethodUpgrade Conf = "pol_methodUpgrade"
+	confPolMethodVerify  Conf = "pol_methodVerify"
+	confPolSCA           Conf = "pol_sca"
+
+	// scheduler
+	confSchInitiator  Conf = "sch_initiator"
+	confSchOnDemand   Conf = "sch_onDemand"
+	confSchRefund     Conf = "sch_refund"
+	confSchSequential Conf = "sch_sequential"
+)
+
+var Confs = map[Conf]bool{
+	confConnAuthorize:        true,
+	confConnBrainTree:        true,
+	confConnChargeHive:       true,
+	confConnCyberSource:      true,
+	confConnMaxMind:          true,
+	confConnPayPalExpress:    true,
+	confConnPayPalWPP:        true,
+	confConnPaysafe:          true,
+	confConnPaysafeApplePay:  true,
+	confConnPaysafeGooglePay: true,
+	confConnQualPay:          true,
+	confConnSandbox:          true,
+	confConnStripe:           true,
+	confConnVindicia:         true,
+	confConnWorldPay:         true,
+	confConnectorPool:        true,
+	confSlack:                true,
+	confPolCascade:           true,
+	confPolChargeExpiry:      true,
+	confPolFraud:             true,
+	confPolMethodLock:        true,
+	confPolMethodUpgrade:     true,
+	confPolMethodVerify:      true,
+	confPolSCA:               true,
+	confSchInitiator:         true,
+	confSchOnDemand:          true,
+	confSchRefund:            true,
+	confSchSequential:        true,
+}
+
+var chg = "CHANGE-ME"
+
+// Generate can be used to create a basic but valid config of any type
+func Generate(conf Conf, pretty bool) ([]byte, error) {
+	spec, err := buildSpec(conf)
+	if err != nil {
+		return nil, err
+	}
+	def := object.DefinitionFromSpec(spec)
+	def.MetaData.Name = chg
+	def.MetaData.ProjectID = chg
+	def.Selector = buildSelector()
+
+	var data []byte
+	if pretty {
+		data, err = json.MarshalIndent(def, "", "    ")
+	} else {
+		data, err = json.Marshal(def)
+	}
+	if err != nil {
+		return []byte{}, err
+	}
+	return data, nil
+}
+
+func buildSpec(conf Conf) (object.Specification, error) {
+
+	switch conf {
+	case confConnAuthorize:
+		j, _ := json.Marshal(connectorconfig.AuthorizeCredentials{APILoginID: &chg, TransactionKey: &chg, Environment: "sandbox"})
+		return connector.Connector{Library: string(connectorconfig.LibraryAuthorize), Configuration: j}, nil
+	case confConnBrainTree:
+		j, _ := json.Marshal(connectorconfig.BraintreeCredentials{PublicKey: &chg, PrivateKey: &chg, MerchantID: chg, MerchantAccountID: chg, Currency: "USD", Environment: "sandbox"})
+		return connector.Connector{Library: string(connectorconfig.LibraryBraintree), Configuration: j}, nil
+	case confConnChargeHive:
+		j, _ := json.Marshal(connectorconfig.ChargeHiveCredentials{})
+		return connector.Connector{Library: string(connectorconfig.LibraryChargeHive), Configuration: j}, nil
+	case confConnCyberSource:
+		j, _ := json.Marshal(connectorconfig.CyberSourceCredentials{MerchantID: chg, TransactionKey: &chg, Environment: "test"})
+		return connector.Connector{Library: string(connectorconfig.LibraryCyberSource), Configuration: j}, nil
+	case confConnMaxMind:
+		j, _ := json.Marshal(connectorconfig.MaxMindCredentials{AccountID: chg, LicenceKey: &chg, ServiceType: 0})
+		return connector.Connector{Library: string(connectorconfig.LibraryMaxMind), Configuration: j}, nil
+	case confConnPayPalExpress:
+		j, _ := json.Marshal(connectorconfig.PayPalExpressCheckoutCredentials{APIUsername: &chg, APIPassword: &chg, APISignature: &chg, SupportedCurrencies: []string{"USD"}, Environment: "sandbox"})
+		return connector.Connector{Library: string(connectorconfig.LibraryPayPalExpressCheckout), Configuration: j}, nil
+	case confConnPayPalWPP:
+		j, _ := json.Marshal(connectorconfig.PayPalWebsitePaymentsProCredentials{APIUsername: &chg, APIPassword: &chg, APISignature: &chg, SupportedCurrencies: []string{"USD"}, Environment: "sandbox"})
+		return connector.Connector{Library: string(connectorconfig.LibraryPayPalWebsitePaymentsPro), Configuration: j}, nil
+	case confConnPaysafe:
+		j, _ := json.Marshal(connectorconfig.PaySafeCredentials{Acquirer: chg, AccountID: chg, APIUsername: &chg, APIPassword: &chg, Environment: "MOCK", Currency: "USD"})
+		return connector.Connector{Library: string(connectorconfig.LibraryPaySafe), Configuration: j}, nil
+	case confConnPaysafeApplePay:
+		j, _ := json.Marshal(connectorconfig.PaySafeApplePayCredentials{Acquirer: chg, AccountID: chg, APIUsername: &chg, APIPassword: &chg, Environment: "MOCK", Currency: "USD", Locale: "en_GB", ApplePayMerchantIdentityCert: chg, ApplePayMerchantIdentityKey: chg, ApplePayMerchantIdentifier: chg, ApplePayDisplayName: chg, ApplePayInitiative: chg, ApplePayInitiativeContext: chg})
+		return connector.Connector{Library: string(connectorconfig.LibraryPaySafeApplePay), Configuration: j}, nil
+	case confConnPaysafeGooglePay:
+		j, _ := json.Marshal(connectorconfig.PaySafeGooglePayCredentials{Acquirer: chg, AccountID: chg, APIUsername: &chg, APIPassword: &chg, Environment: "MOCK", Currency: "USD", Locale: "en_GB"})
+		return connector.Connector{Library: string(connectorconfig.LibraryPaySafeApplePay), Configuration: j}, nil
+	case confConnQualPay:
+		j, _ := json.Marshal(connectorconfig.QualpayCredentials{APIKey: &chg, MerchantID: 1, Environment: "test"})
+		return connector.Connector{Library: string(connectorconfig.LibraryQualPay), Configuration: j}, nil
+	case confConnSandbox:
+		j, _ := json.Marshal(connectorconfig.SandboxCredentials{Mode: "dynamic"})
+		return connector.Connector{Library: string(connectorconfig.LibrarySandbox), Configuration: j}, nil
+	case confConnStripe:
+		j, _ := json.Marshal(connectorconfig.StripeCredentials{APIKey: &chg})
+		return connector.Connector{Library: string(connectorconfig.LibraryStripe), Configuration: j}, nil
+	case confConnVindicia:
+		j, _ := json.Marshal(connectorconfig.VindiciaCredentials{Login: chg, Password: &chg, HMACKey: &chg, PGPPrivateKey: &chg, Environment: "development"})
+		return connector.Connector{Library: string(connectorconfig.LibraryVindicia), Configuration: j}, nil
+	case confConnWorldPay:
+		j, _ := json.Marshal(connectorconfig.WorldpayCredentials{Username: &chg, Password: &chg, MerchantID: chg, Environment: "sandbox"})
+		return connector.Connector{Library: string(connectorconfig.LibraryWorldpay), Configuration: j}, nil
+	case confConnectorPool:
+		return connector.Pool{Restriction: "unrestricted", Connectors: []connector.PoolItem{{ConnectorID: chg}}}, nil
+	case confSlack:
+		return integration.Slack{AccessToken: chg, TeamName: chg, TeamID: chg, Webhook: &integration.SlackWebhook{Url: chg, Channel: chg, ConfigurationUrl: chg}}, nil
+	case confPolCascade:
+		return policy.CascadePolicy{Rules: []policy.CascadeRule{{Library: connectorconfig.Library(chg), OriginalResponseCode: chg}}}, nil
+	case confPolChargeExpiry:
+		return policy.ChargeExpiryPolicy{}, nil
+	case confPolFraud:
+		return policy.FraudPolicy{ConnectorIDs: []string{chg}, CheckTime: "preauth-first", CheckType: "all"}, nil
+	case confPolMethodLock:
+		return policy.MethodLockPolicy{Duration: 1, Reason: chg}, nil
+	case confPolMethodUpgrade:
+		return policy.MethodUpgradePolicy{}, nil
+	case confPolMethodVerify:
+		return policy.MethodVerifyPolicy{Amount: 100, AmountCurrency: "GBP", ConnectorID: chg}, nil
+	case confPolSCA:
+		return policy.ScaPolicy{ShouldByPassChallenge: "cascade"}, nil
+	case confSchInitiator:
+		return scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorConfig, AttemptConfig: &scheduler.AttemptConfig{PoolType: scheduler.PoolTypeCascade, MethodSelector: scheduler.MethodSelectorPrimaryMethod, OverridePoolConnectorIDs: []string{}}}, nil
+	case confSchOnDemand:
+		return scheduler.OnDemand{Schedule: scheduler.Schedule{AttemptConfig: scheduler.AttemptConfig{PoolType: "single", MethodSelector: "primary"}, TimeDelayOrigin: "initialisation", TimeDelaySync: "Earliest", TimeSyncZone: "UTC"}}, nil
+	case confSchRefund:
+		return scheduler.Refund{Schedules: map[int]scheduler.ScheduleRefund{0: {0}}}, nil
+	case confSchSequential:
+		return scheduler.Sequential{Schedules: map[int]scheduler.Schedule{0: {AttemptConfig: scheduler.AttemptConfig{PoolType: "single", MethodSelector: "primary"}, TimeDelayOrigin: "initialisation", TimeDelaySync: "Earliest", TimeSyncZone: "UTC"}}}, nil
+	}
+	return nil, errors.New("invalid config to generate")
+}
+
+func buildSelector() selector.Selector {
+	return selector.Selector{Priority: 50, Expressions: []selector.Predicate{{Key: selector.KeyChargeAmountCurrency, Operator: selector.PredicateOperatorEqual, Values: []string{"GBP"}}}}
+}

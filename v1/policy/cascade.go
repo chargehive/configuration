@@ -13,7 +13,7 @@ const KindPolicyCascade object.Kind = "PolicyCascade"
 
 // CascadePolicy is a collection of rules for connector cascading
 type CascadePolicy struct {
-	Rules []CascadeRule `json:"rules" yaml:"rules"`
+	Rules []CascadeRule `json:"rules" yaml:"rules" validate:"min=1"`
 }
 
 // CascadeRule is a single cascade rule (all fields are required)

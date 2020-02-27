@@ -36,7 +36,7 @@ type ScaPolicy struct {
 
 	// ShouldChallenge3dSecureV1 determines if the connector can fallback to 3DS v1 when 3DS v2 is not available
 	// Deprecated: ChargeHive does not currently support v1 SCA
-	ShouldChallenge3dSecureV1 bool `json:"shouldChallenge3dSecureV1" yaml:"shouldChallenge3dSecureV1" validate:"-"`
+	ShouldChallenge3dSecureV1 bool `json:"shouldChallenge3dSecureV1,omitempty" yaml:"shouldChallenge3dSecureV1,omitempty" validate:"-"`
 
 	// ShouldAuthOnError if true and an error response is returned from the connector; proceed to auth anyway
 	ShouldAuthOnError bool `json:"shouldAuthOnError" yaml:"shouldAuthOnError" validate:"-"`

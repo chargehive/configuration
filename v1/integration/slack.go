@@ -15,7 +15,7 @@ type Slack struct {
 	AccessToken string `json:"accessToken" yaml:"accessToken" validate:"required"`
 
 	// Scopes for OAuth authentication
-	Scopes []string `json:"scopes" yaml:"scopes" validate:"required"`
+	Scopes []string `json:"scopes" yaml:"scopes" validate:"-"`
 
 	// TeamName for posting
 	TeamName string `json:"teamName" yaml:"teamName" validate:"required"`
