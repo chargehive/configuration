@@ -14,20 +14,20 @@ const KindPolicyMethodVerify object.Kind = "PolicyMethodVerify"
 type MethodVerifyPolicy struct {
 	// If true the payment method will be verified at the same time it is tokenized
 	// [Optional. Defaults to false]
-	VerifyMethodOnTokenization bool `json:"verifyMethodOnTokenization" yaml:"verifyMethodOnTokenization"`
+	VerifyMethodOnTokenization bool `json:"verifyMethodOnTokenization" yaml:"verifyMethodOnTokenization" validate:"-"`
 
 	// Amount is a monetary value integer that will be authorized on a card to verify its ability to make payments
 	// this should be an amount in the currencies smallest denomination i.e a value of 44 would equate to 0.44 GBP
 	// [Required]
-	Amount int64 `json:"amount" yaml:"amount"`
+	Amount int64 `json:"amount" yaml:"amount" validate:"min=1"`
 
 	// This is the currency code for the specified amount i.e GBP
 	// [Required]
-	AmountCurrency string `json:"amountCurrency" yaml:"amountCurrency"`
+	AmountCurrency string `json:"amountCurrency" yaml:"amountCurrency"validate:"oneof=ARS AUD AZN BHD BYR BOB BAM BRL BGN CAD CLP CNY COP CRC HRK CZK DKK DOP XCD EGP ETB EUR FJD GEL GTQ HTG HNL HKD HUF ISK INR IDR IRR JMD JPY JOD KZT KES KRW KWD LVL LBP LYD LTL MWK MYR MUR MXN MDL MAD ILS NZD NGN NOK OMR PKR PAB PYG PEN PHP PLN GBP QAR RON RUB SAR RSD SGD ZAR LKR SEK CHF SYP TWD THB TTD TND TRY UAH AED UYU USD VEF VND"`
 
 	// This is the ID of the connector that is used to verify payment methods
 	// [Required]
-	ConnectorID string `json:"connectorID" yaml:"connectorID"`
+	ConnectorID string `json:"connectorID" yaml:"connectorID" validate:"required"`
 }
 
 // GetKind returns the MethodVerifyPolicy kind

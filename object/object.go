@@ -13,8 +13,8 @@ const KindNone Kind = ""
 type Definition struct {
 	Kind        Kind              `json:"Kind" yaml:"Kind"`
 	MetaData    MetaData          `json:"metadata" yaml:"metadata" validate:"dive"`
-	SpecVersion string            `json:"specVersion,omitempty" yaml:"specVersion,omitempty"`
-	Selector    selector.Selector `json:"selector,omitempty" yaml:"selector,omitempty" validate:"dive"`
+	SpecVersion string            `json:"specVersion" yaml:"specVersion"`
+	Selector    selector.Selector `json:"selector" yaml:"selector" validate:"dive"`
 	Spec        interface{}       `json:"spec" yaml:"spec" validate:"dive"`
 }
 
@@ -29,7 +29,10 @@ func FromJson(jsonData []byte) (*Definition, error) {
 		return nil, err
 	}
 
-	spec := SpecFromJson(obj.Kind, obj.SpecVersion, raw)
+	spec, err := SpecFromJson(obj.Kind, obj.SpecVersion, raw)
+	if err != nil {
+		return nil, errors.New("invalid JSON format in configuration")
+	}
 	if spec == nil {
 		return nil, errors.New("Kind " + string(obj.Kind) + ", Version " + obj.SpecVersion + " has not yet been implemented")
 	}
@@ -37,15 +40,15 @@ func FromJson(jsonData []byte) (*Definition, error) {
 	return obj, nil
 }
 
-func SpecFromJson(kind Kind, version string, jsonData []byte) Specification {
+func SpecFromJson(kind Kind, version string, jsonData []byte) (Specification, error) {
 	if handler, ok := getKindHandlerFunc(kind, version); ok {
 		spec := handler()
 		if err := json.Unmarshal(jsonData, spec); err != nil {
-			return nil
+			return nil, err
 		}
-		return spec
+		return spec, nil
 	}
-	return nil
+	return nil, nil
 }
 
 func DefinitionFromSpec(specification Specification) *Definition {

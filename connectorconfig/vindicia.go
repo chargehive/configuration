@@ -19,7 +19,7 @@ type VindiciaCredentials struct {
 	Password      *string             `json:"password" yaml:"password" validate:"required"`
 	HMACKey       *string             `json:"hmacKey" yaml:"hmacKey" validate:"required"`
 	PGPPrivateKey *string             `json:"pgpPrivateKey" yaml:"pgpPrivateKey" validate:"required"`
-	Environment   VindiciaEnvironment `json:"environment" yaml:"environment" validate:"required"`
+	Environment   VindiciaEnvironment `json:"environment" yaml:"environment" validate:"oneof=development stage production"`
 }
 
 func (c VindiciaCredentials) GetLibrary() Library {
