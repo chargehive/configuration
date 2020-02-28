@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"github.com/chargehive/configuration"
 	"github.com/chargehive/configuration/connectorconfig"
 	"github.com/chargehive/configuration/object"
 	"github.com/chargehive/configuration/selector"
@@ -18,11 +17,14 @@ var (
 )
 
 // Validate will check all structs for structural and invalid parameters, will return an empty map if valid
-func Validate(rawJson []byte) map[string]string {
-	configuration.Initialise()
-
+func Validate(rawJson []byte, version string) map[string]string {
 	result := map[string]string{}
-	o, err := object.FromJson(rawJson)
+	if version != "v1" {
+		result["config version"] = "version mismatch"
+		return result
+	}
+
+	o, err := object.FromJsonStrict(rawJson)
 	if err != nil {
 		result["json"] = err.Error()
 		return result

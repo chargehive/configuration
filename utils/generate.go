@@ -90,7 +90,12 @@ var Templates = map[Template]string{
 var chg = "CHANGE-ME"
 
 // Generate can be used to create a basic but valid config of any type
-func Generate(conf Template, pretty bool) ([]byte, error) {
+func Generate(conf Template, version string, pretty bool) ([]byte, error) {
+
+	if version != "v1" {
+		return nil, errors.New("version mismatch")
+	}
+
 	spec, err := buildSpec(conf)
 	if err != nil {
 		return nil, err
@@ -108,7 +113,7 @@ func Generate(conf Template, pretty bool) ([]byte, error) {
 	}
 
 	// run validation against generated configs to ensure compliance
-	errs := Validate(data)
+	errs := Validate(data, version)
 	if len(errs) > 0 {
 		log.Println(errs)
 		err = errors.New("generated config does not pass validation")

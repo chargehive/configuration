@@ -1,45 +1,63 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"github.com/chargehive/configuration/utils"
+	"io/ioutil"
 	"os"
 	"sort"
 )
 
 func main() {
-	// sub commands
-	generateCommand := flag.NewFlagSet("generate", flag.ExitOnError)
-	updateCommand := flag.NewFlagSet("update", flag.ExitOnError)
-	validateCommand := flag.NewFlagSet("validate", flag.ExitOnError)
+	generateCmd := flag.NewFlagSet("generate", flag.ExitOnError)
+	generateCmdList := generateCmd.Bool("list", false, "list configs to generate")
+	generateCmdConfig := generateCmd.String("config", "", "name of config to generate")
+	generateCmdPretty := generateCmd.Bool("pretty", false, "pretty print the output (optional)")
+	generateCmdVersion := generateCmd.String("version", "v1", "version of config to generate")
+	generateCmdOutput := generateCmd.String("output", "", "specify a filename to write the output")
 
-	generateCommandList := generateCommand.Bool("list", false, "List configs to generate")
-	generateCommandConfig := generateCommand.String("config", "", "Name of config to generate")
-	generateCommandPretty := generateCommand.Bool("pretty", false, "Pretty print the output")
+	updateCmd := flag.NewFlagSet("update", flag.ExitOnError)
+	updateCmdVersion := updateCmd.String("version", "v1", "version of config to update")
+	updateCmdPretty := updateCmd.Bool("pretty", false, "pretty print the output (optional)")
+	updateCmdJson := updateCmd.String("json", "", "specify a json string to update")
+	updateCmdFile := updateCmd.String("file", "", "specify a config file to update")
+	updateCmdOutput := updateCmd.String("output", "", "specify a filename to write the output")
 
-	// os.Arg[0] is the main command
-	// os.Arg[1] will be the sub commands
+	validateCmd := flag.NewFlagSet("validate", flag.ExitOnError)
+	validateCmdVersion := validateCmd.String("version", "v1", "version of config to validate")
+	validateCmdJson := validateCmd.String("json", "", "specify a json string")
+	validateCmdFile := validateCmd.String("file", "", "specify a config file")
+
 	if len(os.Args) < 2 {
-		fmt.Println("generate, update or validate required")
+		fmt.Println("usage: generate, update or validate")
 		os.Exit(1)
 	}
 
-	// os.Args[2:] will be all arguments starting after the subcommand at os.Args[1]
+	var currentVersion = "v1"
+
 	switch os.Args[1] {
 	case "generate":
-		_ = generateCommand.Parse(os.Args[2:])
+		_ = generateCmd.Parse(os.Args[2:])
 	case "update":
-		_ = updateCommand.Parse(os.Args[2:])
+		_ = updateCmd.Parse(os.Args[2:])
 	case "validate":
-		_ = validateCommand.Parse(os.Args[2:])
+		_ = validateCmd.Parse(os.Args[2:])
 	default:
-		flag.PrintDefaults()
+		fmt.Println("usage: generate, update or validate")
 		os.Exit(1)
 	}
 
-	if generateCommand.Parsed() {
-		if *generateCommandList == true {
+	// Generate configs
+	if generateCmd.Parsed() {
+		if *generateCmdVersion != currentVersion {
+			fmt.Printf("%v is not a valid config version\n", *generateCmdVersion)
+			os.Exit(1)
+		}
+
+		if *generateCmdList == true {
+			// list templates available
 			fmt.Printf("%-30v%v\n-----------------------------------------\n", "Template Name", "Description")
 			keys := make([]string, 0)
 			for k, _ := range utils.Templates {
@@ -49,25 +67,111 @@ func main() {
 			for _, k := range keys {
 				fmt.Printf("%-30v%v\n", k, utils.Templates[utils.Template(k)])
 			}
-		} else if _, validChoice := utils.Templates[utils.Template(*generateCommandConfig)]; validChoice {
-			out, err := utils.Generate(utils.Template(*generateCommandConfig), *generateCommandPretty)
+		} else if _, validChoice := utils.Templates[utils.Template(*generateCmdConfig)]; validChoice {
+			// generate template output
+			out, err := utils.Generate(utils.Template(*generateCmdConfig), *generateCmdVersion, *generateCmdPretty)
 			if err != nil {
 				fmt.Println(err)
 				os.Exit(1)
-			} else {
-				fmt.Println(string(out))
 			}
+
+			// write template output
+			if *generateCmdOutput != "" {
+				err := ioutil.WriteFile(*generateCmdOutput, out, os.ModePerm)
+				if err != nil {
+					fmt.Println(err)
+				} else {
+					fmt.Printf("\nWritten data to '%v'\n", *generateCmdOutput)
+				}
+			}
+			fmt.Println(string(out))
 		} else {
-			fmt.Printf("%v is not a valid config\n", *generateCommandConfig)
-			generateCommand.PrintDefaults()
+			// invalid inputs
+			if *generateCmdConfig == "" {
+				fmt.Println("you must specify a config to generate")
+			} else {
+				fmt.Printf("%v is not a valid config\n", *generateCmdConfig)
+			}
+			generateCmd.PrintDefaults()
 			os.Exit(1)
 		}
 	}
-	if updateCommand.Parsed() {
 
+	// Update Configs
+	if updateCmd.Parsed() {
+		if *updateCmdVersion != currentVersion {
+			fmt.Printf("%v is not a valid config version\n", *updateCmdVersion)
+			os.Exit(1)
+		}
+
+		// load json
+		json, err := getJson(updateCmdJson, updateCmdFile)
+		if err != nil {
+			fmt.Println(err.Error())
+			generateCmd.PrintDefaults()
+			os.Exit(1)
+		}
+
+		// perform update
+		updated, result, err := utils.Update(json, *updateCmdVersion, *updateCmdPretty)
+		if err != nil {
+			fmt.Println(err.Error())
+			os.Exit(1)
+		}
+
+		// confirm update status
+		if updated {
+			fmt.Println("changes have been made to the structure of this config")
+		} else {
+			fmt.Println("config is up to date")
+		}
+
+		// write output
+		if *generateCmdOutput != "" {
+			err := ioutil.WriteFile(*generateCmdOutput, result, os.ModePerm)
+			if err != nil {
+				fmt.Println(err)
+			} else {
+				fmt.Printf("\nWritten data to '%v'\n", *updateCmdOutput)
+			}
+		}
+		fmt.Println(string(result))
 	}
-	if validateCommand.Parsed() {
 
+	// Validate Configs
+	if validateCmd.Parsed() {
+		if *validateCmdVersion != currentVersion {
+			fmt.Printf("%v is not a valid config version\n", *validateCmdVersion)
+			os.Exit(1)
+		}
+
+		json, err := getJson(validateCmdJson, validateCmdFile)
+		if err != nil {
+			fmt.Println(err.Error())
+			os.Exit(1)
+		}
+
+		if errs := utils.Validate(json, *validateCmdVersion); len(errs) > 0 {
+			fmt.Println("errors found:")
+			for k, v := range errs {
+				fmt.Printf("%v : %v", k, v)
+			}
+			os.Exit(1)
+		}
+		fmt.Println("no errors found")
 	}
+}
 
+func getJson(jsonCmd *string, fileCmd *string) ([]byte, error) {
+	if *jsonCmd != "" {
+		return []byte(*jsonCmd), nil
+	}
+	if *fileCmd != "" {
+		json, err := ioutil.ReadFile(*fileCmd)
+		if err != nil {
+			return nil, err
+		}
+		return json, nil
+	}
+	return nil, errors.New("must specify either a file or json string")
 }
