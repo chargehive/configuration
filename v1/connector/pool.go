@@ -65,7 +65,7 @@ type PoolItem struct {
 	Priority int32 `json:"priority" yaml:"priority" validate:"min=0"` // for specific ordering
 
 	// Weighting is used to weigh items of the same priority, secondary to priority
-	Weighting int32 `json:"weighting" yaml:"weighting" validate:"min=0, max=1000"` // 0 - 1000
+	Weighting int32 `json:"weighting" yaml:"weighting" validate:"min=0,max=1000"` // 0 - 1000
 
 	// Uses is the maximum times a connector can be used in a single charge
 	Uses int32 `json:"uses" yaml:"uses" validate:"min=0"`

@@ -9,60 +9,45 @@ import (
 
 // CreateCredentials create credentials from json
 func GetCredentials(c *connector.Connector) (Credentials, error) {
+	var credentials Credentials
 	switch Library(c.Library) {
 
 	// Payment Libraries
 	case LibraryAuthorize:
-		creds := &AuthorizeCredentials{}
-		err := json.Unmarshal(c.Configuration, creds)
-		return creds, err
+		credentials = &AuthorizeCredentials{}
 	case LibraryBraintree:
-		creds := &BraintreeCredentials{}
-		err := json.Unmarshal(c.Configuration, creds)
-		return creds, err
+		credentials = &BraintreeCredentials{}
 	case LibraryQualPay:
-		creds := &QualpayCredentials{}
-		err := json.Unmarshal(c.Configuration, creds)
-		return creds, err
+		credentials = &QualpayCredentials{}
 	case LibraryStripe:
-		creds := &StripeCredentials{}
-		err := json.Unmarshal(c.Configuration, creds)
-		return creds, err
+		credentials = &StripeCredentials{}
 	case LibraryPaySafe:
-		creds := &PaySafeCredentials{}
-		err := json.Unmarshal(c.Configuration, creds)
-		return creds, err
+		credentials = &PaySafeCredentials{}
+	case LibraryPaySafeApplePay:
+		credentials = &PaySafeApplePayCredentials{}
+	case LibraryPaySafeGooglePay:
+		credentials = &PaySafeGooglePayCredentials{}
 	case LibraryPayPalExpressCheckout:
-		creds := &PayPalExpressCheckoutCredentials{}
-		err := json.Unmarshal(c.Configuration, creds)
-		return creds, err
+		credentials = &PayPalExpressCheckoutCredentials{}
 	case LibraryPayPalWebsitePaymentsPro:
-		creds := &PayPalWebsitePaymentsProCredentials{}
-		err := json.Unmarshal(c.Configuration, creds)
-		return creds, err
+		credentials = &PayPalWebsitePaymentsProCredentials{}
 	case LibraryWorldpay:
-		creds := &WorldpayCredentials{}
-		err := json.Unmarshal(c.Configuration, creds)
-		return creds, err
+		credentials = &WorldpayCredentials{}
 	case LibrarySandbox:
-		creds := &SandboxCredentials{}
-		err := json.Unmarshal(c.Configuration, creds)
-		return creds, err
+		credentials = &SandboxCredentials{}
+	case LibraryVindicia:
+		credentials = &VindiciaCredentials{}
 
-	// Fraud Libraries
+		// Fraud Libraries
 	case LibraryMaxMind:
-		creds := &MaxMindCredentials{}
-		err := json.Unmarshal(c.Configuration, creds)
-		return creds, err
+		credentials = &MaxMindCredentials{}
 	case LibraryCyberSource:
-		creds := &CyberSourceCredentials{}
-		err := json.Unmarshal(c.Configuration, creds)
-		return creds, err
+		credentials = &CyberSourceCredentials{}
 	case LibraryChargeHive:
-		creds := &ChargeHiveCredentials{}
-		err := json.Unmarshal(c.Configuration, creds)
-		return creds, err
+		credentials = &ChargeHiveCredentials{}
 	default:
+		return nil, errors.New("invalid library specified")
 	}
-	return nil, errors.New("invalid library specified")
+	err := json.Unmarshal(c.Configuration, credentials)
+	return credentials, err
 }

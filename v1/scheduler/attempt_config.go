@@ -17,7 +17,7 @@ type AttemptConfig struct {
 	MethodLimit int `json:"methodLimit" yaml:"methodLimit" validate:"min=0"`
 
 	// CascadeDelay is the duration to wait between each cascade
-	CascadeDelay *time.Duration `json:"cascadeDelay" yaml:"cascadeDelay" validate:"min=0"`
+	CascadeDelay *time.Duration `json:"cascadeDelay" yaml:"cascadeDelay" validate:"required"`
 
 	// OverridePoolConnectorIDs will use this connectors instead of the ones in the pool
 	OverridePoolConnectorIDs []string `json:"overridePoolConnectorIDs" yaml:"overridePoolConnectorIDs" validate:"-"`

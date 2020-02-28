@@ -10,85 +10,87 @@ import (
 	"github.com/chargehive/configuration/v1/integration"
 	"github.com/chargehive/configuration/v1/policy"
 	"github.com/chargehive/configuration/v1/scheduler"
+	"log"
+	"time"
 )
 
-type Conf string
+type Template string
 
 const (
 	// connectors
-	confConnAuthorize        Conf = "con_authorize"
-	confConnBrainTree        Conf = "con_brainTree"
-	confConnChargeHive       Conf = "con_chargeHive"
-	confConnCyberSource      Conf = "con_cyberSource"
-	confConnMaxMind          Conf = "con_maxMind"
-	confConnPayPalExpress    Conf = "con_payPalExpressCheckout"
-	confConnPayPalWPP        Conf = "con_payPalWPP"
-	confConnPaysafe          Conf = "con_paysafe"
-	confConnPaysafeApplePay  Conf = "con_paysafeApplePay"
-	confConnPaysafeGooglePay Conf = "con_paysafeGooglePay"
-	confConnQualPay          Conf = "con_qualPay"
-	confConnSandbox          Conf = "con_sandbox"
-	confConnStripe           Conf = "con_stripe"
-	confConnVindicia         Conf = "con_vindicia"
-	confConnWorldPay         Conf = "con_worldPay"
+	confConnAuthorize        Template = "con_authorize"
+	confConnBrainTree        Template = "con_brainTree"
+	confConnChargeHive       Template = "con_chargeHive"
+	confConnCyberSource      Template = "con_cyberSource"
+	confConnMaxMind          Template = "con_maxMind"
+	confConnPayPalExpress    Template = "con_payPalExpressCheckout"
+	confConnPayPalWPP        Template = "con_payPalWPP"
+	confConnPaysafe          Template = "con_paysafe"
+	confConnPaysafeApplePay  Template = "con_paysafeApplePay"
+	confConnPaysafeGooglePay Template = "con_paysafeGooglePay"
+	confConnQualPay          Template = "con_qualPay"
+	confConnSandbox          Template = "con_sandbox"
+	confConnStripe           Template = "con_stripe"
+	confConnVindicia         Template = "con_vindicia"
+	confConnWorldPay         Template = "con_worldPay"
 
 	// connector Pool
-	confConnectorPool Conf = "con_pool"
+	confConnectorPool Template = "con_pool"
 
 	// integration
-	confSlack Conf = "int_slack"
+	confSlack Template = "int_slack"
 
 	// policy
-	confPolCascade       Conf = "pol_cascade"
-	confPolChargeExpiry  Conf = "pol_chargeExpiry"
-	confPolFraud         Conf = "pol_fraud"
-	confPolMethodLock    Conf = "pol_methodLock"
-	confPolMethodUpgrade Conf = "pol_methodUpgrade"
-	confPolMethodVerify  Conf = "pol_methodVerify"
-	confPolSCA           Conf = "pol_sca"
+	confPolCascade       Template = "pol_cascade"
+	confPolChargeExpiry  Template = "pol_chargeExpiry"
+	confPolFraud         Template = "pol_fraud"
+	confPolMethodLock    Template = "pol_methodLock"
+	confPolMethodUpgrade Template = "pol_methodUpgrade"
+	confPolMethodVerify  Template = "pol_methodVerify"
+	confPolSCA           Template = "pol_sca"
 
 	// scheduler
-	confSchInitiator  Conf = "sch_initiator"
-	confSchOnDemand   Conf = "sch_onDemand"
-	confSchRefund     Conf = "sch_refund"
-	confSchSequential Conf = "sch_sequential"
+	confSchInitiator  Template = "sch_initiator"
+	confSchOnDemand   Template = "sch_onDemand"
+	confSchRefund     Template = "sch_refund"
+	confSchSequential Template = "sch_sequential"
 )
 
-var Confs = map[Conf]bool{
-	confConnAuthorize:        true,
-	confConnBrainTree:        true,
-	confConnChargeHive:       true,
-	confConnCyberSource:      true,
-	confConnMaxMind:          true,
-	confConnPayPalExpress:    true,
-	confConnPayPalWPP:        true,
-	confConnPaysafe:          true,
-	confConnPaysafeApplePay:  true,
-	confConnPaysafeGooglePay: true,
-	confConnQualPay:          true,
-	confConnSandbox:          true,
-	confConnStripe:           true,
-	confConnVindicia:         true,
-	confConnWorldPay:         true,
-	confConnectorPool:        true,
-	confSlack:                true,
-	confPolCascade:           true,
-	confPolChargeExpiry:      true,
-	confPolFraud:             true,
-	confPolMethodLock:        true,
-	confPolMethodUpgrade:     true,
-	confPolMethodVerify:      true,
-	confPolSCA:               true,
-	confSchInitiator:         true,
-	confSchOnDemand:          true,
-	confSchRefund:            true,
-	confSchSequential:        true,
+var Templates = map[Template]string{
+	confConnAuthorize:        "Connector: Authorize.net",
+	confConnBrainTree:        "Connector: Braintree",
+	confConnChargeHive:       "Connector: ChargeHive (fraud)",
+	confConnCyberSource:      "Connector: Cybersource (fraud)",
+	confConnMaxMind:          "Connector: MaxMind (fraud)",
+	confConnPayPalExpress:    "Connector: Paypal Express Checkout",
+	confConnPayPalWPP:        "Connector: Paypal Website Payments Pro",
+	confConnPaysafe:          "Connector: Paysafe",
+	confConnPaysafeApplePay:  "Connector: Paysafe Apple Pay",
+	confConnPaysafeGooglePay: "Connector: Paysafe Google Pay",
+	confConnQualPay:          "Connector: QualPay",
+	confConnSandbox:          "Connector: ChargeHive Sandbox",
+	confConnStripe:           "Connector: Stripe",
+	confConnVindicia:         "Connector: Vindicia",
+	confConnWorldPay:         "Connector: Worldpay",
+	confConnectorPool:        "Connector Pool",
+	confSlack:                "Integration: Slack",
+	confPolCascade:           "Policy: Cascade",
+	confPolChargeExpiry:      "Policy: Charge Expiry",
+	confPolFraud:             "Policy: Fraud",
+	confPolMethodLock:        "Policy: Method Lock",
+	confPolMethodUpgrade:     "Policy: Method Upgrade",
+	confPolMethodVerify:      "Policy: Method Verify",
+	confPolSCA:               "Policy: SCA",
+	confSchInitiator:         "Schedule: Initiator",
+	confSchOnDemand:          "Schedule: OnDemand",
+	confSchRefund:            "Schedule: Refund",
+	confSchSequential:        "Schedule: Sequential",
 }
 
 var chg = "CHANGE-ME"
 
 // Generate can be used to create a basic but valid config of any type
-func Generate(conf Conf, pretty bool) ([]byte, error) {
+func Generate(conf Template, pretty bool) ([]byte, error) {
 	spec, err := buildSpec(conf)
 	if err != nil {
 		return nil, err
@@ -104,14 +106,19 @@ func Generate(conf Conf, pretty bool) ([]byte, error) {
 	} else {
 		data, err = json.Marshal(def)
 	}
-	if err != nil {
-		return []byte{}, err
+
+	// run validation against generated configs to ensure compliance
+	errs := Validate(data)
+	if len(errs) > 0 {
+		log.Println(errs)
+		err = errors.New("generated config does not pass validation")
 	}
-	return data, nil
+
+	return data, err
 }
 
-func buildSpec(conf Conf) (object.Specification, error) {
-
+func buildSpec(conf Template) (object.Specification, error) {
+	sec1 := 1 * time.Second
 	switch conf {
 	case confConnAuthorize:
 		j, _ := json.Marshal(connectorconfig.AuthorizeCredentials{APILoginID: &chg, TransactionKey: &chg, Environment: "sandbox"})
@@ -142,7 +149,7 @@ func buildSpec(conf Conf) (object.Specification, error) {
 		return connector.Connector{Library: string(connectorconfig.LibraryPaySafeApplePay), Configuration: j}, nil
 	case confConnPaysafeGooglePay:
 		j, _ := json.Marshal(connectorconfig.PaySafeGooglePayCredentials{Acquirer: chg, AccountID: chg, APIUsername: &chg, APIPassword: &chg, Environment: "MOCK", Currency: "USD", Locale: "en_GB"})
-		return connector.Connector{Library: string(connectorconfig.LibraryPaySafeApplePay), Configuration: j}, nil
+		return connector.Connector{Library: string(connectorconfig.LibraryPaySafeGooglePay), Configuration: j}, nil
 	case confConnQualPay:
 		j, _ := json.Marshal(connectorconfig.QualpayCredentials{APIKey: &chg, MerchantID: 1, Environment: "test"})
 		return connector.Connector{Library: string(connectorconfig.LibraryQualPay), Configuration: j}, nil
@@ -161,7 +168,7 @@ func buildSpec(conf Conf) (object.Specification, error) {
 	case confConnectorPool:
 		return connector.Pool{Restriction: "unrestricted", Connectors: []connector.PoolItem{{ConnectorID: chg}}}, nil
 	case confSlack:
-		return integration.Slack{AccessToken: chg, TeamName: chg, TeamID: chg, Webhook: &integration.SlackWebhook{Url: chg, Channel: chg, ConfigurationUrl: chg}}, nil
+		return integration.Slack{AccessToken: chg, TeamName: chg, TeamID: chg, TransactionNotifications: false, Webhook: &integration.SlackWebhook{Url: chg, Channel: chg, ConfigurationUrl: chg}}, nil
 	case confPolCascade:
 		return policy.CascadePolicy{Rules: []policy.CascadeRule{{Library: connectorconfig.Library(chg), OriginalResponseCode: chg}}}, nil
 	case confPolChargeExpiry:
@@ -177,13 +184,13 @@ func buildSpec(conf Conf) (object.Specification, error) {
 	case confPolSCA:
 		return policy.ScaPolicy{ShouldByPassChallenge: "cascade"}, nil
 	case confSchInitiator:
-		return scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorConfig, AttemptConfig: &scheduler.AttemptConfig{PoolType: scheduler.PoolTypeCascade, MethodSelector: scheduler.MethodSelectorPrimaryMethod, OverridePoolConnectorIDs: []string{}}}, nil
+		return scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorConfig, AttemptConfig: &scheduler.AttemptConfig{PoolType: scheduler.PoolTypeCascade, MethodSelector: scheduler.MethodSelectorPrimaryMethod, CascadeDelay: &sec1, OverridePoolConnectorIDs: []string{}}}, nil
 	case confSchOnDemand:
-		return scheduler.OnDemand{Schedule: scheduler.Schedule{AttemptConfig: scheduler.AttemptConfig{PoolType: "single", MethodSelector: "primary"}, TimeDelayOrigin: "initialisation", TimeDelaySync: "Earliest", TimeSyncZone: "UTC"}}, nil
+		return scheduler.OnDemand{Schedule: scheduler.Schedule{AttemptConfig: scheduler.AttemptConfig{PoolType: "single", MethodSelector: "primary", CascadeDelay: &sec1}, TimeDelayOrigin: "initialisation", TimeDelaySync: "Earliest", TimeSyncZone: "UTC"}}, nil
 	case confSchRefund:
 		return scheduler.Refund{Schedules: map[int]scheduler.ScheduleRefund{0: {0}}}, nil
 	case confSchSequential:
-		return scheduler.Sequential{Schedules: map[int]scheduler.Schedule{0: {AttemptConfig: scheduler.AttemptConfig{PoolType: "single", MethodSelector: "primary"}, TimeDelayOrigin: "initialisation", TimeDelaySync: "Earliest", TimeSyncZone: "UTC"}}}, nil
+		return scheduler.Sequential{Schedules: map[int]scheduler.Schedule{0: {AttemptConfig: scheduler.AttemptConfig{PoolType: "single", MethodSelector: "primary", CascadeDelay: &sec1}, TimeDelayOrigin: "initialisation", TimeDelaySync: "Earliest", TimeSyncZone: "UTC"}}}, nil
 	}
 	return nil, errors.New("invalid config to generate")
 }

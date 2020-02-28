@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"github.com/chargehive/configuration"
 	"github.com/chargehive/configuration/connectorconfig"
 	"github.com/chargehive/configuration/object"
 	"github.com/chargehive/configuration/selector"
@@ -16,10 +17,11 @@ var (
 	validate *validator.Validate
 )
 
-// Validate will check all structs for structural and invalid parameters
+// Validate will check all structs for structural and invalid parameters, will return an empty map if valid
 func Validate(rawJson []byte) map[string]string {
-	result := map[string]string{}
+	configuration.Initialise()
 
+	result := map[string]string{}
 	o, err := object.FromJson(rawJson)
 	if err != nil {
 		result["json"] = err.Error()
@@ -56,7 +58,7 @@ func Validate(rawJson []byte) map[string]string {
 		}
 		conn, err := connectorconfig.GetCredentials(c)
 		if err != nil {
-			result["connector error"] = "invalid connector in config"
+			result["connector error"] = err.Error()
 			return result
 		}
 		err = validate.Struct(conn)

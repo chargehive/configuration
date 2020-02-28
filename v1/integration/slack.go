@@ -27,7 +27,7 @@ type Slack struct {
 	Webhook *SlackWebhook `json:"webhook" yaml:"webhook" validate:"required"`
 
 	// TransactionNotifications indicates the action to perform
-	TransactionNotifications bool `json:"transactionNotifications" yaml:"transactionNotifications" validate:"required"`
+	TransactionNotifications bool `json:"transactionNotifications" yaml:"transactionNotifications" validate:"-"`
 }
 
 // SlackWebhook structure
