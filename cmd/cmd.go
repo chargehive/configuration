@@ -18,12 +18,12 @@ func main() {
 	generateCmdVersion := generateCmd.String("version", "v1", "version of config to generate")
 	generateCmdOutput := generateCmd.String("output", "", "specify a filename to write the output")
 
-	updateCmd := flag.NewFlagSet("update", flag.ExitOnError)
-	updateCmdVersion := updateCmd.String("version", "v1", "version of config to update")
-	updateCmdPretty := updateCmd.Bool("pretty", false, "pretty print the output (optional)")
-	updateCmdJson := updateCmd.String("json", "", "specify a json string to update")
-	updateCmdFile := updateCmd.String("file", "", "specify a config file to update")
-	updateCmdOutput := updateCmd.String("output", "", "specify a filename to write the output")
+	cleanCmd := flag.NewFlagSet("clean", flag.ExitOnError)
+	cleanCmdVersion := cleanCmd.String("version", "v1", "version of config to clean")
+	cleanCmdPretty := cleanCmd.Bool("pretty", false, "pretty print the output (optional)")
+	cleanCmdJson := cleanCmd.String("json", "", "specify a json string to clean")
+	cleanCmdFile := cleanCmd.String("file", "", "specify a config file to clean")
+	cleanCmdOutput := cleanCmd.String("output", "", "specify a filename to write the output")
 
 	validateCmd := flag.NewFlagSet("validate", flag.ExitOnError)
 	validateCmdVersion := validateCmd.String("version", "v1", "version of config to validate")
@@ -31,7 +31,7 @@ func main() {
 	validateCmdFile := validateCmd.String("file", "", "specify a config file")
 
 	if len(os.Args) < 2 {
-		fmt.Println("usage: generate, update or validate")
+		fmt.Println("usage: generate, clean or validate")
 		os.Exit(1)
 	}
 
@@ -40,12 +40,12 @@ func main() {
 	switch os.Args[1] {
 	case "generate":
 		_ = generateCmd.Parse(os.Args[2:])
-	case "update":
-		_ = updateCmd.Parse(os.Args[2:])
+	case "clean":
+		_ = cleanCmd.Parse(os.Args[2:])
 	case "validate":
 		_ = validateCmd.Parse(os.Args[2:])
 	default:
-		fmt.Println("usage: generate, update or validate")
+		fmt.Println("usage: generate, clean or validate")
 		os.Exit(1)
 	}
 
@@ -97,30 +97,31 @@ func main() {
 		}
 	}
 
-	// Update Configs
-	if updateCmd.Parsed() {
-		if *updateCmdVersion != currentVersion {
-			fmt.Printf("%v is not a valid config version\n", *updateCmdVersion)
+	// Clean Configs
+	if cleanCmd.Parsed() {
+		if *cleanCmdVersion != currentVersion {
+			fmt.Printf("%v is not a valid config version\n", *cleanCmdVersion)
 			os.Exit(1)
 		}
 
 		// load json
-		json, err := getJson(updateCmdJson, updateCmdFile)
+		json, err := getJson(cleanCmdJson, cleanCmdFile)
 		if err != nil {
 			fmt.Println(err.Error())
 			generateCmd.PrintDefaults()
 			os.Exit(1)
 		}
 
-		// perform update
-		updated, result, err := utils.Update(json, *updateCmdVersion, *updateCmdPretty)
+		// perform clean
+		cleaned, result, err := utils.Clean(json, *cleanCmdVersion, *cleanCmdPretty)
 		if err != nil {
+			fmt.Println("Error:")
 			fmt.Println(err.Error())
 			os.Exit(1)
 		}
 
-		// confirm update status
-		if updated {
+		// confirm clean status
+		if cleaned {
 			fmt.Println("changes have been made to the structure of this config")
 		} else {
 			fmt.Println("config is up to date")
@@ -132,7 +133,7 @@ func main() {
 			if err != nil {
 				fmt.Println(err)
 			} else {
-				fmt.Printf("\nWritten data to '%v'\n", *updateCmdOutput)
+				fmt.Printf("\nWritten data to '%v'\n", *cleanCmdOutput)
 			}
 		}
 		fmt.Println(string(result))

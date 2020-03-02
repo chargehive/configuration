@@ -6,6 +6,6 @@ type MetaData struct {
 	UUID        string            `json:"uuid" yaml:"uuid"`
 	DisplayName string            `json:"displayName" yaml:"displayName"`
 	Description string            `json:"description" yaml:"description"`
-	Annotations map[string]string `json:"annotaions" yaml:"annotaions"`
+	Annotations map[string]string `json:"annotations" yaml:"annotations"`
 	Labels      map[string]string `json:"labels" yaml:"labels"`
 }

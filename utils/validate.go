@@ -55,10 +55,10 @@ func Validate(rawJson []byte, version string) map[string]string {
 	if o.Kind == "Connector" {
 		c, ok := o.Spec.(*connector.Connector)
 		if !ok {
-			result["connector error"] = "spec is not a connector"
+			result["spec error"] = "spec is not a connector"
 			return result
 		}
-		conn, err := connectorconfig.GetCredentials(c)
+		conn, err := connectorconfig.GetCredentialsStrict(c)
 		if err != nil {
 			result["connector error"] = err.Error()
 			return result

@@ -53,7 +53,7 @@ func jsonToObj(jsonData []byte, strict bool) (*Definition, error) {
 
 	spec, err := jsonSpecToObj(obj.Kind, obj.SpecVersion, raw, strict)
 	if err != nil {
-		return nil, errors.New("invalid JSON format in configuration")
+		return nil, err
 	}
 	if spec == nil {
 		return nil, errors.New("Kind " + string(obj.Kind) + ", Version " + obj.SpecVersion + " has not yet been implemented")
