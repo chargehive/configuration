@@ -16,7 +16,7 @@ As with all configs, the standard wrapper is used.
     "schedule": {                           // Schedule object
       "attemptConfig": {                    // Configuration used when processing this schedule
             "poolType": "single",           // The order that this attempt should iterate connectors
-            "methodSelector": "primary",    // How payment method should be selected for this attempt
+            "methodSelector": "primary",    // How payment methods should be selected for this attempt
             "connectorLimit": 0,            // Maximum number of connectors to process within an attempt per method
             "methodLimit": 0,               // Maximum number of methods to be attempt per method
             "cascadeDelay": null,           // Delay between connector cascades

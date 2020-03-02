@@ -7,26 +7,55 @@ The connector config defines the account and connection information to communica
   
 ## Format  
 As with all configs, the standard wrapper is used:  
-```json5  
-{  
-  "kind": "Connector", //Must be set to "Connector"  
-  "metadata": {  
-  "projectId": "test-project", //Must be set to the ChargeHive Project ID you were issued with  
-  "name": "braintree-connector" //Set this to a memorable name for the connector, no spaces, all lowercase  
- }, 
-  "spec": {  
-  "Library": "braintree", //Set this to the name of the library you wish to use  
-  "Configuration": "eyJQdWJsaWN..." //Set this to the Base64 Encoded configuration json as featured below  
- }}  
-```  
+ 
+```json5
+{
+  "kind": "Connector",                        // Must be set to "Connector"
+  "metadata": {
+    "projectId": "test-project",              // Must be set to the ChargeHive Project ID you were issued with
+    "name": "braintree-connector",            // Set this to a memorable name for the connector, no spaces, all lowercase
+  },
+  "specVersion": "v1",                        // Must be set to the correct version
+  "selector": {},                             // May be used to apply this to a subset of charges
+  "spec": {
+    "Library": "braintree",                   // Set this to the name of the library you wish to use
+    "configuration": "eyJQdWJsaWN..."         // Set this to the Base64 Encoded configuration json as featured below
+  }
+}
+```
+##Selectors
+You can optionally apply Selector rules to Connectors to ensure they are only used in certain circumstances.  Selectors allow you to define Expressions that must be matched in order for a Charge to be attempted on this Connector.
   
+  A good example of a Selector for a Connector would be Currency. Using a Selector you can ensure the Currency of the Charge must match the Currency defined in the Expression, so this Connector would only be used in a Charge Attempt if the Currency matched.
+  
+  Find out more about Selectors and what you can define in the [Selectors](../selectors.md) secton.
+
 ## Payment Libraries  
 To create a Payment Provider Connector you need to define the `spec` properties in the config of the Connector.
 * The `Library` property needs to be set to the Library value defined below for the Payment Provider or Fraud Service you are setting up.
 * The `Configuration` property must have the library configuration json as defined below Base64 encoded and inserted as a string.
 
-Below is a list of the configuration options for each of the connectors for the Payment Provider and Fraud Services. 
- 
+Here are the configuration options for each of the connectors for the Payment Provider and Fraud Services. 
+
+---
+#### Payment Providers
+[Authorize.net](#authorizenet)  
+[Braintree](#braintree)  
+[PayPal Express Checkout](#paypal---express-checkout)  
+[PayPal Website Payments Pro](#paypal---website-payments-pro)  
+[Paysafe](#paysafe)  
+[Qualpay](#qualpay)  
+[Sandbox](#sandbox)  
+[Stripe](#stripe)  
+[Vindicia](#vindicia)
+[Worldpay](#worldpay)  
+
+#### Fraud Libraries
+[ChargeHive](#chargehive)  
+[Cybersource](#cybersource)  
+[Maxmind](#maxmind)
+---
+
 ### Authorize.net
 Library: `authorize`  
 Configuration:
@@ -254,6 +283,8 @@ FieldName | Definition
 ---:|:---   
 AccountID | The Account Id found in your MaxMind account Services -> My Licence Key
 LicenceKey | The Licence Key from your MaxMind account under Services -> My Licence Key
+
+---
 
 ## Full Example
 This is a working example using the sandbox connector with the base 64 encoded configuration set to : `{"Mode":"dynamic","TransactionIDPrefix":"1234"}`

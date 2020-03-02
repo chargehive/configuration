@@ -166,7 +166,7 @@ Charge Meta Keys | Definition
 "charge.meta.item.delivery.standard"|
 "charge.meta.item.delivery.type"|
 "charge.meta.item.delivery.trackingCode"|
-"charge.meta.item.delivery.courier"|
+"charge.meta.item.delivery.courier"| 
 	
 Transaction Keys | Definition 
 ---:|:---
