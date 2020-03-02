@@ -19,14 +19,14 @@ const (
 )
 
 type WorldpayCredentials struct {
-	Username              *string
-	Password              *string
-	MerchantID            string
-	ReportGroup           string
-	Environment           WorldpayEnvironment
-	CardinalApiIdentifier *string
-	CardinalApiKey        *string
-	CardinalOrgUnitId     *string
+	Username              *string             `json:"username" yaml:"username" validate:"required"`
+	Password              *string             `json:"password" yaml:"password" validate:"required"`
+	MerchantID            string              `json:"merchantID" yaml:"merchantID" validate:"required"`
+	ReportGroup           string              `json:"reportGroup" yaml:"reportGroup" validate:"-"`
+	Environment           WorldpayEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox postlive transactpostlive production productiontransact prelive transactprelive"`
+	CardinalApiIdentifier *string             `json:"cardinalApiIdentifier" yaml:"cardinalApiIdentifier" validate:"required_with=CardinalApiKey CardinalOrgUnitId"`
+	CardinalApiKey        *string             `json:"cardinalApiKey" yaml:"cardinalApiKey" validate:"required_with=CardinalApiIdentifier CardinalOrgUnitId"`
+	CardinalOrgUnitId     *string             `json:"cardinalOrgUnitId" yaml:"cardinalOrgUnitId" validate:"required_with=CardinalApiIdentifier CardinalApiKey"`
 }
 
 func (c WorldpayCredentials) GetLibrary() Library {

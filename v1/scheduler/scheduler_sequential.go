@@ -6,14 +6,14 @@ import (
 	"github.com/chargehive/configuration/object"
 )
 
+// KindSequentialScheduler is the identifier for an KindSequentialScheduler scheduler config
+const KindSequentialScheduler object.Kind = "SchedulerSequential"
+
 // Sequential scheduler is a schedule that is ran based on factors such as attempt number
 type Sequential struct {
 	// Schedules to use based on attempt number map[attempt number > Schedule]
-	Schedules map[int]Schedule
+	Schedules map[int]Schedule `json:"schedules" yaml:"schedules" validate:"min=1,dive"`
 }
-
-// KindSequentialScheduler is the identifier for an KindSequentialScheduler scheduler config
-const KindSequentialScheduler object.Kind = "SchedulerSequential"
 
 // GetKind returns the Sequential kind
 func (Sequential) GetKind() object.Kind { return KindSequentialScheduler }

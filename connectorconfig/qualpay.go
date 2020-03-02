@@ -14,9 +14,9 @@ const (
 )
 
 type QualpayCredentials struct {
-	APIKey      *string
-	MerchantID  int64
-	Environment QualPayEnvironment
+	APIKey      *string            `json:"apiKey" yaml:"apiKey" validate:"required"`
+	MerchantID  int64              `json:"merchantID" yaml:"merchantID" validate:"min=1"`
+	Environment QualPayEnvironment `json:"environment" yaml:"environment" validate:"oneof=test live"`
 }
 
 func (c QualpayCredentials) GetLibrary() Library {

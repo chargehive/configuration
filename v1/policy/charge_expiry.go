@@ -13,10 +13,10 @@ const KindPolicyChargeExpiry object.Kind = "PolicyChargeExpiry"
 // ChargeExpiryPolicy defines the constraints that when exceeded a charge will not expire
 type ChargeExpiryPolicy struct {
 	// Timeout is the duration from when the charge was first initialized
-	Timeout time.Duration
+	Timeout time.Duration `json:"timeout" yaml:"timeout" validate:"min=0"`
 
 	// Attempts is the maximum number of attempts that can be performed on a charge
-	Attempts int64
+	Attempts int64 `json:"attempts" yaml:"attempts" validate:"min=0"`
 }
 
 // GetKind returns the ChargeExpiryPolicy kind

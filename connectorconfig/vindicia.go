@@ -15,11 +15,11 @@ const (
 )
 
 type VindiciaCredentials struct {
-	Login         string
-	Password      *string
-	HMACKey       *string
-	PGPPrivateKey *string
-	Environment   VindiciaEnvironment
+	Login         string              `json:"login" yaml:"login" validate:"required"`
+	Password      *string             `json:"password" yaml:"password" validate:"required"`
+	HMACKey       *string             `json:"hmacKey" yaml:"hmacKey" validate:"required"`
+	PGPPrivateKey *string             `json:"pgpPrivateKey" yaml:"pgpPrivateKey" validate:"required"`
+	Environment   VindiciaEnvironment `json:"environment" yaml:"environment" validate:"oneof=development stage production"`
 }
 
 func (c VindiciaCredentials) GetLibrary() Library {

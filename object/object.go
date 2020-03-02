@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/chargehive/configuration/selector"
+	"strings"
 )
 
 type Kind string
@@ -12,24 +13,48 @@ const KindNone Kind = ""
 
 type Definition struct {
 	Kind        Kind              `json:"Kind" yaml:"Kind"`
-	MetaData    MetaData          `json:"metadata" yaml:"metadata"`
-	SpecVersion string            `json:"specVersion,omitempty" yaml:"specVersion,omitempty"`
-	Selector    selector.Selector `json:"selector,omitempty" yaml:"selector,omitempty"`
-	Spec        interface{}       `json:"spec" yaml:"spec"`
+	MetaData    MetaData          `json:"metadata" yaml:"metadata" validate:"dive"`
+	SpecVersion string            `json:"specVersion" yaml:"specVersion"`
+	Selector    selector.Selector `json:"selector" yaml:"selector" validate:"dive"`
+	Spec        interface{}       `json:"spec" yaml:"spec" validate:"dive"`
 }
 
 func (d *Definition) Definition() *Definition { return d }
 func (d *Definition) GetID() string           { return d.MetaData.Name }
 
 func FromJson(jsonData []byte) (*Definition, error) {
+	return jsonToObj(jsonData, false)
+}
+
+func FromJsonStrict(jsonData []byte) (*Definition, error) {
+	return jsonToObj(jsonData, true)
+}
+
+func SpecFromJson(kind Kind, version string, jsonData []byte) (Specification, error) {
+	return jsonSpecToObj(kind, version, jsonData, false)
+}
+
+func SpecFromJsonStrict(kind Kind, version string, jsonData []byte) (Specification, error) {
+	return jsonSpecToObj(kind, version, jsonData, true)
+}
+
+func jsonToObj(jsonData []byte, strict bool) (*Definition, error) {
 	var raw json.RawMessage
 	obj := &Definition{Spec: &raw}
 
-	if err := json.Unmarshal(jsonData, obj); err != nil {
+	reader := strings.NewReader(string(jsonData))
+	dec := json.NewDecoder(reader)
+	if strict {
+		dec.DisallowUnknownFields()
+	}
+	if err := dec.Decode(obj); err != nil {
 		return nil, err
 	}
 
-	spec := SpecFromJson(obj.Kind, obj.SpecVersion, raw)
+	spec, err := jsonSpecToObj(obj.Kind, obj.SpecVersion, raw, strict)
+	if err != nil {
+		return nil, err
+	}
 	if spec == nil {
 		return nil, errors.New("Kind " + string(obj.Kind) + ", Version " + obj.SpecVersion + " has not yet been implemented")
 	}
@@ -37,15 +62,20 @@ func FromJson(jsonData []byte) (*Definition, error) {
 	return obj, nil
 }
 
-func SpecFromJson(kind Kind, version string, jsonData []byte) Specification {
+func jsonSpecToObj(kind Kind, version string, jsonData []byte, strict bool) (Specification, error) {
 	if handler, ok := getKindHandlerFunc(kind, version); ok {
 		spec := handler()
-		if err := json.Unmarshal(jsonData, spec); err != nil {
-			return nil
+		reader := strings.NewReader(string(jsonData))
+		dec := json.NewDecoder(reader)
+		if strict {
+			dec.DisallowUnknownFields()
 		}
-		return spec
+		if err := dec.Decode(spec); err != nil {
+			return nil, err
+		}
+		return spec, nil
 	}
-	return nil
+	return nil, nil
 }
 
 func DefinitionFromSpec(specification Specification) *Definition {

@@ -7,18 +7,18 @@ import (
 )
 
 type PayPalWebsitePaymentsProCredentials struct {
-	APIUsername            *string
-	APIPassword            *string
-	APISignature           *string
-	SupportedCurrencies    []string
-	CardinalProcessorID    *string
-	CardinalMerchantID     *string
-	CardinalTransactionPw  *string
-	CardinalTransactionURL *string
-	CardinalAPIIdentifier  *string
-	CardinalAPIKey         *string
-	CardinalOrgUnitID      *string
-	Environment            PayPalEnvironment
+	APIUsername            *string           `json:"apiUsername" yaml:"apiUsername" validate:"required"`
+	APIPassword            *string           `json:"apiPassword" yaml:"apiPassword" validate:"required"`
+	APISignature           *string           `json:"apiSignature" yaml:"apiSignature" validate:"required"`
+	SupportedCurrencies    []string          `json:"supportedCurrencies" yaml:"supportedCurrencies" validate:"gt=0,dive,oneof=AUD BRL CAD CZK DKK EUR HKD HUF INR ILS JPY MYR MXN TWD NZD NOK PHP PLN GBP RUB SGD SEK CHF THB USD"`
+	CardinalProcessorID    *string           `json:"cardinalProcessorID" yaml:"cardinalProcessorID" validate:"required_with=cardinalMerchantID cardinalTransactionPw cardinalTransactionURL cardinalAPIIdentifier cardinalAPIKey cardinalOrgUnitID"`
+	CardinalMerchantID     *string           `json:"cardinalMerchantID" yaml:"cardinalMerchantID" validate:"required_with=cardinalProcessorID cardinalTransactionPw cardinalTransactionURL cardinalAPIIdentifier cardinalAPIKey cardinalOrgUnitID"`
+	CardinalTransactionPw  *string           `json:"cardinalTransactionPw" yaml:"cardinalTransactionPw" validate:"required_with=cardinalProcessorID cardinalMerchantID cardinalTransactionURL cardinalAPIIdentifier cardinalAPIKey cardinalOrgUnitID"`
+	CardinalTransactionURL *string           `json:"cardinalTransactionURL" yaml:"cardinalTransactionURL" validate:"required_with=cardinalProcessorID cardinalMerchantID cardinalTransactionPw cardinalAPIIdentifier cardinalAPIKey cardinalOrgUnitID"`
+	CardinalAPIIdentifier  *string           `json:"cardinalAPIIdentifier" yaml:"cardinalAPIIdentifier" validate:"required_with=cardinalProcessorID cardinalMerchantID cardinalTransactionPw cardinalTransactionURL cardinalAPIKey cardinalOrgUnitID"`
+	CardinalAPIKey         *string           `json:"cardinalAPIKey" yaml:"cardinalAPIKey" validate:"required_with=cardinalProcessorID cardinalMerchantID cardinalTransactionPw cardinalTransactionURL cardinalAPIIdentifier cardinalOrgUnitID"`
+	CardinalOrgUnitID      *string           `json:"cardinalOrgUnitID" yaml:"cardinalOrgUnitID" validate:"required_with=cardinalProcessorID cardinalMerchantID cardinalTransactionPw cardinalTransactionURL cardinalAPIIdentifier cardinalAPIKey"`
+	Environment            PayPalEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox live"`
 }
 
 func (c PayPalWebsitePaymentsProCredentials) GetLibrary() Library {

@@ -34,9 +34,32 @@ const (
 	LibraryCyberSource Library = "cybersource"
 )
 
+var LibraryRegister = map[Library]bool{
+	LibrarySandbox:                  true,
+	LibraryAuthorize:                true,
+	LibraryBraintree:                true,
+	LibraryQualPay:                  true,
+	LibraryStripe:                   true,
+	LibraryPaySafe:                  true,
+	LibraryPaySafeApplePay:          true,
+	LibraryPaySafeGooglePay:         true,
+	LibraryWorldpay:                 true,
+	LibraryPayPalWebsitePaymentsPro: true,
+	LibraryPayPalExpressCheckout:    true,
+	LibraryVindicia:                 true,
+	LibraryChargeHive:               true,
+	LibraryMaxMind:                  true,
+	LibraryCyberSource:              true,
+}
+
 type LibraryType string
 
 const (
 	LibraryTypePayment LibraryType = "payment"
 	LibraryTypeFraud   LibraryType = "fraud"
 )
+
+var LibraryTypeRegister = map[LibraryType]bool{
+	LibraryTypePayment: true,
+	LibraryTypeFraud:   true,
+}

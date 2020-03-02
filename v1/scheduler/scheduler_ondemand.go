@@ -6,13 +6,13 @@ import (
 	"github.com/chargehive/configuration/object"
 )
 
-// OnDemand is a schedule that is run on demand
-type OnDemand struct {
-	Schedule Schedule
-}
-
 // KindOnDemandScheduler is the identifier for an OnDemand scheduler config
 const KindOnDemandScheduler object.Kind = "SchedulerOnDemand"
+
+// OnDemand is a schedule that is run on demand
+type OnDemand struct {
+	Schedule Schedule `json:"schedule" yaml:"schedule" validate:"required,dive"`
+}
 
 // GetKind returns the OnDemand kind
 func (OnDemand) GetKind() object.Kind { return KindOnDemandScheduler }

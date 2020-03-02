@@ -7,7 +7,7 @@ import (
 )
 
 type StripeCredentials struct {
-	APIKey *string
+	APIKey *string `json:"apiKey" yaml:"apiKey" validate:"required"`
 }
 
 func (c StripeCredentials) GetLibrary() Library {

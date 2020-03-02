@@ -9,11 +9,11 @@ const (
 	ConnectorSelectorNone ConnectorSelector = "none"
 
 	// ConnectorSelectorStickyFirst indicates the connector should stick to the first connector
-	// that was sucessful for that payment method
+	// that was successful for that payment method
 	ConnectorSelectorStickyFirst ConnectorSelector = "sticky-first"
 
 	// ConnectorSelectorStickyLast indicates the connector should stick to the most recent connector
-	// that was sucessful for that payment method
+	// that was successful for that payment method
 	ConnectorSelectorStickyLast ConnectorSelector = "sticky-last"
 
 	// ConnectorSelectorStickyAny indicates to use any connector that has a past success for that payment method
@@ -101,4 +101,14 @@ const (
 
 	// TimeDelaySyncClosest will run the transaction at the closest sync hour relative to TimeSync
 	TimeDelaySyncClosest TimeDelaySync = "Closest"
+)
+
+// TimeZone represents a three character timezone
+type TimeZone string
+
+const (
+	// TimeZoneULT Users Local Time
+	TimeZoneULT TimeZone = "ULT"
+	// TimeZoneUTC  Universal Time Coordinated
+	TimeZoneUTC TimeZone = "UTC"
 )

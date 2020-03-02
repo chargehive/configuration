@@ -25,8 +25,8 @@ const (
 )
 
 type Predicate struct {
-	Key        Key                `json:"key" yaml:"key"`
-	Operator   PredicateOperator  `json:"operator" yaml:"operator"`
-	Conversion OperatorConversion `json:"conversion,omitempty" yaml:"conversion,omitempty"`
-	Values     []string           `json:"values,omitempty" yaml:"values,omitempty"`
+	Key        Key                `json:"key" yaml:"key" validate:"predicate-key"`
+	Operator   PredicateOperator  `json:"operator" yaml:"operator" validate:"oneof=Equal NotEqual In NotIn Exists DoesNotExists Gt Lt"`
+	Conversion OperatorConversion `json:"conversion" yaml:"conversion" validate:"omitempty,oneof=TimeDow TimeMonth DurationSeconds DurationHours DurationDays"`
+	Values     []string           `json:"values" yaml:"values"`
 }

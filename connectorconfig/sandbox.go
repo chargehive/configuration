@@ -17,8 +17,8 @@ const (
 )
 
 type SandboxCredentials struct {
-	Mode                SandboxMode
-	TransactionIDPrefix string
+	Mode                SandboxMode `json:"mode" yaml:"mode" validate:"oneof=dynamic offline delayed random-timeout chaos"`
+	TransactionIDPrefix string      `json:"yransactionIDPrefix" yaml:"transactionIDPrefix" validate:"-"`
 }
 
 func (c SandboxCredentials) GetLibrary() Library {

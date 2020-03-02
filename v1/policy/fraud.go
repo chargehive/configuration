@@ -40,13 +40,13 @@ const (
 // FraudPolicy is the policy ran against a charge to determine its fraud status
 type FraudPolicy struct {
 	// ConnectorIDs is the IDs of the fraud connectors
-	ConnectorIDs []string
+	ConnectorIDs []string `json:"connectorIDs" yaml:"connectorIDs" validate:"min=1"`
 
 	// CheckTime is the time we should be running a fraud scan
-	CheckTime FraudCheckTime
+	CheckTime FraudCheckTime `json:"checkTime" yaml:"checkTime" validate:"oneof=preauth-first preauth-every auth-success ondemand"`
 
-	// CheckType is the type of check that should be perofrmed for this policy
-	CheckType FraudCheckType
+	// CheckType is the type of check that should be performed for this policy
+	CheckType FraudCheckType `json:"checkType" yaml:"checkType" validate:"oneof=all failover"`
 }
 
 // GetKind returns the FraudPolicy kind

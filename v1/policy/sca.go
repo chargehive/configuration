@@ -9,7 +9,7 @@ import (
 // KindPolicySCA is the identifier for a ScaPolicy config
 const KindPolicySCA object.Kind = "PolicySCA"
 
-// SCABypassMode indicates the action to be perfomed when a verification result is returned by a connector
+// SCABypassMode indicates the action to be performed when a verification result is returned by a connector
 type SCABypassMode string
 
 const (
@@ -26,19 +26,20 @@ const (
 // ScaPolicy options determine how to handle 3DS on connector requests
 type ScaPolicy struct {
 	// ShouldIdentify indicates if the identification stages should take place
-	ShouldIdentify bool
+	ShouldIdentify bool `json:"shouldIdentify" yaml:"shouldIdentify" validate:"-"`
 
 	// ShouldChallengeOptional challenge based on an optional response from the connector (setting this to false will not display the challenge)
-	ShouldChallengeOptional bool
+	ShouldChallengeOptional bool `json:"shouldChallengeOptional" yaml:"shouldChallengeOptional" validate:"-"`
 
 	// ShouldByPassChallenge if the challenge is required, bypassing this will attempt an auth without displaying the challenge
-	ShouldByPassChallenge SCABypassMode
+	ShouldByPassChallenge SCABypassMode `json:"shouldByPassChallenge" yaml:"shouldByPassChallenge" validate:"omitempty,oneof=cascade current"`
 
-	// ShouldChallenge3dSecureV1 determines if the connector can fallback to 3DS v1 when 3DS v2 is not availabe
-	ShouldChallenge3dSecureV1 bool
+	// ShouldChallenge3dSecureV1 determines if the connector can fallback to 3DS v1 when 3DS v2 is not available
+	// Deprecated: ChargeHive does not currently support v1 SCA
+	ShouldChallenge3dSecureV1 bool `json:"shouldChallenge3dSecureV1,omitempty" yaml:"shouldChallenge3dSecureV1,omitempty" validate:"-"`
 
 	// ShouldAuthOnError if true and an error response is returned from the connector; proceed to auth anyway
-	ShouldAuthOnError bool
+	ShouldAuthOnError bool `json:"shouldAuthOnError" yaml:"shouldAuthOnError" validate:"-"`
 }
 
 // GetKind returns the ScaPolicy kind
