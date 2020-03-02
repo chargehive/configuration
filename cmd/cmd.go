@@ -4,6 +4,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"github.com/chargehive/configuration"
 	"github.com/chargehive/configuration/utils"
 	"io/ioutil"
 	"os"
@@ -49,6 +50,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	configuration.Initialise()
 	// Generate configs
 	if generateCmd.Parsed() {
 		if *generateCmdVersion != currentVersion {
