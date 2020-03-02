@@ -37,8 +37,6 @@ To create a Payment Provider Connector you need to define the `spec` properties 
 
 Here are the configuration options for each of the connectors for the Payment Provider and Fraud Services. 
 
----
-
 #### Payment Providers
 [Authorize.net](#authorizenet)  
 [Braintree](#braintree)  
@@ -248,6 +246,8 @@ FieldName | Definition
   CardinalAPIIdentifier | The Cardinal API Identifier obtained from the CardinalCommerce Integration Payments settings  
   CardinalOrgUnitID | The Cardinal API OrgUnitID obtained from the CardinalCommerce Integration Payments settings 
   CardinalAPIKey | The Cardinal API Key obtained from the CardinalCommerce Integration Payments settings  
+
+---
 
 ## Fraud Libraries  
 
