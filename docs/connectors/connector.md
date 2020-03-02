@@ -23,7 +23,7 @@ As with all configs, the standard wrapper is used:
   }
 }
 ```
-##Selectors
+## Selectors
 You can optionally apply Selector rules to Connectors to ensure they are only used in certain circumstances.  Selectors allow you to define Expressions that must be matched in order for a Charge to be attempted on this Connector.
   
   A good example of a Selector for a Connector would be Currency. Using a Selector you can ensure the Currency of the Charge must match the Currency defined in the Expression, so this Connector would only be used in a Charge Attempt if the Currency matched.
