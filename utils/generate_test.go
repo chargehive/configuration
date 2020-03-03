@@ -13,7 +13,7 @@ func TestGenerate(t *testing.T) {
 	fmt.Println("Testing templates: ")
 	for k := range Templates {
 		output, err := Generate(k, "v1", false)
-		fmt.Printf("%v - %s\n", k, output)
+		fmt.Printf("%-30v%s\n", k, output)
 		if err != nil {
 			fmt.Println(err)
 		}
