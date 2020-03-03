@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"os"
 	"sort"
+	"strings"
 )
 
 func main() {
@@ -31,6 +32,7 @@ func main() {
 	validateCmdJson := validateCmd.String("json", "", "specify a json string")
 	validateCmdFile := validateCmd.String("file", "", "specify a config file")
 
+	fmt.Print("\n")
 	if len(os.Args) < 2 {
 		fmt.Println("usage: generate, clean or validate")
 		os.Exit(1)
@@ -62,7 +64,7 @@ func main() {
 			// list templates available
 			fmt.Printf("%-30v%v\n-----------------------------------------\n", "Template Name", "Description")
 			keys := make([]string, 0)
-			for k, _ := range utils.Templates {
+			for k := range utils.Templates {
 				keys = append(keys, string(k))
 			}
 			sort.Strings(keys)
@@ -110,26 +112,23 @@ func main() {
 		json, err := getJson(cleanCmdJson, cleanCmdFile)
 		if err != nil {
 			fmt.Println(err.Error())
-			generateCmd.PrintDefaults()
 			os.Exit(1)
 		}
 
 		// perform clean
-		cleaned, result, err := utils.Clean(json, *cleanCmdVersion, *cleanCmdPretty)
+		modified, result, err := utils.Clean(json, *cleanCmdVersion, *cleanCmdPretty)
 		if err != nil {
-			fmt.Println("Error:")
-			fmt.Println(err.Error())
+			fmt.Printf("error:\t\t%v\n", err.Error())
 			os.Exit(1)
 		}
 
 		// confirm clean status
-		if cleaned {
-			fmt.Println("changes have been made to the structure of this config")
-		} else {
-			fmt.Println("config is up to date")
-		}
+		fmt.Printf("modified:\t%t\n", modified)
 
-		// write output
+		// print the output
+		fmt.Printf("output:\t\t%s\n", result)
+
+		// write to file if required
 		if *generateCmdOutput != "" {
 			err := ioutil.WriteFile(*generateCmdOutput, result, os.ModePerm)
 			if err != nil {
@@ -138,7 +137,14 @@ func main() {
 				fmt.Printf("\nWritten data to '%v'\n", *cleanCmdOutput)
 			}
 		}
-		fmt.Println(string(result))
+
+		// validate output
+		if errs := utils.Validate(result, *validateCmdVersion); len(errs) > 0 {
+			for k, v := range errs {
+				fmt.Printf("error:\t\t%v - %v\n", k, v)
+			}
+			os.Exit(1)
+		}
 	}
 
 	// Validate Configs
@@ -155,18 +161,18 @@ func main() {
 		}
 
 		if errs := utils.Validate(json, *validateCmdVersion); len(errs) > 0 {
-			fmt.Println("errors found:")
 			for k, v := range errs {
-				fmt.Printf("%v : %v", k, v)
+				fmt.Printf("error:\t\t%v - %v\n", k, v)
 			}
 			os.Exit(1)
 		}
-		fmt.Println("no errors found")
+		fmt.Println("result:\t\tvalid")
 	}
 }
 
 func getJson(jsonCmd *string, fileCmd *string) ([]byte, error) {
 	if *jsonCmd != "" {
+		fmt.Printf("input:\t\t%s\n", strings.TrimSpace(*jsonCmd))
 		return []byte(*jsonCmd), nil
 	}
 	if *fileCmd != "" {
@@ -174,6 +180,8 @@ func getJson(jsonCmd *string, fileCmd *string) ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
+		fmt.Printf("file:\t\t%v\n", *fileCmd)
+		fmt.Printf("input:\t\t%s\n", strings.TrimSpace(string(json)))
 		return json, nil
 	}
 	return nil, errors.New("must specify either a file or json string")

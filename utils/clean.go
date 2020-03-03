@@ -10,7 +10,7 @@ import (
 )
 
 // Clean will load a json file in, merge fields where possible, removes old fields no longer in struct
-func Clean(input []byte, version string, pretty bool) (cleaned bool, output []byte, err error) {
+func Clean(input []byte, version string, pretty bool) (modified bool, output []byte, err error) {
 	if version != "v1" {
 		err = errors.New("version mismatch")
 		return
@@ -51,9 +51,9 @@ func Clean(input []byte, version string, pretty bool) (cleaned bool, output []by
 	}
 
 	// convert to new json
-	output, _ = json.MarshalIndent(def, "", "  ")
-	if !pretty {
-		output, _ = json.Marshal(def)
+	output, _ = json.Marshal(def)
+	if pretty {
+		output, _ = json.MarshalIndent(def, "", "  ")
 	}
 
 	// standardise the output
@@ -67,7 +67,7 @@ func Clean(input []byte, version string, pretty bool) (cleaned bool, output []by
 	// compare contents
 	a, _ := json.Marshal(inputStd)
 	b, _ := json.Marshal(outputStd)
-	cleaned = !bytes.Equal(a, b)
+	modified = !bytes.Equal(a, b)
 
 	return
 }
