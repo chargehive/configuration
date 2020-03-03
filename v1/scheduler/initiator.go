@@ -18,7 +18,7 @@ type Initiator struct {
 	InitialConnector ConnectorSelector `json:"initialConnector" yaml:"initialConnector" validate:"required,oneof=none sticky-first sticky-last sticky-any sticky-verified config"`
 
 	// AttemptConfig to be used when ConnectorSelectorConfig is set as InitialConnector
-	AttemptConfig *AttemptConfig `json:"attemptConfig:" yaml:"attemptConfig" validate:"dive"`
+	AttemptConfig *AttemptConfig `json:"attemptConfig:" yaml:"attemptConfig" validate:"required,dive"`
 }
 
 // GetKind returns the Initiator kind

@@ -12,7 +12,7 @@ type Kind string
 const KindNone Kind = ""
 
 type Definition struct {
-	Kind        Kind              `json:"Kind" yaml:"Kind"`
+	Kind        Kind              `json:"kind" yaml:"kind"`
 	MetaData    MetaData          `json:"metadata" yaml:"metadata" validate:"dive"`
 	SpecVersion string            `json:"specVersion" yaml:"specVersion"`
 	Selector    selector.Selector `json:"selector" yaml:"selector" validate:"dive"`
