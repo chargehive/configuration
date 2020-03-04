@@ -3,6 +3,7 @@ package utils
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/chargehive/configuration/connectorconfig"
 	"github.com/chargehive/configuration/object"
 	"github.com/chargehive/configuration/selector"
@@ -10,7 +11,6 @@ import (
 	"github.com/chargehive/configuration/v1/integration"
 	"github.com/chargehive/configuration/v1/policy"
 	"github.com/chargehive/configuration/v1/scheduler"
-	"log"
 	"time"
 )
 
@@ -103,7 +103,7 @@ func Generate(conf Template, version string, pretty bool) ([]byte, error) {
 	def := object.DefinitionFromSpec(spec)
 	def.MetaData.Name = chg
 	def.MetaData.ProjectID = chg
-	def.MetaData.Enabled = true
+	def.MetaData.Disabled = true
 	def.Selector = buildSelector()
 
 	var data []byte
@@ -116,7 +116,7 @@ func Generate(conf Template, version string, pretty bool) ([]byte, error) {
 	// run validation against generated configs to ensure compliance
 	errs := Validate(data, version)
 	if len(errs) > 0 {
-		log.Println(errs)
+		fmt.Println(errs)
 		err = errors.New("generated config does not pass validation")
 	}
 
@@ -148,7 +148,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 		j, _ := json.Marshal(connectorconfig.PayPalWebsitePaymentsProCredentials{APIUsername: &chg, APIPassword: &chg, APISignature: &chg, SupportedCurrencies: []string{"USD"}, Environment: "sandbox"})
 		return connector.Connector{Library: string(connectorconfig.LibraryPayPalWebsitePaymentsPro), Configuration: j}, nil
 	case confConnPaysafe:
-		j, _ := json.Marshal(connectorconfig.PaySafeCredentials{Acquirer: chg, AccountID: chg, APIUsername: &chg, APIPassword: &chg, Environment: "MOCK", Currency: "USD"})
+		j, _ := json.Marshal(connectorconfig.PaySafeCredentials{Acquirer: chg, AccountID: chg, APIUsername: &chg, APIPassword: &chg, Environment: "MOCK", Currency: "USD", UseVault: new(bool)})
 		return connector.Connector{Library: string(connectorconfig.LibraryPaySafe), Configuration: j}, nil
 	case confConnPaysafeApplePay:
 		j, _ := json.Marshal(connectorconfig.PaySafeApplePayCredentials{Acquirer: chg, AccountID: chg, APIUsername: &chg, APIPassword: &chg, Environment: "MOCK", Currency: "USD", Locale: "en_GB", ApplePayMerchantIdentityCert: chg, ApplePayMerchantIdentityKey: chg, ApplePayMerchantIdentifier: chg, ApplePayDisplayName: chg, ApplePayInitiative: chg, ApplePayInitiativeContext: chg})
@@ -174,7 +174,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 	case confConnectorPool:
 		return connector.Pool{Restriction: "unrestricted", Connectors: []connector.PoolItem{{ConnectorID: chg}}}, nil
 	case confSlack:
-		return integration.Slack{AccessToken: chg, TeamName: chg, TeamID: chg, TransactionNotifications: false, Webhook: &integration.SlackWebhook{Url: chg, Channel: chg, ConfigurationUrl: chg}}, nil
+		return integration.Slack{AccessToken: chg, TeamName: chg, TeamID: chg, TransactionNotifications: new(bool), Webhook: &integration.SlackWebhook{Url: chg, Channel: chg, ConfigurationUrl: chg}}, nil
 	case confPolCascade:
 		return policy.CascadePolicy{Rules: []policy.CascadeRule{{Library: connectorconfig.Library(chg), OriginalResponseCode: chg}}}, nil
 	case confPolChargeExpiry:
@@ -184,11 +184,11 @@ func buildSpec(conf Template) (object.Specification, error) {
 	case confPolMethodLock:
 		return policy.MethodLockPolicy{Duration: 1, Reason: chg}, nil
 	case confPolMethodUpgrade:
-		return policy.MethodUpgradePolicy{}, nil
+		return policy.MethodUpgradePolicy{ExtendExpiry: new(bool)}, nil
 	case confPolMethodVerify:
-		return policy.MethodVerifyPolicy{Amount: 100, AmountCurrency: "GBP", ConnectorID: chg}, nil
+		return policy.MethodVerifyPolicy{Amount: 100, AmountCurrency: "GBP", ConnectorID: chg, VerifyMethodOnTokenization: new(bool)}, nil
 	case confPolSCA:
-		return policy.ScaPolicy{ShouldByPassChallenge: "cascade"}, nil
+		return policy.ScaPolicy{ShouldIdentify: new(bool), ShouldChallengeOptional: new(bool), ShouldByPassChallenge: "cascade", ShouldAuthOnError: new(bool)}, nil
 	case confSchInitiator:
 		return scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorConfig, AttemptConfig: &scheduler.AttemptConfig{PoolType: scheduler.PoolTypeCascade, MethodSelector: scheduler.MethodSelectorPrimaryMethod, CascadeDelay: &sec1, OverridePoolConnectorIDs: []string{}}}, nil
 	case confSchOnDemand:

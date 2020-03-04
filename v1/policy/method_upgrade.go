@@ -13,7 +13,14 @@ const KindPolicyMethodUpgrade object.Kind = "PolicyMethodUpgrade"
 // MethodUpgradePolicy is used to temporarily alter the existing payment method information
 type MethodUpgradePolicy struct {
 	// ExtendExpiry date on payment methods to the next likely expiry date
-	ExtendExpiry bool `json:"extendExpiry" yaml:"extendExpiry" validate:"-"`
+	ExtendExpiry *bool `json:"extendExpiry" yaml:"extendExpiry" validate:"required"`
+}
+
+func (m MethodUpgradePolicy) GetExtendExpiry() bool {
+	if m.ExtendExpiry == nil {
+		return false
+	}
+	return *m.ExtendExpiry
 }
 
 // GetKind returns the MethodUpgradePolicy kind

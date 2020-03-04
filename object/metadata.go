@@ -8,5 +8,5 @@ type MetaData struct {
 	Description string            `json:"description" yaml:"description" validate:"-"`
 	Annotations map[string]string `json:"annotations" yaml:"annotations" validate:"-"`
 	Labels      map[string]string `json:"labels" yaml:"labels" validate:"-"`
-	Enabled     bool              `json:"enabled" yaml:"enabled" validate:"-"`
+	Disabled    bool              `json:"disabled" yaml:"disabled" validate:"-"`
 }
