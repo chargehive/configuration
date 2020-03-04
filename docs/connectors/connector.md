@@ -109,7 +109,7 @@ FieldName | Definition
 APIUsername | API Username from your PayPal API settings  
 APIPassword | API Password from your PayPal API settings  
 APISignature | API Signature from your PayPal API settings  
-SupportedCurrencies | The currencies setup to be accepted in your PayPal account in an array (e.g. ["GBP", "USD", "EUR"])  
+SupportedCurrencies | The currencies setup to be accepted in your PayPal account in an array in standard three character format (e.g. ["GBP", "USD", "EUR"])  
 Environment | Must be either "sandbox" or "live"  
   
 ### Paypal - Website Payments Pro  
@@ -138,7 +138,7 @@ FieldName | Definition
 APIUsername | API Username from your PayPal API settings  
 APIPassword | API Password from your PayPal API settings  
 APISignature | API Signature from your PayPal API settings  
-SupportedCurrencies | The currencies setup to be accepted in your PayPal account in an array (e.g. ["GBP", "USD", "EUR"])  
+SupportedCurrencies | The currencies setup to be accepted in your PayPal account in an array, in standard three character format  (e.g. ["GBP", "USD", "EUR"])  
 CardinalProcessorID | Your Processor Identification Code assigned by Cardinal when you registered  
 CardinalMerchantID | Your Merchant Identification Code assigned by Cardinal when you registered  
 CardinalTransactionPw | Your Cardinal Password as you configured it in Cardinal  
@@ -161,8 +161,8 @@ Configuration:
   "Country": "xxxxxxxxxxxxx",
   "Currency": "USD",  
   "UseVault": "false",  
-  "SingleUseTokenPassword": "xxxxxxxxxxxx",  
-  "SingleUseTokenUsername": "xxxxxxxxxxxx"
+  "SingleUseTokenUsername": "xxxxxxxxxxxx",  
+  "SingleUseTokenPassword": "xxxxxxxxxxxx"
 }
 ```
 FieldName | Definition  
@@ -172,11 +172,11 @@ AccountID | The AccountID for this merchant account
 APIUsername | The API Username from your merchant account in your account settings API page
 APIPassword | The API Password from your merchant account in your account settings API page
 Environment | Must be "MOCK", "TEST" or "LIVE"  
-Country | Optional string field
-Currency | The currency setup for this merchant account (e.g. ["GBP", "USD", "EUR"])
+Country | Optional string field for country. Must be in two character country format (e.g. ["US", "DE", "FR"])
+Currency | The currency setup for this merchant account, in standard three character format (e.g. ["GBP", "USD", "EUR"])
 UseVault | Boolean field can be set to "true" or "false"  
-SingleUseTokenPassword | The Single Use Token Password in your account settings API page
-SingleUseTokenUsername | The Single Use Token Username in your account settings API page
+SingleUseTokenUsername | The Single Use Token Username in your account settings API page. If this is entered the Password must be entered as well  
+SingleUseTokenPassword | The Single Use Token Password in your account settings API page. If this is entered the Username must be entered as well
 
 ### QualPay  
 Library: `qualpay`  
@@ -278,13 +278,15 @@ Configuration:
 ```json
 {
   "AccountID": "xxxxxxxxxxxx",
-  "LicenceKey": "xxxxxxxxxxxx"
+  "LicenceKey": "xxxxxxxxxxxx",  
+  "ServiceType": ""
 }
 ```
 FieldName | Definition  
 ---:|:---   
 AccountID | The Account Id found in your MaxMind account Services -> My Licence Key
 LicenceKey | The Licence Key from your MaxMind account under Services -> My Licence Key
+ServiceType | This is the MaxMind service you have on your account, either Score (0), Insights (1) or Factors (2). Must be 0, 1 or 2
 
 ---
 
