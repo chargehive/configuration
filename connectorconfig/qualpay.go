@@ -14,7 +14,7 @@ const (
 )
 
 type QualpayCredentials struct {
-	APIKey      *string            `json:"apiKey" yaml:"apiKey" validate:"required"`
+	APIKey      *string            `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
 	MerchantID  int64              `json:"merchantID" yaml:"merchantID" validate:"min=1"`
 	Environment QualPayEnvironment `json:"environment" yaml:"environment" validate:"oneof=test live"`
 }

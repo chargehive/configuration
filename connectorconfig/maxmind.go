@@ -18,7 +18,7 @@ const (
 
 type MaxMindCredentials struct {
 	AccountID   string                     `json:"accountID" yaml:"accountID" validate:"required"`
-	LicenceKey  *string                    `json:"licenceKey" yaml:"licenceKey" validate:"required"`
+	LicenceKey  *string                    `json:"licenceKey" yaml:"licenceKey" validate:"required,gt=0"`
 	ServiceType MaxMindMinFraudServiceType `json:"serviceType" yaml:"serviceType" validate:"min=0,max=2"`
 }
 

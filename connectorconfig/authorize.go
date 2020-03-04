@@ -14,8 +14,8 @@ const (
 )
 
 type AuthorizeCredentials struct {
-	APILoginID     *string              `json:"apiLoginId" yaml:"apiLoginId" validate:"required"`
-	TransactionKey *string              `json:"transactionKey" yaml:"transactionKey" validate:"required"`
+	APILoginID     *string              `json:"apiLoginId" yaml:"apiLoginId" validate:"required,gt=0"`
+	TransactionKey *string              `json:"transactionKey" yaml:"transactionKey" validate:"required,gt=0"`
 	Environment    AuthorizeEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 }
 
