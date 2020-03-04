@@ -103,6 +103,7 @@ func Generate(conf Template, version string, pretty bool) ([]byte, error) {
 	def := object.DefinitionFromSpec(spec)
 	def.MetaData.Name = chg
 	def.MetaData.ProjectID = chg
+	def.MetaData.Enabled = true
 	def.Selector = buildSelector()
 
 	var data []byte
