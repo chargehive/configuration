@@ -16,9 +16,9 @@ const (
 
 type VindiciaCredentials struct {
 	Login         string              `json:"login" yaml:"login" validate:"required"`
-	Password      *string             `json:"password" yaml:"password" validate:"required"`
-	HMACKey       *string             `json:"hmacKey" yaml:"hmacKey" validate:"required"`
-	PGPPrivateKey *string             `json:"pgpPrivateKey" yaml:"pgpPrivateKey" validate:"required"`
+	Password      *string             `json:"password" yaml:"password" validate:"required,gt=0"`
+	HMACKey       *string             `json:"hmacKey" yaml:"hmacKey" validate:"required,gt=0"`
+	PGPPrivateKey *string             `json:"pgpPrivateKey" yaml:"pgpPrivateKey" validate:"required,gt=0"`
 	Environment   VindiciaEnvironment `json:"environment" yaml:"environment" validate:"oneof=development stage production"`
 }
 

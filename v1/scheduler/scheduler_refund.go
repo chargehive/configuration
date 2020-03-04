@@ -45,5 +45,5 @@ func (d *RefundDefinition) Spec() *Refund { return d.def.Spec.(*Refund) }
 // ScheduleRefund is a single schedule item for a single refund attempt
 type ScheduleRefund struct {
 	// TimeDelay is the amount of time to wait since the last refund attempt
-	TimeDelay time.Duration `json:"timeDelay" yaml:"timeDelay" validate:"min=0"`
+	TimeDelay time.Duration `json:"timeDelay" yaml:"timeDelay" validate:"gte=0"`
 }

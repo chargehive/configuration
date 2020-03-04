@@ -19,8 +19,8 @@ const (
 )
 
 type WorldpayCredentials struct {
-	Username              *string             `json:"username" yaml:"username" validate:"required"`
-	Password              *string             `json:"password" yaml:"password" validate:"required"`
+	Username              *string             `json:"username" yaml:"username" validate:"required,gt=0"`
+	Password              *string             `json:"password" yaml:"password" validate:"required,gt=0"`
 	MerchantID            string              `json:"merchantID" yaml:"merchantID" validate:"required"`
 	ReportGroup           string              `json:"reportGroup" yaml:"reportGroup" validate:"-"`
 	Environment           WorldpayEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox postlive transactpostlive production productiontransact prelive transactprelive"`

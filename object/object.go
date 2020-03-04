@@ -14,7 +14,7 @@ const KindNone Kind = ""
 type Definition struct {
 	Kind        Kind              `json:"kind" yaml:"kind"`
 	MetaData    MetaData          `json:"metadata" yaml:"metadata" validate:"dive"`
-	SpecVersion string            `json:"specVersion" yaml:"specVersion"`
+	SpecVersion string            `json:"specVersion" yaml:"specVersion" validate:"oneof=v1"`
 	Selector    selector.Selector `json:"selector" yaml:"selector" validate:"dive"`
 	Spec        interface{}       `json:"spec" yaml:"spec" validate:"dive"`
 }

@@ -7,9 +7,9 @@ import (
 )
 
 type PayPalExpressCheckoutCredentials struct {
-	APIUsername         *string           `json:"apiUsername" yaml:"apiUsername" validate:"required"`
-	APIPassword         *string           `json:"apiPassword" yaml:"apiPassword" validate:"required"`
-	APISignature        *string           `json:"apiSignature" yaml:"apiSignature" validate:"required"`
+	APIUsername         *string           `json:"apiUsername" yaml:"apiUsername" validate:"required,gt=0"`
+	APIPassword         *string           `json:"apiPassword" yaml:"apiPassword" validate:"required,gt=0"`
+	APISignature        *string           `json:"apiSignature" yaml:"apiSignature" validate:"required,gt=0"`
 	SupportedCurrencies []string          `json:"supportedCurrencies" yaml:"supportedCurrencies" validate:"gt=0,dive,oneof=AUD BRL CAD CZK DKK EUR HKD HUF INR ILS JPY MYR MXN TWD NZD NOK PHP PLN GBP RUB SGD SEK CHF THB USD"`
 	Environment         PayPalEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox live"`
 }

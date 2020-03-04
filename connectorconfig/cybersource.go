@@ -15,7 +15,7 @@ const (
 
 type CyberSourceCredentials struct {
 	MerchantID     string                 `json:"merchantID" yaml:"merchantID" validate:"required"`
-	TransactionKey *string                `json:"transactionKey" yaml:"transactionKey" validate:"required"`
+	TransactionKey *string                `json:"transactionKey" yaml:"transactionKey" validate:"required,gt=0"`
 	Environment    CyberSourceEnvironment `json:"environment" yaml:"environment" validate:"oneof=test live"`
 }
 

@@ -3,7 +3,7 @@ package object
 type MetaData struct {
 	ProjectID   string            `json:"projectId" yaml:"projectId" validate:"required"`
 	Name        string            `json:"name" yaml:"name" validate:"required"`
-	UUID        string            `json:"uuid" yaml:"uuid" validate:"-"`
+	UUID        string            `json:"uuid,omitempty" yaml:"uuid,omitempty" validate:"-"`
 	DisplayName string            `json:"displayName" yaml:"displayName" validate:"-"`
 	Description string            `json:"description" yaml:"description" validate:"-"`
 	Annotations map[string]string `json:"annotations" yaml:"annotations" validate:"-"`
