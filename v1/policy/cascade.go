@@ -25,7 +25,14 @@ type CascadeRule struct {
 	OriginalResponseCode string `json:"originalResponseCode" yaml:"originalResponseCode" validate:"required"`
 
 	// Cascade determines if this rule results in a cascade or not
-	Cascade bool `json:"cascade" yaml:"cascade" validate:"-"`
+	Cascade *bool `json:"cascade" yaml:"cascade" validate:"required"`
+}
+
+func (c CascadeRule) GetCascade() bool {
+	if c.Cascade == nil {
+		return true
+	}
+	return *c.Cascade
 }
 
 // GetKind returns the CascadePolicy Kind

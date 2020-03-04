@@ -2,7 +2,7 @@ package object
 
 import (
 	"encoding/json"
-	"errors"
+	"fmt"
 	"github.com/chargehive/configuration/selector"
 	"strings"
 )
@@ -56,7 +56,7 @@ func jsonToObj(jsonData []byte, strict bool) (*Definition, error) {
 		return nil, err
 	}
 	if spec == nil {
-		return nil, errors.New("Kind " + string(obj.Kind) + ", Version " + obj.SpecVersion + " has not yet been implemented")
+		return nil, fmt.Errorf("kind:`%v`, version:`%v` has not been implemented", obj.Kind, obj.SpecVersion)
 	}
 	obj.Spec = spec
 	return obj, nil

@@ -26,10 +26,10 @@ const (
 // ScaPolicy options determine how to handle 3DS on connector requests
 type ScaPolicy struct {
 	// ShouldIdentify indicates if the identification stages should take place
-	ShouldIdentify bool `json:"shouldIdentify" yaml:"shouldIdentify" validate:"-"`
+	ShouldIdentify *bool `json:"shouldIdentify" yaml:"shouldIdentify" validate:"required"`
 
 	// ShouldChallengeOptional challenge based on an optional response from the connector (setting this to false will not display the challenge)
-	ShouldChallengeOptional bool `json:"shouldChallengeOptional" yaml:"shouldChallengeOptional" validate:"-"`
+	ShouldChallengeOptional *bool `json:"shouldChallengeOptional" yaml:"shouldChallengeOptional" validate:"required"`
 
 	// ShouldByPassChallenge if the challenge is required, bypassing this will attempt an auth without displaying the challenge
 	ShouldByPassChallenge SCABypassMode `json:"shouldByPassChallenge" yaml:"shouldByPassChallenge" validate:"omitempty,oneof=cascade current"`
@@ -39,7 +39,28 @@ type ScaPolicy struct {
 	ShouldChallenge3dSecureV1 bool `json:"shouldChallenge3dSecureV1,omitempty" yaml:"shouldChallenge3dSecureV1,omitempty" validate:"-"`
 
 	// ShouldAuthOnError if true and an error response is returned from the connector; proceed to auth anyway
-	ShouldAuthOnError bool `json:"shouldAuthOnError" yaml:"shouldAuthOnError" validate:"-"`
+	ShouldAuthOnError *bool `json:"shouldAuthOnError" yaml:"shouldAuthOnError" validate:"required"`
+}
+
+func (s ScaPolicy) GetShouldIdentify() bool {
+	if s.ShouldIdentify == nil {
+		return false
+	}
+	return *s.ShouldIdentify
+}
+
+func (s ScaPolicy) GetShouldChallengeOptional() bool {
+	if s.ShouldChallengeOptional == nil {
+		return false
+	}
+	return *s.ShouldChallengeOptional
+}
+
+func (s ScaPolicy) GetShouldAuthOnError() bool {
+	if s.ShouldAuthOnError == nil {
+		return true
+	}
+	return *s.ShouldAuthOnError
 }
 
 // GetKind returns the ScaPolicy kind
