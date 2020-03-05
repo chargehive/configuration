@@ -11,6 +11,7 @@ import (
 	"github.com/chargehive/configuration/v1/integration"
 	"github.com/chargehive/configuration/v1/policy"
 	"github.com/chargehive/configuration/v1/scheduler"
+	"time"
 )
 
 type Template string
@@ -102,7 +103,7 @@ func Generate(conf Template, version string, pretty bool) ([]byte, error) {
 	def := object.DefinitionFromSpec(spec)
 	def.MetaData.Name = chg
 	def.MetaData.ProjectID = chg
-	def.MetaData.Disabled = true
+	def.MetaData.Disabled = false
 	def.Selector = buildSelector()
 
 	var data []byte
@@ -188,13 +189,13 @@ func buildSpec(conf Template) (object.Specification, error) {
 	case confPolSCA:
 		return policy.ScaPolicy{ShouldIdentify: new(bool), ShouldChallengeOptional: new(bool), ShouldByPassChallenge: "cascade", ShouldAuthOnError: new(bool)}, nil
 	case confSchInitiator:
-		return scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorConfig, AttemptConfig: &scheduler.AttemptConfig{PoolType: scheduler.PoolTypeCascade, MethodSelector: scheduler.MethodSelectorPrimaryMethod, OverridePoolConnectorIDs: []string{}}}, nil
+		return scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorConfig, AttemptConfig: &scheduler.AttemptConfig{PoolType: scheduler.PoolTypeCascade, MethodSelector: scheduler.MethodSelectorPrimaryMethod, OverridePoolConnectorIDs: []string{}, CascadeDelay: new(time.Duration)}}, nil
 	case confSchOnDemand:
-		return scheduler.OnDemand{Schedule: scheduler.Schedule{AttemptConfig: scheduler.AttemptConfig{PoolType: "single", MethodSelector: "primary"}, TimeDelayOrigin: "initialisation", TimeDelaySync: "Earliest", TimeSyncZone: "UTC"}}, nil
+		return scheduler.OnDemand{Schedule: scheduler.Schedule{AttemptConfig: scheduler.AttemptConfig{PoolType: "single", MethodSelector: "primary", CascadeDelay: new(time.Duration)}, TimeDelayOrigin: "initialisation", TimeDelaySync: "Earliest", TimeSyncZone: "UTC"}}, nil
 	case confSchRefund:
 		return scheduler.Refund{Schedules: map[int]scheduler.ScheduleRefund{0: {0}}}, nil
 	case confSchSequential:
-		return scheduler.Sequential{Schedules: map[int]scheduler.Schedule{0: {AttemptConfig: scheduler.AttemptConfig{PoolType: "single", MethodSelector: "primary"}, TimeDelayOrigin: "initialisation", TimeDelaySync: "Earliest", TimeSyncZone: "UTC"}}}, nil
+		return scheduler.Sequential{Schedules: map[int]scheduler.Schedule{0: {AttemptConfig: scheduler.AttemptConfig{PoolType: "single", MethodSelector: "primary", CascadeDelay: new(time.Duration)}, TimeDelayOrigin: "initialisation", TimeDelaySync: "Earliest", TimeSyncZone: "UTC"}}}, nil
 	}
 	return nil, errors.New("invalid config to generate")
 }
