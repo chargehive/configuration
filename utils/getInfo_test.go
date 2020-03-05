@@ -12,12 +12,12 @@ func TestGetInfo(t *testing.T) {
 	configuration.Initialise()
 	info, err := GetInfo(rawJson, "v1")
 	assert.Equal(t, err, nil)
-	assert.Equal(t, info, map[string]string{
-		"kind":        "Connector",
-		"version":     "v1",
-		"name":        "CHANGE-ME",
-		"projectId":   "CHANGE-ME",
-		"disabled":    "true",
-		"displayName": "gary",
+	assert.Equal(t, info, ConfigInfo{
+		Kind:        "Connector",
+		Version:     "v1",
+		Name:        "CHANGE-ME",
+		ProjectId:   "CHANGE-ME",
+		Disabled:    true,
+		DisplayName: "gary",
 	})
 }
