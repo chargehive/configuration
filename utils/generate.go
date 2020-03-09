@@ -87,7 +87,7 @@ var Templates = map[Template]string{
 	confSchSequential:        "Schedule: Sequential",
 }
 
-var chg = "CHANGE-ME"
+var chg = "change-me"
 
 // Generate can be used to create a basic but valid config of any type
 func Generate(conf Template, version string, pretty bool) ([]byte, error) {
