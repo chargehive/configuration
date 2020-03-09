@@ -144,16 +144,66 @@ func buildSpec(conf Template) (object.Specification, error) {
 		j, _ := json.Marshal(connectorconfig.PayPalExpressCheckoutCredentials{APIUsername: &chg, APIPassword: &chg, APISignature: &chg, SupportedCurrencies: []string{"USD"}, Environment: "sandbox"})
 		return connector.Connector{Library: string(connectorconfig.LibraryPayPalExpressCheckout), Configuration: j}, nil
 	case confConnPayPalWPP:
-		j, _ := json.Marshal(connectorconfig.PayPalWebsitePaymentsProCredentials{APIUsername: &chg, APIPassword: &chg, APISignature: &chg, SupportedCurrencies: []string{"USD"}, Environment: "sandbox"})
+		j, _ := json.Marshal(connectorconfig.PayPalWebsitePaymentsProCredentials{
+			APIUsername:            &chg,
+			APIPassword:            &chg,
+			APISignature:           &chg,
+			SupportedCurrencies:    []string{"USD"},
+			CardinalProcessorID:    &chg,
+			CardinalMerchantID:     &chg,
+			CardinalTransactionPw:  &chg,
+			CardinalTransactionURL: &chg,
+			CardinalAPIIdentifier:  &chg,
+			CardinalAPIKey:         &chg,
+			CardinalOrgUnitID:      &chg,
+			Environment:            "sandbox",
+		})
 		return connector.Connector{Library: string(connectorconfig.LibraryPayPalWebsitePaymentsPro), Configuration: j}, nil
 	case confConnPaysafe:
-		j, _ := json.Marshal(connectorconfig.PaySafeCredentials{Acquirer: chg, AccountID: chg, APIUsername: &chg, APIPassword: &chg, Environment: "MOCK", Currency: "USD", UseVault: new(bool)})
+		j, _ := json.Marshal(connectorconfig.PaySafeCredentials{
+			Acquirer:               chg,
+			AccountID:              chg,
+			APIUsername:            &chg,
+			APIPassword:            &chg,
+			Environment:            "MOCK",
+			Currency:               "USD",
+			UseVault:               new(bool),
+			SingleUseTokenPassword: &chg,
+			SingleUseTokenUsername: chg,
+		})
 		return connector.Connector{Library: string(connectorconfig.LibraryPaySafe), Configuration: j}, nil
 	case confConnPaysafeApplePay:
-		j, _ := json.Marshal(connectorconfig.PaySafeApplePayCredentials{Acquirer: chg, AccountID: chg, APIUsername: &chg, APIPassword: &chg, Environment: "MOCK", Currency: "USD", Locale: "en_GB", ApplePayMerchantIdentityCert: chg, ApplePayMerchantIdentityKey: chg, ApplePayMerchantIdentifier: chg, ApplePayDisplayName: chg, ApplePayInitiative: chg, ApplePayInitiativeContext: chg})
+		j, _ := json.Marshal(connectorconfig.PaySafeApplePayCredentials{
+			Acquirer:                     chg,
+			AccountID:                    chg,
+			APIUsername:                  &chg,
+			APIPassword:                  &chg,
+			Environment:                  "MOCK",
+			Country:                      "",
+			Currency:                     "USD",
+			SingleUseTokenPassword:       &chg,
+			SingleUseTokenUsername:       &chg,
+			Locale:                       "en_GB",
+			ApplePayMerchantIdentityCert: chg,
+			ApplePayMerchantIdentityKey:  chg,
+			ApplePayMerchantIdentifier:   chg,
+			ApplePayDisplayName:          chg,
+			ApplePayInitiative:           chg,
+			ApplePayInitiativeContext:    chg,
+		})
 		return connector.Connector{Library: string(connectorconfig.LibraryPaySafeApplePay), Configuration: j}, nil
 	case confConnPaysafeGooglePay:
-		j, _ := json.Marshal(connectorconfig.PaySafeGooglePayCredentials{Acquirer: chg, AccountID: chg, APIUsername: &chg, APIPassword: &chg, Environment: "MOCK", Currency: "USD", Locale: "en_GB"})
+		j, _ := json.Marshal(connectorconfig.PaySafeGooglePayCredentials{
+			Acquirer:               chg,
+			AccountID:              chg,
+			APIUsername:            &chg,
+			APIPassword:            &chg,
+			Environment:            "MOCK",
+			Currency:               "USD",
+			SingleUseTokenPassword: &chg,
+			SingleUseTokenUsername: &chg,
+			Locale:                 "en_GB",
+		})
 		return connector.Connector{Library: string(connectorconfig.LibraryPaySafeGooglePay), Configuration: j}, nil
 	case confConnQualPay:
 		j, _ := json.Marshal(connectorconfig.QualpayCredentials{APIKey: &chg, MerchantID: 1, Environment: "test"})
@@ -168,7 +218,16 @@ func buildSpec(conf Template) (object.Specification, error) {
 		j, _ := json.Marshal(connectorconfig.VindiciaCredentials{Login: chg, Password: &chg, HMACKey: &chg, PGPPrivateKey: &chg, Environment: "development"})
 		return connector.Connector{Library: string(connectorconfig.LibraryVindicia), Configuration: j}, nil
 	case confConnWorldPay:
-		j, _ := json.Marshal(connectorconfig.WorldpayCredentials{Username: &chg, Password: &chg, MerchantID: chg, Environment: "sandbox"})
+		j, _ := json.Marshal(connectorconfig.WorldpayCredentials{
+			Username:              &chg,
+			Password:              &chg,
+			MerchantID:            chg,
+			ReportGroup:           "",
+			Environment:           "sandbox",
+			CardinalApiIdentifier: &chg,
+			CardinalApiKey:        &chg,
+			CardinalOrgUnitId:     &chg,
+		})
 		return connector.Connector{Library: string(connectorconfig.LibraryWorldpay), Configuration: j}, nil
 	case confConnectorPool:
 		return connector.Pool{Restriction: "unrestricted", Connectors: []connector.PoolItem{{ConnectorID: chg}}}, nil
