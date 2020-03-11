@@ -3,8 +3,9 @@ package policy
 import (
 	"encoding/json"
 	"errors"
-	"github.com/chargehive/configuration/object"
 	"time"
+
+	"github.com/chargehive/configuration/object"
 )
 
 // KindPolicyChargeExpiry is the identifier for a PolicyChargeExpiry config
@@ -41,6 +42,28 @@ func (d *ChargeExpiryDefinition) Definition() *object.Definition { return d.def 
 
 // MarshalJSON returns the JSON value for the ChargeExpiryDefinition
 func (d *ChargeExpiryDefinition) MarshalJSON() ([]byte, error) { return json.Marshal(d.def) }
+
+// UnmarshalJSON unmarshals a JSON encoded ChargeExpiryDefinition
+func (d *ChargeExpiryDefinition) UnmarshalJSON(data []byte) error {
+	type alias ChargeExpiryDefinition
+	a := &struct{ *alias }{alias: (*alias)(d)}
+	if err := json.Unmarshal(data, &a); err != nil {
+		return err
+	}
+
+	// convert seconds entry to time.Duration (nanoseconds)
+	if a.alias.def != nil {
+		dspec := a.alias.def.Spec.(*ChargeExpiryPolicy)
+		intVal := int64(dspec.Timeout)
+		if intVal != 0 && intVal < int64(time.Second) {
+			dspec.Timeout = time.Second * time.Duration(intVal)
+			a.alias.def.Spec = dspec
+		}
+	}
+
+	d = (*ChargeExpiryDefinition)(a.alias)
+	return nil
+}
 
 // Spec returns the CascadePolicy contained within the ChargeExpiryDefinition
 func (d *ChargeExpiryDefinition) Spec() *ChargeExpiryPolicy { return d.def.Spec.(*ChargeExpiryPolicy) }
