@@ -45,3 +45,7 @@ func (c *PaySafeGooglePayCredentials) ToConnector() connector.Connector {
 func (c *PaySafeGooglePayCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
+
+func (c PaySafeGooglePayCredentials) SupportsSca() bool {
+	return false
+}

@@ -46,3 +46,13 @@ func (c *PayPalWebsitePaymentsProCredentials) ToConnector() connector.Connector 
 func (c *PayPalWebsitePaymentsProCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
+
+func (c *PayPalWebsitePaymentsProCredentials) SupportsSca() bool {
+	return *c.CardinalProcessorID != "" &&
+		*c.CardinalMerchantID != "" &&
+		*c.CardinalTransactionPw != "" &&
+		*c.CardinalTransactionURL != "" &&
+		*c.CardinalAPIIdentifier != "" &&
+		*c.CardinalAPIKey != "" &&
+		*c.CardinalOrgUnitID != ""
+}

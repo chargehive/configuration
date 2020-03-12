@@ -39,3 +39,7 @@ func (c *PayPalExpressCheckoutCredentials) ToConnector() connector.Connector {
 func (c *PayPalExpressCheckoutCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
+
+func (c PayPalExpressCheckoutCredentials) SupportsSca() bool {
+	return false
+}

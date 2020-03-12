@@ -44,3 +44,6 @@ func (c *CyberSourceCredentials) ToConnector() connector.Connector {
 func (c *CyberSourceCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
+func (c CyberSourceCredentials) SupportsSca() bool {
+	return false
+}

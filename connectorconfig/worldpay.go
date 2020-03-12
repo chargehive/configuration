@@ -54,3 +54,7 @@ func (c *WorldpayCredentials) ToConnector() connector.Connector {
 func (c *WorldpayCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
+
+func (c WorldpayCredentials) SupportsSca() bool {
+	return *c.CardinalApiIdentifier != "" && *c.CardinalApiKey != "" && *c.CardinalOrgUnitId != ""
+}

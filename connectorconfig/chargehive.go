@@ -34,3 +34,7 @@ func (c *ChargeHiveCredentials) ToConnector() connector.Connector {
 func (c *ChargeHiveCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
+
+func (c ChargeHiveCredentials) SupportsSca() bool {
+	return false
+}
