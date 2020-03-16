@@ -12,8 +12,8 @@ const KindPolicyMethodLock object.Kind = "PolicyMethodLock"
 
 // MethodLockPolicy is used to lock a payment method preventing it being used for payment
 type MethodLockPolicy struct {
-	// Duration is the duration of time (in seconds) that a payment method should be locked for on application of this policy
-	Duration int64 `json:"duration" yaml:"duration" validate:"min=0"`
+	// Duration is the duration of time that a payment method should be locked for on application of this policy
+	Duration object.DurationInput `json:"duration" yaml:"duration" validate:"min=0"`
 
 	// Reason is a description of why a card locked due to this policy was locked.
 	Reason string `json:"reason" yaml:"reason" validate:"-"`

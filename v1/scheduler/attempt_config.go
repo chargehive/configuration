@@ -1,6 +1,6 @@
 package scheduler
 
-import "time"
+import "github.com/chargehive/configuration/object"
 
 // AttemptConfig defines a single attempt
 type AttemptConfig struct {
@@ -17,7 +17,7 @@ type AttemptConfig struct {
 	MethodLimit int `json:"methodLimit" yaml:"methodLimit" validate:"min=0"`
 
 	// CascadeDelay is the duration to wait between each cascade
-	CascadeDelay *time.Duration `json:"cascadeDelay" yaml:"cascadeDelay" validate:"required,gte=0"`
+	CascadeDelay *object.DurationInput `json:"cascadeDelay" yaml:"cascadeDelay" validate:"required,gte=0"`
 
 	// OverridePoolConnectorIDs will use this connectors instead of the ones in the pool
 	OverridePoolConnectorIDs []string `json:"overridePoolConnectorIDs" yaml:"overridePoolConnectorIDs" validate:"-"`

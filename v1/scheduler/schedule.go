@@ -1,6 +1,6 @@
 package scheduler
 
-import "time"
+import "github.com/chargehive/configuration/object"
 
 // Schedule is a single schedule item for a single attempt
 type Schedule struct {
@@ -8,7 +8,7 @@ type Schedule struct {
 	AttemptConfig AttemptConfig `json:"attemptConfig" yaml:"attemptConfig" validate:"required,dive"`
 
 	// TimeDelay is the amount of time to wait before processing after TimeDelayOrigin
-	TimeDelay time.Duration `json:"timeDelay" yaml:"timeDelay" validate:"gte=0"`
+	TimeDelay object.DurationInput `json:"timeDelay" yaml:"timeDelay" validate:"gte=0"`
 
 	// TimeDelayOrigin specifies when the time origin is based from
 	TimeDelayOrigin AttemptOriginType `json:"timeDelayOrigin" yaml:"timeDelayOrigin" validate:"oneof=initialisation last-failure"`

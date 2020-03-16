@@ -3,8 +3,8 @@ package scheduler
 import (
 	"encoding/json"
 	"errors"
+
 	"github.com/chargehive/configuration/object"
-	"time"
 )
 
 // KindRefundScheduler is the identifier for an KindRefundScheduler scheduler config
@@ -45,5 +45,5 @@ func (d *RefundDefinition) Spec() *Refund { return d.def.Spec.(*Refund) }
 // ScheduleRefund is a single schedule item for a single refund attempt
 type ScheduleRefund struct {
 	// TimeDelay is the amount of time to wait since the last refund attempt
-	TimeDelay time.Duration `json:"timeDelay" yaml:"timeDelay" validate:"gte=0"`
+	TimeDelay object.DurationInput `json:"timeDelay" yaml:"timeDelay" validate:"gte=0"`
 }
