@@ -46,24 +46,24 @@ Special Keys | Definition
 Assemble Keys | Definition 
 ---:|:---
 "charge.label"|
-"charge.currentTransactionNumber"|
-"charge.currentAttemptNumber"|
-"charge.renewalNumber"| (int) Number of renewals this charge has completed.
-"charge.initiatedTime"|
-"charge.lastAttemptTime"|
-"charge.scheduleAttempts"|
-"charge.attemptedTransactions"|
-"charge.failedTransactions"|
-"charge.merchantSubscriptionID"|
-"charge.country"|
-"charge.region"|
-"charge.period"|
+"charge.currentTransactionNumber"|(int64)
+"charge.currentAttemptNumber"|(int64)
+"charge.renewalNumber"| (int64) Number of renewals this charge has completed.
+"charge.initiatedTime"| (time.Time)
+"charge.lastAttemptTime"| (time.Time)
+"charge.scheduleAttempts"| (int32)
+"charge.attemptedTransactions"| (int32)
+"charge.failedTransactions"| (int32)
+"charge.merchantSubscriptionID"| (string)
+"charge.country"| (int32 - ISO 3166)
+"charge.region"| (string)
+"charge.period"| (int64)
 
 Charge Definition Keys | Definition 
 ---:|:---
-"charge.intent"|
-"charge.contract"|
-"charge.amount"|
+"charge.intent"| (int32 1-5) Add=1, Refresh=2, Verify=3, Capture=4, Refund=5
+"charge.contract"| (int32 1-5) None=1, Payment=2, Subscription Initial=3, Subscription Renewal=4, OneClick-5
+"charge.amount"| exists or not exists
 "charge.amount.units"|
 "charge.amount.currency"|
 "charge.expiryTime"|
