@@ -67,3 +67,7 @@ func (c *PaySafeCredentials) ToConnector() connector.Connector {
 func (c *PaySafeCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
+
+func (c PaySafeCredentials) SupportsSca() bool {
+	return c.Environment != "" && c.AccountID != "" && *c.SingleUseTokenPassword != "" && c.SingleUseTokenUsername != ""
+}

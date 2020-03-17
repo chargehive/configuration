@@ -46,3 +46,7 @@ func (c *SandboxCredentials) ToConnector() connector.Connector {
 func (c *SandboxCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
+
+func (c SandboxCredentials) SupportsSca() bool {
+	return true
+}

@@ -47,3 +47,6 @@ func (c *MaxMindCredentials) ToConnector() connector.Connector {
 func (c *MaxMindCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
+func (c MaxMindCredentials) SupportsSca() bool {
+	return false
+}

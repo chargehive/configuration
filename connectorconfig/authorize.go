@@ -43,3 +43,7 @@ func (c *AuthorizeCredentials) ToConnector() connector.Connector {
 func (c *AuthorizeCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
+
+func (c AuthorizeCredentials) SupportsSca() bool {
+	return *c.APILoginID != "" && *c.TransactionKey != ""
+}

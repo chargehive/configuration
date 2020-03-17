@@ -35,3 +35,7 @@ func (c *StripeCredentials) ToConnector() connector.Connector {
 func (c *StripeCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
+
+func (c StripeCredentials) SupportsSca() bool {
+	return false
+}

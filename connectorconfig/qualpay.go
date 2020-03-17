@@ -44,3 +44,7 @@ func (c *QualpayCredentials) ToConnector() connector.Connector {
 func (c *QualpayCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
+
+func (c QualpayCredentials) SupportsSca() bool {
+	return false
+}
