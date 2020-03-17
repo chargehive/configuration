@@ -14,10 +14,12 @@ var (
 
 func TestDurationInputMarshal(t *testing.T) {
 	type testStruct struct {
-		Value DurationInput
+		Value *DurationInput
 	}
 
-	t1 := testStruct{Value: DurationInput(testDuration)}
+	di := DurationInput(testDuration)
+
+	t1 := testStruct{Value: &di}
 	res, err := json.Marshal(t1)
 	if err != nil {
 		t.Error(err)
