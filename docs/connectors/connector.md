@@ -279,7 +279,7 @@ Configuration:
 {
   "AccountID": "xxxxxxxxxxxx",
   "LicenceKey": "xxxxxxxxxxxx",  
-  "ServiceType": ""
+  "ServiceType": 1
 }
 ```
 FieldName | Definition  
