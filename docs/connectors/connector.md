@@ -37,6 +37,8 @@ To create a Payment Provider Connector you need to define the `spec` properties 
 
 Here are the configuration options for each of the connectors for the Payment Provider and Fraud Services. 
 
+---
+
 #### Payment Providers
 [Authorize.net](#authorizenet)  
 [Braintree](#braintree)  

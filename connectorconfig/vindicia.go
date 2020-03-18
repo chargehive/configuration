@@ -47,3 +47,7 @@ func (c *VindiciaCredentials) ToConnector() connector.Connector {
 func (c *VindiciaCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
+
+func (c VindiciaCredentials) SupportsSca() bool {
+	return false
+}

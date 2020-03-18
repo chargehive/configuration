@@ -11,13 +11,13 @@ type PayPalWebsitePaymentsProCredentials struct {
 	APIPassword            *string           `json:"apiPassword" yaml:"apiPassword" validate:"required,gt=0"`
 	APISignature           *string           `json:"apiSignature" yaml:"apiSignature" validate:"required,gt=0"`
 	SupportedCurrencies    []string          `json:"supportedCurrencies" yaml:"supportedCurrencies" validate:"gt=0,dive,oneof=AUD BRL CAD CZK DKK EUR HKD HUF INR ILS JPY MYR MXN TWD NZD NOK PHP PLN GBP RUB SGD SEK CHF THB USD"`
-	CardinalProcessorID    *string           `json:"cardinalProcessorID" yaml:"cardinalProcessorID" validate:"required_with=cardinalMerchantID cardinalTransactionPw cardinalTransactionURL cardinalAPIIdentifier cardinalAPIKey cardinalOrgUnitID"`
-	CardinalMerchantID     *string           `json:"cardinalMerchantID" yaml:"cardinalMerchantID" validate:"required_with=cardinalProcessorID cardinalTransactionPw cardinalTransactionURL cardinalAPIIdentifier cardinalAPIKey cardinalOrgUnitID"`
-	CardinalTransactionPw  *string           `json:"cardinalTransactionPw" yaml:"cardinalTransactionPw" validate:"required_with=cardinalProcessorID cardinalMerchantID cardinalTransactionURL cardinalAPIIdentifier cardinalAPIKey cardinalOrgUnitID"`
-	CardinalTransactionURL *string           `json:"cardinalTransactionURL" yaml:"cardinalTransactionURL" validate:"required_with=cardinalProcessorID cardinalMerchantID cardinalTransactionPw cardinalAPIIdentifier cardinalAPIKey cardinalOrgUnitID"`
-	CardinalAPIIdentifier  *string           `json:"cardinalAPIIdentifier" yaml:"cardinalAPIIdentifier" validate:"required_with=cardinalProcessorID cardinalMerchantID cardinalTransactionPw cardinalTransactionURL cardinalAPIKey cardinalOrgUnitID"`
-	CardinalAPIKey         *string           `json:"cardinalAPIKey" yaml:"cardinalAPIKey" validate:"required_with=cardinalProcessorID cardinalMerchantID cardinalTransactionPw cardinalTransactionURL cardinalAPIIdentifier cardinalOrgUnitID"`
-	CardinalOrgUnitID      *string           `json:"cardinalOrgUnitID" yaml:"cardinalOrgUnitID" validate:"required_with=cardinalProcessorID cardinalMerchantID cardinalTransactionPw cardinalTransactionURL cardinalAPIIdentifier cardinalAPIKey"`
+	CardinalProcessorID    *string           `json:"cardinalProcessorID" yaml:"cardinalProcessorID" validate:"required"`
+	CardinalMerchantID     *string           `json:"cardinalMerchantID" yaml:"cardinalMerchantID" validate:"required"`
+	CardinalTransactionPw  *string           `json:"cardinalTransactionPw" yaml:"cardinalTransactionPw" validate:"required"`
+	CardinalTransactionURL *string           `json:"cardinalTransactionURL" yaml:"cardinalTransactionURL" validate:"required"`
+	CardinalAPIIdentifier  *string           `json:"cardinalAPIIdentifier" yaml:"cardinalAPIIdentifier" validate:"required"`
+	CardinalAPIKey         *string           `json:"cardinalAPIKey" yaml:"cardinalAPIKey" validate:"required"`
+	CardinalOrgUnitID      *string           `json:"cardinalOrgUnitID" yaml:"cardinalOrgUnitID" validate:"required"`
 	Environment            PayPalEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox live"`
 }
 
@@ -45,4 +45,14 @@ func (c *PayPalWebsitePaymentsProCredentials) ToConnector() connector.Connector 
 
 func (c *PayPalWebsitePaymentsProCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
+}
+
+func (c *PayPalWebsitePaymentsProCredentials) SupportsSca() bool {
+	return *c.CardinalProcessorID != "" &&
+		*c.CardinalMerchantID != "" &&
+		*c.CardinalTransactionPw != "" &&
+		*c.CardinalTransactionURL != "" &&
+		*c.CardinalAPIIdentifier != "" &&
+		*c.CardinalAPIKey != "" &&
+		*c.CardinalOrgUnitID != ""
 }

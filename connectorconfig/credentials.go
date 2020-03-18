@@ -9,6 +9,7 @@ type Credentials interface {
 	Validate() error
 	ToConnector() connector.Connector
 	FromJson(input []byte) error
+	SupportsSca() bool
 }
 
 type Library string

@@ -48,3 +48,7 @@ func (c *BraintreeCredentials) ToConnector() connector.Connector {
 func (c *BraintreeCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
+
+func (c BraintreeCredentials) SupportsSca() bool {
+	return c.MerchantID != "" && *c.PublicKey != "" && *c.PrivateKey != "" && c.Environment != ""
+}

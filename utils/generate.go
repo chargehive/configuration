@@ -11,6 +11,7 @@ import (
 	"github.com/chargehive/configuration/v1/integration"
 	"github.com/chargehive/configuration/v1/policy"
 	"github.com/chargehive/configuration/v1/scheduler"
+	"time"
 )
 
 type Template string
@@ -86,7 +87,7 @@ var Templates = map[Template]string{
 	confSchSequential:        "Schedule: Sequential",
 }
 
-var chg = "CHANGE-ME"
+var chg = "change-me"
 
 // Generate can be used to create a basic but valid config of any type
 func Generate(conf Template, version string, pretty bool) ([]byte, error) {
@@ -102,7 +103,7 @@ func Generate(conf Template, version string, pretty bool) ([]byte, error) {
 	def := object.DefinitionFromSpec(spec)
 	def.MetaData.Name = chg
 	def.MetaData.ProjectID = chg
-	def.MetaData.Disabled = true
+	def.MetaData.Disabled = false
 	def.Selector = buildSelector()
 
 	var data []byte
@@ -143,16 +144,66 @@ func buildSpec(conf Template) (object.Specification, error) {
 		j, _ := json.Marshal(connectorconfig.PayPalExpressCheckoutCredentials{APIUsername: &chg, APIPassword: &chg, APISignature: &chg, SupportedCurrencies: []string{"USD"}, Environment: "sandbox"})
 		return connector.Connector{Library: string(connectorconfig.LibraryPayPalExpressCheckout), Configuration: j}, nil
 	case confConnPayPalWPP:
-		j, _ := json.Marshal(connectorconfig.PayPalWebsitePaymentsProCredentials{APIUsername: &chg, APIPassword: &chg, APISignature: &chg, SupportedCurrencies: []string{"USD"}, Environment: "sandbox"})
+		j, _ := json.Marshal(connectorconfig.PayPalWebsitePaymentsProCredentials{
+			APIUsername:            &chg,
+			APIPassword:            &chg,
+			APISignature:           &chg,
+			SupportedCurrencies:    []string{"USD"},
+			CardinalProcessorID:    &chg,
+			CardinalMerchantID:     &chg,
+			CardinalTransactionPw:  &chg,
+			CardinalTransactionURL: &chg,
+			CardinalAPIIdentifier:  &chg,
+			CardinalAPIKey:         &chg,
+			CardinalOrgUnitID:      &chg,
+			Environment:            "sandbox",
+		})
 		return connector.Connector{Library: string(connectorconfig.LibraryPayPalWebsitePaymentsPro), Configuration: j}, nil
 	case confConnPaysafe:
-		j, _ := json.Marshal(connectorconfig.PaySafeCredentials{Acquirer: chg, AccountID: chg, APIUsername: &chg, APIPassword: &chg, Environment: "MOCK", Currency: "USD", UseVault: new(bool)})
+		j, _ := json.Marshal(connectorconfig.PaySafeCredentials{
+			Acquirer:               chg,
+			AccountID:              chg,
+			APIUsername:            &chg,
+			APIPassword:            &chg,
+			Environment:            "MOCK",
+			Currency:               "USD",
+			UseVault:               new(bool),
+			SingleUseTokenPassword: &chg,
+			SingleUseTokenUsername: chg,
+		})
 		return connector.Connector{Library: string(connectorconfig.LibraryPaySafe), Configuration: j}, nil
 	case confConnPaysafeApplePay:
-		j, _ := json.Marshal(connectorconfig.PaySafeApplePayCredentials{Acquirer: chg, AccountID: chg, APIUsername: &chg, APIPassword: &chg, Environment: "MOCK", Currency: "USD", Locale: "en_GB", ApplePayMerchantIdentityCert: chg, ApplePayMerchantIdentityKey: chg, ApplePayMerchantIdentifier: chg, ApplePayDisplayName: chg, ApplePayInitiative: chg, ApplePayInitiativeContext: chg})
+		j, _ := json.Marshal(connectorconfig.PaySafeApplePayCredentials{
+			Acquirer:                     chg,
+			AccountID:                    chg,
+			APIUsername:                  &chg,
+			APIPassword:                  &chg,
+			Environment:                  "MOCK",
+			Country:                      "",
+			Currency:                     "USD",
+			SingleUseTokenPassword:       &chg,
+			SingleUseTokenUsername:       &chg,
+			Locale:                       "en_GB",
+			ApplePayMerchantIdentityCert: chg,
+			ApplePayMerchantIdentityKey:  chg,
+			ApplePayMerchantIdentifier:   chg,
+			ApplePayDisplayName:          chg,
+			ApplePayInitiative:           chg,
+			ApplePayInitiativeContext:    chg,
+		})
 		return connector.Connector{Library: string(connectorconfig.LibraryPaySafeApplePay), Configuration: j}, nil
 	case confConnPaysafeGooglePay:
-		j, _ := json.Marshal(connectorconfig.PaySafeGooglePayCredentials{Acquirer: chg, AccountID: chg, APIUsername: &chg, APIPassword: &chg, Environment: "MOCK", Currency: "USD", Locale: "en_GB"})
+		j, _ := json.Marshal(connectorconfig.PaySafeGooglePayCredentials{
+			Acquirer:               chg,
+			AccountID:              chg,
+			APIUsername:            &chg,
+			APIPassword:            &chg,
+			Environment:            "MOCK",
+			Currency:               "USD",
+			SingleUseTokenPassword: &chg,
+			SingleUseTokenUsername: &chg,
+			Locale:                 "en_GB",
+		})
 		return connector.Connector{Library: string(connectorconfig.LibraryPaySafeGooglePay), Configuration: j}, nil
 	case confConnQualPay:
 		j, _ := json.Marshal(connectorconfig.QualpayCredentials{APIKey: &chg, MerchantID: 1, Environment: "test"})
@@ -167,7 +218,16 @@ func buildSpec(conf Template) (object.Specification, error) {
 		j, _ := json.Marshal(connectorconfig.VindiciaCredentials{Login: chg, Password: &chg, HMACKey: &chg, PGPPrivateKey: &chg, Environment: "development"})
 		return connector.Connector{Library: string(connectorconfig.LibraryVindicia), Configuration: j}, nil
 	case confConnWorldPay:
-		j, _ := json.Marshal(connectorconfig.WorldpayCredentials{Username: &chg, Password: &chg, MerchantID: chg, Environment: "sandbox"})
+		j, _ := json.Marshal(connectorconfig.WorldpayCredentials{
+			Username:              &chg,
+			Password:              &chg,
+			MerchantID:            chg,
+			ReportGroup:           "",
+			Environment:           "sandbox",
+			CardinalApiIdentifier: &chg,
+			CardinalApiKey:        &chg,
+			CardinalOrgUnitId:     &chg,
+		})
 		return connector.Connector{Library: string(connectorconfig.LibraryWorldpay), Configuration: j}, nil
 	case confConnectorPool:
 		return connector.Pool{Restriction: "unrestricted", Connectors: []connector.PoolItem{{ConnectorID: chg}}}, nil
@@ -186,15 +246,15 @@ func buildSpec(conf Template) (object.Specification, error) {
 	case confPolMethodVerify:
 		return policy.MethodVerifyPolicy{Amount: 100, AmountCurrency: "GBP", ConnectorID: chg, VerifyMethodOnTokenization: new(bool)}, nil
 	case confPolSCA:
-		return policy.ScaPolicy{ShouldIdentify: new(bool), ShouldChallengeOptional: new(bool), ShouldByPassChallenge: "cascade", ShouldAuthOnError: new(bool)}, nil
+		return policy.ScaPolicy{ShouldIdentify: new(bool), ShouldChallengeOptional: new(bool), ShouldByPassChallenge: "cascade", ShouldAuthOnError: new(bool), RequireSca: new(bool)}, nil
 	case confSchInitiator:
-		return scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorConfig, AttemptConfig: &scheduler.AttemptConfig{PoolType: scheduler.PoolTypeCascade, MethodSelector: scheduler.MethodSelectorPrimaryMethod, OverridePoolConnectorIDs: []string{}}}, nil
+		return scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorConfig, AttemptConfig: &scheduler.AttemptConfig{PoolType: scheduler.PoolTypeCascade, MethodSelector: scheduler.MethodSelectorPrimaryMethod, OverridePoolConnectorIDs: []string{}, CascadeDelay: new(time.Duration)}}, nil
 	case confSchOnDemand:
-		return scheduler.OnDemand{Schedule: scheduler.Schedule{AttemptConfig: scheduler.AttemptConfig{PoolType: "single", MethodSelector: "primary"}, TimeDelayOrigin: "initialisation", TimeDelaySync: "Earliest", TimeSyncZone: "UTC"}}, nil
+		return scheduler.OnDemand{Schedule: scheduler.Schedule{AttemptConfig: scheduler.AttemptConfig{PoolType: "single", MethodSelector: "primary", CascadeDelay: new(time.Duration)}, TimeDelayOrigin: "initialisation", TimeDelaySync: "Earliest", TimeSyncZone: "UTC"}}, nil
 	case confSchRefund:
 		return scheduler.Refund{Schedules: map[int]scheduler.ScheduleRefund{0: {0}}}, nil
 	case confSchSequential:
-		return scheduler.Sequential{Schedules: map[int]scheduler.Schedule{0: {AttemptConfig: scheduler.AttemptConfig{PoolType: "single", MethodSelector: "primary"}, TimeDelayOrigin: "initialisation", TimeDelaySync: "Earliest", TimeSyncZone: "UTC"}}}, nil
+		return scheduler.Sequential{Schedules: map[int]scheduler.Schedule{0: {AttemptConfig: scheduler.AttemptConfig{PoolType: "single", MethodSelector: "primary", CascadeDelay: new(time.Duration)}, TimeDelayOrigin: "initialisation", TimeDelaySync: "Earliest", TimeSyncZone: "UTC"}}}, nil
 	}
 	return nil, errors.New("invalid config to generate")
 }

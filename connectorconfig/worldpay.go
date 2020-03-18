@@ -24,9 +24,9 @@ type WorldpayCredentials struct {
 	MerchantID            string              `json:"merchantID" yaml:"merchantID" validate:"required"`
 	ReportGroup           string              `json:"reportGroup" yaml:"reportGroup" validate:"-"`
 	Environment           WorldpayEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox postlive transactpostlive production productiontransact prelive transactprelive"`
-	CardinalApiIdentifier *string             `json:"cardinalApiIdentifier" yaml:"cardinalApiIdentifier" validate:"required_with=CardinalApiKey CardinalOrgUnitId"`
-	CardinalApiKey        *string             `json:"cardinalApiKey" yaml:"cardinalApiKey" validate:"required_with=CardinalApiIdentifier CardinalOrgUnitId"`
-	CardinalOrgUnitId     *string             `json:"cardinalOrgUnitId" yaml:"cardinalOrgUnitId" validate:"required_with=CardinalApiIdentifier CardinalApiKey"`
+	CardinalApiIdentifier *string             `json:"cardinalApiIdentifier" yaml:"cardinalApiIdentifier" validate:"required"`
+	CardinalApiKey        *string             `json:"cardinalApiKey" yaml:"cardinalApiKey" validate:"required"`
+	CardinalOrgUnitId     *string             `json:"cardinalOrgUnitId" yaml:"cardinalOrgUnitId" validate:"required"`
 }
 
 func (c WorldpayCredentials) GetLibrary() Library {
@@ -42,7 +42,7 @@ func (c *WorldpayCredentials) Validate() error {
 }
 
 func (c *WorldpayCredentials) GetSecureFields() []*string {
-	return []*string{c.Username, c.Password}
+	return []*string{c.Username, c.Password, c.CardinalApiIdentifier, c.CardinalApiKey}
 }
 
 func (c *WorldpayCredentials) ToConnector() connector.Connector {
@@ -53,4 +53,8 @@ func (c *WorldpayCredentials) ToConnector() connector.Connector {
 
 func (c *WorldpayCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
+}
+
+func (c WorldpayCredentials) SupportsSca() bool {
+	return *c.CardinalApiIdentifier != "" && *c.CardinalApiKey != "" && *c.CardinalOrgUnitId != ""
 }

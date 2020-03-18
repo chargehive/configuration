@@ -25,6 +25,9 @@ const (
 
 // ScaPolicy options determine how to handle 3DS on connector requests
 type ScaPolicy struct {
+	// RequireSca indicates if a transaction will require SCA facilities. This is used to filter out connectors which cannot complete SCA
+	RequireSca *bool `json:"requireSca" yaml:"requireSca" validate:"required"`
+
 	// ShouldIdentify indicates if the identification stages should take place
 	ShouldIdentify *bool `json:"shouldIdentify" yaml:"shouldIdentify" validate:"required"`
 
@@ -40,6 +43,13 @@ type ScaPolicy struct {
 
 	// ShouldAuthOnError if true and an error response is returned from the connector; proceed to auth anyway
 	ShouldAuthOnError *bool `json:"shouldAuthOnError" yaml:"shouldAuthOnError" validate:"required"`
+}
+
+func (s ScaPolicy) GetScaRequired() bool {
+	if s.RequireSca == nil {
+		return false
+	}
+	return *s.RequireSca
 }
 
 func (s ScaPolicy) GetShouldIdentify() bool {
