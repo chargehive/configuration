@@ -29,6 +29,27 @@ type WorldpayCredentials struct {
 	CardinalOrgUnitId     *string             `json:"cardinalOrgUnitId" yaml:"cardinalOrgUnitId" validate:"required"`
 }
 
+func (c WorldpayCredentials) GetCardinalApiIdentifier() string {
+	if c.CardinalApiIdentifier == nil {
+		return ""
+	}
+	return *c.CardinalApiIdentifier
+}
+
+func (c WorldpayCredentials) GetCardinalApiKey() string {
+	if c.CardinalApiKey == nil {
+		return ""
+	}
+	return *c.CardinalApiKey
+}
+
+func (c WorldpayCredentials) GetCardinalOrgUnitId() string {
+	if c.CardinalOrgUnitId == nil {
+		return ""
+	}
+	return *c.CardinalOrgUnitId
+}
+
 func (c WorldpayCredentials) GetLibrary() Library {
 	return LibraryWorldpay
 }
@@ -56,5 +77,5 @@ func (c *WorldpayCredentials) FromJson(input []byte) error {
 }
 
 func (c WorldpayCredentials) SupportsSca() bool {
-	return *c.CardinalApiIdentifier != "" && *c.CardinalApiKey != "" && *c.CardinalOrgUnitId != ""
+	return c.GetCardinalApiIdentifier() != "" && c.GetCardinalApiKey() != "" && c.GetCardinalOrgUnitId() != ""
 }

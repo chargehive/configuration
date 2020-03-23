@@ -19,6 +19,20 @@ type AuthorizeCredentials struct {
 	Environment    AuthorizeEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 }
 
+func (c AuthorizeCredentials) GetAPILoginID() string {
+	if c.APILoginID == nil {
+		return ""
+	}
+	return *c.APILoginID
+}
+
+func (c AuthorizeCredentials) GetTransactionKey() string {
+	if c.TransactionKey == nil {
+		return ""
+	}
+	return *c.TransactionKey
+}
+
 func (c AuthorizeCredentials) GetLibrary() Library {
 	return LibraryAuthorize
 }
@@ -45,5 +59,5 @@ func (c *AuthorizeCredentials) FromJson(input []byte) error {
 }
 
 func (c AuthorizeCredentials) SupportsSca() bool {
-	return *c.APILoginID != "" && *c.TransactionKey != ""
+	return c.GetAPILoginID() != "" && c.GetTransactionKey() != ""
 }
