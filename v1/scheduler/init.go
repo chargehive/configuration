@@ -11,6 +11,7 @@ func GetHandlers() []object.KindHandler {
 	funcs = append(funcs, sequentialScheduler()...)
 	funcs = append(funcs, onDemandScheduler()...)
 	funcs = append(funcs, refundScheduler()...)
+	funcs = append(funcs, onTriggerScheduler()...)
 	return funcs
 }
 
@@ -35,6 +36,14 @@ func onDemandScheduler() []object.KindHandler {
 	return []object.KindHandler{
 		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &OnDemand{} }),
 		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &OnDemand{} }),
+	}
+}
+
+func onTriggerScheduler() []object.KindHandler {
+	o := OnTrigger{}
+	return []object.KindHandler{
+		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &OnTrigger{} }),
+		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &OnTrigger{} }),
 	}
 }
 
