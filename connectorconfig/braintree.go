@@ -23,6 +23,20 @@ type BraintreeCredentials struct {
 	Environment       BraintreeEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 }
 
+func (c BraintreeCredentials) GetPublicKey() string {
+	if c.PublicKey == nil {
+		return ""
+	}
+	return *c.PublicKey
+}
+
+func (c BraintreeCredentials) GetPrivateKey() string {
+	if c.PrivateKey == nil {
+		return ""
+	}
+	return *c.PrivateKey
+}
+
 func (c BraintreeCredentials) GetLibrary() Library {
 	return LibraryBraintree
 }
@@ -50,5 +64,5 @@ func (c *BraintreeCredentials) FromJson(input []byte) error {
 }
 
 func (c BraintreeCredentials) SupportsSca() bool {
-	return c.MerchantID != "" && *c.PublicKey != "" && *c.PrivateKey != "" && c.Environment != ""
+	return c.MerchantID != "" && c.GetPublicKey() != "" && c.GetPrivateKey() != "" && c.Environment != ""
 }

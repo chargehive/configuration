@@ -21,6 +21,55 @@ type PayPalWebsitePaymentsProCredentials struct {
 	Environment            PayPalEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox live"`
 }
 
+func (c PayPalWebsitePaymentsProCredentials) GetCardinalProcessorID() string {
+	if c.CardinalProcessorID == nil {
+		return ""
+	}
+	return *c.CardinalProcessorID
+}
+
+func (c PayPalWebsitePaymentsProCredentials) GetCardinalMerchantID() string {
+	if c.CardinalMerchantID == nil {
+		return ""
+	}
+	return *c.CardinalMerchantID
+}
+
+func (c PayPalWebsitePaymentsProCredentials) GetCardinalTransactionPw() string {
+	if c.CardinalTransactionPw == nil {
+		return ""
+	}
+	return *c.CardinalTransactionPw
+}
+
+func (c PayPalWebsitePaymentsProCredentials) GetCardinalTransactionURL() string {
+	if c.CardinalTransactionURL == nil {
+		return ""
+	}
+	return *c.CardinalTransactionURL
+}
+
+func (c PayPalWebsitePaymentsProCredentials) GetCardinalAPIIdentifier() string {
+	if c.CardinalAPIIdentifier == nil {
+		return ""
+	}
+	return *c.CardinalAPIIdentifier
+}
+
+func (c PayPalWebsitePaymentsProCredentials) GetCardinalAPIKey() string {
+	if c.CardinalAPIKey == nil {
+		return ""
+	}
+	return *c.CardinalAPIKey
+}
+
+func (c PayPalWebsitePaymentsProCredentials) GetCardinalOrgUnitID() string {
+	if c.CardinalOrgUnitID == nil {
+		return ""
+	}
+	return *c.CardinalOrgUnitID
+}
+
 func (c PayPalWebsitePaymentsProCredentials) GetLibrary() Library {
 	return LibraryPayPalWebsitePaymentsPro
 }
@@ -48,11 +97,11 @@ func (c *PayPalWebsitePaymentsProCredentials) FromJson(input []byte) error {
 }
 
 func (c *PayPalWebsitePaymentsProCredentials) SupportsSca() bool {
-	return *c.CardinalProcessorID != "" &&
-		*c.CardinalMerchantID != "" &&
-		*c.CardinalTransactionPw != "" &&
-		*c.CardinalTransactionURL != "" &&
-		*c.CardinalAPIIdentifier != "" &&
-		*c.CardinalAPIKey != "" &&
-		*c.CardinalOrgUnitID != ""
+	return c.GetCardinalProcessorID() != "" &&
+		c.GetCardinalMerchantID() != "" &&
+		c.GetCardinalTransactionPw() != "" &&
+		c.GetCardinalTransactionURL() != "" &&
+		c.GetCardinalAPIIdentifier() != "" &&
+		c.GetCardinalAPIKey() != "" &&
+		c.GetCardinalOrgUnitID() != ""
 }
