@@ -179,6 +179,8 @@ Transaction Keys | Definition
 "transaction.liability"|
 "transaction.sub.type"|
 "transaction.result"|
+"transaction.connector.id"| (string) the id of the connector
+"transaction.connector.library"| (string) the name of the library (e.g. "paysafe", "worldpay")
 
 Transaction Response Keys | Definition 
 ---:|:---
