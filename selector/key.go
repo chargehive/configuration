@@ -131,15 +131,17 @@ const (
 	KeyChargeItemDeliveryCourier        Key = "charge.meta.item.delivery.courier"
 
 	// Transaction
-	KeyTransactionType          Key = "transaction.type"
-	KeyTransactionPaymentType   Key = "transaction.payment.type"
-	KeyTransactionPaymentScheme Key = "transaction.payment.scheme"
-	KeyTransactionContract      Key = "transaction.contract"
-	KeyTransactionFailureType   Key = "transaction.failure.type"
-	KeyTransactionVerified      Key = "transaction.verified"
-	KeyTransactionLiability     Key = "transaction.liability"
-	KeyTransactionSubType       Key = "transaction.sub.type"
-	KeyTransactionResult        Key = "transaction.result"
+	KeyTransactionType             Key = "transaction.type"
+	KeyTransactionPaymentType      Key = "transaction.payment.type"
+	KeyTransactionPaymentScheme    Key = "transaction.payment.scheme"
+	KeyTransactionContract         Key = "transaction.contract"
+	KeyTransactionFailureType      Key = "transaction.failure.type"
+	KeyTransactionVerified         Key = "transaction.verified"
+	KeyTransactionLiability        Key = "transaction.liability"
+	KeyTransactionSubType          Key = "transaction.sub.type"
+	KeyTransactionResult           Key = "transaction.result"
+	KeyTransactionConnectorId      Key = "transaction.connector.id"
+	KeyTransactionConnectorLibrary Key = "transaction.connector.library"
 
 	// Transaction response
 	KeyTransactionResponseCode            Key = "transaction.response.code"
@@ -286,6 +288,8 @@ var KeyRegister = map[Key]bool{
 	KeyTransactionLiability:               true,
 	KeyTransactionSubType:                 true,
 	KeyTransactionResult:                  true,
+	KeyTransactionConnectorId:             true,
+	KeyTransactionConnectorLibrary:        true,
 	KeyTransactionResponseCode:            true,
 	KeyTransactionResponseFailureType:     true,
 	KeyTransactionResponseCategory:        true,
