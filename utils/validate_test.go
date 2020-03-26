@@ -19,14 +19,14 @@ func TestAdditionalUnknownFields(t *testing.T) {
 
 // test for missing field
 func TestMissingFields(t *testing.T) {
-	rawJson := []byte(`{"kind":"Connector","metadata":{"name":"change-me","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"paypal-websitepaymentspro","configuration":"eyJhcGlQYXNzd29yZCI6bnVsbCwiYXBpU2lnbmF0dXJlIjoiQ0hBTkdFLU1FIiwic3VwcG9ydGVkQ3VycmVuY2llcyI6WyJVU0QiXSwiY2FyZGluYWxQcm9jZXNzb3JJRCI6IkNIQU5HRS1NRSIsImNhcmRpbmFsTWVyY2hhbnRJRCI6IkNIQU5HRS1NRSIsImNhcmRpbmFsVHJhbnNhY3Rpb25QdyI6IkNIQU5HRS1NRSIsImNhcmRpbmFsVHJhbnNhY3Rpb25VUkwiOiJDSEFOR0UtTUUiLCJjYXJkaW5hbEFQSUlkZW50aWZpZXIiOiJDSEFOR0UtTUUiLCJjYXJkaW5hbEFQSUtleSI6IkNIQU5HRS1NRSIsImNhcmRpbmFsT3JnVW5pdElEIjoiQ0hBTkdFLU1FIiwiZW52aXJvbm1lbnQiOiJzYW5kYm94In0="}}`)
+	rawJson := []byte(`{"kind":"Connector","metadata":{"displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"paypal-websitepaymentspro","configuration":"eyJhcGlQYXNzd29yZCI6bnVsbCwiYXBpU2lnbmF0dXJlIjoiQ0hBTkdFLU1FIiwic3VwcG9ydGVkQ3VycmVuY2llcyI6WyJVU0QiXSwiY2FyZGluYWxQcm9jZXNzb3JJRCI6IkNIQU5HRS1NRSIsImNhcmRpbmFsTWVyY2hhbnRJRCI6IkNIQU5HRS1NRSIsImNhcmRpbmFsVHJhbnNhY3Rpb25QdyI6IkNIQU5HRS1NRSIsImNhcmRpbmFsVHJhbnNhY3Rpb25VUkwiOiJDSEFOR0UtTUUiLCJjYXJkaW5hbEFQSUlkZW50aWZpZXIiOiJDSEFOR0UtTUUiLCJjYXJkaW5hbEFQSUtleSI6IkNIQU5HRS1NRSIsImNhcmRpbmFsT3JnVW5pdElEIjoiQ0hBTkdFLU1FIiwiZW52aXJvbm1lbnQiOiJzYW5kYm94In0="}}`)
 	configuration.Initialise()
 	if errs := Validate(rawJson, "v1"); len(errs) > 0 {
 		_ = PrettyPrint(errs)
 		assert.Equal(t, 3, len(errs))
 		assert.Equal(t, errs["PayPalWebsitePaymentsProCredentials.APIUsername"], "APIUsername is a required field") // missing field
 		assert.Equal(t, errs["PayPalWebsitePaymentsProCredentials.APIPassword"], "APIPassword is a required field") // null field
-		assert.Equal(t, errs["Definition.MetaData.ProjectID"], "ProjectID is a required field")
+		assert.Equal(t, errs["Definition.MetaData.Name"], "Name is a required field")
 	}
 }
 
