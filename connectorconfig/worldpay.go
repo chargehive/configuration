@@ -19,10 +19,10 @@ const (
 )
 
 type WorldpayCredentials struct {
-	Username              *string             `json:"username" yaml:"username" validate:"required,gt=0"`
-	Password              *string             `json:"password" yaml:"password" validate:"required,gt=0"`
-	MerchantID            string              `json:"merchantID" yaml:"merchantID" validate:"required"`
-	ReportGroup           string              `json:"reportGroup" yaml:"reportGroup" validate:"-"`
+	Username              *string             `json:"username" yaml:"username" validate:"required,gt=0,lte=20"`
+	Password              *string             `json:"password" yaml:"password" validate:"required,gt=0,lte=20"`
+	MerchantID            string              `json:"merchantID" yaml:"merchantID" validate:"gte=1,lte=50"`
+	ReportGroup           string              `json:"reportGroup" yaml:"reportGroup" validate:"gte=1,lte=25"`
 	Environment           WorldpayEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox postlive transactpostlive production productiontransact prelive transactprelive"`
 	CardinalApiIdentifier *string             `json:"cardinalApiIdentifier" yaml:"cardinalApiIdentifier" validate:"required"`
 	CardinalApiKey        *string             `json:"cardinalApiKey" yaml:"cardinalApiKey" validate:"required"`
