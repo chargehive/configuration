@@ -30,6 +30,7 @@ type PaySafeApplePayCredentials struct {
 	SingleUseTokenUsername *string            `json:"singleUseTokenUsername" yaml:"singleUseTokenUsername" validate:"required"`
 	Locale                 PaysafeLocale      `json:"locale" yaml:"locale" validate:"oneof=en_GB en_US fr_CA"`
 
+	// todo this probably needs to go into the secure fields!
 	ApplePayMerchantIdentityCert string `json:"applePayMerchantIdentityCert" yaml:"applePayMerchantIdentityCert" validate:"required"`
 	ApplePayMerchantIdentityKey  string `json:"applePayMerchantIdentityKey" yaml:"applePayMerchantIdentityKey" validate:"required"`
 	ApplePayMerchantIdentifier   string `json:"applePayMerchantIdentifier" yaml:"applePayMerchantIdentifier" validate:"required"`

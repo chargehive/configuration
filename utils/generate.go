@@ -168,8 +168,8 @@ func buildSpec(conf Template) (object.Specification, error) {
 			Environment:            "MOCK",
 			Currency:               "USD",
 			UseVault:               new(bool),
-			SingleUseTokenPassword: &chg,
-			SingleUseTokenUsername: chg,
+			SingleUseTokenPassword: new(string),
+			SingleUseTokenUsername: "",
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryPaySafe), Configuration: j}, nil
 	case confConnPaysafeApplePay:
