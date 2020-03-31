@@ -17,7 +17,8 @@ type PaySafeGooglePayCredentials struct {
 	SingleUseTokenPassword *string            `json:"singleUseTokenPassword" yaml:"singleUseTokenPassword" validate:"required"`
 	SingleUseTokenUsername *string            `json:"singleUseTokenUsername" yaml:"singleUseTokenUsername" validate:"required"`
 	Locale                 PaysafeLocale      `json:"locale" yaml:"locale" validate:"oneof=en_GB en_US fr_CA"`
-	// Pending implementation <additional parameters TBC>
+
+	// todo Pending implementation <additional parameters TBC> probably needs to go in secure fields!
 }
 
 func (c PaySafeGooglePayCredentials) GetLibrary() Library {
