@@ -12,7 +12,7 @@ const KindInitiator object.Kind = "Initiator"
 // Initiator is a config that specifies actions for an initial transaction
 type Initiator struct {
 	// Type indicates the type of this initiator
-	Type InitiatorType `json:"type" yaml:"type" validate:"required,oneof=auth renewal"`
+	Type InitiatorType `json:"type" yaml:"type" validate:"required,oneof=auth renewal capture"`
 
 	// InitialConnector is the selection method for the initial selector (only used on renewal)
 	InitialConnector ConnectorSelector `json:"initialConnector" yaml:"initialConnector" validate:"required,oneof=none sticky-first sticky-last sticky-any sticky-verified config"`

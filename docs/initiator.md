@@ -33,7 +33,7 @@ As with all configs, the standard wrapper is used.
 ## Spec Definition
 FieldName | Required | Definition 
 ---:|---|:---
-type|true| "auth" (how an authorization request is handled) or "renewal" (how a renewal request is handled)
+type|true| "auth" (how an authorization request is handled), "renewal" (how a renewal request is handled) or "capture" (how a secondary new charge is handled)
 [initialConnector](#initialconnector-values)|true|Indicates the method used to select a connector
 [attemptConfig](#attemptconfig-definition)|true|Defines additional configuration options for the attempts
 
