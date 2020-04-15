@@ -23,8 +23,19 @@ const (
 	RestrictionLowestUsage Restriction = "lowestUsage"
 )
 
+type SelectMode string
+
+const (
+	// SelectModeDefault groups all connectors in the pool, and orders by priority
+	SelectModeDefault SelectMode = "default"
+
+	// SelectModePriorityMerge selects a single connector from each priority (after weighting shuffle)
+	SelectModePriorityMerge SelectMode = "priorityMerge"
+)
+
 // Pool is used to select a group of connectors and the order that they should be used in
 type Pool struct {
+	SelectMode  SelectMode  `json:"selectMode" yaml:"selectMode" validate:"oneof=default priorityMerge"`
 	Restriction Restriction `json:"restriction" yaml:"restriction" validate:"oneof=unrestricted noRepeat lowestUsage"`
 	Connectors  []PoolItem  `json:"connectors" yaml:"connectors" validate:"gt=0,dive"`
 }
