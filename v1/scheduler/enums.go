@@ -32,8 +32,12 @@ type InitiatorType string
 const (
 	// InitiatorTypeAuth indicates a configuration for how an authorization request is handled
 	InitiatorTypeAuth InitiatorType = "auth"
+
 	// InitiatorTypeRenewal indicates a configuration for how a renewal request is handled
 	InitiatorTypeRenewal InitiatorType = "renewal"
+
+	// InitiatorTypeCapture indicates a configuration for how a secondary capture request is handled
+	InitiatorTypeCapture InitiatorType = "capture"
 )
 
 // Type indicates the type of a scheduler
