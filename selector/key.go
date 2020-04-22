@@ -133,6 +133,7 @@ const (
 	// Transaction
 	KeyTransactionType             Key = "transaction.type"
 	KeyTransactionPaymentType      Key = "transaction.payment.type"
+	KeyTransactionPaymentProvider  Key = "transaction.payment.provider"
 	KeyTransactionPaymentScheme    Key = "transaction.payment.scheme"
 	KeyTransactionContract         Key = "transaction.contract"
 	KeyTransactionFailureType      Key = "transaction.failure.type"
@@ -281,6 +282,7 @@ var KeyRegister = map[Key]bool{
 	KeyChargeItemDeliveryCourier:          true,
 	KeyTransactionType:                    true,
 	KeyTransactionPaymentType:             true,
+	KeyTransactionPaymentProvider:         true,
 	KeyTransactionPaymentScheme:           true,
 	KeyTransactionContract:                true,
 	KeyTransactionFailureType:             true,
