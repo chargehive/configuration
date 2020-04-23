@@ -133,6 +133,7 @@ const (
 	// Transaction
 	KeyTransactionType             Key = "transaction.type"
 	KeyTransactionPaymentType      Key = "transaction.payment.type"
+	KeyTransactionPaymentProvider  Key = "transaction.payment.provider"
 	KeyTransactionPaymentScheme    Key = "transaction.payment.scheme"
 	KeyTransactionContract         Key = "transaction.contract"
 	KeyTransactionFailureType      Key = "transaction.failure.type"
@@ -157,6 +158,7 @@ const (
 	KeyMethodValidFrom     Key = "method.validFrom"
 	KeyMethodExpiry        Key = "method.expiry"
 	KeyMethodType          Key = "method.type"
+	KeyMethodProvider      Key = "method.provider"
 	KeyMethodInfo          Key = "method.info"
 )
 
@@ -281,6 +283,7 @@ var KeyRegister = map[Key]bool{
 	KeyChargeItemDeliveryCourier:          true,
 	KeyTransactionType:                    true,
 	KeyTransactionPaymentType:             true,
+	KeyTransactionPaymentProvider:         true,
 	KeyTransactionPaymentScheme:           true,
 	KeyTransactionContract:                true,
 	KeyTransactionFailureType:             true,
@@ -300,5 +303,6 @@ var KeyRegister = map[Key]bool{
 	KeyMethodValidFrom:                    true,
 	KeyMethodExpiry:                       true,
 	KeyMethodType:                         true,
+	KeyMethodProvider:                     true,
 	KeyMethodInfo:                         true,
 }
