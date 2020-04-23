@@ -158,6 +158,7 @@ const (
 	KeyMethodValidFrom     Key = "method.validFrom"
 	KeyMethodExpiry        Key = "method.expiry"
 	KeyMethodType          Key = "method.type"
+	KeyMethodProvider      Key = "method.provider"
 	KeyMethodInfo          Key = "method.info"
 )
 
@@ -302,5 +303,6 @@ var KeyRegister = map[Key]bool{
 	KeyMethodValidFrom:                    true,
 	KeyMethodExpiry:                       true,
 	KeyMethodType:                         true,
+	KeyMethodProvider:                     true,
 	KeyMethodInfo:                         true,
 }

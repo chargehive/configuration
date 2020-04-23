@@ -172,6 +172,7 @@ Transaction Keys | Definition
 ---:|:---
 "transaction.type"|
 "transaction.payment.type"|
+"transaction.payment.provider"|
 "transaction.payment.scheme"|
 "transaction.contract"|
 "transaction.failure.type"|
@@ -197,6 +198,7 @@ Method Keys | Definition
 "method.validFrom"|
 "method.expiry"|
 "method.type"|
+"method.provider"|
 "method.info"|
 
 
