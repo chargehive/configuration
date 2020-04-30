@@ -43,3 +43,7 @@ func (c *PayPalExpressCheckoutCredentials) FromJson(input []byte) error {
 func (c PayPalExpressCheckoutCredentials) SupportsSca() bool {
 	return false
 }
+
+func (c PayPalExpressCheckoutCredentials) SupportsApplePay() bool {
+	return false
+}

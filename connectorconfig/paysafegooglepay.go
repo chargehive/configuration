@@ -50,3 +50,7 @@ func (c *PaySafeGooglePayCredentials) FromJson(input []byte) error {
 func (c PaySafeGooglePayCredentials) SupportsSca() bool {
 	return false
 }
+
+func (c *PaySafeGooglePayCredentials) SupportsApplePay() bool {
+	return false
+}

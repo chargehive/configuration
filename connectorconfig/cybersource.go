@@ -47,3 +47,7 @@ func (c *CyberSourceCredentials) FromJson(input []byte) error {
 func (c CyberSourceCredentials) SupportsSca() bool {
 	return false
 }
+
+func (c CyberSourceCredentials) SupportsApplePay() bool {
+	return false
+}

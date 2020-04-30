@@ -39,3 +39,7 @@ func (c *StripeCredentials) FromJson(input []byte) error {
 func (c StripeCredentials) SupportsSca() bool {
 	return false
 }
+
+func (c *StripeCredentials) SupportsApplePay() bool {
+	return false
+}

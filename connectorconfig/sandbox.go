@@ -50,3 +50,7 @@ func (c *SandboxCredentials) FromJson(input []byte) error {
 func (c SandboxCredentials) SupportsSca() bool {
 	return true
 }
+
+func (c *SandboxCredentials) SupportsApplePay() bool {
+	return false
+}

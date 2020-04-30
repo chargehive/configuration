@@ -48,3 +48,7 @@ func (c *QualpayCredentials) FromJson(input []byte) error {
 func (c QualpayCredentials) SupportsSca() bool {
 	return false
 }
+
+func (c *QualpayCredentials) SupportsApplePay() bool {
+	return false
+}
