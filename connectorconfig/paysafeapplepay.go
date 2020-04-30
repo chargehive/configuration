@@ -68,6 +68,9 @@ func (c *PaySafeApplePayCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c PaySafeApplePayCredentials) SupportsSca() bool {
+func (c *PaySafeApplePayCredentials) SupportsSca() bool {
+	return false
+}
+func (c PaySafeApplePayCredentials) SupportsApplePay() bool {
 	return false
 }

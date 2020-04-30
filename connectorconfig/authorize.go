@@ -61,3 +61,7 @@ func (c *AuthorizeCredentials) FromJson(input []byte) error {
 func (c AuthorizeCredentials) SupportsSca() bool {
 	return c.GetAPILoginID() != "" && c.GetTransactionKey() != ""
 }
+
+func (c AuthorizeCredentials) SupportsApplePay() bool {
+	return false
+}

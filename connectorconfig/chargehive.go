@@ -38,3 +38,7 @@ func (c *ChargeHiveCredentials) FromJson(input []byte) error {
 func (c ChargeHiveCredentials) SupportsSca() bool {
 	return false
 }
+
+func (c ChargeHiveCredentials) SupportsApplePay() bool {
+	return false
+}

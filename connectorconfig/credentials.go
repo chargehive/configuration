@@ -10,6 +10,7 @@ type Credentials interface {
 	ToConnector() connector.Connector
 	FromJson(input []byte) error
 	SupportsSca() bool
+	SupportsApplePay() bool
 }
 
 type Library string

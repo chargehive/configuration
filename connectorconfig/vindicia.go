@@ -51,3 +51,7 @@ func (c *VindiciaCredentials) FromJson(input []byte) error {
 func (c VindiciaCredentials) SupportsSca() bool {
 	return false
 }
+
+func (c VindiciaCredentials) SupportsApplePay() bool {
+	return false
+}

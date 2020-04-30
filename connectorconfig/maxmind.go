@@ -50,3 +50,7 @@ func (c *MaxMindCredentials) FromJson(input []byte) error {
 func (c MaxMindCredentials) SupportsSca() bool {
 	return false
 }
+
+func (c MaxMindCredentials) SupportsApplePay() bool {
+	return false
+}

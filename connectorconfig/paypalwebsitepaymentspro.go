@@ -105,3 +105,7 @@ func (c *PayPalWebsitePaymentsProCredentials) SupportsSca() bool {
 		c.GetCardinalAPIKey() != "" &&
 		c.GetCardinalOrgUnitID() != ""
 }
+
+func (c PayPalWebsitePaymentsProCredentials) SupportsApplePay() bool {
+	return false
+}

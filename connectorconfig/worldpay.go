@@ -79,3 +79,7 @@ func (c *WorldpayCredentials) FromJson(input []byte) error {
 func (c WorldpayCredentials) SupportsSca() bool {
 	return c.GetCardinalApiIdentifier() != "" && c.GetCardinalApiKey() != "" && c.GetCardinalOrgUnitId() != ""
 }
+
+func (c WorldpayCredentials) SupportsApplePay() bool {
+	return true
+}

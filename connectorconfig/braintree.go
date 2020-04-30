@@ -66,3 +66,7 @@ func (c *BraintreeCredentials) FromJson(input []byte) error {
 func (c BraintreeCredentials) SupportsSca() bool {
 	return c.MerchantID != "" && c.GetPublicKey() != "" && c.GetPrivateKey() != "" && c.Environment != ""
 }
+
+func (c BraintreeCredentials) SupportsApplePay() bool {
+	return false
+}
