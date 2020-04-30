@@ -71,6 +71,6 @@ func (c *PaySafeApplePayCredentials) FromJson(input []byte) error {
 func (c *PaySafeApplePayCredentials) SupportsSca() bool {
 	return false
 }
-func (c *PaySafeApplePayCredentials) SupportsApplePay() bool {
+func (c PaySafeApplePayCredentials) SupportsApplePay() bool {
 	return false
 }

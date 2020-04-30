@@ -52,6 +52,6 @@ func (c VindiciaCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c *VindiciaCredentials) SupportsApplePay() bool {
+func (c VindiciaCredentials) SupportsApplePay() bool {
 	return false
 }

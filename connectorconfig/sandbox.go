@@ -51,6 +51,6 @@ func (c SandboxCredentials) SupportsSca() bool {
 	return true
 }
 
-func (c *SandboxCredentials) SupportsApplePay() bool {
+func (c SandboxCredentials) SupportsApplePay() bool {
 	return false
 }

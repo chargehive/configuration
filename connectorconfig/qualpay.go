@@ -49,6 +49,6 @@ func (c QualpayCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c *QualpayCredentials) SupportsApplePay() bool {
+func (c QualpayCredentials) SupportsApplePay() bool {
 	return false
 }

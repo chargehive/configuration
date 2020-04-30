@@ -51,6 +51,6 @@ func (c PaySafeGooglePayCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c *PaySafeGooglePayCredentials) SupportsApplePay() bool {
+func (c PaySafeGooglePayCredentials) SupportsApplePay() bool {
 	return false
 }

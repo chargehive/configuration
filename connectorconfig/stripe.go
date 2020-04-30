@@ -40,6 +40,6 @@ func (c StripeCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c *StripeCredentials) SupportsApplePay() bool {
+func (c StripeCredentials) SupportsApplePay() bool {
 	return false
 }

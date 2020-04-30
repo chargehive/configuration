@@ -106,6 +106,6 @@ func (c *PayPalWebsitePaymentsProCredentials) SupportsSca() bool {
 		c.GetCardinalOrgUnitID() != ""
 }
 
-func (c *PayPalWebsitePaymentsProCredentials) SupportsApplePay() bool {
+func (c PayPalWebsitePaymentsProCredentials) SupportsApplePay() bool {
 	return false
 }

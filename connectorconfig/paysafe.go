@@ -72,6 +72,6 @@ func (c PaySafeCredentials) SupportsSca() bool {
 	return c.Environment != "" && c.AccountID != "" && *c.SingleUseTokenPassword != "" && c.SingleUseTokenUsername != ""
 }
 
-func (c *PaySafeCredentials) SupportsApplePay() bool {
+func (c PaySafeCredentials) SupportsApplePay() bool {
 	return false
 }
