@@ -27,9 +27,9 @@ type WorldpayCredentials struct {
 	CardinalApiKey           *string             `json:"cardinalApiKey" yaml:"cardinalApiKey" validate:"required"`
 	CardinalOrgUnitId        *string             `json:"cardinalOrgUnitId" yaml:"cardinalOrgUnitId" validate:"required"`
 	AppleMerchantIdentifier  string              `json:"appleMerchantIdentifier" yaml:"appleMerchantIdentifier"`
-	AppleMerchantDisplayName string              `json:"appleMerchantDisplayName" yaml:"appleMerchantDisplayName"`
-	AppleInitiative          string              `json:"appleInitiative" yaml:"appleInitiative" validate:"omitempty,oneof=web messaging"`
-	AppleInitiativeContext   string              `json:"appleInitiativeContext" yaml:"appleInitiativeContext"`
+	AppleMerchantDisplayName string              `json:"appleMerchantDisplayName" yaml:"appleMerchantDisplayName" validate:"required_with=AppleMerchantIdentifier"`
+	AppleInitiative          string              `json:"appleInitiative" yaml:"appleInitiative" validate:"required_with=AppleMerchantIdentifier,omitempty,oneof=web messaging"`
+	AppleInitiativeContext   string              `json:"appleInitiativeContext" yaml:"appleInitiativeContext" validate:"required_with=AppleMerchantIdentifier"`
 	AppleMerchantCertificate *string             `json:"appleMerchantPublicKey" yaml:"appleMerchantPublicKey" validate:"required"`
 	AppleMerchantPrivateKey  *string             `json:"appleMerchantPrivateKey" yaml:"appleMerchantPrivateKey" validate:"required"`
 }
