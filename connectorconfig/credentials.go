@@ -1,6 +1,7 @@
 package connectorconfig
 
 import "github.com/chargehive/configuration/v1/connector"
+import "github.com/chargehive/proto/golang/chargehive/chtype"
 
 type Credentials interface {
 	GetLibrary() Library
@@ -10,7 +11,7 @@ type Credentials interface {
 	ToConnector() connector.Connector
 	FromJson(input []byte) error
 	SupportsSca() bool
-	SupportsApplePay() bool
+	SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool
 }
 
 type Library string

@@ -3,6 +3,7 @@ package connectorconfig
 import (
 	"encoding/json"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
 type WorldpayEnvironment string
@@ -99,8 +100,13 @@ func (c WorldpayCredentials) SupportsSca() bool {
 	return c.GetCardinalApiIdentifier() != "" && c.GetCardinalApiKey() != "" && c.GetCardinalOrgUnitId() != ""
 }
 
-func (c WorldpayCredentials) SupportsApplePay() bool {
-	if c.AppleMerchantIdentifier != "" &&
+func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
+		return true
+	}
+	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
+		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY &&
+		c.AppleMerchantIdentifier != "" &&
 		c.AppleMerchantDisplayName != "" &&
 		c.AppleInitiative != "" &&
 		c.AppleInitiativeContext != "" &&
