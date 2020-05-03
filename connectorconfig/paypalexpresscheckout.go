@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 
 	"github.com/chargehive/configuration/v1/connector"
 )
@@ -44,6 +45,9 @@ func (c PayPalExpressCheckoutCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c PayPalExpressCheckoutCredentials) SupportsApplePay() bool {
+func (c PayPalExpressCheckoutCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_PAYPAL {
+		return true
+	}
 	return false
 }
