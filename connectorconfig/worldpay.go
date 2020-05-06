@@ -31,7 +31,7 @@ type WorldpayCredentials struct {
 	AppleMerchantDisplayName string              `json:"appleMerchantDisplayName" yaml:"appleMerchantDisplayName" validate:"required_with=AppleMerchantIdentifier"`
 	AppleInitiative          string              `json:"appleInitiative" yaml:"appleInitiative" validate:"required_with=AppleMerchantIdentifier,omitempty,oneof=web messaging"`
 	AppleInitiativeContext   string              `json:"appleInitiativeContext" yaml:"appleInitiativeContext" validate:"required_with=AppleMerchantIdentifier"`
-	AppleMerchantCertificate *string             `json:"appleMerchantPublicKey" yaml:"appleMerchantPublicKey" validate:"required"`
+	AppleMerchantCertificate *string             `json:"appleMerchantCertificate" yaml:"appleMerchantCertificate" validate:"required"`
 	AppleMerchantPrivateKey  *string             `json:"appleMerchantPrivateKey" yaml:"appleMerchantPrivateKey" validate:"required"`
 }
 
