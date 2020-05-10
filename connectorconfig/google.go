@@ -1,6 +1,6 @@
 package connectorconfig
 
-type GooglePaySubCredentials struct {
+type GooglePayCredentials struct {
 	Environment                    GoogleEnvironment             `json:"environment" validate:"omitempty,oneof=TEST PRODUCTION"` // PRODUCTION: Used to return chargeable payment methods when a valid Google merchant ID is specified and configured for the domain.TEST: Dummy payment methods that are suitable for testing (default).
 	MerchantId                     string                        `json:"merchantId" validate:"required"`                         // A Google merchant identifier issued after your website is approved by Google. Required when PaymentsClient is initialized with an environment property of PRODUCTION. See the Integration checklist for more information about the approval process and how to obtain a Google merchant identifier.
 	MerchantName                   string                        `json:"merchantName" validate:"-"`                              // Merchant name encoded as UTF-8. Merchant name is rendered in the payment sheet. In TEST environment, or if a merchant isn't recognized, a “Pay Unverified Merchant” message is displayed in the payment sheet.
