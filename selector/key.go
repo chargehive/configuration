@@ -73,6 +73,7 @@ const (
 	KeyChargeDeliveryAddressPostalCode  Key = "charge.meta.deliveryAddress.postalCode"
 	KeyChargeDeliveryAddressFao         Key = "charge.meta.deliveryAddress.fao"
 	KeyChargeDeliveryAddressCompanyName Key = "charge.meta.deliveryAddress.companyName"
+	KeyChargePlacementID                Key = "charge.meta.PlacementID"
 	KeyChargePerson                     Key = "charge.meta.person"
 	KeyChargePersonTitle                Key = "charge.meta.person.title"
 	KeyChargePersonFirstName            Key = "charge.meta.person.firstName"
@@ -253,6 +254,7 @@ var KeyRegister = map[Key]bool{
 	KeyChargeDeviceOsVersion:              true,
 	KeyChargeDeviceBrowser:                true,
 	KeyChargeDeviceBrowserVersion:         true,
+	KeyChargePlacementID:                  true,
 	KeyChargeItems:                        true,
 	KeyChargeItemsCount:                   true,
 	KeyChargeItemSubscriptionId:           true,
