@@ -1,7 +1,9 @@
 package connectorconfig
 
-import "github.com/chargehive/configuration/v1/connector"
-import "github.com/chargehive/proto/golang/chargehive/chtype"
+import (
+	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
+)
 
 type Credentials interface {
 	GetLibrary() Library
@@ -35,6 +37,9 @@ const (
 	LibraryChargeHive  Library = "chargehive"
 	LibraryMaxMind     Library = "maxmind"
 	LibraryCyberSource Library = "cybersource"
+
+	// Updater Libraries
+	LibraryPaySafeAccountUpdater Library = "paysafe-accountupdater"
 )
 
 var LibraryRegister = map[Library]bool{
@@ -60,6 +65,7 @@ type LibraryType string
 const (
 	LibraryTypePayment LibraryType = "payment"
 	LibraryTypeFraud   LibraryType = "fraud"
+	LibraryTypeUpdater LibraryType = "updater"
 )
 
 var LibraryTypeRegister = map[LibraryType]bool{
