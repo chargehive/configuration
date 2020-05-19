@@ -32,10 +32,6 @@ func getCreds(c *connector.Connector, strict bool) (Credentials, error) {
 		credentials = &StripeCredentials{}
 	case LibraryPaySafe:
 		credentials = &PaySafeCredentials{}
-	case LibraryPaySafeApplePay:
-		credentials = &PaySafeApplePayCredentials{}
-	case LibraryPaySafeGooglePay:
-		credentials = &PaySafeGooglePayCredentials{}
 	case LibraryPayPalExpressCheckout:
 		credentials = &PayPalExpressCheckoutCredentials{}
 	case LibraryPayPalWebsitePaymentsPro:
