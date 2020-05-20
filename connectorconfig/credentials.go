@@ -63,9 +63,9 @@ var LibraryRegister = map[Library]bool{
 type LibraryType string
 
 const (
-	LibraryTypePayment LibraryType = "payment"
-	LibraryTypeFraud   LibraryType = "fraud"
-	LibraryTypeUpdater LibraryType = "updater"
+	LibraryTypePayment       LibraryType = "payment"
+	LibraryTypeFraud         LibraryType = "fraud"
+	LibraryTypeMethodUpdater LibraryType = "methodUpdater"
 )
 
 var LibraryTypeRegister = map[LibraryType]bool{

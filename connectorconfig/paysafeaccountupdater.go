@@ -32,7 +32,7 @@ func (c PaySafeAccountUpdaterCredentials) GetLibrary() Library {
 }
 
 func (c *PaySafeAccountUpdaterCredentials) GetSupportedTypes() []LibraryType {
-	return []LibraryType{LibraryTypeUpdater}
+	return []LibraryType{LibraryTypeMethodUpdater}
 }
 
 func (c *PaySafeAccountUpdaterCredentials) Validate() error {
