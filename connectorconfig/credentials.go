@@ -1,7 +1,9 @@
 package connectorconfig
 
-import "github.com/chargehive/configuration/v1/connector"
-import "github.com/chargehive/proto/golang/chargehive/chtype"
+import (
+	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
+)
 
 type Credentials interface {
 	GetLibrary() Library
@@ -24,8 +26,6 @@ const (
 	LibraryQualPay                  Library = "qualpay"
 	LibraryStripe                   Library = "stripe"
 	LibraryPaySafe                  Library = "paysafe"
-	LibraryPaySafeApplePay          Library = "paysafe-applepay"
-	LibraryPaySafeGooglePay         Library = "paysafe-googlepay"
 	LibraryWorldpay                 Library = "worldpay"
 	LibraryPayPalWebsitePaymentsPro Library = "paypal-websitepaymentspro"
 	LibraryPayPalExpressCheckout    Library = "paypal-expresscheckout"
