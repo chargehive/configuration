@@ -103,8 +103,6 @@ func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY &&
 		c.AppleMerchantIdentifier != "" &&
 		c.AppleMerchantDisplayName != "" &&
-		c.AppleInitiative != "" &&
-		c.AppleInitiativeContext != "" &&
 		(c.AppleMerchantCertificate != nil && c.AppleMerchantCertificate != new(string)) &&
 		(c.AppleMerchantPrivateKey != nil && c.AppleMerchantPrivateKey != new(string)) {
 		return true

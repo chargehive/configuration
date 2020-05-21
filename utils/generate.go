@@ -219,20 +219,20 @@ func buildSpec(conf Template) (object.Specification, error) {
 		return connector.Connector{Library: string(connectorconfig.LibraryVindicia), Configuration: j}, nil
 	case confConnWorldPay:
 		j, _ := json.Marshal(connectorconfig.WorldpayCredentials{
-			Username:                 &chg,
-			Password:                 &chg,
-			MerchantID:               chg,
-			ReportGroup:              chg,
-			Environment:              "sandbox",
-			CardinalApiIdentifier:    &chg,
-			CardinalApiKey:           &chg,
-			CardinalOrgUnitId:        &chg,
-			AppleMerchantIdentifier:  chg,
-			AppleMerchantDisplayName: chg,
-			AppleInitiative:          "web",
-			AppleInitiativeContext:   chg,
-			AppleMerchantCertificate: &chg,
-			AppleMerchantPrivateKey:  &chg,
+			Username:              &chg,
+			Password:              &chg,
+			MerchantID:            chg,
+			ReportGroup:           chg,
+			Environment:           "sandbox",
+			CardinalApiIdentifier: &chg,
+			CardinalApiKey:        &chg,
+			CardinalOrgUnitId:     &chg,
+			ApplePay: connectorconfig.ApplePay{
+				AppleMerchantIdentifier:  chg,
+				AppleMerchantDisplayName: chg,
+				AppleMerchantCertificate: &chg,
+				AppleMerchantPrivateKey:  &chg,
+			},
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryWorldpay), Configuration: j}, nil
 	case confConnectorPool:
