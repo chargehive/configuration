@@ -44,8 +44,6 @@ var LibraryRegister = map[Library]bool{
 	LibraryQualPay:                  true,
 	LibraryStripe:                   true,
 	LibraryPaySafe:                  true,
-	LibraryPaySafeApplePay:          true,
-	LibraryPaySafeGooglePay:         true,
 	LibraryWorldpay:                 true,
 	LibraryPayPalWebsitePaymentsPro: true,
 	LibraryPayPalExpressCheckout:    true,
