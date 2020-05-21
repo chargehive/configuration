@@ -172,39 +172,6 @@ func buildSpec(conf Template) (object.Specification, error) {
 			SingleUseTokenUsername: "",
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryPaySafe), Configuration: j}, nil
-	case confConnPaysafeApplePay:
-		j, _ := json.Marshal(connectorconfig.PaySafeApplePayCredentials{
-			Acquirer:                     chg,
-			AccountID:                    chg,
-			APIUsername:                  &chg,
-			APIPassword:                  &chg,
-			Environment:                  "MOCK",
-			Country:                      "",
-			Currency:                     "USD",
-			SingleUseTokenPassword:       &chg,
-			SingleUseTokenUsername:       &chg,
-			Locale:                       "en_GB",
-			ApplePayMerchantIdentityCert: chg,
-			ApplePayMerchantIdentityKey:  chg,
-			ApplePayMerchantIdentifier:   chg,
-			ApplePayDisplayName:          chg,
-			ApplePayInitiative:           chg,
-			ApplePayInitiativeContext:    chg,
-		})
-		return connector.Connector{Library: string(connectorconfig.LibraryPaySafeApplePay), Configuration: j}, nil
-	case confConnPaysafeGooglePay:
-		j, _ := json.Marshal(connectorconfig.PaySafeGooglePayCredentials{
-			Acquirer:               chg,
-			AccountID:              chg,
-			APIUsername:            &chg,
-			APIPassword:            &chg,
-			Environment:            "MOCK",
-			Currency:               "USD",
-			SingleUseTokenPassword: &chg,
-			SingleUseTokenUsername: &chg,
-			Locale:                 "en_GB",
-		})
-		return connector.Connector{Library: string(connectorconfig.LibraryPaySafeGooglePay), Configuration: j}, nil
 	case confConnQualPay:
 		j, _ := json.Marshal(connectorconfig.QualpayCredentials{APIKey: &chg, MerchantID: 1, Environment: "test"})
 		return connector.Connector{Library: string(connectorconfig.LibraryQualPay), Configuration: j}, nil
