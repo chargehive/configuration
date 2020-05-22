@@ -19,34 +19,15 @@ const (
 )
 
 type WorldpayCredentials struct {
-	Username                 *string             `json:"username" yaml:"username" validate:"required,gt=0"`
-	Password                 *string             `json:"password" yaml:"password" validate:"required,gt=0"`
-	MerchantID               string              `json:"merchantID" yaml:"merchantID" validate:"gte=1,lte=50"`
-	ReportGroup              string              `json:"reportGroup" yaml:"reportGroup" validate:"gte=1,lte=25"`
-	Environment              WorldpayEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox postlive transactpostlive production productiontransact prelive transactprelive"`
-	CardinalApiIdentifier    *string             `json:"cardinalApiIdentifier" yaml:"cardinalApiIdentifier" validate:"required"`
-	CardinalApiKey           *string             `json:"cardinalApiKey" yaml:"cardinalApiKey" validate:"required"`
-	CardinalOrgUnitId        *string             `json:"cardinalOrgUnitId" yaml:"cardinalOrgUnitId" validate:"required"`
-	AppleMerchantIdentifier  string              `json:"appleMerchantIdentifier" yaml:"appleMerchantIdentifier"`
-	AppleMerchantDisplayName string              `json:"appleMerchantDisplayName" yaml:"appleMerchantDisplayName" validate:"required_with=AppleMerchantIdentifier"`
-	AppleInitiative          string              `json:"appleInitiative" yaml:"appleInitiative" validate:"required_with=AppleMerchantIdentifier,omitempty,oneof=web messaging"`
-	AppleInitiativeContext   string              `json:"appleInitiativeContext" yaml:"appleInitiativeContext" validate:"required_with=AppleMerchantIdentifier"`
-	AppleMerchantCertificate *string             `json:"appleMerchantPublicKey" yaml:"appleMerchantPublicKey" validate:"required"`
-	AppleMerchantPrivateKey  *string             `json:"appleMerchantPrivateKey" yaml:"appleMerchantPrivateKey" validate:"required"`
-}
-
-func (c WorldpayCredentials) GetAppleMerchantPublicKey() string {
-	if c.AppleMerchantCertificate == nil {
-		return ""
-	}
-	return *c.AppleMerchantCertificate
-}
-
-func (c WorldpayCredentials) GetAppleMerchantPrivateKey() string {
-	if c.AppleMerchantPrivateKey == nil {
-		return ""
-	}
-	return *c.AppleMerchantPrivateKey
+	Username              *string             `json:"username" yaml:"username" validate:"required,gt=0"`
+	Password              *string             `json:"password" yaml:"password" validate:"required,gt=0"`
+	MerchantID            string              `json:"merchantID" yaml:"merchantID" validate:"gte=1,lte=50"`
+	ReportGroup           string              `json:"reportGroup" yaml:"reportGroup" validate:"gte=1,lte=25"`
+	Environment           WorldpayEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox postlive transactpostlive production productiontransact prelive transactprelive"`
+	CardinalApiIdentifier *string             `json:"cardinalApiIdentifier" yaml:"cardinalApiIdentifier" validate:"required"`
+	CardinalApiKey        *string             `json:"cardinalApiKey" yaml:"cardinalApiKey" validate:"required"`
+	CardinalOrgUnitId     *string             `json:"cardinalOrgUnitId" yaml:"cardinalOrgUnitId" validate:"required"`
+	ApplePay
 }
 
 func (c WorldpayCredentials) GetCardinalApiIdentifier() string {
@@ -108,8 +89,6 @@ func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY &&
 		c.AppleMerchantIdentifier != "" &&
 		c.AppleMerchantDisplayName != "" &&
-		c.AppleInitiative != "" &&
-		c.AppleInitiativeContext != "" &&
 		(c.AppleMerchantCertificate != nil && c.AppleMerchantCertificate != new(string)) &&
 		(c.AppleMerchantPrivateKey != nil && c.AppleMerchantPrivateKey != new(string)) {
 		return true
