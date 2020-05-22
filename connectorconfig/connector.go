@@ -50,6 +50,11 @@ func getCreds(c *connector.Connector, strict bool) (Credentials, error) {
 		credentials = &CyberSourceCredentials{}
 	case LibraryChargeHive:
 		credentials = &ChargeHiveCredentials{}
+
+		// Updater libraries
+	case LibraryPaySafeAccountUpdater:
+		credentials = &PaySafeAccountUpdaterCredentials{}
+
 	default:
 		return nil, errors.New("invalid library specified")
 	}

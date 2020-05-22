@@ -35,6 +35,9 @@ const (
 	LibraryChargeHive  Library = "chargehive"
 	LibraryMaxMind     Library = "maxmind"
 	LibraryCyberSource Library = "cybersource"
+
+	// Updater Libraries
+	LibraryPaySafeAccountUpdater Library = "paysafe-accountupdater"
 )
 
 var LibraryRegister = map[Library]bool{
@@ -56,8 +59,9 @@ var LibraryRegister = map[Library]bool{
 type LibraryType string
 
 const (
-	LibraryTypePayment LibraryType = "payment"
-	LibraryTypeFraud   LibraryType = "fraud"
+	LibraryTypePayment       LibraryType = "payment"
+	LibraryTypeFraud         LibraryType = "fraud"
+	LibraryTypeMethodUpdater LibraryType = "methodUpdater"
 )
 
 var LibraryTypeRegister = map[LibraryType]bool{
