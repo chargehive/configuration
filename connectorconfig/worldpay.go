@@ -30,20 +30,6 @@ type WorldpayCredentials struct {
 	ApplePay
 }
 
-func (c WorldpayCredentials) GetAppleMerchantPublicKey() string {
-	if c.AppleMerchantCertificate == nil {
-		return ""
-	}
-	return *c.AppleMerchantCertificate
-}
-
-func (c WorldpayCredentials) GetAppleMerchantPrivateKey() string {
-	if c.AppleMerchantPrivateKey == nil {
-		return ""
-	}
-	return *c.AppleMerchantPrivateKey
-}
-
 func (c WorldpayCredentials) GetCardinalApiIdentifier() string {
 	if c.CardinalApiIdentifier == nil {
 		return ""
