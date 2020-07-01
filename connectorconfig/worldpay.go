@@ -94,5 +94,11 @@ func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 		(c.AppleMerchantPrivateKey != nil && c.AppleMerchantPrivateKey != new(string)) {
 		return true
 	}
+	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
+		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY &&
+		c.GoogleMerchantName != "" &&
+		c.GoogleMerchantId != "" {
+		return true
+	}
 	return false
 }
