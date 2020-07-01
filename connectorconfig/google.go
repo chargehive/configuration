@@ -19,8 +19,6 @@ type GooglePay struct {
 	GoogleCardBillingAddressReq  GoogleCardBillingAddressReq `json:"cardBillingAddressRequirements"` // Set level of billing requirement
 }
 
-// direct integration or eProtect
-
 type (
 	GoogleEnvironment           string
 	GoogleCardGateway           string
