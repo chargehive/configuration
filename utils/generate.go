@@ -18,21 +18,19 @@ type Template string
 
 const (
 	// connectors
-	confConnAuthorize        Template = "con_authorize"
-	confConnBrainTree        Template = "con_brainTree"
-	confConnChargeHive       Template = "con_chargeHive"
-	confConnCyberSource      Template = "con_cyberSource"
-	confConnMaxMind          Template = "con_maxMind"
-	confConnPayPalExpress    Template = "con_payPalExpressCheckout"
-	confConnPayPalWPP        Template = "con_payPalWPP"
-	confConnPaysafe          Template = "con_paysafe"
-	confConnPaysafeApplePay  Template = "con_paysafeApplePay"
-	confConnPaysafeGooglePay Template = "con_paysafeGooglePay"
-	confConnQualPay          Template = "con_qualPay"
-	confConnSandbox          Template = "con_sandbox"
-	confConnStripe           Template = "con_stripe"
-	confConnVindicia         Template = "con_vindicia"
-	confConnWorldPay         Template = "con_worldPay"
+	confConnAuthorize     Template = "con_authorize"
+	confConnBrainTree     Template = "con_brainTree"
+	confConnChargeHive    Template = "con_chargeHive"
+	confConnCyberSource   Template = "con_cyberSource"
+	confConnMaxMind       Template = "con_maxMind"
+	confConnPayPalExpress Template = "con_payPalExpressCheckout"
+	confConnPayPalWPP     Template = "con_payPalWPP"
+	confConnPaysafe       Template = "con_paysafe"
+	confConnQualPay       Template = "con_qualPay"
+	confConnSandbox       Template = "con_sandbox"
+	confConnStripe        Template = "con_stripe"
+	confConnVindicia      Template = "con_vindicia"
+	confConnWorldPay      Template = "con_worldPay"
 
 	// connector Pool
 	confConnectorPool Template = "con_pool"
@@ -57,34 +55,32 @@ const (
 )
 
 var Templates = map[Template]string{
-	confConnAuthorize:        "Connector: Authorize.net",
-	confConnBrainTree:        "Connector: Braintree",
-	confConnChargeHive:       "Connector: ChargeHive (fraud)",
-	confConnCyberSource:      "Connector: Cybersource (fraud)",
-	confConnMaxMind:          "Connector: MaxMind (fraud)",
-	confConnPayPalExpress:    "Connector: Paypal Express Checkout",
-	confConnPayPalWPP:        "Connector: Paypal Website Payments Pro",
-	confConnPaysafe:          "Connector: Paysafe",
-	confConnPaysafeApplePay:  "Connector: Paysafe Apple Pay",
-	confConnPaysafeGooglePay: "Connector: Paysafe Google Pay",
-	confConnQualPay:          "Connector: QualPay",
-	confConnSandbox:          "Connector: ChargeHive Sandbox",
-	confConnStripe:           "Connector: Stripe",
-	confConnVindicia:         "Connector: Vindicia",
-	confConnWorldPay:         "Connector: Worldpay",
-	confConnectorPool:        "Connector Pool",
-	confSlack:                "Integration: Slack",
-	confPolCascade:           "Policy: Cascade",
-	confPolChargeExpiry:      "Policy: Charge Expiry",
-	confPolFraud:             "Policy: Fraud",
-	confPolMethodLock:        "Policy: Method Lock",
-	confPolMethodUpgrade:     "Policy: Method Upgrade",
-	confPolMethodVerify:      "Policy: Method Verify",
-	confPolSCA:               "Policy: SCA",
-	confSchInitiator:         "Schedule: Initiator",
-	confSchOnDemand:          "Schedule: OnDemand",
-	confSchRefund:            "Schedule: Refund",
-	confSchSequential:        "Schedule: Sequential",
+	confConnAuthorize:     "Connector: Authorize.net",
+	confConnBrainTree:     "Connector: Braintree",
+	confConnChargeHive:    "Connector: ChargeHive (fraud)",
+	confConnCyberSource:   "Connector: Cybersource (fraud)",
+	confConnMaxMind:       "Connector: MaxMind (fraud)",
+	confConnPayPalExpress: "Connector: Paypal Express Checkout",
+	confConnPayPalWPP:     "Connector: Paypal Website Payments Pro",
+	confConnPaysafe:       "Connector: Paysafe",
+	confConnQualPay:       "Connector: QualPay",
+	confConnSandbox:       "Connector: ChargeHive Sandbox",
+	confConnStripe:        "Connector: Stripe",
+	confConnVindicia:      "Connector: Vindicia",
+	confConnWorldPay:      "Connector: Worldpay",
+	confConnectorPool:     "Connector Pool",
+	confSlack:             "Integration: Slack",
+	confPolCascade:        "Policy: Cascade",
+	confPolChargeExpiry:   "Policy: Charge Expiry",
+	confPolFraud:          "Policy: Fraud",
+	confPolMethodLock:     "Policy: Method Lock",
+	confPolMethodUpgrade:  "Policy: Method Upgrade",
+	confPolMethodVerify:   "Policy: Method Verify",
+	confPolSCA:            "Policy: SCA",
+	confSchInitiator:      "Schedule: Initiator",
+	confSchOnDemand:       "Schedule: OnDemand",
+	confSchRefund:         "Schedule: Refund",
+	confSchSequential:     "Schedule: Sequential",
 }
 
 var chg = "change-me"
@@ -195,10 +191,12 @@ func buildSpec(conf Template) (object.Specification, error) {
 			CardinalApiKey:        &chg,
 			CardinalOrgUnitId:     &chg,
 			ApplePay: connectorconfig.ApplePay{
-				AppleMerchantIdentifier:  chg,
-				AppleMerchantDisplayName: chg,
-				AppleMerchantCertificate: &chg,
-				AppleMerchantPrivateKey:  &chg,
+				AppleMerchantIdentifier:   chg,
+				AppleMerchantDisplayName:  chg,
+				AppleMerchantCertificate:  &chg,
+				AppleMerchantPrivateKey:   &chg,
+				AppleSupportedNetworks:    []connectorconfig.AppleNetwork{connectorconfig.AppleNetworkAmex},
+				AppleMerchantCapabilities: []connectorconfig.AppleMerchantCapability{connectorconfig.AppleMerchantCapability3DS},
 			},
 			GooglePayPageId: chg,
 			GooglePay: connectorconfig.GooglePay{
