@@ -37,6 +37,7 @@ const (
 
 	GoogleCardGatewayWORLDPAY GoogleCardGateway = "worldpay"
 	GoogleCardGatewayPAYSAFE  GoogleCardGateway = "paysafe"
+	GoogleCardGatewayVANTIV   GoogleCardGateway = "vantiv"
 
 	GoogleCardTokenTypeDIRECT  GoogleTokenType = "DIRECT"
 	GoogleCardTokenTypeGATEWAY GoogleTokenType = "PAYMENT_GATEWAY"
