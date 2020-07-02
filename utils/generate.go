@@ -195,8 +195,8 @@ func buildSpec(conf Template) (object.Specification, error) {
 				AppleMerchantDisplayName:  chg,
 				AppleMerchantCertificate:  &chg,
 				AppleMerchantPrivateKey:   &chg,
-				AppleSupportedNetworks:    []string{"test"},
-				AppleMerchantCapabilities: []string{"test"},
+				AppleSupportedNetworks:    []string{"amex"},
+				AppleMerchantCapabilities: []string{"supports3DS"},
 			},
 			GooglePayPageId: chg,
 			GooglePay: connectorconfig.GooglePay{
