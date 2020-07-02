@@ -200,7 +200,20 @@ func buildSpec(conf Template) (object.Specification, error) {
 				AppleMerchantCertificate: &chg,
 				AppleMerchantPrivateKey:  &chg,
 			},
+			GooglePayPageId: chg,
+			GooglePay: connectorconfig.GooglePay{
+				GoogleEnvironment:              connectorconfig.GoogleEnvironmentTEST,
+				GoogleMerchantId:               chg,
+				GoogleMerchantName:             chg,
+				GoogleCardAuthMethods:          []connectorconfig.GoogleCardAuthMethod{connectorconfig.GoogleCardAuthMethodPAN, connectorconfig.GoogleCardAuthMethod3DS},
+				GoogleCardNetworks:             []connectorconfig.GoogleCardNetwork{connectorconfig.GoogleCardNetworkAMEX, connectorconfig.GoogleCardNetworkDISCOVER, connectorconfig.GoogleCardNetworkINTERAC, connectorconfig.GoogleCardNetworkJCB, connectorconfig.GoogleCardNetworkMASTERCARD, connectorconfig.GoogleCardNetworkVISA},
+				GoogleCardBillingAddressFormat: connectorconfig.GoogleCardBillingAddressReqMIN,
+				GoogleCardTokenType:            connectorconfig.GoogleCardTokenTypeGATEWAY,
+				GoogleCardGateway:              connectorconfig.GoogleCardGatewayVANTIV,
+				GoogleCardMerchantId:           chg,
+			},
 		})
+
 		return connector.Connector{Library: string(connectorconfig.LibraryWorldpay), Configuration: j}, nil
 	case confConnectorPool:
 		return connector.Pool{Restriction: "unrestricted", Connectors: []connector.PoolItem{{ConnectorID: chg}}}, nil
