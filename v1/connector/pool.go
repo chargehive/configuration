@@ -58,7 +58,7 @@ func (d *PoolDefinition) Spec() *Pool { return d.def.Spec.(*Pool) }
 // PoolItem is a single entry into a pool used to determine the connector that should be used
 type PoolItem struct {
 	// ConnectorID is the identifier for a connector
-	ConnectorID string `json:"connectorId" yaml:"connectorId" validate:"required"`
+	ConnectorID string `json:"connectorId" yaml:"connectorId" validate:"required,lowercase"`
 
 	// Priority is a integer value where the item with the highest priority has lowest value
 	// (zero is the highest priority number possible)
