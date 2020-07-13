@@ -27,7 +27,7 @@ type MethodVerifyPolicy struct {
 
 	// This is the ID of the connector that is used to verify payment methods
 	// [Required]
-	ConnectorID string `json:"connectorID" yaml:"connectorID" validate:"required"`
+	ConnectorID string `json:"connectorID" yaml:"connectorID" validate:"required,lowercase"`
 }
 
 func (m MethodVerifyPolicy) GetVerifyMethodOnTokenization() bool {
