@@ -20,5 +20,5 @@ type AttemptConfig struct {
 	CascadeDelay *time.Duration `json:"cascadeDelay" yaml:"cascadeDelay" validate:"required,gte=0"`
 
 	// OverridePoolConnectorIDs will use this connectors instead of the ones in the pool
-	OverridePoolConnectorIDs []string `json:"overridePoolConnectorIDs" yaml:"overridePoolConnectorIDs" validate:"-"`
+	OverridePoolConnectorIDs []string `json:"overridePoolConnectorIDs" yaml:"overridePoolConnectorIDs" validate:"omitempty,dive,lowercase"`
 }

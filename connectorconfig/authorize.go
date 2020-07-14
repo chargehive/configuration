@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 
 	"github.com/chargehive/configuration/v1/connector"
 )
@@ -62,6 +63,9 @@ func (c AuthorizeCredentials) SupportsSca() bool {
 	return c.GetAPILoginID() != "" && c.GetTransactionKey() != ""
 }
 
-func (c AuthorizeCredentials) SupportsApplePay() bool {
+func (c AuthorizeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
+		return true
+	}
 	return false
 }

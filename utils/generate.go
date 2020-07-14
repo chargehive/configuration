@@ -18,21 +18,19 @@ type Template string
 
 const (
 	// connectors
-	confConnAuthorize        Template = "con_authorize"
-	confConnBrainTree        Template = "con_brainTree"
-	confConnChargeHive       Template = "con_chargeHive"
-	confConnCyberSource      Template = "con_cyberSource"
-	confConnMaxMind          Template = "con_maxMind"
-	confConnPayPalExpress    Template = "con_payPalExpressCheckout"
-	confConnPayPalWPP        Template = "con_payPalWPP"
-	confConnPaysafe          Template = "con_paysafe"
-	confConnPaysafeApplePay  Template = "con_paysafeApplePay"
-	confConnPaysafeGooglePay Template = "con_paysafeGooglePay"
-	confConnQualPay          Template = "con_qualPay"
-	confConnSandbox          Template = "con_sandbox"
-	confConnStripe           Template = "con_stripe"
-	confConnVindicia         Template = "con_vindicia"
-	confConnWorldPay         Template = "con_worldPay"
+	confConnAuthorize     Template = "con_authorize"
+	confConnBrainTree     Template = "con_brainTree"
+	confConnChargeHive    Template = "con_chargeHive"
+	confConnCyberSource   Template = "con_cyberSource"
+	confConnMaxMind       Template = "con_maxMind"
+	confConnPayPalExpress Template = "con_payPalExpressCheckout"
+	confConnPayPalWPP     Template = "con_payPalWPP"
+	confConnPaysafe       Template = "con_paysafe"
+	confConnQualPay       Template = "con_qualPay"
+	confConnSandbox       Template = "con_sandbox"
+	confConnStripe        Template = "con_stripe"
+	confConnVindicia      Template = "con_vindicia"
+	confConnWorldPay      Template = "con_worldPay"
 
 	// connector Pool
 	confConnectorPool Template = "con_pool"
@@ -57,34 +55,32 @@ const (
 )
 
 var Templates = map[Template]string{
-	confConnAuthorize:        "Connector: Authorize.net",
-	confConnBrainTree:        "Connector: Braintree",
-	confConnChargeHive:       "Connector: ChargeHive (fraud)",
-	confConnCyberSource:      "Connector: Cybersource (fraud)",
-	confConnMaxMind:          "Connector: MaxMind (fraud)",
-	confConnPayPalExpress:    "Connector: Paypal Express Checkout",
-	confConnPayPalWPP:        "Connector: Paypal Website Payments Pro",
-	confConnPaysafe:          "Connector: Paysafe",
-	confConnPaysafeApplePay:  "Connector: Paysafe Apple Pay",
-	confConnPaysafeGooglePay: "Connector: Paysafe Google Pay",
-	confConnQualPay:          "Connector: QualPay",
-	confConnSandbox:          "Connector: ChargeHive Sandbox",
-	confConnStripe:           "Connector: Stripe",
-	confConnVindicia:         "Connector: Vindicia",
-	confConnWorldPay:         "Connector: Worldpay",
-	confConnectorPool:        "Connector Pool",
-	confSlack:                "Integration: Slack",
-	confPolCascade:           "Policy: Cascade",
-	confPolChargeExpiry:      "Policy: Charge Expiry",
-	confPolFraud:             "Policy: Fraud",
-	confPolMethodLock:        "Policy: Method Lock",
-	confPolMethodUpgrade:     "Policy: Method Upgrade",
-	confPolMethodVerify:      "Policy: Method Verify",
-	confPolSCA:               "Policy: SCA",
-	confSchInitiator:         "Schedule: Initiator",
-	confSchOnDemand:          "Schedule: OnDemand",
-	confSchRefund:            "Schedule: Refund",
-	confSchSequential:        "Schedule: Sequential",
+	confConnAuthorize:     "Connector: Authorize.net",
+	confConnBrainTree:     "Connector: Braintree",
+	confConnChargeHive:    "Connector: ChargeHive (fraud)",
+	confConnCyberSource:   "Connector: Cybersource (fraud)",
+	confConnMaxMind:       "Connector: MaxMind (fraud)",
+	confConnPayPalExpress: "Connector: Paypal Express Checkout",
+	confConnPayPalWPP:     "Connector: Paypal Website Payments Pro",
+	confConnPaysafe:       "Connector: Paysafe",
+	confConnQualPay:       "Connector: QualPay",
+	confConnSandbox:       "Connector: ChargeHive Sandbox",
+	confConnStripe:        "Connector: Stripe",
+	confConnVindicia:      "Connector: Vindicia",
+	confConnWorldPay:      "Connector: Worldpay",
+	confConnectorPool:     "Connector Pool",
+	confSlack:             "Integration: Slack",
+	confPolCascade:        "Policy: Cascade",
+	confPolChargeExpiry:   "Policy: Charge Expiry",
+	confPolFraud:          "Policy: Fraud",
+	confPolMethodLock:     "Policy: Method Lock",
+	confPolMethodUpgrade:  "Policy: Method Upgrade",
+	confPolMethodVerify:   "Policy: Method Verify",
+	confPolSCA:            "Policy: SCA",
+	confSchInitiator:      "Schedule: Initiator",
+	confSchOnDemand:       "Schedule: OnDemand",
+	confSchRefund:         "Schedule: Refund",
+	confSchSequential:     "Schedule: Sequential",
 }
 
 var chg = "change-me"
@@ -172,39 +168,6 @@ func buildSpec(conf Template) (object.Specification, error) {
 			SingleUseTokenUsername: "",
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryPaySafe), Configuration: j}, nil
-	case confConnPaysafeApplePay:
-		j, _ := json.Marshal(connectorconfig.PaySafeApplePayCredentials{
-			Acquirer:                     chg,
-			AccountID:                    chg,
-			APIUsername:                  &chg,
-			APIPassword:                  &chg,
-			Environment:                  "MOCK",
-			Country:                      "",
-			Currency:                     "USD",
-			SingleUseTokenPassword:       &chg,
-			SingleUseTokenUsername:       &chg,
-			Locale:                       "en_GB",
-			ApplePayMerchantIdentityCert: chg,
-			ApplePayMerchantIdentityKey:  chg,
-			ApplePayMerchantIdentifier:   chg,
-			ApplePayDisplayName:          chg,
-			ApplePayInitiative:           chg,
-			ApplePayInitiativeContext:    chg,
-		})
-		return connector.Connector{Library: string(connectorconfig.LibraryPaySafeApplePay), Configuration: j}, nil
-	case confConnPaysafeGooglePay:
-		j, _ := json.Marshal(connectorconfig.PaySafeGooglePayCredentials{
-			Acquirer:               chg,
-			AccountID:              chg,
-			APIUsername:            &chg,
-			APIPassword:            &chg,
-			Environment:            "MOCK",
-			Currency:               "USD",
-			SingleUseTokenPassword: &chg,
-			SingleUseTokenUsername: &chg,
-			Locale:                 "en_GB",
-		})
-		return connector.Connector{Library: string(connectorconfig.LibraryPaySafeGooglePay), Configuration: j}, nil
 	case confConnQualPay:
 		j, _ := json.Marshal(connectorconfig.QualpayCredentials{APIKey: &chg, MerchantID: 1, Environment: "test"})
 		return connector.Connector{Library: string(connectorconfig.LibraryQualPay), Configuration: j}, nil
@@ -227,7 +190,35 @@ func buildSpec(conf Template) (object.Specification, error) {
 			CardinalApiIdentifier: &chg,
 			CardinalApiKey:        &chg,
 			CardinalOrgUnitId:     &chg,
+			ApplePay: connectorconfig.ApplePay{
+				AppleMerchantIdentifier:   chg,
+				AppleMerchantDisplayName:  chg,
+				AppleMerchantCertificate:  &chg,
+				AppleMerchantPrivateKey:   &chg,
+				AppleSupportedNetworks:    []connectorconfig.AppleSupportedNetwork{connectorconfig.AppleSupportedNetworkAmex},
+				AppleMerchantCapabilities: []connectorconfig.AppleMerchantCapability{connectorconfig.AppleMerchantCapabilitysupports3DS},
+			},
+			GooglePayPageId: chg,
+			GooglePay: connectorconfig.GooglePay{
+				GoogleEnvironment:              connectorconfig.GoogleEnvironmentTEST,
+				GoogleMerchantId:               chg,
+				GoogleMerchantName:             chg,
+				GoogleExistingMethodRequired:   false,
+				GoogleEmailReq:                 false,
+				GoogleAcceptCard:               true,
+				GoogleCardAuthMethods:          []connectorconfig.GoogleCardAuthMethod{connectorconfig.GoogleCardAuthMethodPAN, connectorconfig.GoogleCardAuthMethod3DS},
+				GoogleCardNetworks:             []connectorconfig.GoogleCardNetwork{connectorconfig.GoogleCardNetworkAMEX, connectorconfig.GoogleCardNetworkDISCOVER, connectorconfig.GoogleCardNetworkMASTERCARD, connectorconfig.GoogleCardNetworkVISA},
+				GoogleCardAllowPrepaid:         true,
+				GoogleCardAllowCredit:          true,
+				GoogleCardBillingAddressReq:    false,
+				GoogleCardBillingAddressFormat: connectorconfig.GoogleCardBillingAddressReqMIN,
+				GoogleCardBillingPhoneReq:      false,
+				GoogleCardTokenType:            connectorconfig.GoogleCardTokenTypeGATEWAY,
+				GoogleCardGateway:              connectorconfig.GoogleCardGatewayVANTIV,
+				GoogleCardMerchantId:           chg,
+			},
 		})
+
 		return connector.Connector{Library: string(connectorconfig.LibraryWorldpay), Configuration: j}, nil
 	case confConnectorPool:
 		return connector.Pool{Restriction: "unrestricted", Connectors: []connector.PoolItem{{ConnectorID: chg}}}, nil

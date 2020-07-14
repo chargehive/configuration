@@ -1,6 +1,9 @@
 package connectorconfig
 
-import "github.com/chargehive/configuration/v1/connector"
+import (
+	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
+)
 
 type Credentials interface {
 	GetLibrary() Library
@@ -10,7 +13,7 @@ type Credentials interface {
 	ToConnector() connector.Connector
 	FromJson(input []byte) error
 	SupportsSca() bool
-	SupportsApplePay() bool
+	SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool
 }
 
 type Library string
@@ -23,8 +26,6 @@ const (
 	LibraryQualPay                  Library = "qualpay"
 	LibraryStripe                   Library = "stripe"
 	LibraryPaySafe                  Library = "paysafe"
-	LibraryPaySafeApplePay          Library = "paysafe-applepay"
-	LibraryPaySafeGooglePay         Library = "paysafe-googlepay"
 	LibraryWorldpay                 Library = "worldpay"
 	LibraryPayPalWebsitePaymentsPro Library = "paypal-websitepaymentspro"
 	LibraryPayPalExpressCheckout    Library = "paypal-expresscheckout"
@@ -34,6 +35,9 @@ const (
 	LibraryChargeHive  Library = "chargehive"
 	LibraryMaxMind     Library = "maxmind"
 	LibraryCyberSource Library = "cybersource"
+
+	// Updater Libraries
+	LibraryPaySafeAccountUpdater Library = "paysafe-accountupdater"
 )
 
 var LibraryRegister = map[Library]bool{
@@ -43,8 +47,7 @@ var LibraryRegister = map[Library]bool{
 	LibraryQualPay:                  true,
 	LibraryStripe:                   true,
 	LibraryPaySafe:                  true,
-	LibraryPaySafeApplePay:          true,
-	LibraryPaySafeGooglePay:         true,
+	LibraryPaySafeAccountUpdater:    true,
 	LibraryWorldpay:                 true,
 	LibraryPayPalWebsitePaymentsPro: true,
 	LibraryPayPalExpressCheckout:    true,
@@ -57,8 +60,9 @@ var LibraryRegister = map[Library]bool{
 type LibraryType string
 
 const (
-	LibraryTypePayment LibraryType = "payment"
-	LibraryTypeFraud   LibraryType = "fraud"
+	LibraryTypePayment       LibraryType = "payment"
+	LibraryTypeFraud         LibraryType = "fraud"
+	LibraryTypeMethodUpdater LibraryType = "methodUpdater"
 )
 
 var LibraryTypeRegister = map[LibraryType]bool{

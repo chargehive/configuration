@@ -2,8 +2,8 @@ package connectorconfig
 
 import (
 	"encoding/json"
-
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
 type WorldpayEnvironment string
@@ -27,6 +27,9 @@ type WorldpayCredentials struct {
 	CardinalApiIdentifier *string             `json:"cardinalApiIdentifier" yaml:"cardinalApiIdentifier" validate:"required"`
 	CardinalApiKey        *string             `json:"cardinalApiKey" yaml:"cardinalApiKey" validate:"required"`
 	CardinalOrgUnitId     *string             `json:"cardinalOrgUnitId" yaml:"cardinalOrgUnitId" validate:"required"`
+	GooglePayPageId       string              `json:"googlePayPageId"` // vantiv:merchantPayPageId
+	GooglePay
+	ApplePay
 }
 
 func (c WorldpayCredentials) GetCardinalApiIdentifier() string {
@@ -63,7 +66,7 @@ func (c *WorldpayCredentials) Validate() error {
 }
 
 func (c *WorldpayCredentials) GetSecureFields() []*string {
-	return []*string{c.Username, c.Password, c.CardinalApiIdentifier, c.CardinalApiKey}
+	return []*string{c.Username, c.Password, c.CardinalApiIdentifier, c.CardinalApiKey, c.AppleMerchantPrivateKey, c.AppleMerchantCertificate}
 }
 
 func (c *WorldpayCredentials) ToConnector() connector.Connector {
@@ -80,6 +83,24 @@ func (c WorldpayCredentials) SupportsSca() bool {
 	return c.GetCardinalApiIdentifier() != "" && c.GetCardinalApiKey() != "" && c.GetCardinalOrgUnitId() != ""
 }
 
-func (c WorldpayCredentials) SupportsApplePay() bool {
-	return true
+func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
+		return true
+	}
+	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
+		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY &&
+		c.AppleMerchantIdentifier != "" &&
+		c.AppleMerchantDisplayName != "" &&
+		(c.AppleMerchantCertificate != nil && c.AppleMerchantCertificate != new(string)) &&
+		(c.AppleMerchantPrivateKey != nil && c.AppleMerchantPrivateKey != new(string)) {
+		return true
+	}
+	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
+		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY &&
+		c.GoogleMerchantId != "" &&
+		c.GoogleCardGateway != "" &&
+		c.GoogleCardMerchantId != "" {
+		return true
+	}
+	return false
 }

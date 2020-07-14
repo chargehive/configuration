@@ -32,10 +32,6 @@ func getCreds(c *connector.Connector, strict bool) (Credentials, error) {
 		credentials = &StripeCredentials{}
 	case LibraryPaySafe:
 		credentials = &PaySafeCredentials{}
-	case LibraryPaySafeApplePay:
-		credentials = &PaySafeApplePayCredentials{}
-	case LibraryPaySafeGooglePay:
-		credentials = &PaySafeGooglePayCredentials{}
 	case LibraryPayPalExpressCheckout:
 		credentials = &PayPalExpressCheckoutCredentials{}
 	case LibraryPayPalWebsitePaymentsPro:
@@ -54,6 +50,11 @@ func getCreds(c *connector.Connector, strict bool) (Credentials, error) {
 		credentials = &CyberSourceCredentials{}
 	case LibraryChargeHive:
 		credentials = &ChargeHiveCredentials{}
+
+		// Updater libraries
+	case LibraryPaySafeAccountUpdater:
+		credentials = &PaySafeAccountUpdaterCredentials{}
+
 	default:
 		return nil, errors.New("invalid library specified")
 	}

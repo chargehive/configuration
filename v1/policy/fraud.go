@@ -40,7 +40,7 @@ const (
 // FraudPolicy is the policy ran against a charge to determine its fraud status
 type FraudPolicy struct {
 	// ConnectorIDs is the IDs of the fraud connectors
-	ConnectorIDs []string `json:"connectorIDs" yaml:"connectorIDs" validate:"min=1"`
+	ConnectorIDs []string `json:"connectorIDs" yaml:"connectorIDs" validate:"min=1,dive,lowercase"`
 
 	// CheckTime is the time we should be running a fraud scan
 	CheckTime FraudCheckTime `json:"checkTime" yaml:"checkTime" validate:"oneof=preauth-first preauth-every auth-success ondemand"`
