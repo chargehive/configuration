@@ -97,6 +97,9 @@ const (
 type TimeDelaySync string
 
 const (
+	// TimeDelaySyncNone will ignore the TimeSyncHour value
+	TimeDelaySyncNone TimeDelaySync = "None"
+
 	// TimeDelaySyncEarliest will run the transaction at the earliest sync hour relative to TimeSync
 	TimeDelaySyncEarliest TimeDelaySync = "Earliest"
 
