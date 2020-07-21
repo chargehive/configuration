@@ -46,8 +46,8 @@ FieldName | Required | Definition
 timeDelay|true|Amount of time to wait before processing after TimeDelayOrigin in **nanoseconds**
 [timeDelayOrigin](#timedelayorigin-values)|true|Specifies when the time origin is based from
 [timeDelaySync](#timedelaysync-values)|true|Specifies when the transaction should be performed relative to the schedules TimeSync
-timeSyncHour|true|An hour designation (1-24) i.e 2 == 2AM or where less than 1 indicates that this value is not set
-[timeSyncZone](#timesynczone-values)|true|Indicates the timezone that the TimeSyncHour is relative to
+timeSyncHour|true|An hour designation (0-23) i.e 2 == 2AM. Ignored if TimeDelaySync is set to None
+[timeSyncZone](#timesynczone-values)|true|Indicates the timezone that the TimeSyncHour is relative to. Ignored if TimeDelaySync is set to None
 
 ### AttemptConfig Definition
 FieldName | Required | Definition 
@@ -83,6 +83,7 @@ Value| Definition
 ### TimeDelaySync Values
 Value| Definition
 ---:|:---
+"None"|will ignore the TimeSyncHour value
 "Earliest"|will run the transaction at the earliest sync hour relative to TimeSync
 "Latest"|will run the transaction at the latest sync hour relative to TimeSync
 "Closest"|will run the transaction at the closest sync hour relative to TimeSync
