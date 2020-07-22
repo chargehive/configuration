@@ -42,6 +42,8 @@ func getCreds(c *connector.Connector, strict bool) (Credentials, error) {
 		credentials = &SandboxCredentials{}
 	case LibraryVindicia:
 		credentials = &VindiciaCredentials{}
+	case LibraryBottomline:
+		credentials = &BottomlineCredentials{}
 
 		// Fraud Libraries
 	case LibraryMaxMind:
