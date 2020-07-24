@@ -5,20 +5,21 @@ type InfoKey string
 
 // Keys
 const (
-	InfoKeyPaymentScheme InfoKey = "payment_scheme"
-	InfoKeyCardBrand     InfoKey = "card_brand"
-	InfoKeyCardSubbrand  InfoKey = "card_subbrand"
-	InfoKeyIssuer        InfoKey = "issuer"
-	InfoKeyIssueNumber   InfoKey = "issue_number"
-	InfoKeyCardType      InfoKey = "card_type"
-	InfoKeyCardLastFour  InfoKey = "card_last_four"
-	InfoKeyDisplayName   InfoKey = "display_name"
-	InfoKeyCountry       InfoKey = "country"
-	InfoKeyExpiry        InfoKey = "expiry"
-	InfoKeyValidFrom     InfoKey = "valid_from"
-	InfoKeyLookupCode    InfoKey = "lookup_code"
-	InfoKeyAccountHolder InfoKey = "account_holder"
-	InfoKeyMethodVersion InfoKey = "payment_method_version"
+	InfoKeyPaymentScheme  InfoKey = "payment_scheme"
+	InfoKeyCardBrand      InfoKey = "card_brand"
+	InfoKeyCardSubbrand   InfoKey = "card_subbrand"
+	InfoKeyIssuer         InfoKey = "issuer"
+	InfoKeyIssueNumber    InfoKey = "issue_number"
+	InfoKeyCardType       InfoKey = "card_type"
+	InfoKeyCardLastFour   InfoKey = "card_last_four"
+	InfoKeyDisplayName    InfoKey = "display_name"
+	InfoKeyCountry        InfoKey = "country"
+	InfoKeyExpiry         InfoKey = "expiry"
+	InfoKeyValidFrom      InfoKey = "valid_from"
+	InfoKeyLookupCode     InfoKey = "lookup_code"
+	InfoKeyAccountHolder  InfoKey = "account_holder"
+	InfoKeyMethodVersion  InfoKey = "payment_method_version"
+	InfoKeyPayerReference InfoKey = "payer_reference"
 )
 
 // Scheme us a value used to indicate a payment scheme type
@@ -71,6 +72,9 @@ const (
 
 	// Crypto
 	SchemeCryptoBitcoin Scheme = "bitcoin"
+
+	// Direct Debit
+	SchemeDirectDebit Scheme = "direct-debit"
 )
 
 // CardType is a value used to indicate a payment card type
