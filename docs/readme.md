@@ -38,8 +38,8 @@ You can create a Connector for each Merchant Account you have with each Payment 
 
 At this point any Charges sent through to ChargeHive will run through the Initiator or Scheduler and based on the Attempt Config, get a list of Connectors to attempt the Charge, then attempt the Charge and return a result.  
 
-## ChargeHive Configuration
-Every object in ChargeHive, from *Initiators*, *Connector Pools* to *Connectors* have a configuration file which is applied using the `chive` tool. 
+## ChargeHive Configuration - Chive tool
+Every object in ChargeHive, from *Initiators*, *Connector Pools* to *Connectors* have a configuration file which is applied using the [chive](chive.md) tool. 
 Configurations can be saved, updated, loaded and deleted using the tool.
 
 ### Configuration File Structure
@@ -77,7 +77,7 @@ All configurations used in ChargeHive follow the same wrapper pattern:
   "spec": {}                   // Configuration details specific to the kind of config
 }
 ```
-### Applying Configuration files
+### Applying Configuration files using Chive
 The configuration files are applied to your project by using the ChargeHive command line tool "`chive`"
 For further information about how this is done, see the [chive](chive.md) documentation page.
 
