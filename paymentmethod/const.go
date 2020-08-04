@@ -93,3 +93,14 @@ const (
 	CardTypeGovernment  CardType = "government"
 	CardTypeProprietary CardType = "proprietary"
 )
+
+// BACSReportType indicate a type of BACS direct debit report
+type BACSReportType string
+
+// BACSReportType
+const (
+	AUDDIS BACSReportType = "AUDDIS" //rejected registrations
+	DDICA  BACSReportType = "DDICA"  //chargebacks
+	ADDACS BACSReportType = "ADDACS" //account updates/changes
+	ARUDD  BACSReportType = "ARUDD"  //failed payments
+)
