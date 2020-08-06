@@ -1,12 +1,10 @@
 # Configuration Selectors
 
-Selectors are optional configurations that can be defined against all objects in ChargeHive and allow setting a series of Rules that much match against charge.
-
-Selectors allow each config to be applied to all (if the selector is empty), or a specific subset of charges based on whether or not they match the Rules 
-provided in the expressions section. 
+Selectors are optional configurations that can be defined against all objects in ChargeHive and allow setting a series of Rules that must match against the charge.
 
 A Selector has a `priority` which is used to determine a config to use if there are multiple matches. The higher the priority, then the more
 likely that config will be used. 
+
 A Selector also has a list of one or more `expressions`. These act as rules and ensure the config will only be applied to charges which match the expression rules.
 
 If two or more configurations have Selector Rules in the expressions section which are matched to the Charge, the most specific Configuration will be selected (the one with the most Rules defined which match the charge).
@@ -33,7 +31,7 @@ FieldName | Required | Definition
 ---:|---|:---
 [key](#key-values)|true|The key is the field to be compared to the value to find a match. List of available keys are below
 [operator](#operator-values)|true|One of a fixed list of operators listed below
-[conversion](#conversion-values)|false|Can be used to convert the value from the key into another value. See list of conversions below
+[conversion](#conversion-values)|false|Can be used to convert the value from the key into another value. This is typically used to convert the default time value into a specific time or date format. See list of conversions below
 values|false|Simple array of strings to represent one or more values to compare
 
 
@@ -46,72 +44,72 @@ Special Keys | Definition
 Assemble Keys | Definition 
 ---:|:---
 "charge.label"|
-"charge.currentTransactionNumber"|
-"charge.currentAttemptNumber"|
-"charge.renewalNumber"| (int) Number of renewals this charge has completed.
-"charge.initiatedTime"|
-"charge.lastAttemptTime"|
-"charge.scheduleAttempts"|
-"charge.attemptedTransactions"|
-"charge.failedTransactions"|
-"charge.merchantSubscriptionID"|
-"charge.country"|
-"charge.region"|
-"charge.period"|
+"charge.currentTransactionNumber"|(int64)
+"charge.currentAttemptNumber"|(int64)
+"charge.renewalNumber"| (int64) Number of renewals this charge has completed.
+"charge.initiatedTime"| (time.Time)
+"charge.lastAttemptTime"| (time.Time)
+"charge.scheduleAttempts"| (int32)
+"charge.attemptedTransactions"| (int32)
+"charge.failedTransactions"| (int32)
+"charge.merchantSubscriptionID"| (string)
+"charge.country"| (int32 - ISO 3166)
+"charge.region"| (string)
+"charge.period"| (int64)
 
 Charge Definition Keys | Definition 
 ---:|:---
-"charge.intent"|
-"charge.contract"|
-"charge.amount"|
-"charge.amount.units"|
-"charge.amount.currency"|
-"charge.expiryTime"|
-"charge.merchantReference"|
-"charge.references"|
-"charge.userLocale"|
-"charge.userLocation"|
-"charge.environment"|
-"charge.preferredMethodType"|
-	
+"charge.intent"| (int32 1-5) 1 = Add, 2 = Refresh, 3 = Verify, 4 = Capture, 5 = Refund
+"charge.contract"| (int32 1-5) 1 = None, 2 = Payment, 3 = Subscription Initial, 4 = Subscription Renewal, 5 = OneClick
+"charge.amount"| exists or not exists
+"charge.amount.units"| (int64)
+"charge.amount.currency"| (string)
+"charge.expiryTime"| (time.Time)
+"charge.merchantReference"| (string)
+"charge.references"| (string [array])
+"charge.userLocale"| (string)
+"charge.userLocation"| (string)
+"charge.environment"| (int32 0-4) 0 = Invalid, 1 = Retail, 2 = Ecommerce, 3 = Moto, 4 = Renewal
+"charge.preferredMethodType"| (int32 0-7) 0 = Invalid, 1 = Card, 2 = PayPal, 3 = Direct Debit, 4 = Crypto Currency, 5 = Paysafe Apple Pay, 6 = Paysafe Google Pay, 7 = None	
+
 Charge Meta Keys | Definition 
 ---:|:---
-"charge.meta.invoiceDate"|
-"charge.meta.dueDate"|
-"charge.meta.discountAmount"|
-"charge.meta.discountAmount.units"|
-"charge.meta.discountAmount.currency"|
-"charge.meta.deliveryAmount"|
-"charge.meta.deliveryAmount.units"|
-"charge.meta.deliveryAmount.currency"|
-"charge.meta.taxAmount"|
-"charge.meta.taxAmount.units"|
-"charge.meta.taxAmount.currency"|
-"charge.meta.totalAmount"|
-"charge.meta.totalAmount.units"|
-"charge.meta.totalAmount.currency"|
-"charge.meta.ipAddress"|
-"charge.meta.billingAddress"|
-"charge.meta.billingAddress.lineOne"|
-"charge.meta.billingAddress.lineTwo"|
-"charge.meta.billingAddress.lineThree"|
-"charge.meta.billingAddress.town"|
-"charge.meta.billingAddress.county"|
-"charge.meta.billingAddress.country"|
-"charge.meta.billingAddress.postalCode"|
-"charge.meta.billingAddress.fao"|
-"charge.meta.billingAddress.companyName"|
-"charge.meta.deliveryAddress"|
-"charge.meta.deliveryAddress.lineOne"|
-"charge.meta.deliveryAddress.lineTwo"|
-"charge.meta.deliveryAddress.lineThree"|
-"charge.meta.deliveryAddress.town"|
-"charge.meta.deliveryAddress.county"|
-"charge.meta.deliveryAddress.country"|
-"charge.meta.deliveryAddress.postalCode"|
-"charge.meta.deliveryAddress.fao"|
-"charge.meta.deliveryAddress.companyName"|
-"charge.meta.person"|
+"charge.meta.invoiceDate"| (time.Time)
+"charge.meta.dueDate"| (time.Time)
+"charge.meta.discountAmount"| exists or not exists
+"charge.meta.discountAmount.units"| (int64)
+"charge.meta.discountAmount.currency"| (string)
+"charge.meta.deliveryAmount"| exists or not exists
+"charge.meta.deliveryAmount.units"| (int64)
+"charge.meta.deliveryAmount.currency"| (string)
+"charge.meta.taxAmount"| exists or not exists
+"charge.meta.taxAmount.units"| (int64)
+"charge.meta.taxAmount.currency"| (string)
+"charge.meta.totalAmount"| exists or not exists
+"charge.meta.totalAmount.units"| (int64)
+"charge.meta.totalAmount.currency"| (string)
+"charge.meta.ipAddress"| (string)
+"charge.meta.billingAddress"| exists or not exists
+"charge.meta.billingAddress.lineOne"| (string)
+"charge.meta.billingAddress.lineTwo"| (string)
+"charge.meta.billingAddress.lineThree"| (string)
+"charge.meta.billingAddress.town"| (string)
+"charge.meta.billingAddress.county"| (string)
+"charge.meta.billingAddress.country"| (string)
+"charge.meta.billingAddress.postalCode"| (string)
+"charge.meta.billingAddress.fao"| (string)
+"charge.meta.billingAddress.companyName"| (string)
+"charge.meta.deliveryAddress"| exists or not exists
+"charge.meta.deliveryAddress.lineOne"| (string)
+"charge.meta.deliveryAddress.lineTwo"| (string)
+"charge.meta.deliveryAddress.lineThree"| (string)
+"charge.meta.deliveryAddress.town"| (string)
+"charge.meta.deliveryAddress.county"| (string)
+"charge.meta.deliveryAddress.country"| (string)
+"charge.meta.deliveryAddress.postalCode"| (string)
+"charge.meta.deliveryAddress.fao"| (string)
+"charge.meta.deliveryAddress.companyName"| (string)
+"charge.meta.person"| ()
 "charge.meta.person.title"|
 "charge.meta.person.firstName"|
 "charge.meta.person.lastName"|
@@ -152,9 +150,9 @@ Charge Meta Keys | Definition
 "charge.meta.item.unitPrice"|
 "charge.meta.item.unitPrice.units"|
 "charge.meta.item.unitPrice.currency"|
-"charge.meta.item.taxAmount"|
-"charge.meta.item.taxAmount.units"|
-"charge.meta.item.taxAmount.currency"|
+"charge.meta.item.taxAmount"| exists or not exists
+"charge.meta.item.taxAmount.units"| (int64) 
+"charge.meta.item.taxAmount.currency"| (string)
 "charge.meta.item.discountAmount"|
 "charge.meta.item.discountAmount.units"|
 "charge.meta.item.discountAmount.currency"|
@@ -223,4 +221,8 @@ Value | Definition
 "DurationSeconds"|Duration in Seconds
 "DurationHours"|Duration in Hours
 "DurationDays"|Duration in Days
+
+#### Converting Time fields
+
+The time fields on ChargeHive are in time.Time format, so when entering a time value into a Selctor, you must use the format *Year-Month-DayTHour:Min:SecZ*
 

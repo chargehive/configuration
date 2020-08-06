@@ -5,6 +5,8 @@ github.com/chargehive/proto v0.0.0-20200429163847-38378c618b83 h1:koqQzJB5pcye5I
 github.com/chargehive/proto v0.0.0-20200429163847-38378c618b83/go.mod h1:5biJpPKmvccZTYVBopahJiln4Nnn24DWcxrYVveN32Y=
 github.com/chargehive/proto v0.0.0-20200710093319-0dfdaa3d2c3a h1:OOr2QC25uTADhPLOmRNm+hjEHS6Y0JKUlojjczzo0Xc=
 github.com/chargehive/proto v0.0.0-20200710093319-0dfdaa3d2c3a/go.mod h1:5biJpPKmvccZTYVBopahJiln4Nnn24DWcxrYVveN32Y=
+github.com/chargehive/proto v0.0.0-20200717113027-f0fc10ec696d h1:y/U2G1q5c3lwvUj79KtXEufBqYS3CoCr1fbI+UT2+L4=
+github.com/chargehive/proto v0.0.0-20200717113027-f0fc10ec696d/go.mod h1:5biJpPKmvccZTYVBopahJiln4Nnn24DWcxrYVveN32Y=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=

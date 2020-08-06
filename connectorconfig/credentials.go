@@ -30,6 +30,7 @@ const (
 	LibraryPayPalWebsitePaymentsPro Library = "paypal-websitepaymentspro"
 	LibraryPayPalExpressCheckout    Library = "paypal-expresscheckout"
 	LibraryVindicia                 Library = "vindicia"
+	LibraryBottomline               Library = "bottomline"
 
 	// Fraud Libraries
 	LibraryChargeHive  Library = "chargehive"
@@ -52,6 +53,7 @@ var LibraryRegister = map[Library]bool{
 	LibraryPayPalWebsitePaymentsPro: true,
 	LibraryPayPalExpressCheckout:    true,
 	LibraryVindicia:                 true,
+	LibraryBottomline:               true,
 	LibraryChargeHive:               true,
 	LibraryMaxMind:                  true,
 	LibraryCyberSource:              true,
