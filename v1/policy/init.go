@@ -12,7 +12,7 @@ func GetHandlers() []object.KindHandler {
 	funcs = append(funcs, cascadePolicy()...)
 	funcs = append(funcs, methodLockPolicy()...)
 	funcs = append(funcs, methodVerifyPolicy()...)
-	funcs = append(funcs, accountUpdatePolicy()...)
+	funcs = append(funcs, methodRefreshPolicy()...)
 	return funcs
 }
 
@@ -72,10 +72,10 @@ func methodVerifyPolicy() []object.KindHandler {
 	}
 }
 
-func accountUpdatePolicy() []object.KindHandler {
-	o := AccountUpdatePolicy{}
+func methodRefreshPolicy() []object.KindHandler {
+	o := MethodRefreshPolicy{}
 	return []object.KindHandler{
-		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &AccountUpdatePolicy{} }),
-		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &AccountUpdatePolicy{} }),
+		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &MethodRefreshPolicy{} }),
+		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &MethodRefreshPolicy{} }),
 	}
 }
