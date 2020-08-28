@@ -75,7 +75,7 @@ const (
 	SchemeCryptoBitcoin Scheme = "bitcoin"
 
 	// Direct Debit
-	SchemeDirectDebit Scheme = "direct-debit"
+	SchemeDirectDebit Scheme = "directdebit"
 )
 
 // CardType is a value used to indicate a payment card type
