@@ -118,4 +118,6 @@ const (
 	TimeZoneULT TimeZone = "ULT"
 	// TimeZoneUTC  Universal Time Coordinated
 	TimeZoneUTC TimeZone = "UTC"
+	// TimeZoneCIT Charge Initialisation Time
+	TimeZoneCIT TimeZone = "CIT"
 )
