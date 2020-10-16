@@ -30,7 +30,7 @@ func NewMethodRefreshPolicyDefinition(d *object.Definition) (*MethodRefreshPolic
 	if _, ok := d.Spec.(*MethodRefreshPolicy); ok {
 		return &MethodRefreshPolicyDefinition{def: d}, nil
 	}
-	return nil, errors.New("invalid Cascade policy object")
+	return nil, errors.New("invalid method refresh policy object")
 }
 
 // Definition returns the MethodRefreshPolicyDefinition structure
