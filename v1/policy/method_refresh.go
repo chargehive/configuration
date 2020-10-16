@@ -27,7 +27,7 @@ type MethodRefreshPolicyDefinition struct{ def *object.Definition }
 
 // NewMethodRefreshPolicyDefinition creates a new MethodRefreshPolicyDefinition
 func NewMethodRefreshPolicyDefinition(d *object.Definition) (*MethodRefreshPolicyDefinition, error) {
-	if _, ok := d.Spec.(*CascadePolicy); ok {
+	if _, ok := d.Spec.(*MethodRefreshPolicy); ok {
 		return &MethodRefreshPolicyDefinition{def: d}, nil
 	}
 	return nil, errors.New("invalid Cascade policy object")
