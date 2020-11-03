@@ -41,6 +41,9 @@ const (
 
 	// Updater Libraries
 	LibraryPaySafeAccountUpdater Library = "paysafe-accountupdater"
+
+	// SCA Libraries
+	LibraryThreeDSecureIo Library = "threedsecureio"
 )
 
 var LibraryRegister = map[Library]bool{
@@ -59,6 +62,7 @@ var LibraryRegister = map[Library]bool{
 	LibraryChargeHive:               true,
 	LibraryMaxMind:                  true,
 	LibraryCyberSource:              true,
+	LibraryThreeDSecureIo:           true,
 }
 
 type LibraryType string
@@ -67,9 +71,11 @@ const (
 	LibraryTypePayment       LibraryType = "payment"
 	LibraryTypeFraud         LibraryType = "fraud"
 	LibraryTypeMethodUpdater LibraryType = "methodUpdater"
+	LibraryTypeSCA           LibraryType = "sca"
 )
 
 var LibraryTypeRegister = map[LibraryType]bool{
 	LibraryTypePayment: true,
 	LibraryTypeFraud:   true,
+	LibraryTypeSCA:     true,
 }
