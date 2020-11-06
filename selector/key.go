@@ -154,13 +154,18 @@ const (
 )
 
 const (
-	KeyMethodName          Key = "method.name"
-	KeyMethodPaymentScheme Key = "method.paymentScheme"
-	KeyMethodValidFrom     Key = "method.validFrom"
-	KeyMethodExpiry        Key = "method.expiry"
-	KeyMethodType          Key = "method.type"
-	KeyMethodProvider      Key = "method.provider"
-	KeyMethodInfo          Key = "method.info"
+	KeyMethodName                 Key = "method.name"                    // e.g. "**** **** **** 0050"
+	KeyMethodPaymentScheme        Key = "method.paymentScheme"           // e.g. "card_visa"
+	KeyMethodValidFrom            Key = "method.validFrom"               // e.g. "1509984191" unix timestamp
+	KeyMethodExpiry               Key = "method.expiry"                  // e.g. "1509984191" unix timestamp
+	KeyMethodType                 Key = "method.type"                    // e.g. 0-4 PAYMENT_METHOD_TYPE_CARD
+	KeyMethodProvider             Key = "method.provider"                // e.g. 0-5 PAYMENT_METHOD_PROVIDER_FORM
+	KeyMethodInfoCardLastFour     Key = "method.info.card.last.four"     // e.g. "1234"
+	KeyMethodInfoIssuer           Key = "method.info.issuer"             // e.g. "credit"
+	KeyMethodInfoAccountHolder    Key = "method.info.account.holder"     // e.g. "John Smith"
+	KeyMethodInfoCardBrand        Key = "method.info.card.brand"         // e.g. "VISA"
+	KeyMethodInfoCardNumberLength Key = "method.info.card.number.length" // e.g. "16"
+	KeyMethodInfoCountry          Key = "method.info.country"            // e.g. "GB"
 )
 
 var KeyRegister = map[Key]bool{
@@ -306,5 +311,10 @@ var KeyRegister = map[Key]bool{
 	KeyMethodExpiry:                       true,
 	KeyMethodType:                         true,
 	KeyMethodProvider:                     true,
-	KeyMethodInfo:                         true,
+	KeyMethodInfoCardLastFour:             true,
+	KeyMethodInfoIssuer:                   true,
+	KeyMethodInfoAccountHolder:            true,
+	KeyMethodInfoCardBrand:                true,
+	KeyMethodInfoCardNumberLength:         true,
+	KeyMethodInfoCountry:                  true,
 }
