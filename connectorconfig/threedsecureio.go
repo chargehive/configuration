@@ -7,7 +7,9 @@ import (
 )
 
 type ThreeDSecureIoCredentials struct {
-	APIKey *string `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
+	APIKey      *string `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
+	Supports210 bool    `json:"supports_2_1_0"` // supports 3ds version 2.1.0
+	Supports220 bool    `json:"supports_2_2_0"` // supports 3ds version 2.2.0
 }
 
 func (c ThreeDSecureIoCredentials) GetLibrary() Library {
