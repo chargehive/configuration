@@ -2,9 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
-	"github.com/chargehive/proto/golang/chargehive/chtype"
-
+	"github.com/LucidCube/chargehive-transport-config/plans"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
 type PaySafeEnvironment string
@@ -78,4 +78,11 @@ func (c PaySafeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, 
 		return true
 	}
 	return false
+}
+
+func (c PaySafeCredentials) CanPlanModeUse(mode plans.Mode) bool {
+	if mode == plans.ModeSandbox && c.Environment == PaySafeEnvironmentLive {
+		return false
+	}
+	return true
 }

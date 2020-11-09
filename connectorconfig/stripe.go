@@ -2,9 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
-	"github.com/chargehive/proto/golang/chargehive/chtype"
-
+	"github.com/LucidCube/chargehive-transport-config/plans"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
 type StripeCredentials struct {
@@ -46,4 +46,9 @@ func (c StripeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, m
 		return true
 	}
 	return false
+}
+
+func (c StripeCredentials) CanPlanModeUse(plans.Mode) bool {
+	// todo will require updating when we have test credentials
+	return true
 }

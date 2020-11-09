@@ -2,9 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
-	"github.com/chargehive/proto/golang/chargehive/chtype"
-
+	"github.com/LucidCube/chargehive-transport-config/plans"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
 type PayPalExpressCheckoutCredentials struct {
@@ -50,4 +50,11 @@ func (c PayPalExpressCheckoutCredentials) SupportsMethod(methodType chtype.Payme
 		return true
 	}
 	return false
+}
+
+func (c PayPalExpressCheckoutCredentials) CanPlanModeUse(mode plans.Mode) bool {
+	if mode == plans.ModeSandbox && c.Environment == PayPalEnvironmentLive {
+		return false
+	}
+	return true
 }

@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"github.com/LucidCube/chargehive-transport-config/plans"
 	"github.com/chargehive/configuration/v1/connector"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
@@ -103,4 +104,13 @@ func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 		return true
 	}
 	return false
+}
+
+func (c WorldpayCredentials) CanPlanModeUse(mode plans.Mode) bool {
+	if mode == plans.ModeSandbox {
+		if c.Environment == WorldpayEnvironmentProduction || c.Environment == WorldpayEnvironmentProductionTransact {
+			return false
+		}
+	}
+	return true
 }
