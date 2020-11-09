@@ -56,3 +56,10 @@ func (c QualpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType, 
 	}
 	return false
 }
+
+func (c QualpayCredentials) CanSandboxPlanUse() bool {
+	if c.Environment == QualPayEnvironmentLive {
+		return false
+	}
+	return true
+}

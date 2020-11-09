@@ -47,3 +47,7 @@ func (c StripeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, m
 	}
 	return false
 }
+
+func (c StripeCredentials) CanSandboxPlanUse() bool {
+	return true
+}

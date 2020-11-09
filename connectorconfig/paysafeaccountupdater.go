@@ -63,3 +63,7 @@ func (c PaySafeAccountUpdaterCredentials) SupportsMethod(methodType chtype.Payme
 	}
 	return false
 }
+
+func (c PaySafeAccountUpdaterCredentials) CanSandboxPlanUse() bool {
+	return true
+}

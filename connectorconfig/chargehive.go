@@ -46,3 +46,7 @@ func (c ChargeHiveCredentials) SupportsMethod(methodType chtype.PaymentMethodTyp
 	}
 	return false
 }
+
+func (c *ChargeHiveCredentials) CanSandboxPlanUse() bool {
+	return true
+}

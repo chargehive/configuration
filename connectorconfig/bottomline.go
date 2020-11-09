@@ -61,3 +61,10 @@ func (c BottomlineCredentials) SupportsMethod(methodType chtype.PaymentMethodTyp
 	}
 	return false
 }
+
+func (c BottomlineCredentials) CanSandboxPlanUse() bool {
+	if c.Environment == BottomlineEnvironmentProduction {
+		return false
+	}
+	return true
+}

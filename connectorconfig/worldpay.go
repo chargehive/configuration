@@ -104,3 +104,10 @@ func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 	}
 	return false
 }
+
+func (c WorldpayCredentials) CanSandboxPlanUse() bool {
+	if c.Environment == WorldpayEnvironmentProduction || c.Environment == WorldpayEnvironmentProductionTransact {
+		return false
+	}
+	return true
+}

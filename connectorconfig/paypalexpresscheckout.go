@@ -51,3 +51,10 @@ func (c PayPalExpressCheckoutCredentials) SupportsMethod(methodType chtype.Payme
 	}
 	return false
 }
+
+func (c PayPalExpressCheckoutCredentials) CanSandboxPlanUse() bool {
+	if c.Environment == PayPalEnvironmentLive {
+		return false
+	}
+	return true
+}

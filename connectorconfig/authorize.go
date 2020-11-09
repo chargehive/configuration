@@ -69,3 +69,10 @@ func (c AuthorizeCredentials) SupportsMethod(methodType chtype.PaymentMethodType
 	}
 	return false
 }
+
+func (c AuthorizeCredentials) CanSandboxPlanUse() bool {
+	if c.Environment == AuthorizeEnvironmentProduction {
+		return false
+	}
+	return true
+}

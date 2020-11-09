@@ -55,3 +55,10 @@ func (c CyberSourceCredentials) SupportsMethod(methodType chtype.PaymentMethodTy
 	}
 	return false
 }
+
+func (c CyberSourceCredentials) CanSandboxPlanUse() bool {
+	if c.Environment == CyberSourceEnvironmentLive {
+		return false
+	}
+	return true
+}

@@ -59,3 +59,10 @@ func (c VindiciaCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 	}
 	return false
 }
+
+func (c VindiciaCredentials) CanSandboxPlanUse() bool {
+	if c.Environment == VindiciaEnvironmentProduction {
+		return false
+	}
+	return true
+}

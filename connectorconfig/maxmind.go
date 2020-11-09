@@ -58,3 +58,7 @@ func (c MaxMindCredentials) SupportsMethod(methodType chtype.PaymentMethodType, 
 	}
 	return false
 }
+
+func (c MaxMindCredentials) CanSandboxPlanUse() bool {
+	return true
+}

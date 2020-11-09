@@ -113,3 +113,10 @@ func (c PayPalWebsitePaymentsProCredentials) SupportsMethod(methodType chtype.Pa
 	}
 	return false
 }
+
+func (c PayPalWebsitePaymentsProCredentials) CanSandboxPlanUse() bool {
+	if c.Environment == PayPalEnvironmentLive {
+		return false
+	}
+	return true
+}

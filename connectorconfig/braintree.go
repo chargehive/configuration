@@ -74,3 +74,10 @@ func (c BraintreeCredentials) SupportsMethod(methodType chtype.PaymentMethodType
 	}
 	return false
 }
+
+func (c BraintreeCredentials) CanSandboxPlanUse() bool {
+	if c.Environment == BraintreeEnvironmentProduction {
+		return false
+	}
+	return true
+}

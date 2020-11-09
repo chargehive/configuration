@@ -14,6 +14,7 @@ type Credentials interface {
 	FromJson(input []byte) error
 	SupportsSca() bool
 	SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool
+	CanSandboxPlanUse() bool // If the plan is sandbox, you shouldn't be able to use production credentials
 }
 
 type Library string

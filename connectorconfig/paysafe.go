@@ -79,3 +79,10 @@ func (c PaySafeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, 
 	}
 	return false
 }
+
+func (c PaySafeCredentials) CanSandboxPlanUse() bool {
+	if c.Environment == PaySafeEnvironmentLive {
+		return false
+	}
+	return true
+}

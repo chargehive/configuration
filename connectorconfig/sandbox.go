@@ -58,3 +58,7 @@ func (c SandboxCredentials) SupportsMethod(methodType chtype.PaymentMethodType, 
 	}
 	return false
 }
+
+func (c SandboxCredentials) CanSandboxPlanUse() bool {
+	return true
+}
