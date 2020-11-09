@@ -3,6 +3,7 @@ module github.com/chargehive/configuration
 go 1.12
 
 require (
+	github.com/LucidCube/chargehive-transport-config v0.0.0-20200710095746-99a8762b7868 // indirect
 	github.com/chargehive/proto v0.0.0-20200717113027-f0fc10ec696d
 	github.com/go-playground/assert/v2 v2.0.1
 	github.com/go-playground/locales v0.13.0

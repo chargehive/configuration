@@ -2,9 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
-	"github.com/chargehive/proto/golang/chargehive/chtype"
-
+	"github.com/LucidCube/chargehive-transport-config/plans"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
 // MaxMindMinFraudServiceType is the maxmind minFraud service type
@@ -59,6 +59,6 @@ func (c MaxMindCredentials) SupportsMethod(methodType chtype.PaymentMethodType, 
 	return false
 }
 
-func (c MaxMindCredentials) CanSandboxPlanUse() bool {
+func (c MaxMindCredentials) CanPlanModeUse(plans.Mode) bool {
 	return true
 }

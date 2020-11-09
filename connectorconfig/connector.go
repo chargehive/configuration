@@ -3,9 +3,8 @@ package connectorconfig
 import (
 	"encoding/json"
 	"errors"
-	"strings"
-
 	"github.com/chargehive/configuration/v1/connector"
+	"strings"
 )
 
 // CreateCredentials create credentials from json

@@ -1,6 +1,7 @@
 package connectorconfig
 
 import (
+	"github.com/LucidCube/chargehive-transport-config/plans"
 	"github.com/chargehive/configuration/v1/connector"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
@@ -14,7 +15,7 @@ type Credentials interface {
 	FromJson(input []byte) error
 	SupportsSca() bool
 	SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool
-	CanSandboxPlanUse() bool // If the plan is sandbox, you shouldn't be able to use production credentials
+	CanPlanModeUse(mode plans.Mode) bool // Determine if this plan mode can use this configuration
 }
 
 type Library string
