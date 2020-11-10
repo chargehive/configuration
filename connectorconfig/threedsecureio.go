@@ -6,10 +6,23 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
+type (
+	ThreeDSecureEnvironment string
+	ThreeDSecureUrl         string
+)
+
+const (
+	ThreeDSecureEnvironmentLive    ThreeDSecureEnvironment = "live"
+	ThreeDSecureEnvironmentSandbox ThreeDSecureEnvironment = "sandbox"
+	ThreeDSecureUrlLive            ThreeDSecureUrl         = "https://service.3dsecure.io"
+	ThreeDSecureUrlSandbox         ThreeDSecureUrl         = "https://service.sandbox.3dsecure.io"
+)
+
 type ThreeDSecureIoCredentials struct {
-	APIKey      *string `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
-	Supports210 bool    `json:"supports_2_1_0"` // supports 3ds version 2.1.0
-	Supports220 bool    `json:"supports_2_2_0"` // supports 3ds version 2.2.0
+	APIKey      *string                 `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
+	Supports210 bool                    `json:"supports210"` // supports 3ds version 2.1.0
+	Supports220 bool                    `json:"supports220"` // supports 3ds version 2.2.0
+	Environment ThreeDSecureEnvironment `json:"environment"`
 }
 
 func (c ThreeDSecureIoCredentials) GetLibrary() Library {
