@@ -75,7 +75,8 @@ const (
 )
 
 var LibraryTypeRegister = map[LibraryType]bool{
-	LibraryTypePayment: true,
-	LibraryTypeFraud:   true,
-	LibraryTypeSCA:     true,
+	LibraryTypePayment:       true,
+	LibraryTypeFraud:         true,
+	LibraryTypeMethodUpdater: true,
+	LibraryTypeSCA:           true,
 }
