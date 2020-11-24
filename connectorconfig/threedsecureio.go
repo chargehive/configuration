@@ -9,16 +9,12 @@ import (
 
 type (
 	ThreeDSecureEnvironment string
-	ThreeDSecureUrl         string
 	ThreeDVersion           string
 )
 
 const (
 	ThreeDSecureEnvironmentLive    ThreeDSecureEnvironment = "live"
 	ThreeDSecureEnvironmentSandbox ThreeDSecureEnvironment = "sandbox"
-
-	ThreeDSecureUrlLive    ThreeDSecureUrl = "https://service.3dsecure.io"
-	ThreeDSecureUrlSandbox ThreeDSecureUrl = "https://service.sandbox.3dsecure.io"
 
 	ThreeDVersion200 ThreeDVersion = "2.0.0"
 	ThreeDVersion210 ThreeDVersion = "2.1.0"
