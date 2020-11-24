@@ -8,25 +8,25 @@ import (
 )
 
 type (
-	ThreeDSecureEnvironment string
-	ThreeDVersion           string
+	ThreeDSecureIoEnvironment string
+	ThreeDSVersion            string
 )
 
 const (
-	ThreeDSecureEnvironmentLive    ThreeDSecureEnvironment = "live"
-	ThreeDSecureEnvironmentSandbox ThreeDSecureEnvironment = "sandbox"
+	ThreeDSecureEnvironmentLive    ThreeDSecureIoEnvironment = "live"
+	ThreeDSecureEnvironmentSandbox ThreeDSecureIoEnvironment = "sandbox"
 
-	ThreeDVersion200 ThreeDVersion = "2.0.0"
-	ThreeDVersion210 ThreeDVersion = "2.1.0"
-	ThreeDVersion220 ThreeDVersion = "2.2.0"
-	ThreeDVersion230 ThreeDVersion = "2.3.0"
+	ThreeDVersion200 ThreeDSVersion = "2.0.0"
+	ThreeDVersion210 ThreeDSVersion = "2.1.0"
+	ThreeDVersion220 ThreeDSVersion = "2.2.0"
+	ThreeDVersion230 ThreeDSVersion = "2.3.0"
 )
 
 type ThreeDSecureIoCredentials struct {
-	APIKey             *string                 `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`                                         // Api key supplied by 3dsecure.io
-	SupportsMinVersion ThreeDVersion           `json:"supportsMinVersion" yaml:"supportsMinVersion" validate:"oneof=2.0.0 2.1.0 2.2.0 2.3.0"` // lowest supported version
-	SupportsMaxVersion ThreeDVersion           `json:"supportsMaxVersion" yaml:"supportsMaxVersion" validate:"oneof=2.0.0 2.1.0 2.2.0 2.3.0"` // highest supported version
-	Environment        ThreeDSecureEnvironment `json:"environment" yaml:"environment" validate:"oneof=live sandbox"`                          // live or sandbox environment
+	APIKey             *string                   `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`                                         // Api key supplied by 3dsecure.io
+	SupportsMinVersion ThreeDSVersion            `json:"supportsMinVersion" yaml:"supportsMinVersion" validate:"oneof=2.0.0 2.1.0 2.2.0 2.3.0"` // lowest supported version
+	SupportsMaxVersion ThreeDSVersion            `json:"supportsMaxVersion" yaml:"supportsMaxVersion" validate:"oneof=2.0.0 2.1.0 2.2.0 2.3.0"` // highest supported version
+	Environment        ThreeDSecureIoEnvironment `json:"environment" yaml:"environment" validate:"oneof=live sandbox"`                          // live or sandbox environment
 }
 
 func (c ThreeDSecureIoCredentials) GetLibrary() Library {
@@ -59,7 +59,7 @@ func (c ThreeDSecureIoCredentials) SupportsSca() bool {
 	return true
 }
 
-func (c ThreeDSecureIoCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c ThreeDSecureIoCredentials) SupportsMethod(methodType chtype.PaymentMethodType, _ chtype.PaymentMethodProvider) bool {
 	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
 		return true
 	}
@@ -68,4 +68,20 @@ func (c ThreeDSecureIoCredentials) SupportsMethod(methodType chtype.PaymentMetho
 
 func (c ThreeDSecureIoCredentials) CanPlanModeUse(plans.Mode) bool {
 	return true
+}
+
+func (t ThreeDSVersion) Valid() bool {
+	switch t {
+	case ThreeDVersion200, ThreeDVersion210, ThreeDVersion220, ThreeDVersion230:
+		return true
+	}
+	return false
+}
+
+func (t ThreeDSecureIoEnvironment) Valid() bool {
+	switch t {
+	case ThreeDSecureEnvironmentLive, ThreeDSecureEnvironmentSandbox:
+		return true
+	}
+	return false
 }
