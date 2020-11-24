@@ -13,13 +13,13 @@ type (
 )
 
 const (
-	ThreeDSecureEnvironmentLive    ThreeDSecureIoEnvironment = "live"
-	ThreeDSecureEnvironmentSandbox ThreeDSecureIoEnvironment = "sandbox"
+	ThreeDSecureIoEnvironmentLive    ThreeDSecureIoEnvironment = "live"
+	ThreeDSecureIoEnvironmentSandbox ThreeDSecureIoEnvironment = "sandbox"
 
-	ThreeDVersion200 ThreeDSVersion = "2.0.0"
-	ThreeDVersion210 ThreeDSVersion = "2.1.0"
-	ThreeDVersion220 ThreeDSVersion = "2.2.0"
-	ThreeDVersion230 ThreeDSVersion = "2.3.0"
+	ThreeDSVersion200 ThreeDSVersion = "2.0.0"
+	ThreeDSVersion210 ThreeDSVersion = "2.1.0"
+	ThreeDSVersion220 ThreeDSVersion = "2.2.0"
+	ThreeDSVersion230 ThreeDSVersion = "2.3.0"
 )
 
 type ThreeDSecureIoCredentials struct {
@@ -72,7 +72,7 @@ func (c ThreeDSecureIoCredentials) CanPlanModeUse(plans.Mode) bool {
 
 func (t ThreeDSVersion) Valid() bool {
 	switch t {
-	case ThreeDVersion200, ThreeDVersion210, ThreeDVersion220, ThreeDVersion230:
+	case ThreeDSVersion200, ThreeDSVersion210, ThreeDSVersion220, ThreeDSVersion230:
 		return true
 	}
 	return false
@@ -80,7 +80,7 @@ func (t ThreeDSVersion) Valid() bool {
 
 func (t ThreeDSecureIoEnvironment) Valid() bool {
 	switch t {
-	case ThreeDSecureEnvironmentLive, ThreeDSecureEnvironmentSandbox:
+	case ThreeDSecureIoEnvironmentLive, ThreeDSecureIoEnvironmentSandbox:
 		return true
 	}
 	return false
