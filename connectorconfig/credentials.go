@@ -1,9 +1,9 @@
 package connectorconfig
 
 import (
+	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
-	"github.com/lucidcube/chargehive-transport-config/plans"
 )
 
 type Credentials interface {
@@ -15,7 +15,7 @@ type Credentials interface {
 	FromJson(input []byte) error
 	SupportsSca() bool
 	SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool
-	CanPlanModeUse(mode plans.Mode) bool // Determine if this plan mode can use this configuration
+	CanPlanModeUse(mode environment.Mode) bool // Determine if this plan mode can use this configuration
 }
 
 type Library string

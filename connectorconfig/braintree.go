@@ -2,9 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
-	"github.com/lucidcube/chargehive-transport-config/plans"
 )
 
 type BraintreeEnvironment string
@@ -75,8 +75,8 @@ func (c BraintreeCredentials) SupportsMethod(methodType chtype.PaymentMethodType
 	return false
 }
 
-func (c BraintreeCredentials) CanPlanModeUse(mode plans.Mode) bool {
-	if mode == plans.ModeSandbox && c.Environment == BraintreeEnvironmentProduction {
+func (c BraintreeCredentials) CanPlanModeUse(mode environment.Mode) bool {
+	if mode == environment.ModeSandbox && c.Environment == BraintreeEnvironmentProduction {
 		return false
 	}
 	return true

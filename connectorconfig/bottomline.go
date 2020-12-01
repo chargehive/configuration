@@ -2,9 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
-	"github.com/lucidcube/chargehive-transport-config/plans"
 )
 
 type BottomlineEnvironment string
@@ -61,8 +61,8 @@ func (c BottomlineCredentials) SupportsMethod(methodType chtype.PaymentMethodTyp
 	return false
 }
 
-func (c BottomlineCredentials) CanPlanModeUse(mode plans.Mode) bool {
-	if mode == plans.ModeSandbox && c.Environment == BottomlineEnvironmentProduction {
+func (c BottomlineCredentials) CanPlanModeUse(mode environment.Mode) bool {
+	if mode == environment.ModeSandbox && c.Environment == BottomlineEnvironmentProduction {
 		return false
 	}
 	return true

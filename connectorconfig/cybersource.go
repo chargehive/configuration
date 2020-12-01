@@ -2,9 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
-	"github.com/lucidcube/chargehive-transport-config/plans"
 )
 
 type CyberSourceEnvironment string
@@ -56,6 +56,6 @@ func (c CyberSourceCredentials) SupportsMethod(methodType chtype.PaymentMethodTy
 	return false
 }
 
-func (c CyberSourceCredentials) CanPlanModeUse(plans.Mode) bool {
+func (c CyberSourceCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }
