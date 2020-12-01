@@ -2,9 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
-	"github.com/lucidcube/chargehive-transport-config/plans"
 )
 
 type SandboxMode string
@@ -59,6 +59,6 @@ func (c SandboxCredentials) SupportsMethod(methodType chtype.PaymentMethodType, 
 	return false
 }
 
-func (c SandboxCredentials) CanPlanModeUse(plans.Mode) bool {
+func (c SandboxCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }

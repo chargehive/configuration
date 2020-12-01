@@ -2,9 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
-	"github.com/lucidcube/chargehive-transport-config/plans"
 )
 
 type QualPayEnvironment string
@@ -57,8 +57,8 @@ func (c QualpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType, 
 	return false
 }
 
-func (c QualpayCredentials) CanPlanModeUse(mode plans.Mode) bool {
-	if mode == plans.ModeSandbox && c.Environment == QualPayEnvironmentLive {
+func (c QualpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
+	if mode == environment.ModeSandbox && c.Environment == QualPayEnvironmentLive {
 		return false
 	}
 	return true

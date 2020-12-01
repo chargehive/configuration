@@ -2,9 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
-	"github.com/lucidcube/chargehive-transport-config/plans"
 )
 
 type WorldpayEnvironment string
@@ -106,8 +106,8 @@ func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 	return false
 }
 
-func (c WorldpayCredentials) CanPlanModeUse(mode plans.Mode) bool {
-	if mode == plans.ModeSandbox {
+func (c WorldpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
+	if mode == environment.ModeSandbox {
 		if c.Environment == WorldpayEnvironmentProduction || c.Environment == WorldpayEnvironmentProductionTransact {
 			return false
 		}
