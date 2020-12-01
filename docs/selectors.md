@@ -3,7 +3,7 @@
 Selectors are optional configurations that can be defined against all objects in ChargeHive and allow setting a series of Rules that must match against the charge.
 
 A Selector has a `priority` which is used to determine a config to use if there are multiple matches. The higher the priority, then the more
-likely that config will be used. 
+likely the config will be used. 
 
 A Selector also has a list of one or more `expressions`. These act as rules and ensure the config will only be applied to charges which match the expression rules.
 
@@ -191,14 +191,64 @@ Transaction Response Keys | Definition
 
 Method Keys | Definition 
 ---:|:---
-"method.name"|
-"method.paymentScheme"|
-"method.validFrom"|
-"method.expiry"|
-"method.type"|
-"method.provider"|
-"method.info"|
+"method.name"                    | Display Name for payment method e.g. "**** **** **** 0050"
+"method.paymentScheme"           | Payment Scheme enum e.g. "card_visa" see [Payment Schemes](#Payment-Schemes)
+"method.validFrom"               | Valid from date e.g. "1509984191" unix timestamp
+"method.expiry"                  | Expiry date e.g. "1509984191" unix timestamp
+"method.type"                    | Payment method type e.g. 0-4 PAYMENT_METHOD_TYPE_CARD
+"method.provider"                | Payment method provider e.g. 0-5 PAYMENT_METHOD_PROVIDER_FORM
+"method.info.card.last.four"     | Last four digits of payment method e.g. "1234"
+"method.info.issuer"             | Issuing bank (useful for selecting sandbox cards) e.g. "ChargeHive SandBanx""
+"method.info.account.holder"     | Name on card e.g. "John Smith"
+"method.info.card.brand"         | Brand of card e.g. "VISA"
+"method.info.card.number.length" | Number of digits on card e.g. "16"
+"method.info.country"            | Country of issuance e.g. "GB"
 
+
+### Payment Schemes
+Scheme Key | Definition
+---:|:---
+"card_unknown"  | Unknown
+"card_air_plus" | AirPlus 
+"card_american_express" | American Express
+"card_aurore" |  Aurore
+"card_carte_bancaire" | Carte Bancaire 
+"card_carte_bleue" |  Carte Blue
+"card_dankort" |  DanKort
+"card_diners_club" |  Diners Club
+"card_discover" |  Discover
+"card_ge_capital" |  GE Captial
+"card_japanese_credit_bank" |  JCB
+"card_maestro" |  Maestro
+"card_master_card" | MasterCard
+"card_uatp" | UATP
+"card_visa" | Visa
+"card_visa_debit" | Visa Debit 
+"card_visa_electron" | Visa Electron 
+"card_unionpay" | China UnionPay
+"card_bancomat" | Bancomat
+"card_bc_card" |  BC Card
+"card_bca_card" |  BCA Card
+"card_cabcharge" | Cab Charge
+"card_eftpos" |  EFT POS
+"card_eps" | EPS
+"card_elo" | ELO
+"card_forbrugsforeningen" |  FBF (Denmark loyalty club)
+"card_girocard" | Girocard (German)
+"card_interac" | Interac (Canadian)
+"card_isracard" | Isracard (Israeli)
+"card_mir" | Mir (Russia)
+"card_meps" | MepsPay.com (Middle Eastern Payment Services)
+"card_nets" | Nets (Denmark)
+"card_pay_pak" |  PayPak (Pakistan)
+"card_ru_pay" | RuPay (Russia)
+"card_troy" | Troy (Turkish)
+"card_v_pay" | VPay (visa Europe)
+"card_verve" | Verve (Mastercard)
+"paypal_personal" | Paypal Personal account payment
+"paypal_business" | Paypal Business account payment
+"bitcoin" | Bitcoin
+"directdebit" | Direct Debit
 
 ## Operator Values
 Value | Definition 
@@ -224,5 +274,5 @@ Value | Definition
 
 #### Converting Time fields
 
-The time fields on ChargeHive are in time.Time format, so when entering a time value into a Selctor, you must use the format *Year-Month-DayTHour:Min:SecZ*
+The time fields on ChargeHive are in time.Time format, so when entering a time value into a Selector, you must use the format *Year-Month-DayTHour:Min:SecZ*
 
