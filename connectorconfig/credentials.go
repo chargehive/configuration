@@ -33,6 +33,7 @@ const (
 	LibraryPayPalExpressCheckout    Library = "paypal-expresscheckout"
 	LibraryVindicia                 Library = "vindicia"
 	LibraryBottomline               Library = "bottomline"
+	LibraryCheckout                 Library = "checkout"
 
 	// Fraud Libraries
 	LibraryChargeHive  Library = "chargehive"
