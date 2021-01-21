@@ -57,6 +57,7 @@ var LibraryRegister = map[Library]bool{
 	LibraryPayPalExpressCheckout:    true,
 	LibraryVindicia:                 true,
 	LibraryBottomline:               true,
+	LibraryCheckout:                 true,
 	LibraryChargeHive:               true,
 	LibraryMaxMind:                  true,
 	LibraryCyberSource:              true,
