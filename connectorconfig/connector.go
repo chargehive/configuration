@@ -43,6 +43,8 @@ func getCreds(c *connector.Connector, strict bool) (Credentials, error) {
 		credentials = &VindiciaCredentials{}
 	case LibraryBottomline:
 		credentials = &BottomlineCredentials{}
+	case LibraryCheckout:
+		credentials = &CheckoutCredentials{}
 
 		// Fraud Libraries
 	case LibraryMaxMind:
