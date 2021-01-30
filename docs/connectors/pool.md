@@ -14,6 +14,7 @@ As with all configs, the standard wrapper is used.
   "specVersion": "v1",                        // Must be set to the correct version
   "selector": {},                             // May be used to apply this to a subset of charges
   "spec": {
+    "selectMode": "default",                  // Can be set to: "default" or "priorityMerge"
     "restriction": "unrestricted",            // Can be set to: "unrestricted", "noRepeat" or "lowestUsage"
     "connectors": [                           // Connectors contains the list of connectors in the pool
       {
@@ -41,6 +42,7 @@ The `connectors` variable is a container for the list of connectors in this pool
 
 FieldName | Required | Definition 
 ---:|---|:---
+selectMode | false | "default" or "priorityMerge"
 restriction | false | "unrestricted" (Default) , "noRepeat" or "lowestUsage"
 [connectors](#connector-definition) | false | Non-empty list of the connectors in the pool
 
