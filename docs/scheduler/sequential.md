@@ -28,8 +28,8 @@ As with all configs, the standard wrapper is used.
             "test-connector"
           ]
         },                  
-        "timeDelay": 86400000000000,          // Delay in nanoseconds
-        "timeDelayOrigin": "initialisation",  // Defines when a given time is based from
+        "timeDelay": 86400000000000,          // Delay in nanoseconds before the next Attempt - if set to 0, ChargeHive will still delay 30 minutes to avoid multiple attempts at the same time
+        "timeDelayOrigin": "initialisation",  // Defines when the Delay before the next Attempt is based from - either "initialisation" or "last-failure"
         "timeDelaySync": "Closest",           // Specifies when the transaction should be performed relative to the schedules TimeSync
         "timeSyncHour": 2,                    // An hour designation
         "timeSyncZone": "UTC"                 // UTC or ULT
