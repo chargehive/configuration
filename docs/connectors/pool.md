@@ -43,7 +43,7 @@ The `connectors` variable is a container for the list of connectors in this pool
 
 FieldName | Required | Definition 
 ---:|---|:---
-restriction | false | "unrestricted" (Default) , "noRepeat" or "lowestUsage"
+restriction | false | "unrestricted" (Default) , "noRepeat", "lowestUsage", "fullCycle" or "priority"
 [connectors](#connector-definition) | false | Non-empty list of the connectors in the pool
 
 ### Connector definition
