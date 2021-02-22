@@ -31,7 +31,7 @@ const (
 
 // Pool is used to select a group of connectors and the order that they should be used in
 type Pool struct {
-	Restriction Restriction `json:"restriction" yaml:"restriction" validate:"oneof=unrestricted noRepeat lowestUsage"`
+	Restriction Restriction `json:"restriction" yaml:"restriction" validate:"oneof=unrestricted noRepeat lowestUsage fullCycle priority"`
 	Connectors  []PoolItem  `json:"connectors" yaml:"connectors" validate:"gt=0,dive"`
 }
 
