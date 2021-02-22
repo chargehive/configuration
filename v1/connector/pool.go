@@ -24,6 +24,9 @@ const (
 
 	// RestrictionFullCycle a full cycle pool will ensure every connector within the pool has been attempted, before retrying
 	RestrictionFullCycle Restriction = "fullCycle"
+
+	// RestrictionPriority loop through each connector in priority order, using the previous attempt as its calculation
+	RestrictionPriority Restriction = "priority"
 )
 
 // Pool is used to select a group of connectors and the order that they should be used in

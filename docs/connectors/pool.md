@@ -37,6 +37,7 @@ The `restriction` details whether this connector pool is repeated or not. This c
 "noRepeat" (each time this connector pool attempts a charge, it will not select the last Connector attempted) - This ensures that different connectors are selected with each attempt of this pool.  
 "lowestUsage" (the pool will prioritise the connector with the lowest amount of attempts across all charges) - This ensures that all connectors get attemted a similar number of times.  
 "fullCycle" (a full cycle pool will ensure every connector within the pool has been attempted, before retrying) - This ensures that all connectors get attemted before retrying.  
+"priority" (loop through each connector in priority order, using the previous attempt as its calculation) - This ensures the order of the connectors to be attempted based on the previous attempt.  
  
 The `connectors` variable is a container for the list of connectors in this pool defined below.
 
