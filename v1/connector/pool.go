@@ -21,6 +21,9 @@ const (
 
 	// RestrictionLowestUsage the pool will prioritise the connector with the lowest amount of attempts across all charges
 	RestrictionLowestUsage Restriction = "lowestUsage"
+
+	// RestrictionFullCycle a full cycle pool will ensure every connector within the pool has been attempted, before retrying
+	RestrictionFullCycle Restriction = "fullCycle"
 )
 
 // Pool is used to select a group of connectors and the order that they should be used in
