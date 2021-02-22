@@ -21,11 +21,17 @@ const (
 
 	// RestrictionLowestUsage the pool will prioritise the connector with the lowest amount of attempts across all charges
 	RestrictionLowestUsage Restriction = "lowestUsage"
+
+	// RestrictionFullCycle a full cycle pool will ensure every connector within the pool has been attempted, before retrying
+	RestrictionFullCycle Restriction = "fullCycle"
+
+	// RestrictionPriority loop through each connector in priority order, using the previous attempt as its calculation
+	RestrictionPriority Restriction = "priority"
 )
 
 // Pool is used to select a group of connectors and the order that they should be used in
 type Pool struct {
-	Restriction Restriction `json:"restriction" yaml:"restriction" validate:"oneof=unrestricted noRepeat lowestUsage"`
+	Restriction Restriction `json:"restriction" yaml:"restriction" validate:"oneof=unrestricted noRepeat lowestUsage fullCycle priority"`
 	Connectors  []PoolItem  `json:"connectors" yaml:"connectors" validate:"gt=0,dive"`
 }
 
