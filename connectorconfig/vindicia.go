@@ -28,7 +28,7 @@ func (c VindiciaCredentials) GetLibrary() Library {
 }
 
 func (c *VindiciaCredentials) GetSupportedTypes() []LibraryType {
-	return []LibraryType{LibraryTypePayment}
+	return []LibraryType{LibraryRecoveryAgent}
 }
 
 func (c *VindiciaCredentials) Validate() error {
