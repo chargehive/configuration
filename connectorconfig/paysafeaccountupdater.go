@@ -66,3 +66,7 @@ func (c PaySafeAccountUpdaterCredentials) SupportsMethod(methodType chtype.Payme
 func (c PaySafeAccountUpdaterCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }
+
+func (c PaySafeAccountUpdaterCredentials) IsRecoveryAgent() bool {
+	return false
+}

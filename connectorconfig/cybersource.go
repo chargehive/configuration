@@ -59,3 +59,7 @@ func (c CyberSourceCredentials) SupportsMethod(methodType chtype.PaymentMethodTy
 func (c CyberSourceCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }
+
+func (c CyberSourceCredentials) IsRecoveryAgent() bool {
+	return false
+}

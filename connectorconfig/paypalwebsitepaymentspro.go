@@ -120,3 +120,7 @@ func (c PayPalWebsitePaymentsProCredentials) CanPlanModeUse(mode environment.Mod
 	}
 	return true
 }
+
+func (c PayPalWebsitePaymentsProCredentials) IsRecoveryAgent() bool {
+	return false
+}

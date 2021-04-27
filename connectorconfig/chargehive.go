@@ -50,3 +50,7 @@ func (c ChargeHiveCredentials) SupportsMethod(methodType chtype.PaymentMethodTyp
 func (c ChargeHiveCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }
+
+func (c ChargeHiveCredentials) IsRecoveryAgent() bool {
+	return false
+}

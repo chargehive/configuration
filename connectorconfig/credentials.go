@@ -16,6 +16,7 @@ type Credentials interface {
 	SupportsSca() bool
 	SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool
 	CanPlanModeUse(mode environment.Mode) bool // Determine if this plan mode can use this configuration
+	IsRecoveryAgent() bool
 }
 
 type Library string

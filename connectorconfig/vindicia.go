@@ -66,3 +66,7 @@ func (c VindiciaCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	}
 	return true
 }
+
+func (c VindiciaCredentials) IsRecoveryAgent() bool {
+	return true
+}

@@ -67,3 +67,7 @@ func (c BottomlineCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	}
 	return true
 }
+
+func (c BottomlineCredentials) IsRecoveryAgent() bool {
+	return false
+}

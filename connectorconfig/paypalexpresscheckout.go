@@ -58,3 +58,7 @@ func (c PayPalExpressCheckoutCredentials) CanPlanModeUse(mode environment.Mode) 
 	}
 	return true
 }
+
+func (c PayPalExpressCheckoutCredentials) IsRecoveryAgent() bool {
+	return false
+}
