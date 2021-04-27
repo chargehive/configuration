@@ -63,3 +63,7 @@ func (c QualpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	}
 	return true
 }
+
+func (c QualpayCredentials) IsRecoveryAgent() bool {
+	return false
+}

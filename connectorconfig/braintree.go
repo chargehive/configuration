@@ -81,3 +81,7 @@ func (c BraintreeCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	}
 	return true
 }
+
+func (c BraintreeCredentials) IsRecoveryAgent() bool {
+	return false
+}

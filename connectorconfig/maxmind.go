@@ -62,3 +62,7 @@ func (c MaxMindCredentials) SupportsMethod(methodType chtype.PaymentMethodType, 
 func (c MaxMindCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }
+
+func (c MaxMindCredentials) IsRecoveryAgent() bool {
+	return false
+}

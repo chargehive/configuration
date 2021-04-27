@@ -78,3 +78,7 @@ func (c CheckoutCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	}
 	return true
 }
+
+func (c CheckoutCredentials) IsRecoveryAgent() bool {
+	return false
+}

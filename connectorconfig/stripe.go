@@ -52,3 +52,7 @@ func (c StripeCredentials) CanPlanModeUse(environment.Mode) bool {
 	// todo will require updating when we have test credentials
 	return true
 }
+
+func (c StripeCredentials) IsRecoveryAgent() bool {
+	return false
+}

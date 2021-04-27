@@ -16,11 +16,12 @@ const (
 )
 
 type VindiciaCredentials struct {
-	Login         string              `json:"login" yaml:"login" validate:"required"`
-	Password      *string             `json:"password" yaml:"password" validate:"required,gt=0"`
-	HMACKey       *string             `json:"hmacKey" yaml:"hmacKey" validate:"required,gt=0"`
-	PGPPrivateKey *string             `json:"pgpPrivateKey" yaml:"pgpPrivateKey" validate:"required,gt=0"`
-	Environment   VindiciaEnvironment `json:"environment" yaml:"environment" validate:"oneof=development stage production"`
+	Login           string              `json:"login" yaml:"login" validate:"required"`
+	Password        *string             `json:"password" yaml:"password" validate:"required,gt=0"`
+	HMACKey         *string             `json:"hmacKey" yaml:"hmacKey" validate:"required,gt=0"`
+	PGPPrivateKey   *string             `json:"pgpPrivateKey" yaml:"pgpPrivateKey" validate:"required,gt=0"`
+	DivisionNumbers map[string]int      `json:"divisionNumbers" yaml:"divisionNumbers" validate:"required"`
+	Environment     VindiciaEnvironment `json:"environment" yaml:"environment" validate:"oneof=development stage production"`
 }
 
 func (c VindiciaCredentials) GetLibrary() Library {
@@ -64,5 +65,9 @@ func (c VindiciaCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == VindiciaEnvironmentProduction {
 		return false
 	}
+	return true
+}
+
+func (c VindiciaCredentials) IsRecoveryAgent() bool {
 	return true
 }

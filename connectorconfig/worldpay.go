@@ -114,3 +114,7 @@ func (c WorldpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	}
 	return true
 }
+
+func (c WorldpayCredentials) IsRecoveryAgent() bool {
+	return false
+}

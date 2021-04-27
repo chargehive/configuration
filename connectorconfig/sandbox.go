@@ -62,3 +62,7 @@ func (c SandboxCredentials) SupportsMethod(methodType chtype.PaymentMethodType, 
 func (c SandboxCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }
+
+func (c SandboxCredentials) IsRecoveryAgent() bool {
+	return false
+}

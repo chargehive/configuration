@@ -86,3 +86,7 @@ func (c PaySafeCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	}
 	return true
 }
+
+func (c PaySafeCredentials) IsRecoveryAgent() bool {
+	return false
+}
