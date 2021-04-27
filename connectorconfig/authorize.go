@@ -76,3 +76,7 @@ func (c AuthorizeCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	}
 	return true
 }
+
+func (c AuthorizeCredentials) IsRecoveryAgent() bool {
+	return false
+}
