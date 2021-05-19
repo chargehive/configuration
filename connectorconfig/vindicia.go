@@ -15,13 +15,19 @@ const (
 	VindiciaEnvironmentProduction  VindiciaEnvironment = "production"
 )
 
+type ConnectorAttempt struct {
+	ConnectorID    string
+	DivisionNumber string
+	Weight         int
+}
+
 type VindiciaCredentials struct {
-	Login           string              `json:"login" yaml:"login" validate:"required"`
-	Password        *string             `json:"password" yaml:"password" validate:"required,gt=0"`
-	HMACKey         *string             `json:"hmacKey" yaml:"hmacKey" validate:"required,gt=0"`
-	PGPPrivateKey   *string             `json:"pgpPrivateKey" yaml:"pgpPrivateKey" validate:"required,gt=0"`
-	DivisionNumbers map[string]int      `json:"divisionNumbers" yaml:"divisionNumbers" validate:"required"`
-	Environment     VindiciaEnvironment `json:"environment" yaml:"environment" validate:"oneof=development stage production"`
+	Login         string              `json:"login" yaml:"login" validate:"required"`
+	Password      *string             `json:"password" yaml:"password" validate:"required,gt=0"`
+	HMACKey       *string             `json:"hmacKey" yaml:"hmacKey" validate:"required,gt=0"`
+	PGPPrivateKey *string             `json:"pgpPrivateKey" yaml:"pgpPrivateKey" validate:"required,gt=0"`
+	ConnectorPool []ConnectorAttempt  `json:"connectorPool" yaml:"connectorPool" validate:"required"`
+	Environment   VindiciaEnvironment `json:"environment" yaml:"environment" validate:"oneof=development stage production"`
 }
 
 func (c VindiciaCredentials) GetLibrary() Library {
