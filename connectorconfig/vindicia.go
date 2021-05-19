@@ -16,9 +16,9 @@ const (
 )
 
 type ConnectorAttempt struct {
-	ConnectorID    string
-	DivisionNumber string
-	Weight         int
+	ConnectorID    string `json:"connectorID"`
+	DivisionNumber string `json:"divisionNumber"`
+	Weight         int    `json:"weight"`
 }
 
 type VindiciaCredentials struct {
