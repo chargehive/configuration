@@ -106,6 +106,8 @@ const (
 	KeyChargeItemsCount                 Key = "charge.meta.items.count"
 	KeyChargeItemSubscriptionId         Key = "charge.meta.item.subscriptionId"
 	KeyChargeItemRenewalNumber          Key = "charge.meta.item.renewalNumber"
+	KeyChargeItemTermUnits              Key = "charge.meta.item.termUnits"
+	KeyChargeItemTermType               Key = "charge.meta.item.termType"
 	KeyChargeItemDuration               Key = "charge.meta.item.duration"
 	KeyChargeItemStartDate              Key = "charge.meta.item.startDate"
 	KeyChargeItemEndDate                Key = "charge.meta.item.endDate"
