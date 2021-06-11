@@ -266,6 +266,8 @@ var KeyRegister = map[Key]bool{
 	KeyChargeItemsCount:                   true,
 	KeyChargeItemSubscriptionId:           true,
 	KeyChargeItemRenewalNumber:            true,
+	KeyChargeItemTermUnits:                true,
+	KeyChargeItemTermType:                 true,
 	KeyChargeItemDuration:                 true,
 	KeyChargeItemStartDate:                true,
 	KeyChargeItemEndDate:                  true,
