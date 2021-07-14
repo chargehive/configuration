@@ -87,7 +87,6 @@ var chg = "change-me"
 
 // Generate can be used to create a basic but valid config of any type
 func Generate(conf Template, version string, pretty bool) ([]byte, error) {
-
 	if version != "v1" {
 		return nil, errors.New("version mismatch")
 	}
@@ -178,7 +177,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 		j, _ := json.Marshal(connectorconfig.StripeCredentials{APIKey: &chg})
 		return connector.Connector{Library: string(connectorconfig.LibraryStripe), Configuration: j}, nil
 	case confConnVindicia:
-		j, _ := json.Marshal(connectorconfig.VindiciaCredentials{Login: chg, Password: &chg, HMACKey: &chg, PGPPrivateKey: &chg, Environment: "development"})
+		j, _ := json.Marshal(connectorconfig.VindiciaCredentials{Login: chg, Password: &chg, HMACKey: &chg, PGPPrivateKey: &chg, Environment: "development", ConnectorPool: []connectorconfig.ConnectorAttempt{{ConnectorID: "", DivisionNumber: "", Weight: 0}}})
 		return connector.Connector{Library: string(connectorconfig.LibraryVindicia), Configuration: j}, nil
 	case confConnWorldPay:
 		j, _ := json.Marshal(connectorconfig.WorldpayCredentials{
