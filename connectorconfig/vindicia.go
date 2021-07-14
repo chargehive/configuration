@@ -20,7 +20,6 @@ type ConnectorAttempt struct {
 	DivisionNumber string `json:"divisionNumber"`
 	Weight         int    `json:"weight"`
 }
-
 type VindiciaCredentials struct {
 	Login         string              `json:"login" yaml:"login" validate:"required"`
 	Password      *string             `json:"password" yaml:"password" validate:"required,gt=0"`
@@ -60,11 +59,8 @@ func (c VindiciaCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c VindiciaCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
-	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
-		return true
-	}
-	return false
+func (c VindiciaCredentials) SupportsMethod(methodType chtype.PaymentMethodType, _ chtype.PaymentMethodProvider) bool {
+	return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 }
 
 func (c VindiciaCredentials) CanPlanModeUse(mode environment.Mode) bool {

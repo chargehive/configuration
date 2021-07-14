@@ -9,6 +9,7 @@ import (
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	enTranslations "github.com/go-playground/validator/v10/translations/en"
+	"strings"
 )
 
 var (
@@ -85,7 +86,7 @@ func Validate(rawJson []byte, version string) map[string]string {
 
 func PredicateKeysValidator(fl validator.FieldLevel) bool {
 	_, ok := selector.KeyRegister[selector.Key(fl.Field().String())]
-	return ok
+	return ok || strings.HasPrefix(fl.Field().String(), "charge.label.")
 }
 
 func ConnectorLibraryValidator(fl validator.FieldLevel) bool {
