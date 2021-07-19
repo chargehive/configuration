@@ -38,21 +38,22 @@ To create a Payment Provider Connector you need to define the `spec` properties 
 Here are the configuration options for each of the connectors for the Payment Provider and Fraud Services. 
 
 #### Payment Providers
-[Authorize.net](#authorizenet)  
-[Braintree](#braintree)  
-[PayPal Express Checkout](#paypal---express-checkout)  
-[PayPal Website Payments Pro](#paypal---website-payments-pro)  
-[Paysafe](#paysafe)  
-[Qualpay](#qualpay)  
-[Sandbox](#sandbox)  
-[Stripe](#stripe)  
-[Vindicia](#vindicia)
-[Worldpay](#worldpay)  
+- [Authorize.net](#authorizenet)  
+- [Braintree](#braintree)  
+- [PayPal Express Checkout](#paypal---express-checkout)  
+- [PayPal Website Payments Pro](#paypal---website-payments-pro)  
+- [Paysafe](#paysafe)  
+- [Qualpay](#qualpay)  
+- [Sandbox](#sandbox)  
+- [Stripe](#stripe)  
+- [Vindicia](#vindicia)
+- [Checkout](#checkout)  
+- [Worldpay](#worldpay)  
 
 #### Fraud Libraries
-[ChargeHive](#chargehive)  
-[Cybersource](#cybersource)  
-[Maxmind](#maxmind)
+- [ChargeHive](#chargehive)  
+- [Cybersource](#cybersource)  
+- [Maxmind](#maxmind)
 
 ---
 
@@ -216,7 +217,51 @@ To be confirmed
 ### Vindicia  
 Library: `vindicia`  
 Configuration:
-To be confirmed
+```json  
+{
+	"login": "xxxxxxx",
+	"password": "xxxxxxxxxxxxxxxxxx",
+	"hmacKey": "xxxxxxxxxxxxxxxxxxx",
+	"pgpPrivateKey": "xxxxxxxxxxxxxxxxxxx",
+	"connectorPool": [
+	{
+		"connectorID": "sandbox-connector",
+		"divisionNumber": "12345",
+		"weight": 10
+	}],
+	"environment": "stage"
+}  
+```  
+
+FieldName | Definition
+---:|:---   
+login | The username of this account
+password | The password of this account
+hmacKey | The HMAC key of this account
+pgpPrivateKey | The PGP Private Key of this account
+connector | An weighted array of connectors that make up a pool of vindicia division numbers
+environment | Must be "development", stage" or "production"
+---
+
+### Checkout
+Library: `checkout`  
+Configuration:
+```json  
+{
+	"publicKey" : "pk_xxxxxxxxxxxx",
+	"secretKey" : "sk_xxxxxxxxxxxx",
+	"currency" : "GBP",
+	"environment" : "sandbox"
+}
+```
+
+FieldName | Definition
+---:|:---   
+publicKey | The Public Key of this account. This can be found in settings page of Hub
+secretKey | The Secret Key of this account. This can be found in settings page of Hub
+currency | The currency to process with this account
+environment | Must be "sandbox" or "production"
+---
 
 ### WorldPay  
 Library: `worldpay`  
