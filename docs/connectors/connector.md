@@ -38,22 +38,22 @@ To create a Payment Provider Connector you need to define the `spec` properties 
 Here are the configuration options for each of the connectors for the Payment Provider and Fraud Services. 
 
 #### Payment Providers
-[Authorize.net](#authorizenet)  
-[Braintree](#braintree)  
-[PayPal Express Checkout](#paypal---express-checkout)  
-[PayPal Website Payments Pro](#paypal---website-payments-pro)  
-[Paysafe](#paysafe)  
-[Qualpay](#qualpay)  
-[Sandbox](#sandbox)  
-[Stripe](#stripe)  
-[Vindicia](#vindicia)
-[Checkout](#checkout)  
-[Worldpay](#worldpay)  
+- [Authorize.net](#authorizenet)  
+- [Braintree](#braintree)  
+- [PayPal Express Checkout](#paypal---express-checkout)  
+- [PayPal Website Payments Pro](#paypal---website-payments-pro)  
+- [Paysafe](#paysafe)  
+- [Qualpay](#qualpay)  
+- [Sandbox](#sandbox)  
+- [Stripe](#stripe)  
+- [Vindicia](#vindicia)
+- [Checkout](#checkout)  
+- [Worldpay](#worldpay)  
 
 #### Fraud Libraries
-[ChargeHive](#chargehive)  
-[Cybersource](#cybersource)  
-[Maxmind](#maxmind)
+- [ChargeHive](#chargehive)  
+- [Cybersource](#cybersource)  
+- [Maxmind](#maxmind)
 
 ---
 
@@ -215,7 +215,7 @@ Configuration:
 To be confirmed
 
 ### Vindicia  
-Library: `vindicia`
+Library: `vindicia`  
 Configuration:
 ```json  
 {
@@ -244,7 +244,7 @@ environment | Must be "development", stage" or "production"
 ---
 
 ### Checkout
-Library: `checkout`
+Library: `checkout`  
 Configuration:
 ```json  
 {
