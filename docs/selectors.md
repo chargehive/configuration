@@ -1,13 +1,16 @@
 # Configuration Selectors
 
-Selectors are optional configurations that can be defined against all objects in ChargeHive and allow setting a series of Rules that must match against the charge.
+Selectors are optional configurations that can be defined against all objects in ChargeHive and allow setting a series of Rules that must match against the
+charge.
 
-A Selector has a `priority` which is used to determine a config to use if there are multiple matches. The higher the priority, then the more
-likely the config will be used. 
+A Selector has a `priority` which is used to determine a config to use if there are multiple matches. The higher the priority, then the more likely the config
+will be used.
 
-A Selector also has a list of one or more `expressions`. These act as rules and ensure the config will only be applied to charges which match the expression rules.
+A Selector also has a list of one or more `expressions`. These act as rules and ensure the config will only be applied to charges which match the expression
+rules.
 
-If two or more configurations have Selector Rules in the expressions section which are matched to the Charge, the most specific Configuration will be selected (the one with the most Rules defined which match the charge).
+If two or more configurations have Selector Rules in the expressions section which are matched to the Charge, the most specific Configuration will be selected (
+the one with the most Rules defined which match the charge).
 
 ```json
 {
@@ -27,25 +30,28 @@ If two or more configurations have Selector Rules in the expressions section whi
 ```
 
 ## Expression Definition
-FieldName | Required | Definition 
+
+FieldName | Required | Definition
 ---:|---|:---
 [key](#key-values)|true|The key is the field to be compared to the value to find a match. List of available keys are below
 [operator](#operator-values)|true|One of a fixed list of operators listed below
 [conversion](#conversion-values)|false|Can be used to convert the value from the key into another value. This is typically used to convert the default time value into a specific time or date format. See list of conversions below
 values|false|Simple array of strings to represent one or more values to compare
 
-
 ## Key Values
-Special Keys | Definition 
+
+Special Keys | Definition
 ---:|:---
 "now"| Key returned will be the timestamp now
 "randompercent"| Key will be a random integer between 0-100
 
-Assemble Keys | Definition 
+Assemble Keys | Definition
 ---:|:---
 "charge.label"|
 "charge.currentTransactionNumber"|(int64)
 "charge.currentAttemptNumber"|(int64)
+"charge.currentAttemptMethodCascadeNumber"|(int64) Cascade number for payment methods
+"charge.currentAttemptConnectorCascadeNumber"|(int64) Cascade number for connectors
 "charge.renewalNumber"| (int64) Number of renewals this charge has completed.
 "charge.initiatedTime"| (time.Time)
 "charge.lastAttemptTime"| (time.Time)
@@ -57,7 +63,7 @@ Assemble Keys | Definition
 "charge.region"| (string)
 "charge.period"| (int64)
 
-Charge Definition Keys | Definition 
+Charge Definition Keys | Definition
 ---:|:---
 "charge.intent"| (int32 1-5) 1 = Add, 2 = Refresh, 3 = Verify, 4 = Capture, 5 = Refund
 "charge.contract"| (int32 1-5) 1 = None, 2 = Payment, 3 = Subscription Initial, 4 = Subscription Renewal, 5 = OneClick
@@ -70,9 +76,9 @@ Charge Definition Keys | Definition
 "charge.userLocale"| (string)
 "charge.userLocation"| (string)
 "charge.environment"| (int32 0-4) 0 = Invalid, 1 = Retail, 2 = Ecommerce, 3 = Moto, 4 = Renewal
-"charge.preferredMethodType"| (int32 0-7) 0 = Invalid, 1 = Card, 2 = PayPal, 3 = Direct Debit, 4 = Crypto Currency, 5 = Paysafe Apple Pay, 6 = Paysafe Google Pay, 7 = None	
+"charge.preferredMethodType"| (int32 0-7) 0 = Invalid, 1 = Card, 2 = PayPal, 3 = Direct Debit, 4 = Crypto Currency, 5 = Paysafe Apple Pay, 6 = Paysafe Google Pay, 7 = None
 
-Charge Meta Keys | Definition 
+Charge Meta Keys | Definition
 ---:|:---
 "charge.meta.invoiceDate"| (time.Time)
 "charge.meta.dueDate"| (time.Time)
@@ -151,7 +157,7 @@ Charge Meta Keys | Definition
 "charge.meta.item.unitPrice.units"|
 "charge.meta.item.unitPrice.currency"|
 "charge.meta.item.taxAmount"| exists or not exists
-"charge.meta.item.taxAmount.units"| (int64) 
+"charge.meta.item.taxAmount.units"| (int64)
 "charge.meta.item.taxAmount.currency"| (string)
 "charge.meta.item.discountAmount"|
 "charge.meta.item.discountAmount.units"|
@@ -164,9 +170,9 @@ Charge Meta Keys | Definition
 "charge.meta.item.delivery.standard"|
 "charge.meta.item.delivery.type"|
 "charge.meta.item.delivery.trackingCode"|
-"charge.meta.item.delivery.courier"| 
-	
-Transaction Keys | Definition 
+"charge.meta.item.delivery.courier"|
+
+Transaction Keys | Definition
 ---:|:---
 "transaction.type"|
 "transaction.payment.type"|
@@ -181,7 +187,7 @@ Transaction Keys | Definition
 "transaction.connector.id"| (string) the id of the connector
 "transaction.connector.library"| (string) the name of the library (e.g. "paysafe", "worldpay")
 
-Transaction Response Keys | Definition 
+Transaction Response Keys | Definition
 ---:|:---
 "transaction.response.code"|
 "transaction.response.failure.type"|
@@ -189,7 +195,7 @@ Transaction Response Keys | Definition
 "transaction.response.error.type"|
 "transaction.response.originating.code"|
 
-Method Keys | Definition 
+Method Keys | Definition
 ---:|:---
 "method.name"                    | Display Name for payment method e.g. "**** **** **** 0050"
 "method.paymentScheme"           | Payment Scheme enum e.g. "card_visa" see [Payment Schemes](#Payment-Schemes)
@@ -204,15 +210,15 @@ Method Keys | Definition
 "method.info.card.number.length" | Number of digits on card e.g. "16"
 "method.info.country"            | Country of issuance e.g. "GB"
 
-
 ### Payment Schemes
+
 Scheme Key | Definition
 ---:|:---
 "card_unknown"  | Unknown
-"card_air_plus" | AirPlus 
+"card_air_plus" | AirPlus
 "card_american_express" | American Express
 "card_aurore" |  Aurore
-"card_carte_bancaire" | Carte Bancaire 
+"card_carte_bancaire" | Carte Bancaire
 "card_carte_bleue" |  Carte Blue
 "card_dankort" |  DanKort
 "card_diners_club" |  Diners Club
@@ -223,8 +229,8 @@ Scheme Key | Definition
 "card_master_card" | MasterCard
 "card_uatp" | UATP
 "card_visa" | Visa
-"card_visa_debit" | Visa Debit 
-"card_visa_electron" | Visa Electron 
+"card_visa_debit" | Visa Debit
+"card_visa_electron" | Visa Electron
 "card_unionpay" | China UnionPay
 "card_bancomat" | Bancomat
 "card_bc_card" |  BC Card
@@ -251,19 +257,21 @@ Scheme Key | Definition
 "directdebit" | Direct Debit
 
 ## Operator Values
-Value | Definition 
+
+Value | Definition
 ---:|:---
 "Equal"|Match if the key is exactly the same as first value
 "NotEqual"|Match if the key is anything but the first value
 "In"|Match if key is in the list of values (should only be used when there are multiple values)
 "NotIn"|Match if the key is not in the list of values (should only be used when there are multiple values)
-"Exists"|Match if the key is an array, and the value is in that array 
+"Exists"|Match if the key is an array, and the value is in that array
 "DoesNotExists"|Match if the key is an array, and the value is not in that array
 "Gt"|Match if the key is greater than the value (only works if the key and value are numeric)
 "Lt"|Match if the key is less than the value (only works if the key and value are numeric)
 
 ## Conversion Values
-Value | Definition 
+
+Value | Definition
 ---:|:---
 ""| No conversion
 "TimeDow"|Day Of Week - Converts timestamp to "Mon","Tues"...
