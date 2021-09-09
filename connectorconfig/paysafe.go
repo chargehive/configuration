@@ -34,6 +34,8 @@ type PaySafeCredentials struct {
 	UseVault               *bool              `json:"useVault" yaml:"useVault" validate:"required"`
 	SingleUseTokenPassword *string            `json:"singleUseTokenPassword" yaml:"singleUseTokenPassword" validate:"required"` // string* needs "required" to ensure nil is never returned
 	SingleUseTokenUsername string             `json:"singleUseTokenUsername" yaml:"singleUseTokenUsername" validate:"-"`        // string will default to empty string
+	GooglePay              *GooglePay         `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay               *ApplePay          `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
 func (c PaySafeCredentials) GetUseVault() bool {
@@ -75,6 +77,21 @@ func (c PaySafeCredentials) SupportsSca() bool {
 
 func (c PaySafeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
+		return true
+	}
+	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
+		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY &&
+		c.ApplePay.GetAppleMerchantIdentifier() != "" &&
+		c.ApplePay.GetAppleMerchantDisplayName() != "" &&
+		c.ApplePay.GetAppleMerchantCertificate() != "" &&
+		c.ApplePay.GetAppleMerchantPrivateKey() != "" {
+		return true
+	}
+	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
+		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY &&
+		c.GooglePay.GetGoogleMerchantId() != "" &&
+		c.GooglePay.GetGoogleCardGateway() != "" &&
+		c.GooglePay.GetGoogleCardMerchantId() != "" {
 		return true
 	}
 	return false
