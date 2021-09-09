@@ -67,7 +67,7 @@ var LibraryTypeRegister = map[LibraryType]bool{
 func (l Library) GetDisplayName() string {
 	switch l {
 	case LibrarySandbox:
-		return "Sandbox"
+		return "ChargeHive Sandbox"
 	case LibraryAuthorize:
 		return "Authorize"
 	case LibraryBraintree:
