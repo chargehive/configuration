@@ -25,7 +25,7 @@ type VindiciaCredentials struct {
 	Password      *string             `json:"password" yaml:"password" validate:"required,gt=0"`
 	HMACKey       *string             `json:"hmacKey" yaml:"hmacKey" validate:"required,gt=0"`
 	PGPPrivateKey *string             `json:"pgpPrivateKey" yaml:"pgpPrivateKey" validate:"required,gt=0"`
-	DirectRefund  bool                `json:"directRefund" yaml:"directRefund"`
+	DirectRefund  bool                `json:"directRefund" yaml:"directRefund" validate:"-"`
 	ConnectorPool []ConnectorAttempt  `json:"connectorPool" yaml:"connectorPool" validate:"required"`
 	Environment   VindiciaEnvironment `json:"environment" yaml:"environment" validate:"oneof=development stage production"`
 }

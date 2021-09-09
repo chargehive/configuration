@@ -43,16 +43,43 @@ const (
 	AppleSupportedNetworkVPay            AppleSupportedNetwork = "vPay"
 )
 
-func (c ApplePay) GetAppleMerchantPublicKey() string {
+func (c *ApplePay) GetAppleMerchantPublicKey() string {
+	if c == nil {
+		return ""
+	}
 	if c.AppleMerchantCertificate == nil {
 		return ""
 	}
 	return *c.AppleMerchantCertificate
 }
 
-func (c ApplePay) GetAppleMerchantPrivateKey() string {
+func (c *ApplePay) GetAppleMerchantPrivateKey() string {
+	if c == nil {
+		return ""
+	}
 	if c.AppleMerchantPrivateKey == nil {
 		return ""
 	}
 	return *c.AppleMerchantPrivateKey
+}
+
+func (c *ApplePay) GetAppleMerchantIdentifier() string {
+	if c == nil {
+		return ""
+	}
+	return c.AppleMerchantIdentifier
+}
+
+func (c *ApplePay) GetAppleMerchantDisplayName() string {
+	if c == nil {
+		return ""
+	}
+	return c.AppleMerchantDisplayName
+}
+
+func (c *ApplePay) GetAppleMerchantCertificate() string {
+	if c == nil {
+		return ""
+	}
+	return *c.AppleMerchantCertificate
 }
