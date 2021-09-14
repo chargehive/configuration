@@ -25,6 +25,7 @@ const (
 	LibraryChargeHive  Library = "chargehive"
 	LibraryMaxMind     Library = "maxmind"
 	LibraryCyberSource Library = "cybersource"
+	LibraryKount       Library = "kount"
 
 	// Updater Libraries
 	LibraryPaySafeAccountUpdater Library = "paysafe-accountupdater"
@@ -47,6 +48,7 @@ var LibraryRegister = map[Library]bool{
 	LibraryChargeHive:               true,
 	LibraryMaxMind:                  true,
 	LibraryCyberSource:              true,
+	LibraryKount:                    true,
 }
 
 type LibraryType string
@@ -98,6 +100,8 @@ func (l Library) GetDisplayName() string {
 		return "MaxMind"
 	case LibraryCyberSource:
 		return "CyberSource"
+	case LibraryKount:
+		return "Kount"
 	}
 	return string(l)
 }
@@ -137,6 +141,8 @@ func (l Library) GetCredential() (Credentials, error) {
 		return &CyberSourceCredentials{}, nil
 	case LibraryChargeHive:
 		return &ChargeHiveCredentials{}, nil
+	case LibraryKount:
+		return &KountCredentials{}, nil
 
 		// Updater libraries
 	case LibraryPaySafeAccountUpdater:
