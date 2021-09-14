@@ -12,7 +12,7 @@ const KindConnector object.Kind = "Connector"
 
 // Connector is a configuration file for a single payment processing entity
 type Connector struct {
-	Library       string `json:"library" yaml:"library" validate:"required,oneof=sandbox authorize braintree qualpay stripe paysafe worldpay paypal-websitepaymentspro paypal-expresscheckout vindicia chargehive maxmind cybersource paysafe-accountupdater bottomline checkout"`
+	Library       string `json:"library" yaml:"library" validate:"required,oneof=sandbox authorize braintree qualpay stripe paysafe worldpay paypal-websitepaymentspro paypal-expresscheckout vindicia chargehive maxmind cybersource paysafe-accountupdater bottomline checkout kount"`
 	Configuration []byte `json:"configuration" yaml:"configuration" validate:"required"`
 }
 
