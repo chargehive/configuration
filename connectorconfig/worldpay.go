@@ -102,20 +102,13 @@ func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 	}
 	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
 		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY &&
-		c.ApplePay != nil &&
-		c.ApplePay.AppleMerchantIdentifier != "" &&
-		c.ApplePay.AppleMerchantDisplayName != "" &&
-		(c.ApplePay.AppleMerchantCertificate != nil && c.ApplePay.AppleMerchantCertificate != new(string)) &&
-		(c.ApplePay.AppleMerchantPrivateKey != nil && c.ApplePay.AppleMerchantPrivateKey != new(string)) {
+		c.ApplePay != nil && c.ApplePay.IsValid() {
 		return true
 	}
 	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
 		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY &&
 		c.GooglePayPageId != "" &&
-		c.GooglePay != nil &&
-		c.GooglePay.GoogleMerchantId != "" &&
-		c.GooglePay.GoogleCardGateway != "" &&
-		c.GooglePay.GoogleCardMerchantId != "" {
+		c.GooglePay != nil && c.GooglePay.IsValid() {
 		return true
 	}
 	return false

@@ -19,6 +19,13 @@ type ApplePay struct {
 	AppleMerchantCapabilities []AppleMerchantCapability `json:"appleMerchantCapabilities,omitempty" yaml:"appleMerchantCapabilities,omitempty" validate:"required_with=AppleMerchantIdentifier,dive,oneof=supports3DS supportsCredit supportsDebit supportsEMV"`
 }
 
+func (a *ApplePay) IsValid() bool {
+	return a.GetAppleMerchantIdentifier() != "" &&
+		a.GetAppleMerchantDisplayName() != "" &&
+		a.GetAppleMerchantCertificate() != "" &&
+		a.GetAppleMerchantPrivateKey() != ""
+}
+
 type (
 	AppleMerchantCapability string
 	AppleSupportedNetwork   string
@@ -47,43 +54,43 @@ const (
 	AppleSupportedNetworkVPay            AppleSupportedNetwork = "vPay"
 )
 
-func (c *ApplePay) GetAppleMerchantPublicKey() string {
-	if c == nil {
+func (a *ApplePay) GetAppleMerchantPublicKey() string {
+	if a == nil {
 		return ""
 	}
-	if c.AppleMerchantCertificate == nil {
+	if a.AppleMerchantCertificate == nil {
 		return ""
 	}
-	return *c.AppleMerchantCertificate
+	return *a.AppleMerchantCertificate
 }
 
-func (c *ApplePay) GetAppleMerchantPrivateKey() string {
-	if c == nil {
+func (a *ApplePay) GetAppleMerchantPrivateKey() string {
+	if a == nil {
 		return ""
 	}
-	if c.AppleMerchantPrivateKey == nil {
+	if a.AppleMerchantPrivateKey == nil {
 		return ""
 	}
-	return *c.AppleMerchantPrivateKey
+	return *a.AppleMerchantPrivateKey
 }
 
-func (c *ApplePay) GetAppleMerchantIdentifier() string {
-	if c == nil {
+func (a *ApplePay) GetAppleMerchantIdentifier() string {
+	if a == nil {
 		return ""
 	}
-	return c.AppleMerchantIdentifier
+	return a.AppleMerchantIdentifier
 }
 
-func (c *ApplePay) GetAppleMerchantDisplayName() string {
-	if c == nil {
+func (a *ApplePay) GetAppleMerchantDisplayName() string {
+	if a == nil {
 		return ""
 	}
-	return c.AppleMerchantDisplayName
+	return a.AppleMerchantDisplayName
 }
 
-func (c *ApplePay) GetAppleMerchantCertificate() string {
-	if c == nil {
+func (a *ApplePay) GetAppleMerchantCertificate() string {
+	if a == nil {
 		return ""
 	}
-	return *c.AppleMerchantCertificate
+	return *a.AppleMerchantCertificate
 }

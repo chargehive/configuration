@@ -93,19 +93,12 @@ func (c PaySafeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, 
 	}
 	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
 		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY &&
-		c.ApplePay != nil &&
-		c.ApplePay.GetAppleMerchantIdentifier() != "" &&
-		c.ApplePay.GetAppleMerchantDisplayName() != "" &&
-		c.ApplePay.GetAppleMerchantCertificate() != "" &&
-		c.ApplePay.GetAppleMerchantPrivateKey() != "" {
+		c.ApplePay != nil && c.ApplePay.IsValid() {
 		return true
 	}
 	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
 		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY &&
-		c.GooglePay != nil &&
-		c.GooglePay.GetGoogleMerchantId() != "" &&
-		c.GooglePay.GetGoogleCardGateway() != "" &&
-		c.GooglePay.GetGoogleCardMerchantId() != "" {
+		c.GooglePay != nil && c.GooglePay.IsValid() {
 		return true
 	}
 	return false
