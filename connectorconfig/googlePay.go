@@ -1,5 +1,9 @@
 package connectorconfig
 
+type GooglePayCredential interface {
+	GetGooglePay() *GooglePay
+}
+
 type GooglePay struct {
 	// GoogleMerchantId REQUIRED TO ENABLE GOOGLE PAY (merchantInfo.merchantId) A Google merchant identifier issued after your website is approved by Google. Required when PaymentsClient is initialized with an environment property of PRODUCTION. See the Integration checklist for more information about the approval process and how to obtain a Google merchant identifier. (https://developers.google.com/pay/api/web/reference/request-objects#MerchantInfo)
 	GoogleMerchantId string `json:"googleMerchantId,omitempty" yaml:"googleMerchantId,omitempty" validate:"-"`
@@ -33,6 +37,12 @@ type GooglePay struct {
 	GoogleCardGateway GoogleCardGateway `json:"googleCardGateway,omitempty" yaml:"googleCardGateway,omitempty" validate:"required_with=GoogleMerchantId,omitempty,oneof=example vantiv paysafe"`
 	// GoogleCardMerchantId (Card {tokenizationSpecification.parameters.gatewayMerchantId}) https://developers.google.com/pay/api/web/reference/request-objects#gateway
 	GoogleCardMerchantId string `json:"googleCardMerchantId,omitempty" yaml:"googleCardMerchantId,omitempty" validate:"required_with=GoogleMerchantId"`
+}
+
+func (g *GooglePay) IsValid() bool {
+	return g.GetGoogleMerchantId() != "" &&
+		g.GetGoogleCardGateway() != "" &&
+		g.GetGoogleCardMerchantId() != ""
 }
 
 type (

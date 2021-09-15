@@ -29,8 +29,16 @@ type WorldpayCredentials struct {
 	CardinalApiKey        *string             `json:"cardinalApiKey" yaml:"cardinalApiKey" validate:"required"`
 	CardinalOrgUnitId     *string             `json:"cardinalOrgUnitId" yaml:"cardinalOrgUnitId" validate:"required"`
 	GooglePayPageId       string              `json:"googlePayPageId"` // vantiv:merchantPayPageId
-	GooglePay
-	ApplePay
+	GooglePay             *GooglePay          `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay              *ApplePay           `json:"applePay,omitempty" yaml:"applePay,omitempty"`
+}
+
+func (c *WorldpayCredentials) GetGooglePay() *GooglePay {
+	return c.GooglePay
+}
+
+func (c *WorldpayCredentials) GetApplePay() *ApplePay {
+	return c.ApplePay
 }
 
 func (c WorldpayCredentials) GetCardinalApiIdentifier() string {
@@ -67,7 +75,7 @@ func (c *WorldpayCredentials) Validate() error {
 }
 
 func (c *WorldpayCredentials) GetSecureFields() []*string {
-	return []*string{c.Username, c.Password, c.CardinalApiIdentifier, c.CardinalApiKey, c.AppleMerchantPrivateKey, c.AppleMerchantCertificate}
+	return []*string{c.Username, c.Password, c.CardinalApiIdentifier, c.CardinalApiKey, c.ApplePay.AppleMerchantPrivateKey, c.ApplePay.AppleMerchantCertificate}
 }
 
 func (c *WorldpayCredentials) ToConnector() connector.Connector {
@@ -94,17 +102,13 @@ func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 	}
 	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
 		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY &&
-		c.AppleMerchantIdentifier != "" &&
-		c.AppleMerchantDisplayName != "" &&
-		(c.AppleMerchantCertificate != nil && c.AppleMerchantCertificate != new(string)) &&
-		(c.AppleMerchantPrivateKey != nil && c.AppleMerchantPrivateKey != new(string)) {
+		c.ApplePay != nil && c.ApplePay.IsValid() {
 		return true
 	}
 	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
 		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY &&
-		c.GoogleMerchantId != "" &&
-		c.GoogleCardGateway != "" &&
-		c.GoogleCardMerchantId != "" {
+		c.GooglePayPageId != "" &&
+		c.GooglePay != nil && c.GooglePay.IsValid() {
 		return true
 	}
 	return false
