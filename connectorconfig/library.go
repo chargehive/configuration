@@ -195,5 +195,5 @@ func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvi
 	case LibraryKount:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	}
-	return true
+	return false
 }
