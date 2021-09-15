@@ -54,6 +54,10 @@ func (c KountCredentials) SupportsSca() bool {
 }
 
 func (c KountCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
+		return false
+	}
+
 	return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 }
 

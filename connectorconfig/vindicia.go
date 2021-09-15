@@ -60,7 +60,11 @@ func (c VindiciaCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c VindiciaCredentials) SupportsMethod(methodType chtype.PaymentMethodType, _ chtype.PaymentMethodProvider) bool {
+func (c VindiciaCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
+		return false
+	}
+
 	return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 }
 

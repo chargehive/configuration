@@ -55,6 +55,10 @@ func (c BottomlineCredentials) SupportsSca() bool {
 }
 
 func (c BottomlineCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
+		return false
+	}
+
 	if methodType == chtype.PAYMENT_METHOD_TYPE_DIRECTDEBIT {
 		return true
 	}
