@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"errors"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
 type Library string
@@ -151,4 +152,48 @@ func (l Library) GetCredential() (Credentials, error) {
 	}
 
 	return nil, errors.New("invalid library specified")
+}
+
+func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	switch l {
+	case LibrarySandbox:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryAuthorize:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryBraintree:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryQualPay:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryStripe:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryPaySafe:
+		return (methodType == chtype.PAYMENT_METHOD_TYPE_CARD) ||
+			(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
+			(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY)
+	case LibraryPaySafeAccountUpdater:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryWorldpay:
+		return (methodType == chtype.PAYMENT_METHOD_TYPE_CARD) ||
+			(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
+			(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY)
+	case LibraryPayPalWebsitePaymentsPro:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryPayPalExpressCheckout:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_PAYPAL
+	case LibraryVindicia:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryBottomline:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_DIRECTDEBIT
+	case LibraryCheckout:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryChargeHive:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryMaxMind:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryCyberSource:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryKount:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	}
+	return true
 }

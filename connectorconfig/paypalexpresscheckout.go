@@ -46,6 +46,10 @@ func (c PayPalExpressCheckoutCredentials) SupportsSca() bool {
 }
 
 func (c PayPalExpressCheckoutCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
+		return false
+	}
+
 	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_PAYPAL {
 		return true
 	}
