@@ -38,6 +38,14 @@ type PaySafeCredentials struct {
 	ApplePay               *ApplePay          `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
+func (c *PaySafeCredentials) GetGooglePay() *GooglePay {
+	return c.GooglePay
+}
+
+func (c *PaySafeCredentials) GetApplePay() *ApplePay {
+	return c.ApplePay
+}
+
 func (c PaySafeCredentials) GetUseVault() bool {
 	if c.UseVault == nil {
 		return false

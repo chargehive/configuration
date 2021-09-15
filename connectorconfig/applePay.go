@@ -1,5 +1,9 @@
 package connectorconfig
 
+type ApplePayCredential interface {
+	GetApplePay() *ApplePay
+}
+
 type ApplePay struct {
 	// AppleMerchantIdentifier REQUIRED TO ENABLE APPLE PAY Merchant Identifier specified in the Apple Developer Merchant section
 	AppleMerchantIdentifier string `json:"appleMerchantIdentifier,omitempty" yaml:"appleMerchantIdentifier,omitempty" validate:"-"`

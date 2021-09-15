@@ -33,6 +33,14 @@ type WorldpayCredentials struct {
 	ApplePay              *ApplePay           `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
+func (c *WorldpayCredentials) GetGooglePay() *GooglePay {
+	return c.GooglePay
+}
+
+func (c *WorldpayCredentials) GetApplePay() *ApplePay {
+	return c.ApplePay
+}
+
 func (c WorldpayCredentials) GetCardinalApiIdentifier() string {
 	if c.CardinalApiIdentifier == nil {
 		return ""
