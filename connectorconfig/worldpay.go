@@ -103,6 +103,7 @@ func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 	}
 	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
 		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY &&
+		c.GooglePayPageId != "" &&
 		c.GooglePay != nil &&
 		c.GooglePay.GoogleMerchantId != "" &&
 		c.GooglePay.GoogleCardGateway != "" &&
