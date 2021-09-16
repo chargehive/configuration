@@ -66,7 +66,11 @@ func (c *PaySafeCredentials) Validate() error {
 }
 
 func (c *PaySafeCredentials) GetSecureFields() []*string {
-	return []*string{c.APIUsername, c.APIPassword, c.SingleUseTokenPassword}
+	fields := []*string{c.APIUsername, c.APIPassword, c.SingleUseTokenPassword}
+	if c.ApplePay != nil {
+		fields = append(fields, c.ApplePay.AppleMerchantPrivateKey, c.ApplePay.AppleMerchantCertificate)
+	}
+	return fields
 }
 
 func (c *PaySafeCredentials) ToConnector() connector.Connector {
