@@ -189,7 +189,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 			CardinalApiIdentifier: &chg,
 			CardinalApiKey:        &chg,
 			CardinalOrgUnitId:     &chg,
-			ApplePay: connectorconfig.ApplePay{
+			ApplePay: &connectorconfig.ApplePay{
 				AppleMerchantIdentifier:   chg,
 				AppleMerchantDisplayName:  chg,
 				AppleMerchantCertificate:  &chg,
@@ -198,7 +198,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 				AppleMerchantCapabilities: []connectorconfig.AppleMerchantCapability{connectorconfig.AppleMerchantCapabilitysupports3DS},
 			},
 			GooglePayPageId: chg,
-			GooglePay: connectorconfig.GooglePay{
+			GooglePay: &connectorconfig.GooglePay{
 				GoogleEnvironment:              connectorconfig.GoogleEnvironmentTEST,
 				GoogleMerchantId:               chg,
 				GoogleMerchantName:             chg,
