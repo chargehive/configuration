@@ -167,9 +167,7 @@ func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvi
 	case LibraryStripe:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibraryPaySafe:
-		return (methodType == chtype.PAYMENT_METHOD_TYPE_CARD) ||
-			(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
-			(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY)
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibraryPaySafeAccountUpdater:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibraryWorldpay:
