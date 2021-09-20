@@ -81,7 +81,7 @@ func (g *GooglePay) GetGoogleMerchantId() string {
 	if g == nil {
 		return ""
 	}
-	return g.GoogleCardMerchantId
+	return g.GoogleMerchantId
 }
 func (g *GooglePay) GetGoogleEnvironment() GoogleEnvironment {
 	if g == nil {
@@ -180,5 +180,5 @@ func (g *GooglePay) GetGoogleCardMerchantId() string {
 	if g == nil {
 		return ""
 	}
-	return g.GoogleMerchantId
+	return g.GoogleCardMerchantId
 }
