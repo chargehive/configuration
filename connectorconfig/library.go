@@ -168,6 +168,7 @@ func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvi
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibraryPaySafe:
 		return (methodType == chtype.PAYMENT_METHOD_TYPE_CARD) ||
+			(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
 			(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY)
 	case LibraryPaySafeAccountUpdater:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
