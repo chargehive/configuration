@@ -58,13 +58,13 @@ const (
 	LibraryTypePayment       LibraryType = "payment"
 	LibraryTypeFraud         LibraryType = "fraud"
 	LibraryTypeMethodUpdater LibraryType = "methodUpdater"
-	LibraryRecoveryAgent     LibraryType = "recoveryAgent"
+	LibraryTypeRecoveryAgent LibraryType = "recoveryAgent"
 )
 
 var LibraryTypeRegister = map[LibraryType]bool{
-	LibraryTypePayment:   true,
-	LibraryTypeFraud:     true,
-	LibraryRecoveryAgent: true,
+	LibraryTypePayment:       true,
+	LibraryTypeFraud:         true,
+	LibraryTypeRecoveryAgent: true,
 }
 
 func (l Library) GetDisplayName() string {
@@ -148,7 +148,6 @@ func (l Library) GetCredential() (Credentials, error) {
 		// Updater libraries
 	case LibraryPaySafeAccountUpdater:
 		return &PaySafeAccountUpdaterCredentials{}, nil
-
 	}
 
 	return nil, errors.New("invalid library specified")
