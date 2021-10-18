@@ -61,7 +61,8 @@ const (
 	GoogleEnvironmentTEST GoogleEnvironment = "TEST"
 	GoogleEnvironmentPROD GoogleEnvironment = "PRODUCTION"
 
-	GoogleCardGatewayVANTIV GoogleCardGateway = "vantiv"
+	GoogleCardGatewayVANTIV  GoogleCardGateway = "vantiv"
+	GoogleCardGatewayPAYSAFE GoogleCardGateway = "paysafe"
 
 	GoogleCardTokenTypeDIRECT  GoogleTokenType = "DIRECT"
 	GoogleCardTokenTypeGATEWAY GoogleTokenType = "PAYMENT_GATEWAY"
