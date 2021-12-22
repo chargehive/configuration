@@ -96,13 +96,25 @@ const (
 	CardTypeProprietary CardType = "proprietary"
 )
 
+type FundingType string
+
+const (
+	FundingTypeUnknown              FundingType = "unknown"
+	FundingTypeCredit               FundingType = "credit"
+	FundingTypeDebit                FundingType = "debit"
+	FundingTypeCharge               FundingType = "charge"
+	FundingTypePrepaid              FundingType = "prepaid"
+	FundingTypePrepaidReloadable    FundingType = "prepaid_reloadable"
+	FundingTypePrepaidNonReloadable FundingType = "prepaid_non_reloadable"
+)
+
 // BACSReportType indicate a type of BACS direct debit report
 type BACSReportType string
 
 // BACSReportType
 const (
-	AUDDIS BACSReportType = "AUDDIS" //rejected registrations
-	DDICA  BACSReportType = "DDICA"  //chargebacks
-	ADDACS BACSReportType = "ADDACS" //account updates/changes
-	ARUDD  BACSReportType = "ARUDD"  //failed payments
+	AUDDIS BACSReportType = "AUDDIS" // rejected registrations
+	DDICA  BACSReportType = "DDICA"  // chargebacks
+	ADDACS BACSReportType = "ADDACS" // account updates/changes
+	ARUDD  BACSReportType = "ARUDD"  // failed payments
 )
