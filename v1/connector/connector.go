@@ -27,8 +27,8 @@ type Connector struct {
 	ProcessingState ProcessingState `json:"processingState,omitempty" yaml:"processingState,omitempty"`
 	Library         string          `json:"library" yaml:"library" validate:"required,oneof=sandbox authorize braintree qualpay stripe paysafe worldpay paypal-websitepaymentspro paypal-expresscheckout vindicia chargehive maxmind cybersource paysafe-accountupdater bottomline checkout kount"`
 	Configuration   []byte          `json:"configuration" yaml:"configuration" validate:"required"`
-	CredentialID    string          `json:"credentialId,omitempty" yaml:"credentialId,omitempty"`
-	CredentialAuth  string          `json:"credentialAuth,omitempty" yaml:"credentialAuth,omitempty"`
+	ConfigID        string          `json:"configId,omitempty" yaml:"configId,omitempty"`
+	ConfigAuth      string          `json:"configAuth,omitempty" yaml:"configAuth,omitempty"`
 }
 
 // GetKind returns the Connector kind
