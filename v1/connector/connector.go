@@ -29,6 +29,7 @@ type Connector struct {
 	Configuration   []byte          `json:"configuration" yaml:"configuration" validate:"required"`
 	ConfigID        string          `json:"configId,omitempty" yaml:"configId,omitempty"`
 	ConfigAuth      string          `json:"configAuth,omitempty" yaml:"configAuth,omitempty"`
+	EnablePCIB      bool            `json:"enablePCIB,omitempty" yaml:"enablePCIB,omitempty"`
 }
 
 // GetKind returns the Connector kind
