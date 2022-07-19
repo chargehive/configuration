@@ -30,13 +30,13 @@ connectorIDs|true|List of fraud connector IDs to apply the policy to. These must
 [checkTime](#fraudchecktime)|true| Sets when to fraud check
 [checkType](#fraudchecktype)|true| Sets how it works through the connectors
 
-### FraudCheckTime
+### FraudCheckType
 value | Definition 
 ---:|:---
 "all"|Perform a fraud check on all provided connectors
 "failover"|Will perform a fraud check on one connector ID at a time, stopping at the first success
 
-### FraudCheckType
+### FraudCheckTime
 value | Definition 
 ---:|:---
 "preauth-first" | Indicates that a fraud scan should check before the first auth
