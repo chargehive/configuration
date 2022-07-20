@@ -2,9 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
-	"github.com/chargehive/proto/golang/chargehive/chtype"
-
+	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
 type SandboxMode string
@@ -53,8 +53,20 @@ func (c SandboxCredentials) SupportsSca() bool {
 }
 
 func (c SandboxCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
+		return false
+	}
+
 	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
 		return true
 	}
+	return false
+}
+
+func (c SandboxCredentials) CanPlanModeUse(environment.Mode) bool {
+	return true
+}
+
+func (c SandboxCredentials) IsRecoveryAgent() bool {
 	return false
 }

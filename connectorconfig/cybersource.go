@@ -2,9 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
-	"github.com/chargehive/proto/golang/chargehive/chtype"
-
+	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
 type CyberSourceEnvironment string
@@ -50,8 +50,20 @@ func (c CyberSourceCredentials) SupportsSca() bool {
 }
 
 func (c CyberSourceCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
+		return false
+	}
+
 	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
 		return true
 	}
+	return false
+}
+
+func (c CyberSourceCredentials) CanPlanModeUse(environment.Mode) bool {
+	return true
+}
+
+func (c CyberSourceCredentials) IsRecoveryAgent() bool {
 	return false
 }

@@ -2,9 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
-	"github.com/chargehive/proto/golang/chargehive/chtype"
-
+	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
 // MaxMindMinFraudServiceType is the maxmind minFraud service type
@@ -53,8 +53,20 @@ func (c MaxMindCredentials) SupportsSca() bool {
 }
 
 func (c MaxMindCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
+		return false
+	}
+
 	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
 		return true
 	}
+	return false
+}
+
+func (c MaxMindCredentials) CanPlanModeUse(environment.Mode) bool {
+	return true
+}
+
+func (c MaxMindCredentials) IsRecoveryAgent() bool {
 	return false
 }

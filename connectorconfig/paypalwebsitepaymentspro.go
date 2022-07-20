@@ -2,9 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
-	"github.com/chargehive/proto/golang/chargehive/chtype"
-
+	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
 type PayPalWebsitePaymentsProCredentials struct {
@@ -108,8 +108,23 @@ func (c *PayPalWebsitePaymentsProCredentials) SupportsSca() bool {
 }
 
 func (c PayPalWebsitePaymentsProCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
+		return false
+	}
+
 	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
 		return true
 	}
+	return false
+}
+
+func (c PayPalWebsitePaymentsProCredentials) CanPlanModeUse(mode environment.Mode) bool {
+	if mode == environment.ModeSandbox && c.Environment == PayPalEnvironmentLive {
+		return false
+	}
+	return true
+}
+
+func (c PayPalWebsitePaymentsProCredentials) IsRecoveryAgent() bool {
 	return false
 }

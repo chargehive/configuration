@@ -27,12 +27,29 @@ As with all configs, the standard wrapper is used.
 }
 ```
 ## Spec Definition
+
+The `spec` entered in a Connector Pool config will determine which connectors are selected to attempt the charge through, and in what order.
+
+The `spec` contains two variables;  
+
+The `restriction` details whether this connector pool is repeated or not. This can be set to:  
+"unrestricted" (no restrictions will be applied)  
+"noRepeat" (each time this connector pool attempts a charge, it will not select the last Connector attempted) - This ensures that different connectors are selected with each attempt of this pool.  
+"lowestUsage" (the pool will prioritise the connector with the lowest amount of attempts across all charges) - This ensures that all connectors get attemted a similar number of times.  
+"fullCycle" (a full cycle pool will ensure every connector within the pool has been attempted, before retrying) - This ensures that all connectors get attemted before retrying.  
+"priority" (loop through each connector in priority order, using the previous attempt as its calculation) - This ensures the order of the connectors to be attempted based on the previous attempt.  
+ 
+The `connectors` variable is a container for the list of connectors in this pool defined below.
+
 FieldName | Required | Definition 
 ---:|---|:---
-restriction | false | "unrestricted" (Default) , "noRepeat" or "lowestUsage"
+restriction | false | "unrestricted" (Default) , "noRepeat", "lowestUsage", "fullCycle" or "priority"
 [connectors](#connector-definition) | false | Non-empty list of the connectors in the pool
 
 ### Connector definition
+
+The `connectors` variable contains a list of the connectors within this pool. You define the connectorID, priority, weighting and uses for each connector. The priority, weighting and uses determine which Connector to use first and how many times to attempt a connector.   
+
 FieldName | Required | Definition 
 ---:|---|:---
 connectorId | true | Identifier for a connector, must match a previously defined connector id

@@ -2,10 +2,9 @@ package connectorconfig
 
 import (
 	"encoding/json"
-
-	"github.com/chargehive/proto/golang/chargehive/chtype"
-
+	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
 type PaySafeAccountUpdaterCredentials struct {
@@ -58,8 +57,20 @@ func (c *PaySafeAccountUpdaterCredentials) SupportsSca() bool {
 }
 
 func (c PaySafeAccountUpdaterCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
+		return false
+	}
+
 	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
 		return true
 	}
+	return false
+}
+
+func (c PaySafeAccountUpdaterCredentials) CanPlanModeUse(environment.Mode) bool {
+	return true
+}
+
+func (c PaySafeAccountUpdaterCredentials) IsRecoveryAgent() bool {
 	return false
 }

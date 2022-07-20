@@ -37,19 +37,18 @@ To create a Payment Provider Connector you need to define the `spec` properties 
 
 Here are the configuration options for each of the connectors for the Payment Provider and Fraud Services. 
 
----
-
 #### Payment Providers
-[Authorize.net](#authorizenet)  
-[Braintree](#braintree)  
-[PayPal Express Checkout](#paypal---express-checkout)  
-[PayPal Website Payments Pro](#paypal---website-payments-pro)  
-[Paysafe](#paysafe)  
-[Qualpay](#qualpay)  
-[Sandbox](#sandbox)  
-[Stripe](#stripe)  
-[Vindicia](#vindicia)
-[Worldpay](#worldpay)  
+- [Authorize.net](#authorizenet)  
+- [Braintree](#braintree)  
+- [PayPal Express Checkout](#paypal---express-checkout)  
+- [PayPal Website Payments Pro](#paypal---website-payments-pro)  
+- [Paysafe](#paysafe)  
+- [Qualpay](#qualpay)  
+- [Sandbox](#sandbox)  
+- [Stripe](#stripe)  
+- [Vindicia](#vindicia)
+- [Checkout](#checkout)  
+- [Worldpay](#worldpay)  
 
 #### Fraud Libraries
 [ChargeHive](#chargehive)  
@@ -112,7 +111,7 @@ FieldName | Definition
 APIUsername | API Username from your PayPal API settings  
 APIPassword | API Password from your PayPal API settings  
 APISignature | API Signature from your PayPal API settings  
-SupportedCurrencies | The currencies setup to be accepted in your PayPal account in an array (e.g. ["GBP", "USD", "EUR"])  
+SupportedCurrencies | The currencies setup to be accepted in your PayPal account in an array in standard three character format (e.g. ["GBP", "USD", "EUR"])  
 Environment | Must be either "sandbox" or "live"  
   
 ### Paypal - Website Payments Pro  
@@ -141,7 +140,7 @@ FieldName | Definition
 APIUsername | API Username from your PayPal API settings  
 APIPassword | API Password from your PayPal API settings  
 APISignature | API Signature from your PayPal API settings  
-SupportedCurrencies | The currencies setup to be accepted in your PayPal account in an array (e.g. ["GBP", "USD", "EUR"])  
+SupportedCurrencies | The currencies setup to be accepted in your PayPal account in an array, in standard three character format  (e.g. ["GBP", "USD", "EUR"])  
 CardinalProcessorID | Your Processor Identification Code assigned by Cardinal when you registered  
 CardinalMerchantID | Your Merchant Identification Code assigned by Cardinal when you registered  
 CardinalTransactionPw | Your Cardinal Password as you configured it in Cardinal  
@@ -164,8 +163,8 @@ Configuration:
   "Country": "xxxxxxxxxxxxx",
   "Currency": "USD",  
   "UseVault": "false",  
-  "SingleUseTokenPassword": "xxxxxxxxxxxx",  
-  "SingleUseTokenUsername": "xxxxxxxxxxxx"
+  "SingleUseTokenUsername": "xxxxxxxxxxxx",  
+  "SingleUseTokenPassword": "xxxxxxxxxxxx"
 }
 ```
 FieldName | Definition  
@@ -175,11 +174,11 @@ AccountID | The AccountID for this merchant account
 APIUsername | The API Username from your merchant account in your account settings API page
 APIPassword | The API Password from your merchant account in your account settings API page
 Environment | Must be "MOCK", "TEST" or "LIVE"  
-Country | Optional string field
-Currency | The currency setup for this merchant account (e.g. ["GBP", "USD", "EUR"])
+Country | Optional string field for country. Must be in two character country format (e.g. ["US", "DE", "FR"])
+Currency | The currency setup for this merchant account, in standard three character format (e.g. ["GBP", "USD", "EUR"])
 UseVault | Boolean field can be set to "true" or "false"  
-SingleUseTokenPassword | The Single Use Token Password in your account settings API page
-SingleUseTokenUsername | The Single Use Token Username in your account settings API page
+SingleUseTokenUsername | The Single Use Token Username in your account settings API page. If this is entered the Password must be entered as well  
+SingleUseTokenPassword | The Single Use Token Password in your account settings API page. If this is entered the Username must be entered as well
 
 ### QualPay  
 Library: `qualpay`  
@@ -219,7 +218,51 @@ To be confirmed
 ### Vindicia  
 Library: `vindicia`  
 Configuration:
-To be confirmed
+```json  
+{
+	"login": "xxxxxxx",
+	"password": "xxxxxxxxxxxxxxxxxx",
+	"hmacKey": "xxxxxxxxxxxxxxxxxxx",
+	"pgpPrivateKey": "xxxxxxxxxxxxxxxxxxx",
+	"connectorPool": [
+	{
+		"connectorID": "sandbox-connector",
+		"divisionNumber": "12345",
+		"weight": 10
+	}],
+	"environment": "stage"
+}  
+```  
+
+FieldName | Definition
+---:|:---   
+login | The username of this account
+password | The password of this account
+hmacKey | The HMAC key of this account
+pgpPrivateKey | The PGP Private Key of this account
+connector | An weighted array of connectors that make up a pool of vindicia division numbers
+environment | Must be "development", stage" or "production"
+---
+
+### Checkout
+Library: `checkout`  
+Configuration:
+```json  
+{
+	"publicKey" : "pk_xxxxxxxxxxxx",
+	"secretKey" : "sk_xxxxxxxxxxxx",
+	"currency" : "GBP",
+	"environment" : "sandbox"
+}
+```
+
+FieldName | Definition
+---:|:---   
+publicKey | The Public Key of this account. This can be found in settings page of Hub
+secretKey | The Secret Key of this account. This can be found in settings page of Hub
+currency | The currency to process with this account
+environment | Must be "sandbox" or "production"
+---
 
 ### WorldPay  
 Library: `worldpay`  
@@ -249,6 +292,8 @@ FieldName | Definition
   CardinalAPIIdentifier | The Cardinal API Identifier obtained from the CardinalCommerce Integration Payments settings  
   CardinalOrgUnitID | The Cardinal API OrgUnitID obtained from the CardinalCommerce Integration Payments settings 
   CardinalAPIKey | The Cardinal API Key obtained from the CardinalCommerce Integration Payments settings  
+
+---
 
 ## Fraud Libraries  
 
@@ -305,13 +350,15 @@ Configuration:
 ```json
 {
   "AccountID": "xxxxxxxxxxxx",
-  "LicenceKey": "xxxxxxxxxxxx"
+  "LicenceKey": "xxxxxxxxxxxx",  
+  "ServiceType": 1
 }
 ```
 FieldName | Definition  
 ---:|:---   
 AccountID | The Account Id found in your MaxMind account Services -> My Licence Key
 LicenceKey | The Licence Key from your MaxMind account under Services -> My Licence Key
+ServiceType | This is the MaxMind service you have on your account, either Score (0), Insights (1) or Factors (2). Must be 0, 1 or 2
 
 ---
 

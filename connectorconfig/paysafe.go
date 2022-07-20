@@ -2,9 +2,10 @@ package connectorconfig
 
 import (
 	"encoding/json"
-	"github.com/chargehive/proto/golang/chargehive/chtype"
 
+	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
 type PaySafeEnvironment string
@@ -25,6 +26,7 @@ const (
 
 type PaySafeCredentials struct {
 	Acquirer               string             `json:"acquirer" yaml:"acquirer" validate:"-"`
+	MerchantURL            string             `json:"merchantURL" yaml:"merchantURL" validate:"required"`
 	AccountID              string             `json:"accountID" yaml:"accountID" validate:"required"`
 	APIUsername            *string            `json:"apiUsername" yaml:"apiUsername" validate:"required,gt=0"`
 	APIPassword            *string            `json:"apiPassword" yaml:"apiPassword" validate:"required,gt=0"`
@@ -34,6 +36,16 @@ type PaySafeCredentials struct {
 	UseVault               *bool              `json:"useVault" yaml:"useVault" validate:"required"`
 	SingleUseTokenPassword *string            `json:"singleUseTokenPassword" yaml:"singleUseTokenPassword" validate:"required"` // string* needs "required" to ensure nil is never returned
 	SingleUseTokenUsername string             `json:"singleUseTokenUsername" yaml:"singleUseTokenUsername" validate:"-"`        // string will default to empty string
+	GooglePay              *GooglePay         `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay               *ApplePay          `json:"applePay,omitempty" yaml:"applePay,omitempty"`
+}
+
+func (c *PaySafeCredentials) GetGooglePay() *GooglePay {
+	return c.GooglePay
+}
+
+func (c *PaySafeCredentials) GetApplePay() *ApplePay {
+	return c.ApplePay
 }
 
 func (c PaySafeCredentials) GetUseVault() bool {
@@ -56,7 +68,11 @@ func (c *PaySafeCredentials) Validate() error {
 }
 
 func (c *PaySafeCredentials) GetSecureFields() []*string {
-	return []*string{c.APIUsername, c.APIPassword, c.SingleUseTokenPassword}
+	fields := []*string{c.APIUsername, c.APIPassword, c.SingleUseTokenPassword}
+	if c.ApplePay != nil {
+		fields = append(fields, c.ApplePay.AppleMerchantPrivateKey, c.ApplePay.AppleMerchantCertificate)
+	}
+	return fields
 }
 
 func (c *PaySafeCredentials) ToConnector() connector.Connector {
@@ -74,8 +90,33 @@ func (c PaySafeCredentials) SupportsSca() bool {
 }
 
 func (c PaySafeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
+		return false
+	}
+
 	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
 		return true
 	}
+	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
+		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY &&
+		c.ApplePay != nil && c.ApplePay.IsValid() {
+		return true
+	}
+	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
+		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY &&
+		c.GooglePay != nil && c.GooglePay.IsValid() {
+		return true
+	}
+	return false
+}
+
+func (c PaySafeCredentials) CanPlanModeUse(mode environment.Mode) bool {
+	if mode == environment.ModeSandbox && c.Environment == PaySafeEnvironmentLive {
+		return false
+	}
+	return true
+}
+
+func (c PaySafeCredentials) IsRecoveryAgent() bool {
 	return false
 }

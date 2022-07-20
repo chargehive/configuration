@@ -20,5 +20,5 @@ type Schedule struct {
 	TimeSyncHour int `json:"timeSyncHour" yaml:"timeSyncHour" validate:"min=0,max=23"`
 
 	// TimeSyncZone indicates the timezone that the TimeSyncHour is relative to. Ignored if TimeDelaySync is set to None
-	TimeSyncZone TimeZone `json:"timeSyncZone" yaml:"timeSyncZone" validate:"oneof=ULT UTC"`
+	TimeSyncZone TimeZone `json:"timeSyncZone" yaml:"timeSyncZone" validate:"oneof=ULT UTC CIT"`
 }

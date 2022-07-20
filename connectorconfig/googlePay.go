@@ -1,5 +1,9 @@
 package connectorconfig
 
+type GooglePayCredential interface {
+	GetGooglePay() *GooglePay
+}
+
 type GooglePay struct {
 	// GoogleMerchantId REQUIRED TO ENABLE GOOGLE PAY (merchantInfo.merchantId) A Google merchant identifier issued after your website is approved by Google. Required when PaymentsClient is initialized with an environment property of PRODUCTION. See the Integration checklist for more information about the approval process and how to obtain a Google merchant identifier. (https://developers.google.com/pay/api/web/reference/request-objects#MerchantInfo)
 	GoogleMerchantId string `json:"googleMerchantId,omitempty" yaml:"googleMerchantId,omitempty" validate:"-"`
@@ -30,9 +34,15 @@ type GooglePay struct {
 	// GoogleCardTokenType (Card {tokenizationSpecification.type})
 	GoogleCardTokenType GoogleTokenType `json:"googleCardTokenType,omitempty" yaml:"googleCardTokenType,omitempty" validate:"required_with=GoogleMerchantId,omitempty,oneof=DIRECT PAYMENT_GATEWAY"`
 	// GoogleCardGateway (Card {tokenizationSpecification.parameters.gateway}) https://developers.google.com/pay/api/web/reference/request-objects#gateway
-	GoogleCardGateway GoogleCardGateway `json:"googleCardGateway,omitempty" yaml:"googleCardGateway,omitempty" validate:"required_with=GoogleMerchantId,omitempty,oneof=vantiv"`
+	GoogleCardGateway GoogleCardGateway `json:"googleCardGateway,omitempty" yaml:"googleCardGateway,omitempty" validate:"required_with=GoogleMerchantId,omitempty,oneof=example vantiv paysafe"`
 	// GoogleCardMerchantId (Card {tokenizationSpecification.parameters.gatewayMerchantId}) https://developers.google.com/pay/api/web/reference/request-objects#gateway
 	GoogleCardMerchantId string `json:"googleCardMerchantId,omitempty" yaml:"googleCardMerchantId,omitempty" validate:"required_with=GoogleMerchantId"`
+}
+
+func (g *GooglePay) IsValid() bool {
+	return g.GetGoogleMerchantId() != "" &&
+		g.GetGoogleCardGateway() != "" &&
+		g.GetGoogleCardMerchantId() != ""
 }
 
 type (
@@ -51,7 +61,8 @@ const (
 	GoogleEnvironmentTEST GoogleEnvironment = "TEST"
 	GoogleEnvironmentPROD GoogleEnvironment = "PRODUCTION"
 
-	GoogleCardGatewayVANTIV GoogleCardGateway = "vantiv"
+	GoogleCardGatewayVANTIV  GoogleCardGateway = "vantiv"
+	GoogleCardGatewayPAYSAFE GoogleCardGateway = "paysafe"
 
 	GoogleCardTokenTypeDIRECT  GoogleTokenType = "DIRECT"
 	GoogleCardTokenTypeGATEWAY GoogleTokenType = "PAYMENT_GATEWAY"
@@ -66,3 +77,109 @@ const (
 	GoogleCardNetworkMASTERCARD GoogleCardNetwork = "MASTERCARD"
 	GoogleCardNetworkVISA       GoogleCardNetwork = "VISA"
 )
+
+func (g *GooglePay) GetGoogleMerchantId() string {
+	if g == nil {
+		return ""
+	}
+	return g.GoogleMerchantId
+}
+func (g *GooglePay) GetGoogleEnvironment() GoogleEnvironment {
+	if g == nil {
+		return ""
+	}
+
+	return g.GoogleEnvironment
+}
+func (g *GooglePay) GetGoogleMerchantName() string {
+	if g == nil {
+		return ""
+	}
+
+	return g.GoogleMerchantName
+}
+func (g *GooglePay) GetGoogleExistingMethodRequired() bool {
+	if g == nil {
+		return false
+	}
+
+	return g.GoogleExistingMethodRequired
+}
+func (g *GooglePay) GetGoogleEmailReq() bool {
+	if g == nil {
+		return false
+	}
+
+	return g.GoogleEmailReq
+}
+func (g *GooglePay) GetGoogleAcceptCard() bool {
+	if g == nil {
+		return false
+	}
+
+	return g.GoogleAcceptCard
+}
+func (g *GooglePay) GetGoogleCardAuthMethods() []GoogleCardAuthMethod {
+	if g == nil {
+		return nil
+	}
+	return g.GoogleCardAuthMethods
+}
+func (g *GooglePay) GetGoogleCardNetworks() []GoogleCardNetwork {
+	if g == nil {
+		return nil
+	}
+
+	return g.GoogleCardNetworks
+}
+func (g *GooglePay) GetGoogleCardAllowPrepaid() bool {
+	if g == nil {
+		return false
+	}
+
+	return g.GoogleCardAllowPrepaid
+}
+func (g *GooglePay) GetGoogleCardAllowCredit() bool {
+	if g == nil {
+		return false
+	}
+
+	return g.GoogleCardAllowCredit
+}
+func (g *GooglePay) GetGoogleCardBillingAddressReq() bool {
+	if g == nil {
+		return false
+	}
+	return g.GoogleCardBillingAddressReq
+}
+func (g *GooglePay) GetGoogleCardBillingAddressFormat() GoogleCardBillingAddressReq {
+	if g == nil {
+		return ""
+	}
+
+	return g.GoogleCardBillingAddressFormat
+}
+func (g *GooglePay) GetGoogleCardBillingPhoneReq() bool {
+	if g == nil {
+		return false
+	}
+	return g.GoogleCardBillingAddressReq
+}
+func (g *GooglePay) GetGoogleCardTokenType() GoogleTokenType {
+	if g == nil {
+		return ""
+	}
+	return g.GoogleCardTokenType
+}
+func (g *GooglePay) GetGoogleCardGateway() GoogleCardGateway {
+	if g == nil {
+		return ""
+	}
+	return g.GoogleCardGateway
+}
+func (g *GooglePay) GetGoogleCardMerchantId() string {
+	if g == nil {
+		return ""
+	}
+	return g.GoogleCardMerchantId
+}

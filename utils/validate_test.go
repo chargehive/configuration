@@ -9,6 +9,15 @@ import (
 )
 
 // test for additional unknown fields
+func TestChargeLabelVariables(t *testing.T) {
+	rawJson := []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"change-me","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.label.unsubscribed","operator":"Equal","values":["True"]}]},"spec":{"library":"paysafe","configuration":"eyJhY3F1aXJlciI6ImNoYW5nZS1tZSIsImFjY291bnRJRCI6ImNoYW5nZS1tZSIsImFwaVVzZXJuYW1lIjoiY2hhbmdlLW1lIiwiYXBpUGFzc3dvcmQiOiJjaGFuZ2UtbWUiLCJlbnZpcm9ubWVudCI6Ik1PQ0siLCJjb3VudHJ5IjoiIiwiY3VycmVuY3kiOiJVU0QiLCJ1c2VWYXVsdCI6ZmFsc2UsInNpbmdsZVVzZVRva2VuUGFzc3dvcmQiOiIiLCJzaW5nbGVVc2VUb2tlblVzZXJuYW1lIjoiIn0="}}`)
+	configuration.Initialise()
+	errs := Validate(rawJson, "v1")
+	// _ = PrettyPrint(errs)
+	assert.Equal(t, errs, map[string]string{})
+}
+
+// test for additional unknown fields
 func TestAdditionalUnknownFields(t *testing.T) {
 	rawJson := []byte(`{"Kind":"Connector","metadata":{"projectId":"change-me","bob":"cat","Name":"change-me","uuid":"","displayName":"","description":"","annotations":null,"labels":null,"disabled":true},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"paypal-websitepaymentspro","configuration":"eyJhcGlVc2VybmFtZSI6IkNIQU5HRS1NRSIsImFwaVBhc3N3b3JkIjoiQ0hBTkdFLU1FIiwiYXBpU2lnbmF0dXJlIjoiQ0hBTkdFLU1FIiwic3VwcG9ydGVkQ3VycmVuY2llcyI6WyJVU0QiXSwiY2FyZGluYWxQcm9jZXNzb3JJRCI6bnVsbCwiY2FyZGluYWxNZXJjaGFudElEIjpudWxsLCJjYXJkaW5hbFRyYW5zYWN0aW9uUHciOm51bGwsImNhcmRpbmFsVHJhbnNhY3Rpb25VUkwiOm51bGwsImNhcmRpbmFsQVBJSWRlbnRpZmllciI6bnVsbCwiY2FyZGluYWxBUElLZXkiOm51bGwsImNhcmRpbmFsT3JnVW5pdElEIjpudWxsLCJlbnZpcm9ubWVudCI6InNhbmRib3gifQ=="}}`)
 	configuration.Initialise()

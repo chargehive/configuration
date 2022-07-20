@@ -10,10 +10,26 @@ import (
 // KindConnector is the identifier for a Connector config
 const KindConnector object.Kind = "Connector"
 
+// ProcessingState indicates how a connection should be used while processing
+type ProcessingState string
+
+const (
+	// ProcessingStateLive process all transactions
+	ProcessingStateLive ProcessingState = "live"
+	// ProcessingStateCoolDown allow existing auths to be captured and refunds
+	ProcessingStateCoolDown ProcessingState = "cool-down"
+	// ProcessingStateRefundOnly  Only process refund transactions
+	ProcessingStateRefundOnly ProcessingState = "refund-only"
+)
+
 // Connector is a configuration file for a single payment processing entity
 type Connector struct {
-	Library       string `json:"library" yaml:"library" validate:"required,oneof=sandbox authorize braintree qualpay stripe paysafe worldpay paypal-websitepaymentspro paypal-expresscheckout vindicia chargehive maxmind cybersource paysafe-accountupdater bottomline"`
-	Configuration []byte `json:"configuration" yaml:"configuration" validate:"required"`
+	ProcessingState ProcessingState `json:"processingState,omitempty" yaml:"processingState,omitempty"`
+	Library         string          `json:"library" yaml:"library" validate:"required,oneof=sandbox authorize braintree qualpay stripe paysafe worldpay paypal-websitepaymentspro paypal-expresscheckout vindicia chargehive maxmind cybersource paysafe-accountupdater bottomline checkout kount"`
+	Configuration   []byte          `json:"configuration" yaml:"configuration" validate:"required"`
+	ConfigID        string          `json:"configId,omitempty" yaml:"configId,omitempty"`
+	ConfigAuth      string          `json:"configAuth,omitempty" yaml:"configAuth,omitempty"`
+	EnablePCIB      bool            `json:"enablePCIB,omitempty" yaml:"enablePCIB,omitempty"`
 }
 
 // GetKind returns the Connector kind

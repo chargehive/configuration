@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
@@ -28,8 +29,16 @@ type WorldpayCredentials struct {
 	CardinalApiKey        *string             `json:"cardinalApiKey" yaml:"cardinalApiKey" validate:"required"`
 	CardinalOrgUnitId     *string             `json:"cardinalOrgUnitId" yaml:"cardinalOrgUnitId" validate:"required"`
 	GooglePayPageId       string              `json:"googlePayPageId"` // vantiv:merchantPayPageId
-	GooglePay
-	ApplePay
+	GooglePay             *GooglePay          `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay              *ApplePay           `json:"applePay,omitempty" yaml:"applePay,omitempty"`
+}
+
+func (c *WorldpayCredentials) GetGooglePay() *GooglePay {
+	return c.GooglePay
+}
+
+func (c *WorldpayCredentials) GetApplePay() *ApplePay {
+	return c.ApplePay
 }
 
 func (c WorldpayCredentials) GetCardinalApiIdentifier() string {
@@ -66,7 +75,12 @@ func (c *WorldpayCredentials) Validate() error {
 }
 
 func (c *WorldpayCredentials) GetSecureFields() []*string {
-	return []*string{c.Username, c.Password, c.CardinalApiIdentifier, c.CardinalApiKey, c.AppleMerchantPrivateKey, c.AppleMerchantCertificate}
+	fields := []*string{c.Username, c.Password, c.CardinalApiIdentifier, c.CardinalApiKey}
+	if c.ApplePay != nil {
+		fields = append(fields, c.ApplePay.AppleMerchantPrivateKey, c.ApplePay.AppleMerchantCertificate)
+	}
+
+	return fields
 }
 
 func (c *WorldpayCredentials) ToConnector() connector.Connector {
@@ -84,23 +98,36 @@ func (c WorldpayCredentials) SupportsSca() bool {
 }
 
 func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
+		return false
+	}
+
 	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
 		return true
 	}
 	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
 		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY &&
-		c.AppleMerchantIdentifier != "" &&
-		c.AppleMerchantDisplayName != "" &&
-		(c.AppleMerchantCertificate != nil && c.AppleMerchantCertificate != new(string)) &&
-		(c.AppleMerchantPrivateKey != nil && c.AppleMerchantPrivateKey != new(string)) {
+		c.ApplePay != nil && c.ApplePay.IsValid() {
 		return true
 	}
 	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
 		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY &&
-		c.GoogleMerchantId != "" &&
-		c.GoogleCardGateway != "" &&
-		c.GoogleCardMerchantId != "" {
+		c.GooglePayPageId != "" &&
+		c.GooglePay != nil && c.GooglePay.IsValid() {
 		return true
 	}
+	return false
+}
+
+func (c WorldpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
+	if mode == environment.ModeSandbox {
+		if c.Environment == WorldpayEnvironmentProduction || c.Environment == WorldpayEnvironmentProductionTransact {
+			return false
+		}
+	}
+	return true
+}
+
+func (c WorldpayCredentials) IsRecoveryAgent() bool {
 	return false
 }

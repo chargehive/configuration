@@ -5,21 +5,24 @@ type InfoKey string
 
 // Keys
 const (
-	InfoKeyPaymentScheme  InfoKey = "payment_scheme"
-	InfoKeyCardBrand      InfoKey = "card_brand"
-	InfoKeyCardSubbrand   InfoKey = "card_subbrand"
-	InfoKeyIssuer         InfoKey = "issuer"
-	InfoKeyIssueNumber    InfoKey = "issue_number"
-	InfoKeyCardType       InfoKey = "card_type"
-	InfoKeyCardLastFour   InfoKey = "card_last_four"
-	InfoKeyDisplayName    InfoKey = "display_name"
-	InfoKeyCountry        InfoKey = "country"
-	InfoKeyExpiry         InfoKey = "expiry"
-	InfoKeyValidFrom      InfoKey = "valid_from"
-	InfoKeyLookupCode     InfoKey = "lookup_code"
-	InfoKeyAccountHolder  InfoKey = "account_holder"
-	InfoKeyMethodVersion  InfoKey = "payment_method_version"
-	InfoKeyPayerReference InfoKey = "payer_reference"
+	InfoKeyPaymentScheme      InfoKey = "payment_scheme"
+	InfoKeyCardBrand          InfoKey = "card_brand"
+	InfoKeyCardSubbrand       InfoKey = "card_subbrand"
+	InfoKeyIssuer             InfoKey = "issuer"
+	InfoKeyIssueNumber        InfoKey = "issue_number"
+	InfoKeyCardType           InfoKey = "card_type"
+	InfoKeyCardLastFour       InfoKey = "card_last_four"
+	InfoKeyCardNumberLength   InfoKey = "card_number_length"
+	InfoKeyDisplayName        InfoKey = "display_name"
+	InfoKeyCountry            InfoKey = "country"
+	InfoKeyExpiry             InfoKey = "expiry"
+	InfoKeyValidFrom          InfoKey = "valid_from"
+	InfoKeyLookupCode         InfoKey = "lookup_code"
+	InfoKeyAccountHolder      InfoKey = "account_holder"
+	InfoKeyMethodVersion      InfoKey = "payment_method_version"
+	InfoKeyPayerReference     InfoKey = "payer_reference"
+	InfoKeyAccountNumberLast2 InfoKey = "account_number_last_two"
+	InfoKeySortCode           InfoKey = "sort_code"
 )
 
 // Scheme us a value used to indicate a payment scheme type
@@ -74,7 +77,7 @@ const (
 	SchemeCryptoBitcoin Scheme = "bitcoin"
 
 	// Direct Debit
-	SchemeDirectDebit Scheme = "direct-debit"
+	SchemeDirectDebit Scheme = "directdebit"
 )
 
 // CardType is a value used to indicate a payment card type
@@ -91,4 +94,27 @@ const (
 	CardTypeCorporate   CardType = "corporate"
 	CardTypeGovernment  CardType = "government"
 	CardTypeProprietary CardType = "proprietary"
+)
+
+type FundingType string
+
+const (
+	FundingTypeUnknown              FundingType = "unknown"
+	FundingTypeCredit               FundingType = "credit"
+	FundingTypeDebit                FundingType = "debit"
+	FundingTypeCharge               FundingType = "charge"
+	FundingTypePrepaid              FundingType = "prepaid"
+	FundingTypePrepaidReloadable    FundingType = "prepaid_reloadable"
+	FundingTypePrepaidNonReloadable FundingType = "prepaid_non_reloadable"
+)
+
+// BACSReportType indicate a type of BACS direct debit report
+type BACSReportType string
+
+// BACSReportType
+const (
+	AUDDIS BACSReportType = "AUDDIS" // rejected registrations
+	DDICA  BACSReportType = "DDICA"  // chargebacks
+	ADDACS BACSReportType = "ADDACS" // account updates/changes
+	ARUDD  BACSReportType = "ARUDD"  // failed payments
 )
