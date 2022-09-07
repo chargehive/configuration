@@ -19,6 +19,9 @@ type AttemptConfig struct {
 	// CascadeDelay is the duration to wait between each cascade
 	CascadeDelay *time.Duration `json:"cascadeDelay" yaml:"cascadeDelay" validate:"required,gte=0"`
 
+	// AttemptType indicates what type of transaction to submit to the connector
+	AttemptType AttemptType `json:"attemptType" yaml:"attemptType" validate:"oneof=capture auth"`
+
 	// OverridePoolConnectorIDs will use this connectors instead of the ones in the pool
 	OverridePoolConnectorIDs []string `json:"overridePoolConnectorIDs" yaml:"overridePoolConnectorIDs" validate:"omitempty,dive,lowercase"`
 }
