@@ -40,6 +40,16 @@ const (
 	InitiatorTypeCapture InitiatorType = "capture"
 )
 
+type AttemptType string
+
+const (
+	// AttemptTypeAuth indicates an authorization attempt
+	AttemptTypeAuth AttemptType = "auth"
+
+	// AttemptTypeCapture indicates a capture attempt
+	AttemptTypeCapture AttemptType = "capture"
+)
+
 // Type indicates the type of a scheduler
 type Type string
 
