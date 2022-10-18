@@ -10,6 +10,7 @@ import (
 
 type CWAMSCredentials struct {
 	SecurityKey string `json:"securityKey" yaml:"securityKey" validate:"required"`
+	TestMode    bool   `json:"testMode" yaml:"testMode"`
 }
 
 func (c *CWAMSCredentials) GetLibrary() Library {
@@ -51,7 +52,15 @@ func (c *CWAMSCredentials) SupportsMethod(methodType chtype.PaymentMethodType, m
 }
 
 func (c *CWAMSCredentials) CanPlanModeUse(mode environment.Mode) bool {
-	return true
+	if mode == environment.ModeProduction && !c.TestMode {
+		return true
+	}
+
+	if mode == environment.ModeSandbox && c.TestMode {
+		return true
+	}
+
+	return false
 }
 
 func (c *CWAMSCredentials) IsRecoveryAgent() bool {

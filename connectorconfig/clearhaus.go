@@ -59,7 +59,15 @@ func (c *ClearhausCredentials) SupportsMethod(methodType chtype.PaymentMethodTyp
 }
 
 func (c *ClearhausCredentials) CanPlanModeUse(mode environment.Mode) bool {
-	return true
+	if mode == environment.ModeProduction && c.Environment == ClearhausEnvironmentLive {
+		return true
+	}
+
+	if mode == environment.ModeSandbox && c.Environment == ClearhausEnvironmentTest {
+		return true
+	}
+
+	return false
 }
 
 func (c *ClearhausCredentials) IsRecoveryAgent() bool {

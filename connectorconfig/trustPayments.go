@@ -16,11 +16,19 @@ const (
 	TrustPaymentsRegionEU TrustPaymentsRegion = "eu"
 )
 
+type TrustPaymentsEnvironment string
+
+const (
+	TrustPaymentsEnvironmentTest TrustPaymentsEnvironment = "test"
+	TrustPaymentsEnvironmentLive TrustPaymentsEnvironment = "live"
+)
+
 type TrustPaymentsCredentials struct {
-	Username string              `json:"username" yaml:"username" validate:"required"`
-	Password string              `json:"password" yaml:"password" validate:"required"`
-	SiteRef  string              `json:"siteRef" yaml:"siteRef" validate:"required"`
-	Region   TrustPaymentsRegion `json:"region" yaml:"region" validate:"oneof=us eu"`
+	Username    string                   `json:"username" yaml:"username" validate:"required"`
+	Password    string                   `json:"password" yaml:"password" validate:"required"`
+	SiteRef     string                   `json:"siteRef" yaml:"siteRef" validate:"required"`
+	Region      TrustPaymentsRegion      `json:"region" yaml:"region" validate:"oneof=us eu"`
+	Environment TrustPaymentsEnvironment `json:"environment" yaml:"environment" validate:"oneof=test live"`
 }
 
 func (c *TrustPaymentsCredentials) GetLibrary() Library {
@@ -63,15 +71,15 @@ func (c *TrustPaymentsCredentials) SupportsMethod(methodType chtype.PaymentMetho
 
 func (c *TrustPaymentsCredentials) CanPlanModeUse(mode environment.Mode) bool {
 
-	if mode == environment.ModeProduction && strings.HasPrefix(c.SiteRef, "test_") {
-		return false
+	if mode == environment.ModeProduction && !strings.HasPrefix(c.SiteRef, "test_") && c.Environment == TrustPaymentsEnvironmentLive {
+		return true
 	}
 
-	if mode == environment.ModeSandbox && !strings.HasPrefix(c.SiteRef, "test_") {
-		return false
+	if mode == environment.ModeSandbox && strings.HasPrefix(c.SiteRef, "test_") && c.Environment == TrustPaymentsEnvironmentTest {
+		return true
 	}
 
-	return true
+	return false
 }
 
 func (c *TrustPaymentsCredentials) IsRecoveryAgent() bool {

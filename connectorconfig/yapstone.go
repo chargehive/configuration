@@ -8,9 +8,17 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
+type YapstoneEnvironment string
+
+const (
+	YapstoneEnvironmentTest YapstoneEnvironment = "test"
+	YapstoneEnvironmentLive YapstoneEnvironment = "live"
+)
+
 type YapstoneCredentials struct {
-	ClientID     string `json:"clientID" yaml:"clientID" validate:"required"`
-	ClientSecret string `json:"clientSecret" yaml:"clientSecret" validate:"required"`
+	ClientID     string              `json:"clientID" yaml:"clientID" validate:"required"`
+	ClientSecret string              `json:"clientSecret" yaml:"clientSecret" validate:"required"`
+	Environment  YapstoneEnvironment `json:"environment" yaml:"environment" validate:"oneof=test live"`
 }
 
 func (c *YapstoneCredentials) GetLibrary() Library {
@@ -52,7 +60,15 @@ func (c *YapstoneCredentials) SupportsMethod(methodType chtype.PaymentMethodType
 }
 
 func (c *YapstoneCredentials) CanPlanModeUse(mode environment.Mode) bool {
-	return true
+	if mode == environment.ModeProduction && c.Environment == YapstoneEnvironmentLive {
+		return true
+	}
+
+	if mode == environment.ModeSandbox && c.Environment == YapstoneEnvironmentTest {
+		return true
+	}
+
+	return false
 }
 
 func (c *YapstoneCredentials) IsRecoveryAgent() bool {
