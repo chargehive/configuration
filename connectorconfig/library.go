@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"errors"
+
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
@@ -21,6 +22,10 @@ const (
 	LibraryVindicia                 Library = "vindicia"
 	LibraryBottomline               Library = "bottomline"
 	LibraryCheckout                 Library = "checkout"
+	LibraryClearhaus                Library = "clearhaus"
+	LibraryTrustPayments            Library = "trust-payments"
+	LibraryCWAMS                    Library = "cwams"
+	LibraryYapstone                 Library = "yapstone"
 
 	// Fraud Libraries
 	LibraryChargeHive  Library = "chargehive"
@@ -50,6 +55,10 @@ var LibraryRegister = map[Library]bool{
 	LibraryMaxMind:                  true,
 	LibraryCyberSource:              true,
 	LibraryKount:                    true,
+	LibraryClearhaus:                true,
+	LibraryTrustPayments:            true,
+	LibraryCWAMS:                    true,
+	LibraryYapstone:                 true,
 }
 
 type LibraryType string
@@ -103,6 +112,14 @@ func (l Library) GetDisplayName() string {
 		return "CyberSource"
 	case LibraryKount:
 		return "Kount"
+	case LibraryClearhaus:
+		return "Clearhaus"
+	case LibraryTrustPayments:
+		return "Trust Payments"
+	case LibraryCWAMS:
+		return "CWAMS"
+	case LibraryYapstone:
+		return "Yapstone"
 	}
 	return string(l)
 }
@@ -134,6 +151,14 @@ func (l Library) GetCredential() (Credentials, error) {
 		return &BottomlineCredentials{}, nil
 	case LibraryCheckout:
 		return &CheckoutCredentials{}, nil
+	case LibraryClearhaus:
+		return &ClearhausCredentials{}, nil
+	case LibraryTrustPayments:
+		return &TrustPaymentsCredentials{}, nil
+	case LibraryCWAMS:
+		return &CWAMSCredentials{}, nil
+	case LibraryYapstone:
+		return &YapstoneCredentials{}, nil
 
 		// Fraud Libraries
 	case LibraryMaxMind:
@@ -192,6 +217,14 @@ func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvi
 	case LibraryCyberSource:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibraryKount:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryClearhaus:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryTrustPayments:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryCWAMS:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryYapstone:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	}
 	return false
