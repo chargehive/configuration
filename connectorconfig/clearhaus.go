@@ -8,7 +8,16 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
+type ClearhausEnvironment string
+
+const (
+	ClearhausEnvironmentTest ClearhausEnvironment = "test"
+	ClearhausEnvironmentLive ClearhausEnvironment = "live"
+)
+
 type ClearhausCredentials struct {
+	APIKey      string               `json:"apiKey" yaml:"apiKey" validate:"required"`
+	Environment ClearhausEnvironment `json:"environment" yaml:"environment" validate:"required,oneof=test live"`
 }
 
 func (c *ClearhausCredentials) GetLibrary() Library {

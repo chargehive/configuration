@@ -9,6 +9,8 @@ import (
 )
 
 type YapstoneCredentials struct {
+	ClientID     string `json:"clientID" yaml:"clientID" validate:"required"`
+	ClientSecret string `json:"clientSecret" yaml:"clientSecret" validate:"required"`
 }
 
 func (c *YapstoneCredentials) GetLibrary() Library {

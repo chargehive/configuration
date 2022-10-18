@@ -2,13 +2,25 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"strings"
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
+type TrustPaymentsRegion string
+
+const (
+	TrustPaymentsRegionUS TrustPaymentsRegion = "us"
+	TrustPaymentsRegionEU TrustPaymentsRegion = "eu"
+)
+
 type TrustPaymentsCredentials struct {
+	Username string              `json:"username" yaml:"username" validate:"required"`
+	Password string              `json:"password" yaml:"password" validate:"required"`
+	SiteRef  string              `json:"siteRef" yaml:"siteRef" validate:"required"`
+	Region   TrustPaymentsRegion `json:"region" yaml:"region" validate:"oneof=us eu"`
 }
 
 func (c *TrustPaymentsCredentials) GetLibrary() Library {
@@ -50,6 +62,15 @@ func (c *TrustPaymentsCredentials) SupportsMethod(methodType chtype.PaymentMetho
 }
 
 func (c *TrustPaymentsCredentials) CanPlanModeUse(mode environment.Mode) bool {
+
+	if mode == environment.ModeProduction && strings.HasPrefix(c.SiteRef, "test_") {
+		return false
+	}
+
+	if mode == environment.ModeSandbox && !strings.HasPrefix(c.SiteRef, "test_") {
+		return false
+	}
+
 	return true
 }
 

@@ -9,6 +9,7 @@ import (
 )
 
 type CWAMSCredentials struct {
+	SecurityKey string `json:"securityKey" yaml:"securityKey" validate:"required"`
 }
 
 func (c *CWAMSCredentials) GetLibrary() Library {
