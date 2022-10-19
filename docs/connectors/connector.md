@@ -51,9 +51,10 @@ Here are the configuration options for each of the connectors for the Payment Pr
 - [Worldpay](#worldpay)  
 
 #### Fraud Libraries
-- [ChargeHive](#chargehive)  
-- [Cybersource](#cybersource)  
-- [Maxmind](#maxmind)
+[ChargeHive](#chargehive)  
+[Kount](#kount)  
+[Cybersource](#cybersource)  
+[Maxmind](#maxmind)
 
 ---
 
@@ -316,6 +317,32 @@ FieldName | Definition
 MerchantID | The Merchant ID on your Cybersource Account
 TransactionKey | The Transaction Key generated in Cybersource on Payment Configuration -> Key Management
 Environment | Must be either "test" or "live" 
+
+### Kount
+Library: `kount`  
+Configuration:
+```json
+{
+"siteID": "xxxxxxxx",
+"merchantID": "xxxxxxxxxx",
+"configKey": "xxxxxxxx",
+"apiKey": "xxxxxxxxxxxx",
+"dataCollectorURL": "xxxxxxx",
+"riskInquiryServiceURL": "xxxxxxx",
+"environment": "xxxxx"
+}
+```
+FieldName | Definition
+---:|:---   
+siteID | The site ID on your Kount Account
+merchantID | The Merchant Id of your Kount Account
+configKey | The configuration key defined within your Kount account
+apiKey | The API key defined in your Kount account
+dataCollectorURL | The Kount data collection URL and will be test or a production URL depending on the environment
+riskInquiryServiceURL | The Kount risk inquiry URL and will be test or a production URL depending on the environment
+environment | Must be either "test" or "production"
+
+
 
 ### MaxMind  
 Library: `maxmind`  
