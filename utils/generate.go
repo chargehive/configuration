@@ -32,6 +32,10 @@ const (
 	confConnStripe        Template = "con_stripe"
 	confConnVindicia      Template = "con_vindicia"
 	confConnWorldPay      Template = "con_worldPay"
+	confClearhaus         Template = "con_clearhaus"
+	confTrustPayments     Template = "con_trust-payments"
+	confCWAMS             Template = "con_cwams"
+	confYapstone          Template = "con_yapstone"
 
 	// connector Pool
 	confConnectorPool Template = "con_pool"
@@ -69,6 +73,10 @@ var Templates = map[Template]string{
 	confConnStripe:        "Connector: Stripe",
 	confConnVindicia:      "Connector: Vindicia",
 	confConnWorldPay:      "Connector: Worldpay",
+	confClearhaus:         "Connector: Clearhaus",
+	confTrustPayments:     "Connector: Trust Payments",
+	confCWAMS:             "Connector: CWAMS",
+	confYapstone:          "Connector: Yapstone",
 	confConnectorPool:     "Connector Pool",
 	confSlack:             "Integration: Slack",
 	confPolCascade:        "Policy: Cascade",
@@ -220,6 +228,34 @@ func buildSpec(conf Template) (object.Specification, error) {
 		})
 
 		return connector.Connector{Library: string(connectorconfig.LibraryWorldpay), Configuration: j}, nil
+	case confClearhaus:
+		j, _ := json.Marshal(connectorconfig.ClearhausCredentials{
+			APIKey:      chg,
+			Environment: connectorconfig.ClearhausEnvironmentTest,
+		})
+		return connector.Connector{Library: string(connectorconfig.LibraryClearhaus), Configuration: j}, nil
+	case confTrustPayments:
+		j, _ := json.Marshal(connectorconfig.TrustPaymentsCredentials{
+			Username:    chg,
+			Password:    chg,
+			SiteRef:     chg,
+			Region:      connectorconfig.TrustPaymentsRegionUS,
+			Environment: connectorconfig.TrustPaymentsEnvironmentTest,
+		})
+		return connector.Connector{Library: string(connectorconfig.LibraryTrustPayments), Configuration: j}, nil
+	case confCWAMS:
+		j, _ := json.Marshal(connectorconfig.CWAMSCredentials{
+			SecurityKey: chg,
+			TestMode:    true,
+		})
+		return connector.Connector{Library: string(connectorconfig.LibraryCWAMS), Configuration: j}, nil
+	case confYapstone:
+		j, _ := json.Marshal(connectorconfig.YapstoneCredentials{
+			ClientID:     chg,
+			ClientSecret: chg,
+			Environment:  connectorconfig.YapstoneEnvironmentTest,
+		})
+		return connector.Connector{Library: string(connectorconfig.LibraryYapstone), Configuration: j}, nil
 	case confConnectorPool:
 		return connector.Pool{Restriction: "unrestricted", Connectors: []connector.PoolItem{{ConnectorID: chg}}}, nil
 	case confSlack:
