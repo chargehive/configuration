@@ -4,7 +4,6 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"sort"
 	"strings"
@@ -82,7 +81,7 @@ func main() {
 
 			// write template output
 			if *generateCmdOutput != "" {
-				err := ioutil.WriteFile(*generateCmdOutput, out, os.ModePerm)
+				err := os.WriteFile(*generateCmdOutput, out, os.ModePerm)
 				if err != nil {
 					fmt.Println(err)
 				} else {
@@ -131,7 +130,7 @@ func main() {
 
 		// write to file if required
 		if *generateCmdOutput != "" {
-			err := ioutil.WriteFile(*generateCmdOutput, result, os.ModePerm)
+			err := os.WriteFile(*generateCmdOutput, result, os.ModePerm)
 			if err != nil {
 				fmt.Println(err)
 			} else {
@@ -177,7 +176,7 @@ func getJson(jsonCmd *string, fileCmd *string) ([]byte, error) {
 		return []byte(*jsonCmd), nil
 	}
 	if *fileCmd != "" {
-		json, err := ioutil.ReadFile(*fileCmd)
+		json, err := os.ReadFile(*fileCmd)
 		if err != nil {
 			return nil, err
 		}
