@@ -169,7 +169,7 @@ Configuration:
 ```
 FieldName | Definition  
 ---:|:---  
-Acquirer | The Acquirer bank setup for this merchant account
+Acquirer | The Acquirer bank setup for this merchant account (optional, if you are not using a defined acquirer this can be left blank)
 AccountID | The AccountID for this merchant account
 APIUsername | The API Username from your merchant account in your account settings API page
 APIPassword | The API Password from your merchant account in your account settings API page
