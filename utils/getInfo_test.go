@@ -1,10 +1,11 @@
 package utils
 
 import (
+	"testing"
+
 	"github.com/chargehive/configuration"
 	"github.com/chargehive/configuration/object"
 	"github.com/go-playground/assert/v2"
-	"testing"
 )
 
 // test for missing field

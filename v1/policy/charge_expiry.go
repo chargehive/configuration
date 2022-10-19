@@ -3,8 +3,9 @@ package policy
 import (
 	"encoding/json"
 	"errors"
-	"github.com/chargehive/configuration/object"
 	"time"
+
+	"github.com/chargehive/configuration/object"
 )
 
 // KindPolicyChargeExpiry is the identifier for a PolicyChargeExpiry config

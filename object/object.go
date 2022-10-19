@@ -3,8 +3,9 @@ package object
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/chargehive/configuration/selector"
 	"strings"
+
+	"github.com/chargehive/configuration/selector"
 )
 
 type Kind string

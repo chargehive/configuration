@@ -3,9 +3,10 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
+	"testing"
+
 	"github.com/chargehive/configuration"
 	"github.com/go-playground/assert/v2"
-	"testing"
 )
 
 // test for additional unknown fields

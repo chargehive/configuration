@@ -2,11 +2,12 @@ package tests
 
 import (
 	"encoding/json"
+	"log"
+	"testing"
+
 	"github.com/chargehive/configuration"
 	"github.com/chargehive/configuration/object"
 	"github.com/chargehive/configuration/v1/scheduler"
-	"log"
-	"testing"
 )
 
 func TestUnmarshall(t *testing.T) {

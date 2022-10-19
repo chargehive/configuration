@@ -4,12 +4,13 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/chargehive/configuration"
-	"github.com/chargehive/configuration/utils"
 	"io/ioutil"
 	"os"
 	"sort"
 	"strings"
+
+	"github.com/chargehive/configuration"
+	"github.com/chargehive/configuration/utils"
 )
 
 func main() {
