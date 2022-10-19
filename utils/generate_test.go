@@ -2,9 +2,10 @@ package utils
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/chargehive/configuration"
 	"github.com/go-playground/assert/v2"
-	"testing"
 )
 
 // generate all config templates and validate them as they're generated

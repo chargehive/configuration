@@ -1,9 +1,10 @@
 package utils
 
 import (
+	"testing"
+
 	"github.com/chargehive/configuration"
 	"github.com/go-playground/assert/v2"
-	"testing"
 )
 
 // Checks that a disabled config is enabled

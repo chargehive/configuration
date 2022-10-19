@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"strings"
+
 	"github.com/chargehive/configuration/connectorconfig"
 	"github.com/chargehive/configuration/object"
 	"github.com/chargehive/configuration/selector"
@@ -9,7 +11,6 @@ import (
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	enTranslations "github.com/go-playground/validator/v10/translations/en"
-	"strings"
 )
 
 var (

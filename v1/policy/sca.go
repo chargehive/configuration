@@ -3,6 +3,7 @@ package policy
 import (
 	"encoding/json"
 	"errors"
+
 	"github.com/chargehive/configuration/object"
 )
 

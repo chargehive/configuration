@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"time"
+
 	"github.com/chargehive/configuration/connectorconfig"
 	"github.com/chargehive/configuration/object"
 	"github.com/chargehive/configuration/selector"
@@ -11,7 +13,6 @@ import (
 	"github.com/chargehive/configuration/v1/integration"
 	"github.com/chargehive/configuration/v1/policy"
 	"github.com/chargehive/configuration/v1/scheduler"
-	"time"
 )
 
 type Template string

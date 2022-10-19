@@ -2,9 +2,10 @@ package utils
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/chargehive/configuration"
 	"github.com/go-playground/assert/v2"
-	"testing"
 )
 
 // TestClean ensures that an additional fields in main struct and serialized config are removed

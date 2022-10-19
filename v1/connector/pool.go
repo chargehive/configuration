@@ -3,6 +3,7 @@ package connector
 import (
 	"encoding/json"
 	"errors"
+
 	"github.com/chargehive/configuration/object"
 )
 

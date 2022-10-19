@@ -3,8 +3,9 @@ package scheduler
 import (
 	"encoding/json"
 	"errors"
-	"github.com/chargehive/configuration/object"
 	"time"
+
+	"github.com/chargehive/configuration/object"
 )
 
 // KindRefundScheduler is the identifier for an KindRefundScheduler scheduler config

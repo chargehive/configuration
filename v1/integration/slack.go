@@ -3,6 +3,7 @@ package integration
 import (
 	"encoding/json"
 	"errors"
+
 	"github.com/chargehive/configuration/object"
 )
 
