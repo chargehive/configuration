@@ -1,6 +1,7 @@
 package connector
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 
@@ -39,7 +40,16 @@ func (Connector) GetKind() object.Kind { return KindConnector }
 func (Connector) GetVersion() string { return "v1" }
 
 func (c Connector) GetConfigurationJSON() []byte {
-	j, _ := json.Marshal(c.Configuration)
+	var j []byte
+	s, ok := c.Configuration.(string)
+	if ok {
+		dec, err := base64.StdEncoding.DecodeString(s)
+		if err != nil {
+			s = string(dec)
+		}
+		return []byte(s)
+	}
+	j, _ = json.Marshal(c.Configuration)
 	return j
 }
 
