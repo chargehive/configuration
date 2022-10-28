@@ -40,16 +40,20 @@ func (Connector) GetKind() object.Kind { return KindConnector }
 func (Connector) GetVersion() string { return "v1" }
 
 func (c Connector) GetConfigurationJSON() []byte {
-	var j []byte
-	s, ok := c.Configuration.(string)
-	if ok {
+	if u, ok := c.Configuration.([]uint8); ok {
+		dec, err := base64.StdEncoding.DecodeString(string(u))
+		if err == nil {
+			return dec
+		}
+		return u
+	} else if s, ok := c.Configuration.(string); ok {
 		dec, err := base64.StdEncoding.DecodeString(s)
 		if err == nil {
-			s = string(dec)
+			return dec
 		}
 		return []byte(s)
 	}
-	j, _ = json.Marshal(c.Configuration)
+	j, _ := json.Marshal(c.Configuration)
 	return j
 }
 

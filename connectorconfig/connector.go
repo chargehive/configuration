@@ -1,7 +1,6 @@
 package connectorconfig
 
 import (
-	"encoding/base64"
 	"encoding/json"
 	"strings"
 
@@ -23,19 +22,7 @@ func getCreds(c *connector.Connector, strict bool) (Credentials, error) {
 	if err != nil {
 		return credentials, err
 	}
-
-	str, isStr := c.Configuration.(string)
-	if !isStr {
-		s, _ := json.Marshal(c.Configuration)
-		str = string(s)
-	} else {
-		// check base64
-		s, err := base64.StdEncoding.DecodeString(str)
-		if err == nil {
-			str = string(s)
-		}
-	}
-	reader := strings.NewReader(str)
+	reader := strings.NewReader(string(c.GetConfigurationJSON()))
 	dec := json.NewDecoder(reader)
 	if strict {
 		dec.DisallowUnknownFields()
