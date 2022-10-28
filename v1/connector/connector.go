@@ -38,6 +38,11 @@ func (Connector) GetKind() object.Kind { return KindConnector }
 // GetVersion returns the Connector version
 func (Connector) GetVersion() string { return "v1" }
 
+func (c Connector) GetConfigurationJSON() []byte {
+	j, _ := json.Marshal(c.Configuration)
+	return j
+}
+
 // NewDefinition returns a new connector definition
 func NewDefinition(d *object.Definition) (*Definition, error) {
 	if _, ok := d.Spec.(*Connector); ok {
