@@ -44,10 +44,7 @@ func Clean(input []byte, version string, pretty bool) (modified bool, output []b
 			return
 		}
 
-		c.Configuration, err = json.Marshal(cred)
-		if err != nil {
-			return
-		}
+		c.Configuration = cred
 		def.Spec = c
 	}
 

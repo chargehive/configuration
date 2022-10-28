@@ -1,8 +1,6 @@
 package utils
 
 import (
-	"encoding/json"
-	"fmt"
 	"testing"
 
 	"github.com/chargehive/configuration"
@@ -11,7 +9,7 @@ import (
 
 // test for additional unknown fields
 func TestChargeLabelVariables(t *testing.T) {
-	rawJson := []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"change-me","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.label.unsubscribed","operator":"Equal","values":["True"]}]},"spec":{"library":"paysafe","configuration":"eyJhY3F1aXJlciI6ImNoYW5nZS1tZSIsImFjY291bnRJRCI6ImNoYW5nZS1tZSIsImFwaVVzZXJuYW1lIjoiY2hhbmdlLW1lIiwiYXBpUGFzc3dvcmQiOiJjaGFuZ2UtbWUiLCJlbnZpcm9ubWVudCI6Ik1PQ0siLCJjb3VudHJ5IjoiIiwiY3VycmVuY3kiOiJVU0QiLCJ1c2VWYXVsdCI6ZmFsc2UsInNpbmdsZVVzZVRva2VuUGFzc3dvcmQiOiIiLCJzaW5nbGVVc2VUb2tlblVzZXJuYW1lIjoiIn0="}}`)
+	rawJson := []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"change-me","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.label.unsubscribed","operator":"Equal","values":["True"]}]},"spec":{"library":"paysafe","configuration":"eyJhY3F1aXJlciI6ImNoYW5nZS1tZSIsImFjY291bnRJRCI6ImNoYW5nZS1tZSIsImFwaVVzZXJuYW1lIjoiY2hhbmdlLW1lIiwiYXBpUGFzc3dvcmQiOiJjaGFuZ2UtbWUiLCJlbnZpcm9ubWVudCI6Ik1PQ0siLCJjb3VudHJ5IjoiIiwiY3VycmVuY3kiOiJVU0QiLCJ1c2VWYXVsdCI6ZmFsc2UsInNpbmdsZVVzZVRva2VuUGFzc3dvcmQiOiIiLCJzaW5nbGVVc2VUb2tlblVzZXJuYW1lIjoiIiwibWVyY2hhbnRVUkwiOiJodHRwOi8vdGVzdC5jb20ifQ=="}}`)
 	configuration.Initialise()
 	errs := Validate(rawJson, "v1")
 	// _ = PrettyPrint(errs)
@@ -64,26 +62,18 @@ func TestEmptyFields(t *testing.T) {
 	configuration.Initialise()
 
 	// "singleUseTokenPassword":"","singleUseTokenUsername":""
-	rawJson := []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"change-me","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"paysafe","configuration":"eyJhY3F1aXJlciI6ImNoYW5nZS1tZSIsImFjY291bnRJRCI6ImNoYW5nZS1tZSIsImFwaVVzZXJuYW1lIjoiY2hhbmdlLW1lIiwiYXBpUGFzc3dvcmQiOiJjaGFuZ2UtbWUiLCJlbnZpcm9ubWVudCI6Ik1PQ0siLCJjb3VudHJ5IjoiIiwiY3VycmVuY3kiOiJVU0QiLCJ1c2VWYXVsdCI6ZmFsc2UsInNpbmdsZVVzZVRva2VuUGFzc3dvcmQiOiIiLCJzaW5nbGVVc2VUb2tlblVzZXJuYW1lIjoiIn0="}}`)
+	rawJson := []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"change-me","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"paysafe","configuration":"eyJhY3F1aXJlciI6ImNoYW5nZS1tZSIsImFjY291bnRJRCI6ImNoYW5nZS1tZSIsImFwaVVzZXJuYW1lIjoiY2hhbmdlLW1lIiwiYXBpUGFzc3dvcmQiOiJjaGFuZ2UtbWUiLCJlbnZpcm9ubWVudCI6Ik1PQ0siLCJjb3VudHJ5IjoiIiwiY3VycmVuY3kiOiJVU0QiLCJ1c2VWYXVsdCI6ZmFsc2UsInNpbmdsZVVzZVRva2VuUGFzc3dvcmQiOiIiLCJzaW5nbGVVc2VUb2tlblVzZXJuYW1lIjoiIiwibWVyY2hhbnRVcmwiOiJodHRwOi8vdGVzdC5jb20ifQ=="}}`)
 	errs := Validate(rawJson, "v1")
 	assert.Equal(t, len(errs), 0)
 
 	// "singleUseTokenUsername":""
-	rawJson = []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"change-me","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"paysafe","configuration":"eyJhY3F1aXJlciI6ImNoYW5nZS1tZSIsImFjY291bnRJRCI6ImNoYW5nZS1tZSIsImFwaVVzZXJuYW1lIjoiY2hhbmdlLW1lIiwiYXBpUGFzc3dvcmQiOiJjaGFuZ2UtbWUiLCJlbnZpcm9ubWVudCI6Ik1PQ0siLCJjb3VudHJ5IjoiIiwiY3VycmVuY3kiOiJVU0QiLCJ1c2VWYXVsdCI6ZmFsc2UsInNpbmdsZVVzZVRva2VuVXNlcm5hbWUiOiIifQ=="}}`)
+	rawJson = []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"change-me","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"paysafe","configuration":"eyJhY3F1aXJlciI6ImNoYW5nZS1tZSIsImFjY291bnRJRCI6ImNoYW5nZS1tZSIsImFwaVVzZXJuYW1lIjoiY2hhbmdlLW1lIiwiYXBpUGFzc3dvcmQiOiJjaGFuZ2UtbWUiLCJlbnZpcm9ubWVudCI6Ik1PQ0siLCJjb3VudHJ5IjoiIiwiY3VycmVuY3kiOiJVU0QiLCJ1c2VWYXVsdCI6ZmFsc2UsInNpbmdsZVVzZVRva2VuVXNlcm5hbWUiOiIiLCJtZXJjaGFudFVybCI6Imh0dHA6Ly90ZXN0LmNvbSJ9"}}`)
 	errs = Validate(rawJson, "v1")
 	assert.Equal(t, 1, len(errs))
 	assert.Equal(t, errs["PaySafeCredentials.SingleUseTokenPassword"], "SingleUseTokenPassword is a required field")
 
 	// "singleUseTokenPassword":""
-	rawJson = []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"change-me","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"paysafe","configuration":"eyJhY3F1aXJlciI6ImNoYW5nZS1tZSIsImFjY291bnRJRCI6ImNoYW5nZS1tZSIsImFwaVVzZXJuYW1lIjoiY2hhbmdlLW1lIiwiYXBpUGFzc3dvcmQiOiJjaGFuZ2UtbWUiLCJlbnZpcm9ubWVudCI6Ik1PQ0siLCJjb3VudHJ5IjoiIiwiY3VycmVuY3kiOiJVU0QiLCJ1c2VWYXVsdCI6ZmFsc2UsInNpbmdsZVVzZVRva2VuUGFzc3dvcmQiOiIifQ=="}}`)
+	rawJson = []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"change-me","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"paysafe","configuration":"eyJhY3F1aXJlciI6ImNoYW5nZS1tZSIsImFjY291bnRJRCI6ImNoYW5nZS1tZSIsImFwaVVzZXJuYW1lIjoiY2hhbmdlLW1lIiwiYXBpUGFzc3dvcmQiOiJjaGFuZ2UtbWUiLCJlbnZpcm9ubWVudCI6Ik1PQ0siLCJjb3VudHJ5IjoiIiwiY3VycmVuY3kiOiJVU0QiLCJ1c2VWYXVsdCI6ZmFsc2UsInNpbmdsZVVzZVRva2VuUGFzc3dvcmQiOiIiLCJtZXJjaGFudFVybCI6Imh0dHA6Ly90ZXN0LmNvbSJ9"}}`)
 	errs = Validate(rawJson, "v1")
 	assert.Equal(t, 0, len(errs))
-}
-
-func PrettyPrint(v interface{}) (err error) {
-	b, err := json.MarshalIndent(v, "", "  ")
-	if err == nil {
-		fmt.Println(string(b))
-	}
-	return
 }
