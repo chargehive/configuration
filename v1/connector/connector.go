@@ -44,7 +44,7 @@ func (c Connector) GetConfigurationJSON() []byte {
 	s, ok := c.Configuration.(string)
 	if ok {
 		dec, err := base64.StdEncoding.DecodeString(s)
-		if err != nil {
+		if err == nil {
 			s = string(dec)
 		}
 		return []byte(s)
