@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"encoding/json"
+
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
@@ -15,10 +16,12 @@ const (
 )
 
 type CheckoutCredentials struct {
-	PublicKey   *string             `json:"publicKey" yaml:"publicKey" validate:"required,gt=0"`
-	SecretKey   *string             `json:"secretKey" yaml:"secretKey" validate:"required,gt=0"`
-	Currency    string              `json:"currency" yaml:"currency" validate:"oneof=AED AFN ALL AMD ANG AOA ARS AUD AWG AZN BAM BBD BDT BGN BHD BIF BMD BND BOB BRL BSD BTN BWP BYN BZD CAD CDF CHF CLF CLP CNY COP CRC CUP CVE CZK DJF DKK DOP DZD EEK EGP ERN ETB EUR FJD FKP GBP GEL GHS GIP GMD GNF GTQ GYD HKD HNL HRK HTG HUF IDR ILS INR IQD IRR ISK JMD JOD JPY KES KGS KHR KMF KPW KRW KWD KYD KZT LAK LBP LKR LRD LSL LTL LVL LYD MAD MDL MGA MKD MMK MNT MOP MRO MUR MVR MWK MXN MYR MZN NAD NGN NIO NOK NPR NZD OMR PAB PEN PGK PHP PKR PLN PYG QAR RON RSD RUB RWF SAR SBD SCR SDG SEK SGD SHP SLL SOS SRD STD SVC SYP SZL THB TJS TMT TND TOP TRY TTD TWD TZS UAH UGX USD UYU UZS VEF VND VUV WST XAF XCD XOF XPF YER ZAR ZMW ZWL"`
-	Environment CheckoutEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
+	PublicKey            *string             `json:"publicKey" yaml:"publicKey" validate:"required,gt=0"`
+	SecretKey            *string             `json:"secretKey" yaml:"secretKey" validate:"required,gt=0"`
+	AuthenticationHeader *string             `json:"authenticationHeader" yaml:"authenticationHeader" validate:"required,gt=0"`
+	SignatureKey         *string             `json:"signatureKey" yaml:"signatureKey" validate:"required,gt=0"`
+	Currency             string              `json:"currency" yaml:"currency" validate:"oneof=AED AFN ALL AMD ANG AOA ARS AUD AWG AZN BAM BBD BDT BGN BHD BIF BMD BND BOB BRL BSD BTN BWP BYN BZD CAD CDF CHF CLF CLP CNY COP CRC CUP CVE CZK DJF DKK DOP DZD EEK EGP ERN ETB EUR FJD FKP GBP GEL GHS GIP GMD GNF GTQ GYD HKD HNL HRK HTG HUF IDR ILS INR IQD IRR ISK JMD JOD JPY KES KGS KHR KMF KPW KRW KWD KYD KZT LAK LBP LKR LRD LSL LTL LVL LYD MAD MDL MGA MKD MMK MNT MOP MRO MUR MVR MWK MXN MYR MZN NAD NGN NIO NOK NPR NZD OMR PAB PEN PGK PHP PKR PLN PYG QAR RON RSD RUB RWF SAR SBD SCR SDG SEK SGD SHP SLL SOS SRD STD SVC SYP SZL THB TJS TMT TND TOP TRY TTD TWD TZS UAH UGX USD UYU UZS VEF VND VUV WST XAF XCD XOF XPF YER ZAR ZMW ZWL"`
+	Environment          CheckoutEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 }
 
 func (c CheckoutCredentials) GetPublicKey() string {
@@ -35,6 +38,20 @@ func (c CheckoutCredentials) GetSecretKey() string {
 	return *c.SecretKey
 }
 
+func (c CheckoutCredentials) GetAuthenticationHeader() string {
+	if c.AuthenticationHeader == nil {
+		return ""
+	}
+	return *c.AuthenticationHeader
+}
+
+func (c CheckoutCredentials) GetSignatureKey() string {
+	if c.SignatureKey == nil {
+		return ""
+	}
+	return *c.SignatureKey
+}
+
 func (c CheckoutCredentials) GetLibrary() Library {
 	return LibraryCheckout
 }
@@ -48,7 +65,7 @@ func (c *CheckoutCredentials) Validate() error {
 }
 
 func (c *CheckoutCredentials) GetSecureFields() []*string {
-	return []*string{c.PublicKey, c.SecretKey}
+	return []*string{c.PublicKey, c.SecretKey, c.AuthenticationHeader, c.SignatureKey}
 }
 
 func (c *CheckoutCredentials) ToConnector() connector.Connector {
