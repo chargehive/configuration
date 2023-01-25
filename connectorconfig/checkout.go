@@ -73,7 +73,7 @@ func (c *CheckoutCredentials) Validate() error {
 }
 
 func (c *CheckoutCredentials) GetSecureFields() []*string {
-	return []*string{c.PublicKey, c.SecretKey, c.AuthorizationHeaderKey, c.SignatureKey, c.ProcessingChannelID}
+	return []*string{c.PublicKey, c.SecretKey, c.AuthorizationHeaderKey, c.SignatureKey}
 }
 
 func (c *CheckoutCredentials) ToConnector() connector.Connector {
