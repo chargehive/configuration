@@ -36,7 +36,7 @@ func (c ThreeDSecureIOCredentials) GetLibrary() Library {
 }
 
 func (c ThreeDSecureIOCredentials) GetSupportedTypes() []LibraryType {
-	return []LibraryType{LibraryTypePayment}
+	return []LibraryType{LibraryTypeAuthentication}
 }
 
 func (c *ThreeDSecureIOCredentials) Validate() error {

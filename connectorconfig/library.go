@@ -65,16 +65,18 @@ var LibraryRegister = map[Library]bool{
 type LibraryType string
 
 const (
-	LibraryTypePayment       LibraryType = "payment"
-	LibraryTypeFraud         LibraryType = "fraud"
-	LibraryTypeMethodUpdater LibraryType = "methodUpdater"
-	LibraryTypeRecoveryAgent LibraryType = "recoveryAgent"
+	LibraryTypePayment        LibraryType = "payment"
+	LibraryTypeFraud          LibraryType = "fraud"
+	LibraryTypeMethodUpdater  LibraryType = "methodUpdater"
+	LibraryTypeRecoveryAgent  LibraryType = "recoveryAgent"
+	LibraryTypeAuthentication LibraryType = "authentication"
 )
 
 var LibraryTypeRegister = map[LibraryType]bool{
-	LibraryTypePayment:       true,
-	LibraryTypeFraud:         true,
-	LibraryTypeRecoveryAgent: true,
+	LibraryTypePayment:        true,
+	LibraryTypeFraud:          true,
+	LibraryTypeRecoveryAgent:  true,
+	LibraryTypeAuthentication: true,
 }
 
 func (l Library) GetDisplayName() string {
