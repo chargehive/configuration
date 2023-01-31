@@ -26,6 +26,7 @@ const (
 	LibraryTrustPayments            Library = "trust-payments"
 	LibraryCWAMS                    Library = "cwams"
 	LibraryYapstone                 Library = "yapstone"
+	LibraryThreeDSecureIO           Library = "threedsecureio"
 
 	// Fraud Libraries
 	LibraryChargeHive  Library = "chargehive"
@@ -225,6 +226,8 @@ func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvi
 	case LibraryCWAMS:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibraryYapstone:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryThreeDSecureIO:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	}
 	return false
