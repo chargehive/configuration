@@ -26,6 +26,7 @@ const (
 	LibraryTrustPayments            Library = "trust-payments"
 	LibraryCWAMS                    Library = "cwams"
 	LibraryYapstone                 Library = "yapstone"
+	LibraryThreeDSecureIO           Library = "threedsecureio"
 
 	// Fraud Libraries
 	LibraryChargeHive  Library = "chargehive"
@@ -64,16 +65,18 @@ var LibraryRegister = map[Library]bool{
 type LibraryType string
 
 const (
-	LibraryTypePayment       LibraryType = "payment"
-	LibraryTypeFraud         LibraryType = "fraud"
-	LibraryTypeMethodUpdater LibraryType = "methodUpdater"
-	LibraryTypeRecoveryAgent LibraryType = "recoveryAgent"
+	LibraryTypePayment        LibraryType = "payment"
+	LibraryTypeFraud          LibraryType = "fraud"
+	LibraryTypeMethodUpdater  LibraryType = "methodUpdater"
+	LibraryTypeRecoveryAgent  LibraryType = "recoveryAgent"
+	LibraryTypeAuthentication LibraryType = "authentication"
 )
 
 var LibraryTypeRegister = map[LibraryType]bool{
-	LibraryTypePayment:       true,
-	LibraryTypeFraud:         true,
-	LibraryTypeRecoveryAgent: true,
+	LibraryTypePayment:        true,
+	LibraryTypeFraud:          true,
+	LibraryTypeRecoveryAgent:  true,
+	LibraryTypeAuthentication: true,
 }
 
 func (l Library) GetDisplayName() string {
@@ -225,6 +228,8 @@ func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvi
 	case LibraryCWAMS:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibraryYapstone:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryThreeDSecureIO:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	}
 	return false
