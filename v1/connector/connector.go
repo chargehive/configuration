@@ -1,6 +1,7 @@
 package connector
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 
@@ -26,7 +27,7 @@ const (
 type Connector struct {
 	ProcessingState ProcessingState `json:"processingState,omitempty" yaml:"processingState,omitempty"`
 	Library         string          `json:"library" yaml:"library" validate:"required,oneof=sandbox authorize braintree qualpay stripe paysafe worldpay paypal-websitepaymentspro paypal-expresscheckout vindicia chargehive maxmind cybersource paysafe-accountupdater bottomline checkout kount clearhaus trust-payments cwams yapstone"`
-	Configuration   []byte          `json:"configuration" yaml:"configuration" validate:"required"`
+	Configuration   interface{}     `json:"configuration" yaml:"configuration" validate:"required"`
 	ConfigID        string          `json:"configId,omitempty" yaml:"configId,omitempty"`
 	ConfigAuth      string          `json:"configAuth,omitempty" yaml:"configAuth,omitempty"`
 	EnablePCIB      bool            `json:"enablePCIB,omitempty" yaml:"enablePCIB,omitempty"`
@@ -37,6 +38,24 @@ func (Connector) GetKind() object.Kind { return KindConnector }
 
 // GetVersion returns the Connector version
 func (Connector) GetVersion() string { return "v1" }
+
+func (c Connector) GetConfigurationJSON() []byte {
+	if u, ok := c.Configuration.([]uint8); ok {
+		dec, err := base64.StdEncoding.DecodeString(string(u))
+		if err == nil {
+			return dec
+		}
+		return u
+	} else if s, ok := c.Configuration.(string); ok {
+		dec, err := base64.StdEncoding.DecodeString(s)
+		if err == nil {
+			return dec
+		}
+		return []byte(s)
+	}
+	j, _ := json.Marshal(c.Configuration)
+	return j
+}
 
 // NewDefinition returns a new connector definition
 func NewDefinition(d *object.Definition) (*Definition, error) {

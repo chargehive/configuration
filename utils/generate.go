@@ -130,25 +130,25 @@ func Generate(conf Template, version string, pretty bool) ([]byte, error) {
 func buildSpec(conf Template) (object.Specification, error) {
 	switch conf {
 	case confConnAuthorize:
-		j, _ := json.Marshal(connectorconfig.AuthorizeCredentials{APILoginID: &chg, TransactionKey: &chg, Environment: "sandbox"})
+		j := connectorconfig.AuthorizeCredentials{APILoginID: &chg, TransactionKey: &chg, Environment: "sandbox"}
 		return connector.Connector{Library: string(connectorconfig.LibraryAuthorize), Configuration: j}, nil
 	case confConnBrainTree:
-		j, _ := json.Marshal(connectorconfig.BraintreeCredentials{PublicKey: &chg, PrivateKey: &chg, MerchantID: chg, MerchantAccountID: chg, Currency: "USD", Environment: "sandbox"})
+		j := connectorconfig.BraintreeCredentials{PublicKey: &chg, PrivateKey: &chg, MerchantID: chg, MerchantAccountID: chg, Currency: "USD", Environment: "sandbox"}
 		return connector.Connector{Library: string(connectorconfig.LibraryBraintree), Configuration: j}, nil
 	case confConnChargeHive:
-		j, _ := json.Marshal(connectorconfig.ChargeHiveCredentials{})
+		j := connectorconfig.ChargeHiveCredentials{}
 		return connector.Connector{Library: string(connectorconfig.LibraryChargeHive), Configuration: j}, nil
 	case confConnCyberSource:
-		j, _ := json.Marshal(connectorconfig.CyberSourceCredentials{MerchantID: chg, TransactionKey: &chg, Environment: "test"})
+		j := connectorconfig.CyberSourceCredentials{MerchantID: chg, TransactionKey: &chg, Environment: "test"}
 		return connector.Connector{Library: string(connectorconfig.LibraryCyberSource), Configuration: j}, nil
 	case confConnMaxMind:
-		j, _ := json.Marshal(connectorconfig.MaxMindCredentials{AccountID: chg, LicenceKey: &chg, ServiceType: 0})
+		j := connectorconfig.MaxMindCredentials{AccountID: chg, LicenceKey: &chg, ServiceType: 0}
 		return connector.Connector{Library: string(connectorconfig.LibraryMaxMind), Configuration: j}, nil
 	case confConnPayPalExpress:
-		j, _ := json.Marshal(connectorconfig.PayPalExpressCheckoutCredentials{APIUsername: &chg, APIPassword: &chg, APISignature: &chg, SupportedCurrencies: []string{"USD"}, Environment: "sandbox"})
+		j := connectorconfig.PayPalExpressCheckoutCredentials{APIUsername: &chg, APIPassword: &chg, APISignature: &chg, SupportedCurrencies: []string{"USD"}, Environment: "sandbox"}
 		return connector.Connector{Library: string(connectorconfig.LibraryPayPalExpressCheckout), Configuration: j}, nil
 	case confConnPayPalWPP:
-		j, _ := json.Marshal(connectorconfig.PayPalWebsitePaymentsProCredentials{
+		j := connectorconfig.PayPalWebsitePaymentsProCredentials{
 			APIUsername:            &chg,
 			APIPassword:            &chg,
 			APISignature:           &chg,
@@ -161,10 +161,10 @@ func buildSpec(conf Template) (object.Specification, error) {
 			CardinalAPIKey:         &chg,
 			CardinalOrgUnitID:      &chg,
 			Environment:            "sandbox",
-		})
+		}
 		return connector.Connector{Library: string(connectorconfig.LibraryPayPalWebsitePaymentsPro), Configuration: j}, nil
 	case confConnPaysafe:
-		j, _ := json.Marshal(connectorconfig.PaySafeCredentials{
+		j := connectorconfig.PaySafeCredentials{
 			Acquirer:               chg,
 			AccountID:              chg,
 			APIUsername:            &chg,
@@ -174,22 +174,23 @@ func buildSpec(conf Template) (object.Specification, error) {
 			UseVault:               new(bool),
 			SingleUseTokenPassword: new(string),
 			SingleUseTokenUsername: "",
-		})
+			MerchantURL:            "https://test.com",
+		}
 		return connector.Connector{Library: string(connectorconfig.LibraryPaySafe), Configuration: j}, nil
 	case confConnQualPay:
-		j, _ := json.Marshal(connectorconfig.QualpayCredentials{APIKey: &chg, MerchantID: 1, Environment: "test"})
+		j := connectorconfig.QualpayCredentials{APIKey: &chg, MerchantID: 1, Environment: "test"}
 		return connector.Connector{Library: string(connectorconfig.LibraryQualPay), Configuration: j}, nil
 	case confConnSandbox:
-		j, _ := json.Marshal(connectorconfig.SandboxCredentials{Mode: "dynamic"})
+		j := connectorconfig.SandboxCredentials{Mode: "dynamic"}
 		return connector.Connector{Library: string(connectorconfig.LibrarySandbox), Configuration: j}, nil
 	case confConnStripe:
-		j, _ := json.Marshal(connectorconfig.StripeCredentials{APIKey: &chg})
+		j := connectorconfig.StripeCredentials{APIKey: &chg}
 		return connector.Connector{Library: string(connectorconfig.LibraryStripe), Configuration: j}, nil
 	case confConnVindicia:
-		j, _ := json.Marshal(connectorconfig.VindiciaCredentials{Login: chg, Password: &chg, HMACKey: &chg, PGPPrivateKey: &chg, Environment: "development", ConnectorPool: []connectorconfig.ConnectorAttempt{{ConnectorID: "", DivisionNumber: "", Weight: 0}}})
+		j := connectorconfig.VindiciaCredentials{Login: chg, Password: &chg, HMACKey: &chg, PGPPrivateKey: &chg, Environment: "development", ConnectorPool: []connectorconfig.ConnectorAttempt{{ConnectorID: "", DivisionNumber: "", Weight: 0}}}
 		return connector.Connector{Library: string(connectorconfig.LibraryVindicia), Configuration: j}, nil
 	case confConnWorldPay:
-		j, _ := json.Marshal(connectorconfig.WorldpayCredentials{
+		j := connectorconfig.WorldpayCredentials{
 			Username:              &chg,
 			Password:              &chg,
 			MerchantID:            chg,
@@ -225,36 +226,36 @@ func buildSpec(conf Template) (object.Specification, error) {
 				GoogleCardGateway:              connectorconfig.GoogleCardGatewayVANTIV,
 				GoogleCardMerchantId:           chg,
 			},
-		})
+		}
 
 		return connector.Connector{Library: string(connectorconfig.LibraryWorldpay), Configuration: j}, nil
 	case confClearhaus:
-		j, _ := json.Marshal(connectorconfig.ClearhausCredentials{
+		j := connectorconfig.ClearhausCredentials{
 			APIKey:      chg,
 			Environment: connectorconfig.ClearhausEnvironmentTest,
-		})
+		}
 		return connector.Connector{Library: string(connectorconfig.LibraryClearhaus), Configuration: j}, nil
 	case confTrustPayments:
-		j, _ := json.Marshal(connectorconfig.TrustPaymentsCredentials{
+		j := connectorconfig.TrustPaymentsCredentials{
 			Username:    chg,
 			Password:    chg,
 			SiteRef:     chg,
 			Region:      connectorconfig.TrustPaymentsRegionUS,
 			Environment: connectorconfig.TrustPaymentsEnvironmentTest,
-		})
+		}
 		return connector.Connector{Library: string(connectorconfig.LibraryTrustPayments), Configuration: j}, nil
 	case confCWAMS:
-		j, _ := json.Marshal(connectorconfig.CWAMSCredentials{
+		j := connectorconfig.CWAMSCredentials{
 			SecurityKey: chg,
 			TestMode:    true,
-		})
+		}
 		return connector.Connector{Library: string(connectorconfig.LibraryCWAMS), Configuration: j}, nil
 	case confYapstone:
-		j, _ := json.Marshal(connectorconfig.YapstoneCredentials{
+		j := connectorconfig.YapstoneCredentials{
 			ClientID:     chg,
 			ClientSecret: chg,
 			Environment:  connectorconfig.YapstoneEnvironmentTest,
-		})
+		}
 		return connector.Connector{Library: string(connectorconfig.LibraryYapstone), Configuration: j}, nil
 	case confConnectorPool:
 		return connector.Pool{Restriction: "unrestricted", Connectors: []connector.PoolItem{{ConnectorID: chg}}}, nil

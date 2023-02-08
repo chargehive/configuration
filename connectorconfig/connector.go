@@ -22,8 +22,7 @@ func getCreds(c *connector.Connector, strict bool) (Credentials, error) {
 	if err != nil {
 		return credentials, err
 	}
-
-	reader := strings.NewReader(string(c.Configuration))
+	reader := strings.NewReader(string(c.GetConfigurationJSON()))
 	dec := json.NewDecoder(reader)
 	if strict {
 		dec.DisallowUnknownFields()
