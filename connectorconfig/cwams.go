@@ -10,7 +10,7 @@ import (
 
 type CWAMSCredentials struct {
 	TestMode    bool       `json:"testMode" yaml:"testMode"`
-	SecurityKey string     `json:"securityKey" yaml:"securityKey" validate:"required"`
+	SecurityKey *string    `json:"securityKey" yaml:"securityKey" validate:"required"`
 	GooglePay   *GooglePay `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
 	ApplePay    *ApplePay  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
