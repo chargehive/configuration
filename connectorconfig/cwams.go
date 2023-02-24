@@ -9,8 +9,18 @@ import (
 )
 
 type CWAMSCredentials struct {
-	SecurityKey string `json:"securityKey" yaml:"securityKey" validate:"required"`
-	TestMode    bool   `json:"testMode" yaml:"testMode"`
+	TestMode    bool       `json:"testMode" yaml:"testMode"`
+	SecurityKey *string    `json:"securityKey" yaml:"securityKey" validate:"required"`
+	GooglePay   *GooglePay `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay    *ApplePay  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
+}
+
+func (c *CWAMSCredentials) GetGooglePay() *GooglePay {
+	return c.GooglePay
+}
+
+func (c *CWAMSCredentials) GetApplePay() *ApplePay {
+	return c.ApplePay
 }
 
 func (c *CWAMSCredentials) GetLibrary() Library {

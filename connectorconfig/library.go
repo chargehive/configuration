@@ -226,7 +226,9 @@ func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvi
 	case LibraryTrustPayments:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibraryCWAMS:
-		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		return (methodType == chtype.PAYMENT_METHOD_TYPE_CARD) ||
+			(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
+			(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY)
 	case LibraryYapstone:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibraryThreeDSecureIO:
