@@ -1,0 +1,34 @@
+name: Assemble Unit Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    env:
+      TEST_ENV: github
+      GOPRIVATE: "github.com/lucidcube/*,github.com/LucidCube/*,github.com/chargehive/*"
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.17
+
+      - uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.CHIVE_INTEGRATION_TEST_KEY }}
+
+      - name: Build
+        run: |
+          git config --global --add url."git@github.com:lucidcube".insteadOf "https://github.com/lucidcube"
+          git config --global --add url."git@github.com:chargehive".insteadOf "https://github.com/chargehive"
+          go build -v ./...
+
+      - name: Test
+        run: go test -v ./...
