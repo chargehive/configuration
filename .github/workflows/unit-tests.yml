@@ -1,0 +1,27 @@
+name: Assemble Unit Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    env:
+      TEST_ENV: github
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+
+      - name: Build
+        run: |
+          go build -v ./...
+
+      - name: Test
+        run: go test -v ./...

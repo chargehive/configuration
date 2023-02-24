@@ -165,6 +165,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 		return connector.Connector{Library: string(connectorconfig.LibraryPayPalWebsitePaymentsPro), Configuration: j}, nil
 	case confConnPaysafe:
 		j, _ := json.Marshal(connectorconfig.PaySafeCredentials{
+			MerchantURL:            chg,
 			Acquirer:               chg,
 			AccountID:              chg,
 			APIUsername:            &chg,
@@ -245,7 +246,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 		return connector.Connector{Library: string(connectorconfig.LibraryTrustPayments), Configuration: j}, nil
 	case confCWAMS:
 		j, _ := json.Marshal(connectorconfig.CWAMSCredentials{
-			SecurityKey: chg,
+			SecurityKey: &chg,
 			TestMode:    true,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryCWAMS), Configuration: j}, nil
