@@ -46,11 +46,7 @@ func (c StripeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, m
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
-
-	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
-		return true
-	}
-	return false
+	return true
 }
 
 func (c StripeCredentials) CanPlanModeUse(environment.Mode) bool {

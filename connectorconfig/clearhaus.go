@@ -54,8 +54,7 @@ func (c *ClearhausCredentials) SupportsMethod(methodType chtype.PaymentMethodTyp
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
-
-	return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	return true
 }
 
 func (c *ClearhausCredentials) CanPlanModeUse(mode environment.Mode) bool {

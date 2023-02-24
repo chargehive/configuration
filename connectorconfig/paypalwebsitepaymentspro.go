@@ -112,11 +112,7 @@ func (c PayPalWebsitePaymentsProCredentials) SupportsMethod(methodType chtype.Pa
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
-
-	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
-		return true
-	}
-	return false
+	return true
 }
 
 func (c PayPalWebsitePaymentsProCredentials) CanPlanModeUse(mode environment.Mode) bool {
