@@ -32,7 +32,7 @@ func (c *CWAMSCredentials) GetSupportedTypes() []LibraryType {
 }
 
 func (c *CWAMSCredentials) GetSecureFields() []*string {
-	return []*string{}
+	return []*string{c.SecurityKey}
 }
 
 func (c *CWAMSCredentials) Validate() error {
@@ -50,7 +50,7 @@ func (c *CWAMSCredentials) FromJson(input []byte) error {
 }
 
 func (c *CWAMSCredentials) SupportsSca() bool {
-	return false
+	return true
 }
 
 func (c *CWAMSCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
