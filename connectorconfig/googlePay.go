@@ -34,7 +34,7 @@ type GooglePay struct {
 	// GoogleCardTokenType (Card {tokenizationSpecification.type})
 	GoogleCardTokenType GoogleTokenType `json:"googleCardTokenType,omitempty" yaml:"googleCardTokenType,omitempty" validate:"required_with=GoogleMerchantId,omitempty,oneof=DIRECT PAYMENT_GATEWAY"`
 	// GoogleCardGateway (Card {tokenizationSpecification.parameters.gateway}) https://developers.google.com/pay/api/web/reference/request-objects#gateway
-	GoogleCardGateway GoogleCardGateway `json:"googleCardGateway,omitempty" yaml:"googleCardGateway,omitempty" validate:"required_with=GoogleMerchantId,omitempty,oneof=example vantiv paysafe"`
+	GoogleCardGateway GoogleCardGateway `json:"googleCardGateway,omitempty" yaml:"googleCardGateway,omitempty" validate:"required_with=GoogleMerchantId,omitempty"`
 	// GoogleCardMerchantId (Card {tokenizationSpecification.parameters.gatewayMerchantId}) https://developers.google.com/pay/api/web/reference/request-objects#gateway
 	GoogleCardMerchantId string `json:"googleCardMerchantId,omitempty" yaml:"googleCardMerchantId,omitempty" validate:"required_with=GoogleMerchantId"`
 }
@@ -61,7 +61,11 @@ const (
 	GoogleEnvironmentTEST GoogleEnvironment = "TEST"
 	GoogleEnvironmentPROD GoogleEnvironment = "PRODUCTION"
 
-	GoogleCardGatewayVANTIV  GoogleCardGateway = "vantiv"
+	// GoogleCardGatewayVANTIV
+	// Deprecated
+	GoogleCardGatewayVANTIV GoogleCardGateway = "vantiv"
+	// GoogleCardGatewayPAYSAFE
+	// Deprecated
 	GoogleCardGatewayPAYSAFE GoogleCardGateway = "paysafe"
 
 	GoogleCardTokenTypeDIRECT  GoogleTokenType = "DIRECT"
