@@ -50,11 +50,9 @@ func (c PayPalExpressCheckoutCredentials) SupportsMethod(methodType chtype.Payme
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
-
-	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_PAYPAL {
-		return true
-	}
-	return false
+	return c.APIUsername != nil && *c.APIUsername != "" &&
+		c.APIPassword != nil && *c.APIPassword != "" &&
+		c.APISignature != nil && *c.APISignature != ""
 }
 
 func (c PayPalExpressCheckoutCredentials) CanPlanModeUse(mode environment.Mode) bool {

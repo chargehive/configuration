@@ -57,11 +57,7 @@ func (c MaxMindCredentials) SupportsMethod(methodType chtype.PaymentMethodType, 
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
-
-	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
-		return true
-	}
-	return false
+	return true
 }
 
 func (c MaxMindCredentials) CanPlanModeUse(environment.Mode) bool {

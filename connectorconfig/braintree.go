@@ -73,11 +73,7 @@ func (c BraintreeCredentials) SupportsMethod(methodType chtype.PaymentMethodType
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
-
-	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
-		return true
-	}
-	return false
+	return true
 }
 
 func (c BraintreeCredentials) CanPlanModeUse(mode environment.Mode) bool {

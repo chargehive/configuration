@@ -65,8 +65,7 @@ func (c *TrustPaymentsCredentials) SupportsMethod(methodType chtype.PaymentMetho
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
-
-	return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	return true
 }
 
 func (c *TrustPaymentsCredentials) CanPlanModeUse(mode environment.Mode) bool {

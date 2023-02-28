@@ -65,11 +65,7 @@ func (c ThreeDSecureIOCredentials) SupportsMethod(methodType chtype.PaymentMetho
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
-
-	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
-		return true
-	}
-	return false
+	return true
 }
 
 func (c ThreeDSecureIOCredentials) CanPlanModeUse(mode environment.Mode) bool {

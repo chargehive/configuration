@@ -59,11 +59,7 @@ func (c BottomlineCredentials) SupportsMethod(methodType chtype.PaymentMethodTyp
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
-
-	if methodType == chtype.PAYMENT_METHOD_TYPE_DIRECTDEBIT {
-		return true
-	}
-	return false
+	return true
 }
 
 func (c BottomlineCredentials) CanPlanModeUse(mode environment.Mode) bool {

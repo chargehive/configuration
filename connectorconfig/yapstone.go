@@ -55,8 +55,7 @@ func (c *YapstoneCredentials) SupportsMethod(methodType chtype.PaymentMethodType
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
-
-	return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	return true
 }
 
 func (c *YapstoneCredentials) CanPlanModeUse(mode environment.Mode) bool {

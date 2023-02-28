@@ -102,22 +102,13 @@ func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
-
-	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
-		return true
+	if methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY {
+		return c.GetApplePay().IsValid()
 	}
-	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
-		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY &&
-		c.ApplePay != nil && c.ApplePay.IsValid() {
-		return true
+	if methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY {
+		return c.GetGooglePay().IsValid()
 	}
-	if methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET &&
-		methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY &&
-		c.GooglePayPageId != "" &&
-		c.GooglePay != nil && c.GooglePay.IsValid() {
-		return true
-	}
-	return false
+	return true
 }
 
 func (c WorldpayCredentials) CanPlanModeUse(mode environment.Mode) bool {

@@ -58,8 +58,7 @@ func (c KountCredentials) SupportsMethod(methodType chtype.PaymentMethodType, me
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
-
-	return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	return true
 }
 
 func (c KountCredentials) CanPlanModeUse(environment.Mode) bool {

@@ -54,11 +54,7 @@ func (c CyberSourceCredentials) SupportsMethod(methodType chtype.PaymentMethodTy
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
-
-	if methodType == chtype.PAYMENT_METHOD_TYPE_CARD {
-		return true
-	}
-	return false
+	return true
 }
 
 func (c CyberSourceCredentials) CanPlanModeUse(environment.Mode) bool {

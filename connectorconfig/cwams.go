@@ -57,8 +57,13 @@ func (c *CWAMSCredentials) SupportsMethod(methodType chtype.PaymentMethodType, m
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
-
-	return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	if methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY {
+		return c.GetApplePay().IsValid()
+	}
+	if methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY {
+		return c.GetGooglePay().IsValid()
+	}
+	return true
 }
 
 func (c *CWAMSCredentials) CanPlanModeUse(mode environment.Mode) bool {
