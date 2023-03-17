@@ -251,9 +251,9 @@ Configuration:
 
 ```json
 {
-  "APIKey": "xxxxxxxxxxxx",
-  "MerchantID": "int64",
-  "Environment": "test"
+  "apiKey": "xxxxxxxxxxxx",
+  "merchantID": "int64",
+  "environment": "test"
 }
 ```
 
