@@ -447,12 +447,12 @@ Configuration:
              FieldName | Definition
 
 ----------------------:|:---   
-siteID | The site ID on your Kount Account
-merchantID | The Merchant Id of your Kount Account
+siteID | The site ID for your Kount Account - this will be given to you by Kount
+merchantID | The Merchant Id for your Kount Account - this will be given to you by Kount
 configKey | The configuration key defined within your Kount account
-apiKey | The API key defined in your Kount account
-dataCollectorURL | The Kount data collection URL and will be test or a production URL depending on the environment
-riskInquiryServiceURL | The Kount risk inquiry URL and will be test or a production URL depending on the environment
+apiKey | The API key for your Kount account -> Admin -> API Keys, create a new Key.
+dataCollectorURL | The Kount data collection URL and will be test or a production URL depending on the environment. Kount will provide this.
+riskInquiryServiceURL | The Kount risk inquiry URL and will be test or a production URL depending on the environment. Kount will provide this.
 environment | Must be either "test" or "production"
 
 ### MaxMind

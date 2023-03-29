@@ -1,5 +1,5 @@
 # Fraud Policy
-The fraud policy defines
+The fraud policy allows a Fraud service to be used for charges to get back a recommendtaion of the likelihood of Fraud within each transaction.
 
 ## Format
 As with all configs, the standard wrapper is used.
