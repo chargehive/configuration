@@ -449,7 +449,7 @@ Configuration:
 ----------------------:|:---   
 siteID | The site ID for your Kount Account - this will be given to you by Kount
 merchantID | The Merchant Id for your Kount Account - this will be given to you by Kount
-configKey | The configuration key defined within your Kount account
+configKey | The configuration key for your Kount account - this will be given to you by Kount
 apiKey | The API key for your Kount account -> Admin -> API Keys, create a new Key.
 dataCollectorURL | The Kount data collection URL and will be test or a production URL depending on the environment. Kount will provide this.
 riskInquiryServiceURL | The Kount risk inquiry URL and will be test or a production URL depending on the environment. Kount will provide this.
