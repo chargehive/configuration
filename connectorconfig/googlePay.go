@@ -39,6 +39,10 @@ type GooglePay struct {
 	GoogleCardMerchantId string `json:"googleCardMerchantId,omitempty" yaml:"googleCardMerchantId,omitempty" validate:"required_with=GoogleMerchantId"`
 }
 
+func (g *GooglePay) GetSecureFields() []*string {
+	return nil
+}
+
 func (g *GooglePay) IsValid() bool {
 	return g.GetGoogleMerchantId() != "" &&
 		g.GetGoogleCardGateway() != "" &&
