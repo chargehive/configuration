@@ -24,6 +24,16 @@ type CheckoutCredentials struct {
 	ProcessingChannelID    string              `json:"processingChannelId" yaml:"processingChannelId"`
 	Currency               string              `json:"currency" yaml:"currency" validate:"oneof=AED AFN ALL AMD ANG AOA ARS AUD AWG AZN BAM BBD BDT BGN BHD BIF BMD BND BOB BRL BSD BTN BWP BYN BZD CAD CDF CHF CLF CLP CNY COP CRC CUP CVE CZK DJF DKK DOP DZD EEK EGP ERN ETB EUR FJD FKP GBP GEL GHS GIP GMD GNF GTQ GYD HKD HNL HRK HTG HUF IDR ILS INR IQD IRR ISK JMD JOD JPY KES KGS KHR KMF KPW KRW KWD KYD KZT LAK LBP LKR LRD LSL LTL LVL LYD MAD MDL MGA MKD MMK MNT MOP MRO MUR MVR MWK MXN MYR MZN NAD NGN NIO NOK NPR NZD OMR PAB PEN PGK PHP PKR PLN PYG QAR RON RSD RUB RWF SAR SBD SCR SDG SEK SGD SHP SLL SOS SRD STD SVC SYP SZL THB TJS TMT TND TOP TRY TTD TWD TZS UAH UGX USD UYU UZS VEF VND VUV WST XAF XCD XOF XPF YER ZAR ZMW ZWL"`
 	Environment            CheckoutEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
+	GooglePay              *GooglePay          `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay               *ApplePay           `json:"applePay,omitempty" yaml:"applePay,omitempty"`
+}
+
+func (c *CheckoutCredentials) GetGooglePay() *GooglePay {
+	return c.GooglePay
+}
+
+func (c *CheckoutCredentials) GetApplePay() *ApplePay {
+	return c.ApplePay
 }
 
 func (c CheckoutCredentials) GetPublicKey() string {
@@ -74,7 +84,10 @@ func (c *CheckoutCredentials) Validate() error {
 }
 
 func (c *CheckoutCredentials) GetSecureFields() []*string {
-	return []*string{c.PublicKey, c.SecretKey, c.AuthorizationHeaderKey, c.SignatureKey}
+	fields := []*string{c.PublicKey, c.SecretKey, c.AuthorizationHeaderKey, c.SignatureKey}
+	fields = append(fields, c.GetGooglePay().GetSecureFields()...)
+	fields = append(fields, c.GetApplePay().GetSecureFields()...)
+	return fields
 }
 
 func (c *CheckoutCredentials) ToConnector() connector.Connector {
