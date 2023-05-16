@@ -19,6 +19,13 @@ type ApplePay struct {
 	AppleMerchantCapabilities []AppleMerchantCapability `json:"appleMerchantCapabilities,omitempty" yaml:"appleMerchantCapabilities,omitempty" validate:"required_with=AppleMerchantIdentifier,dive,oneof=supports3DS supportsCredit supportsDebit supportsEMV"`
 }
 
+func (a *ApplePay) GetSecureFields() []*string {
+	if a == nil {
+		return nil
+	}
+	return []*string{a.AppleMerchantPrivateKey, a.AppleMerchantCertificate}
+}
+
 func (a *ApplePay) IsValid() bool {
 	return a.GetAppleMerchantIdentifier() != "" &&
 		a.GetAppleMerchantDisplayName() != "" &&
