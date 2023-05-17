@@ -23,7 +23,7 @@ func (a *ApplePay) GetSecureFields() []*string {
 	if a == nil {
 		return nil
 	}
-	return []*string{a.AppleMerchantPrivateKey, a.AppleMerchantCertificate}
+	return nil
 }
 
 func (a *ApplePay) IsValid() bool {
