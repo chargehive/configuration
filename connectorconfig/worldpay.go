@@ -77,9 +77,8 @@ func (c *WorldpayCredentials) Validate() error {
 
 func (c *WorldpayCredentials) GetSecureFields() []*string {
 	fields := []*string{c.Username, c.Password, c.CardinalApiIdentifier, c.CardinalApiKey}
-	if c.ApplePay != nil {
-		fields = append(fields, c.ApplePay.AppleMerchantPrivateKey, c.ApplePay.AppleMerchantCertificate)
-	}
+	fields = append(fields, c.GetGooglePay().GetSecureFields()...)
+	fields = append(fields, c.GetApplePay().GetSecureFields()...)
 
 	return fields
 }
