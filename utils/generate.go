@@ -200,6 +200,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 			CardinalApiKey:        &chg,
 			CardinalOrgUnitId:     &chg,
 			ApplePay: &connectorconfig.ApplePay{
+				ConnectorID:               chg,
 				AppleMerchantIdentifier:   chg,
 				AppleMerchantDisplayName:  chg,
 				AppleMerchantCertificate:  &chg,

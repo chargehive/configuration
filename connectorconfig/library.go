@@ -11,6 +11,7 @@ type Library string
 const (
 	// Payment Libraries
 	LibrarySandbox                  Library = "sandbox" // Connector for testing Charge hive
+	LibraryApplePay                 Library = "applepay"
 	LibraryAuthorize                Library = "authorize"
 	LibraryBraintree                Library = "braintree"
 	LibraryQualPay                  Library = "qualpay"
@@ -40,6 +41,7 @@ const (
 
 var LibraryRegister = map[Library]bool{
 	LibrarySandbox:                  true,
+	LibraryApplePay:                 true,
 	LibraryAuthorize:                true,
 	LibraryBraintree:                true,
 	LibraryQualPay:                  true,
@@ -83,6 +85,8 @@ func (l Library) GetDisplayName() string {
 	switch l {
 	case LibrarySandbox:
 		return "ChargeHive Sandbox"
+	case LibraryApplePay:
+		return "ApplePay"
 	case LibraryAuthorize:
 		return "Authorize"
 	case LibraryBraintree:
@@ -130,6 +134,8 @@ func (l Library) GetDisplayName() string {
 func (l Library) GetCredential() (Credentials, error) {
 	switch l {
 	// Payment Libraries
+	case LibraryApplePay:
+		return &ApplePay{}, nil
 	case LibraryAuthorize:
 		return &AuthorizeCredentials{}, nil
 	case LibraryBraintree:
