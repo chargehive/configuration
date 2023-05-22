@@ -1,10 +1,10 @@
 package connectorconfig
 
-type ApplePayCredential interface {
-	GetApplePay() *ApplePay
+type ApplePayEmbeddedCredential interface {
+	GetApplePay() *ApplePayEmbedded
 }
 
-type ApplePay struct {
+type ApplePayEmbedded struct {
 	// AppleMerchantIdentifier REQUIRED TO ENABLE APPLE PAY Merchant Identifier specified in the Apple Developer Merchant section
 	AppleMerchantIdentifier string `json:"appleMerchantIdentifier,omitempty" yaml:"appleMerchantIdentifier,omitempty" validate:"-"`
 	// AppleMerchantDisplayName Value to be displayed on the payment page
@@ -19,14 +19,14 @@ type ApplePay struct {
 	AppleMerchantCapabilities []AppleMerchantCapability `json:"appleMerchantCapabilities,omitempty" yaml:"appleMerchantCapabilities,omitempty" validate:"required_with=AppleMerchantIdentifier,dive,oneof=supports3DS supportsCredit supportsDebit supportsEMV"`
 }
 
-func (a *ApplePay) GetSecureFields() []*string {
+func (a *ApplePayEmbedded) GetSecureFields() []*string {
 	if a == nil {
 		return nil
 	}
 	return []*string{a.AppleMerchantPrivateKey, a.AppleMerchantCertificate}
 }
 
-func (a *ApplePay) IsValid() bool {
+func (a *ApplePayEmbedded) IsValid() bool {
 	return a.GetAppleMerchantIdentifier() != "" &&
 		a.GetAppleMerchantDisplayName() != "" &&
 		a.GetAppleMerchantCertificate() != "" &&
@@ -61,7 +61,7 @@ const (
 	AppleSupportedNetworkVPay            AppleSupportedNetwork = "vPay"
 )
 
-func (a *ApplePay) GetAppleMerchantPublicKey() string {
+func (a *ApplePayEmbedded) GetAppleMerchantPublicKey() string {
 	if a == nil {
 		return ""
 	}
@@ -71,7 +71,7 @@ func (a *ApplePay) GetAppleMerchantPublicKey() string {
 	return *a.AppleMerchantCertificate
 }
 
-func (a *ApplePay) GetAppleMerchantPrivateKey() string {
+func (a *ApplePayEmbedded) GetAppleMerchantPrivateKey() string {
 	if a == nil {
 		return ""
 	}
@@ -81,21 +81,21 @@ func (a *ApplePay) GetAppleMerchantPrivateKey() string {
 	return *a.AppleMerchantPrivateKey
 }
 
-func (a *ApplePay) GetAppleMerchantIdentifier() string {
+func (a *ApplePayEmbedded) GetAppleMerchantIdentifier() string {
 	if a == nil {
 		return ""
 	}
 	return a.AppleMerchantIdentifier
 }
 
-func (a *ApplePay) GetAppleMerchantDisplayName() string {
+func (a *ApplePayEmbedded) GetAppleMerchantDisplayName() string {
 	if a == nil {
 		return ""
 	}
 	return a.AppleMerchantDisplayName
 }
 
-func (a *ApplePay) GetAppleMerchantCertificate() string {
+func (a *ApplePayEmbedded) GetAppleMerchantCertificate() string {
 	if a == nil {
 		return ""
 	}

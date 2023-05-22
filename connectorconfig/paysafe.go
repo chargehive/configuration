@@ -37,14 +37,14 @@ type PaySafeCredentials struct {
 	SingleUseTokenPassword *string            `json:"singleUseTokenPassword" yaml:"singleUseTokenPassword" validate:"required"` // string* needs "required" to ensure nil is never returned
 	SingleUseTokenUsername string             `json:"singleUseTokenUsername" yaml:"singleUseTokenUsername" validate:"-"`        // string will default to empty string
 	GooglePay              *GooglePay         `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
-	ApplePay               *ApplePay          `json:"applePay,omitempty" yaml:"applePay,omitempty"`
+	ApplePay               *ApplePayEmbedded  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
 func (c *PaySafeCredentials) GetGooglePay() *GooglePay {
 	return c.GooglePay
 }
 
-func (c *PaySafeCredentials) GetApplePay() *ApplePay {
+func (c *PaySafeCredentials) GetApplePay() *ApplePayEmbedded {
 	return c.ApplePay
 }
 

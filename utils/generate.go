@@ -199,7 +199,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 			CardinalApiIdentifier: &chg,
 			CardinalApiKey:        &chg,
 			CardinalOrgUnitId:     &chg,
-			ApplePay: &connectorconfig.ApplePay{
+			ApplePay: &connectorconfig.ApplePayEmbedded{
 				AppleMerchantIdentifier:   chg,
 				AppleMerchantDisplayName:  chg,
 				AppleMerchantCertificate:  &chg,
