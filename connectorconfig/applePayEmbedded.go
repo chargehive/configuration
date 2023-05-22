@@ -5,6 +5,9 @@ type ApplePayEmbeddedCredential interface {
 }
 
 type ApplePayEmbedded struct {
+	// ConnectorID The ID of the connector that provides the ApplePay service
+	ConnectorID string `json:"applePayConnectorID,omitempty" yaml:"applePayConnectorID,omitempty" validate:"-"`
+
 	// AppleMerchantIdentifier REQUIRED TO ENABLE APPLE PAY Merchant Identifier specified in the Apple Developer Merchant section
 	AppleMerchantIdentifier string `json:"appleMerchantIdentifier,omitempty" yaml:"appleMerchantIdentifier,omitempty" validate:"-"`
 	// AppleMerchantDisplayName Value to be displayed on the payment page
@@ -27,10 +30,12 @@ func (a *ApplePayEmbedded) GetSecureFields() []*string {
 }
 
 func (a *ApplePayEmbedded) IsValid() bool {
-	return a.GetAppleMerchantIdentifier() != "" &&
-		a.GetAppleMerchantDisplayName() != "" &&
-		a.GetAppleMerchantCertificate() != "" &&
-		a.GetAppleMerchantPrivateKey() != ""
+	return a == nil ||
+		a.ConnectorID != "" ||
+		(a.GetAppleMerchantIdentifier() != "" &&
+			a.GetAppleMerchantDisplayName() != "" &&
+			a.GetAppleMerchantCertificate() != "" &&
+			a.GetAppleMerchantPrivateKey() != "")
 }
 
 type (
