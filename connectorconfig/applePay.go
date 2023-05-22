@@ -14,7 +14,7 @@ type ApplePayCredential interface {
 
 type ApplePayCredentials struct {
 	// Region whether global(empty) or china
-	Region string `json:"region,omitempty" yaml:"region,omitempty" validate:"default=,required,dive,oneof=,cn"`
+	Region string `json:"region,omitempty" yaml:"region,omitempty" validate:"oneof='' cn"`
 
 	// AppleMerchantIdentifier REQUIRED TO ENABLE APPLE PAY Merchant Identifier specified in the Apple Developer Merchant section
 	AppleMerchantIdentifier string `json:"appleMerchantIdentifier,omitempty" yaml:"appleMerchantIdentifier,omitempty" validate:"required"`
