@@ -38,34 +38,6 @@ func (a *ApplePayEmbedded) IsValid() bool {
 			a.GetAppleMerchantPrivateKey() != "")
 }
 
-type (
-	AppleMerchantCapability string
-	AppleSupportedNetwork   string
-)
-
-const (
-	AppleMerchantCapabilitysupports3DS    AppleMerchantCapability = "supports3DS"
-	AppleMerchantCapabilitysupportsCredit AppleMerchantCapability = "supportsCredit"
-	AppleMerchantCapabilitysupportsDebit  AppleMerchantCapability = "supportsDebit"
-	AppleMerchantCapabilitysupportsEMV    AppleMerchantCapability = "supportsEMV"
-
-	AppleSupportedNetworkAmex            AppleSupportedNetwork = "amex"
-	AppleSupportedNetworkCartesBancaires AppleSupportedNetwork = "cartesBancaires"
-	AppleSupportedNetworkChinaUnionPay   AppleSupportedNetwork = "chinaUnionPay"
-	AppleSupportedNetworkDiscover        AppleSupportedNetwork = "discover"
-	AppleSupportedNetworkEFTPos          AppleSupportedNetwork = "eftpos"
-	AppleSupportedNetworkElectron        AppleSupportedNetwork = "electron"
-	AppleSupportedNetworkELO             AppleSupportedNetwork = "elo"
-	AppleSupportedNetworkInterac         AppleSupportedNetwork = "interac"
-	AppleSupportedNetworkJCB             AppleSupportedNetwork = "jcb"
-	AppleSupportedNetworkMada            AppleSupportedNetwork = "mada"
-	AppleSupportedNetworkMaestro         AppleSupportedNetwork = "maestro"
-	AppleSupportedNetworkMasterCard      AppleSupportedNetwork = "masterCard"
-	AppleSupportedNetworkPrivateLabel    AppleSupportedNetwork = "privateLabel"
-	AppleSupportedNetworkVisa            AppleSupportedNetwork = "visa"
-	AppleSupportedNetworkVPay            AppleSupportedNetwork = "vPay"
-)
-
 func (a *ApplePayEmbedded) GetAppleMerchantPublicKey() string {
 	if a == nil {
 		return ""
