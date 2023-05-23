@@ -38,16 +38,6 @@ func (a *ApplePayEmbedded) IsValid() bool {
 			a.GetAppleMerchantPrivateKey() != "")
 }
 
-func (a *ApplePayEmbedded) GetAppleMerchantPublicKey() string {
-	if a == nil {
-		return ""
-	}
-	if a.AppleMerchantCertificate == nil {
-		return ""
-	}
-	return *a.AppleMerchantCertificate
-}
-
 func (a *ApplePayEmbedded) GetAppleMerchantPrivateKey() string {
 	if a == nil {
 		return ""
@@ -56,6 +46,16 @@ func (a *ApplePayEmbedded) GetAppleMerchantPrivateKey() string {
 		return ""
 	}
 	return *a.AppleMerchantPrivateKey
+}
+
+func (a *ApplePayEmbedded) GetAppleMerchantCertificate() string {
+	if a == nil {
+		return ""
+	}
+	if a.AppleMerchantCertificate == nil {
+		return ""
+	}
+	return *a.AppleMerchantCertificate
 }
 
 func (a *ApplePayEmbedded) GetAppleMerchantIdentifier() string {
@@ -72,9 +72,8 @@ func (a *ApplePayEmbedded) GetAppleMerchantDisplayName() string {
 	return a.AppleMerchantDisplayName
 }
 
-func (a *ApplePayEmbedded) GetAppleMerchantCertificate() string {
-	if a == nil {
-		return ""
-	}
-	return *a.AppleMerchantCertificate
+// GetAppleMerchantPublicKey
+// Deprecated: use GetAppleMerchantCertificate instead
+func (a *ApplePayEmbedded) GetAppleMerchantPublicKey() string {
+	return a.GetAppleMerchantCertificate()
 }
