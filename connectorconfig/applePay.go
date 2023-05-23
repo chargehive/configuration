@@ -42,8 +42,8 @@ func (a *ApplePayCredentials) GetSupportedTypes() []LibraryType {
 func (a *ApplePayCredentials) Validate() error {
 	if a.AppleMerchantIdentifier != "" {
 		// ensure certificates are valid
-		certData, _ := base64.StdEncoding.DecodeString(a.GetAppleMerchantCertificate())
-		keyData, _ := base64.StdEncoding.DecodeString(a.GetAppleMerchantPrivateKey())
+		certData, _ := base64.StdEncoding.DecodeString(a.GetAppleIdentityCertificate())
+		keyData, _ := base64.StdEncoding.DecodeString(a.GetAppleIdentityPrivateKey())
 		_, err := tls.X509KeyPair(certData, keyData)
 		return err
 	}
@@ -87,8 +87,9 @@ func (a *ApplePayCredentials) GetSecureFields() []*string {
 func (a *ApplePayCredentials) IsValid() bool {
 	return a.GetAppleMerchantIdentifier() != "" &&
 		a.GetAppleMerchantDisplayName() != "" &&
-		a.GetAppleMerchantCertificate() != "" &&
-		a.GetAppleMerchantPrivateKey() != ""
+		a.GetAppleIdentityCertificate() != "" &&
+		a.GetAppleIdentityPrivateKey() != "" &&
+		a.Validate() == nil
 }
 
 type (
@@ -120,7 +121,7 @@ const (
 	AppleSupportedNetworkVPay            AppleSupportedNetwork = "vPay"
 )
 
-func (a *ApplePayCredentials) GetAppleMerchantPublicKey() string {
+func (a *ApplePayCredentials) GetAppleIdentityCertificate() string {
 	if a == nil {
 		return ""
 	}
@@ -130,7 +131,7 @@ func (a *ApplePayCredentials) GetAppleMerchantPublicKey() string {
 	return *a.AppleIdentityCertificate
 }
 
-func (a *ApplePayCredentials) GetAppleMerchantPrivateKey() string {
+func (a *ApplePayCredentials) GetAppleIdentityPrivateKey() string {
 	if a == nil {
 		return ""
 	}
@@ -152,11 +153,4 @@ func (a *ApplePayCredentials) GetAppleMerchantDisplayName() string {
 		return ""
 	}
 	return a.AppleMerchantDisplayName
-}
-
-func (a *ApplePayCredentials) GetAppleMerchantCertificate() string {
-	if a == nil {
-		return ""
-	}
-	return *a.AppleIdentityCertificate
 }
