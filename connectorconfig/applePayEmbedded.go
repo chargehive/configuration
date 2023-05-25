@@ -30,8 +30,10 @@ func (a *ApplePayEmbedded) GetSecureFields() []*string {
 }
 
 func (a *ApplePayEmbedded) IsValid() bool {
-	return a == nil ||
-		a.ConnectorID != "" ||
+	if a == nil {
+		return false
+	}
+	return a.ConnectorID != "" ||
 		(a.GetAppleMerchantIdentifier() != "" &&
 			a.GetAppleMerchantDisplayName() != "" &&
 			a.GetAppleMerchantCertificate() != "" &&

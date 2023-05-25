@@ -44,6 +44,9 @@ func (g *GooglePay) GetSecureFields() []*string {
 }
 
 func (g *GooglePay) IsValid() bool {
+	if g == nil {
+		return false
+	}
 	return g.GetGoogleMerchantId() != "" &&
 		g.GetGoogleCardGateway() != "" &&
 		g.GetGoogleCardMerchantId() != ""
