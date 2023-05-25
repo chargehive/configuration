@@ -85,6 +85,9 @@ func (a *ApplePayCredentials) GetSecureFields() []*string {
 }
 
 func (a *ApplePayCredentials) IsValid() bool {
+	if a == nil {
+		return false
+	}
 	return a.GetAppleMerchantIdentifier() != "" &&
 		a.GetAppleMerchantDisplayName() != "" &&
 		a.GetAppleIdentityCertificate() != "" &&
