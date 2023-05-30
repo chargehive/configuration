@@ -63,6 +63,7 @@ var LibraryRegister = map[Library]bool{
 	LibraryTrustPayments:            true,
 	LibraryCWAMS:                    true,
 	LibraryYapstone:                 true,
+	LibrarySandbanx:                 true,
 }
 
 type LibraryType string
@@ -128,6 +129,8 @@ func (l Library) GetDisplayName() string {
 		return "CWAMS"
 	case LibraryYapstone:
 		return "Yapstone"
+	case LibrarySandbanx:
+		return "SandBanx"
 	}
 	return string(l)
 }
