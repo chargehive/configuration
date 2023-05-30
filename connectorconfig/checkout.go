@@ -108,6 +108,12 @@ func (c CheckoutCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
+	if methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY {
+		return c.GetApplePay().IsValid()
+	}
+	if methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY {
+		return c.GetGooglePay().IsValid()
+	}
 	return true
 }
 
