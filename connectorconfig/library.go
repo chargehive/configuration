@@ -28,6 +28,7 @@ const (
 	LibraryCWAMS                    Library = "cwams"
 	LibraryYapstone                 Library = "yapstone"
 	LibraryThreeDSecureIO           Library = "threedsecureio"
+	LibrarySandbanx                 Library = "sandbanx"
 
 	// Fraud Libraries
 	LibraryChargeHive  Library = "chargehive"
@@ -168,6 +169,8 @@ func (l Library) GetCredential() (Credentials, error) {
 		return &CWAMSCredentials{}, nil
 	case LibraryYapstone:
 		return &YapstoneCredentials{}, nil
+	case LibrarySandbanx:
+		return &SandbanxCredentials{}, nil
 
 		// Fraud Libraries
 	case LibraryMaxMind:
