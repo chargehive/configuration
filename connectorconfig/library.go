@@ -244,6 +244,8 @@ func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvi
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibraryThreeDSecureIO:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibrarySandbanx:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	}
 	return false
 }
