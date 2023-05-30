@@ -63,6 +63,7 @@ var LibraryRegister = map[Library]bool{
 	LibraryTrustPayments:            true,
 	LibraryCWAMS:                    true,
 	LibraryYapstone:                 true,
+	LibrarySandbanx:                 true,
 }
 
 type LibraryType string
@@ -128,6 +129,8 @@ func (l Library) GetDisplayName() string {
 		return "CWAMS"
 	case LibraryYapstone:
 		return "Yapstone"
+	case LibrarySandbanx:
+		return "SandBanx"
 	}
 	return string(l)
 }
@@ -243,6 +246,8 @@ func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvi
 	case LibraryYapstone:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibraryThreeDSecureIO:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibrarySandbanx:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	}
 	return false
