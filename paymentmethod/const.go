@@ -24,6 +24,7 @@ const (
 	InfoKeyPayerReference     InfoKey = "payer_reference"
 	InfoKeyAccountNumberLast2 InfoKey = "account_number_last_two"
 	InfoKeySortCode           InfoKey = "sort_code"
+	InfoKeyConnectorToken     InfoKey = "connector_token"
 )
 
 // Scheme us a value used to indicate a payment scheme type
