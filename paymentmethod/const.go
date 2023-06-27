@@ -3,7 +3,7 @@ package paymentmethod
 // Key is a key used to tag information about a payment method
 type InfoKey string
 
-// Keys
+// InfoKey constants
 const (
 	InfoKeyPaymentScheme      InfoKey = "payment_scheme"
 	InfoKeyCardBrand          InfoKey = "card_brand"
@@ -24,7 +24,10 @@ const (
 	InfoKeyPayerReference     InfoKey = "payer_reference"
 	InfoKeyAccountNumberLast2 InfoKey = "account_number_last_two"
 	InfoKeySortCode           InfoKey = "sort_code"
-	InfoKeyConnectorToken     InfoKey = "connector_token"
+	// InfoKeyConnectorToken token for this payment method on the connector
+	InfoKeyConnectorToken InfoKey = "connector_token"
+	// InfoKeyNetworkTransactionID deprecated - should be migrated into a sequence
+	InfoKeyNetworkTransactionID InfoKey = "network_transaction_id"
 )
 
 // Scheme us a value used to indicate a payment scheme type
