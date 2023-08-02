@@ -26,7 +26,7 @@ type BraintreeCredentials struct {
 }
 
 func (c *BraintreeCredentials) GetMID() string {
-	return c.MerchantID
+	return c.MerchantAccountID
 }
 
 func (c *BraintreeCredentials) GetPublicKey() string {

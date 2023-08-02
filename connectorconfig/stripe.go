@@ -9,11 +9,12 @@ import (
 )
 
 type StripeCredentials struct {
-	APIKey *string `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
+	AccountID string  `json:"accountId" yaml:"accountId"`
+	APIKey    *string `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
 }
 
 func (c *StripeCredentials) GetMID() string {
-	return *c.APIKey // todo
+	return c.AccountID
 }
 
 func (c *StripeCredentials) GetLibrary() Library {

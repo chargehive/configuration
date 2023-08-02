@@ -21,7 +21,7 @@ type ClearhausCredentials struct {
 }
 
 func (c *ClearhausCredentials) GetMID() string {
-	return c.APIKey
+	return ""
 }
 
 func (c *ClearhausCredentials) GetLibrary() Library {

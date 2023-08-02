@@ -16,7 +16,7 @@ type CWAMSCredentials struct {
 }
 
 func (c *CWAMSCredentials) GetMID() string {
-	return "TODO"
+	return ""
 }
 
 func (c *CWAMSCredentials) GetGooglePay() *GooglePay {

@@ -25,7 +25,7 @@ type ThreeDSecureIOCredentials struct {
 }
 
 func (c *ThreeDSecureIOCredentials) GetMID() string {
-	return c.MerchantName // todo should this be acquirerMerchantID?
+	return c.MerchantName
 }
 
 func (c *ThreeDSecureIOCredentials) GetApiKey() string {

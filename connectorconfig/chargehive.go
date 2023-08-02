@@ -12,7 +12,7 @@ type ChargeHiveCredentials struct {
 }
 
 func (c *ChargeHiveCredentials) GetMID() string {
-	return "TODO"
+	return ""
 }
 
 func (c *ChargeHiveCredentials) GetLibrary() Library {

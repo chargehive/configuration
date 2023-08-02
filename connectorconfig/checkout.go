@@ -29,7 +29,7 @@ type CheckoutCredentials struct {
 }
 
 func (c *CheckoutCredentials) GetMID() string {
-	return *c.PublicKey // todo
+	return ""
 }
 
 func (c *CheckoutCredentials) GetGooglePay() *GooglePay {

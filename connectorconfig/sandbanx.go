@@ -9,14 +9,15 @@ import (
 )
 
 type SandbanxCredentials struct {
-	ProcessingDelaySeconds int  `json:"processingDelaySeconds" yaml:"processingDelaySeconds" validate:"-"` // seconds to delay processing
-	Offline                bool `json:"offline" yaml:"offline" validate:"-"`                               // Return service unavailable
-	FailAuth               bool `json:"failAuth" yaml:"failAuth" validate:"-"`                             // Fail to authorize
-	ChaosLevel             int  `json:"chaosLevel" yaml:"chaosLevel" validate:"-"`                         // Percent of errors
+	MerchantID             string `json:"merchantId" yaml:"merchantID" validate:"-"`
+	ProcessingDelaySeconds int    `json:"processingDelaySeconds" yaml:"processingDelaySeconds" validate:"-"` // seconds to delay processing
+	Offline                bool   `json:"offline" yaml:"offline" validate:"-"`                               // Return service unavailable
+	FailAuth               bool   `json:"failAuth" yaml:"failAuth" validate:"-"`                             // Fail to authorize
+	ChaosLevel             int    `json:"chaosLevel" yaml:"chaosLevel" validate:"-"`                         // Percent of errors
 }
 
 func (c *SandbanxCredentials) GetMID() string {
-	return "TODO" // todo
+	return c.MerchantID
 }
 
 func (c *SandbanxCredentials) GetLibrary() Library {

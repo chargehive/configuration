@@ -22,7 +22,7 @@ type YapstoneCredentials struct {
 }
 
 func (c *YapstoneCredentials) GetMID() string {
-	return c.ClientID
+	return ""
 }
 
 func (c *YapstoneCredentials) GetLibrary() Library {

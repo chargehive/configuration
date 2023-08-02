@@ -19,12 +19,13 @@ const (
 )
 
 type SandboxCredentials struct {
+	MerchantID          string      `json:"merchantId" yaml:"merchantID" validate:"-"`
 	Mode                SandboxMode `json:"mode" yaml:"mode" validate:"oneof=dynamic offline delayed random-timeout chaos"`
 	TransactionIDPrefix string      `json:"transactionIDPrefix" yaml:"transactionIDPrefix" validate:"-"`
 }
 
-func (c *SandboxCredentials) GetMID() Library {
-	return "TODO" // todo
+func (c *SandboxCredentials) GetMID() string {
+	return c.MerchantID
 }
 
 func (c *SandboxCredentials) GetLibrary() Library {
