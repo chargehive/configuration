@@ -15,7 +15,11 @@ type SandbanxCredentials struct {
 	ChaosLevel             int  `json:"chaosLevel" yaml:"chaosLevel" validate:"-"`                         // Percent of errors
 }
 
-func (c SandbanxCredentials) GetLibrary() Library {
+func (c *SandbanxCredentials) GetMID() string {
+	return "TODO" // todo
+}
+
+func (c *SandbanxCredentials) GetLibrary() Library {
 	return LibrarySandbanx
 }
 
@@ -41,21 +45,21 @@ func (c *SandbanxCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c SandbanxCredentials) SupportsSca() bool {
+func (c *SandbanxCredentials) SupportsSca() bool {
 	return true
 }
 
-func (c SandbanxCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *SandbanxCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c SandbanxCredentials) CanPlanModeUse(environment.Mode) bool {
+func (c *SandbanxCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }
 
-func (c SandbanxCredentials) IsRecoveryAgent() bool {
+func (c *SandbanxCredentials) IsRecoveryAgent() bool {
 	return false
 }

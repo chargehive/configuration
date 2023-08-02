@@ -24,18 +24,22 @@ type ThreeDSecureIOCredentials struct {
 	Environment        ThreeDSecureIOEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 }
 
-func (c ThreeDSecureIOCredentials) GetApiKey() string {
+func (c *ThreeDSecureIOCredentials) GetMID() string {
+	return c.MerchantName // todo should this be acquirerMerchantID?
+}
+
+func (c *ThreeDSecureIOCredentials) GetApiKey() string {
 	if c.ApiKey == nil {
 		return ""
 	}
 	return *c.ApiKey
 }
 
-func (c ThreeDSecureIOCredentials) GetLibrary() Library {
+func (c *ThreeDSecureIOCredentials) GetLibrary() Library {
 	return LibraryThreeDSecureIO
 }
 
-func (c ThreeDSecureIOCredentials) GetSupportedTypes() []LibraryType {
+func (c *ThreeDSecureIOCredentials) GetSupportedTypes() []LibraryType {
 	return []LibraryType{LibraryTypeAuthentication}
 }
 
@@ -57,24 +61,24 @@ func (c *ThreeDSecureIOCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c ThreeDSecureIOCredentials) SupportsSca() bool {
+func (c *ThreeDSecureIOCredentials) SupportsSca() bool {
 	return true
 }
 
-func (c ThreeDSecureIOCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *ThreeDSecureIOCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c ThreeDSecureIOCredentials) CanPlanModeUse(mode environment.Mode) bool {
+func (c *ThreeDSecureIOCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == ThreeDSecureIOEnvironmentProduction {
 		return false
 	}
 	return true
 }
 
-func (c ThreeDSecureIOCredentials) IsRecoveryAgent() bool {
+func (c *ThreeDSecureIOCredentials) IsRecoveryAgent() bool {
 	return false
 }

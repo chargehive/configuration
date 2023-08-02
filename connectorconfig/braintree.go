@@ -25,25 +25,29 @@ type BraintreeCredentials struct {
 	Environment       BraintreeEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 }
 
-func (c BraintreeCredentials) GetPublicKey() string {
+func (c *BraintreeCredentials) GetMID() string {
+	return c.MerchantID
+}
+
+func (c *BraintreeCredentials) GetPublicKey() string {
 	if c.PublicKey == nil {
 		return ""
 	}
 	return *c.PublicKey
 }
 
-func (c BraintreeCredentials) GetPrivateKey() string {
+func (c *BraintreeCredentials) GetPrivateKey() string {
 	if c.PrivateKey == nil {
 		return ""
 	}
 	return *c.PrivateKey
 }
 
-func (c BraintreeCredentials) GetLibrary() Library {
+func (c *BraintreeCredentials) GetLibrary() Library {
 	return LibraryBraintree
 }
 
-func (c BraintreeCredentials) GetSupportedTypes() []LibraryType {
+func (c *BraintreeCredentials) GetSupportedTypes() []LibraryType {
 	return []LibraryType{LibraryTypePayment}
 }
 
@@ -65,24 +69,24 @@ func (c *BraintreeCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c BraintreeCredentials) SupportsSca() bool {
+func (c *BraintreeCredentials) SupportsSca() bool {
 	return c.MerchantID != "" && c.GetPublicKey() != "" && c.GetPrivateKey() != "" && c.Environment != ""
 }
 
-func (c BraintreeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *BraintreeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c BraintreeCredentials) CanPlanModeUse(mode environment.Mode) bool {
+func (c *BraintreeCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == BraintreeEnvironmentProduction {
 		return false
 	}
 	return true
 }
 
-func (c BraintreeCredentials) IsRecoveryAgent() bool {
+func (c *BraintreeCredentials) IsRecoveryAgent() bool {
 	return false
 }

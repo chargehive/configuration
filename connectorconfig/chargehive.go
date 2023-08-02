@@ -11,7 +11,11 @@ import (
 type ChargeHiveCredentials struct {
 }
 
-func (c ChargeHiveCredentials) GetLibrary() Library {
+func (c *ChargeHiveCredentials) GetMID() string {
+	return "TODO"
+}
+
+func (c *ChargeHiveCredentials) GetLibrary() Library {
 	return LibraryChargeHive
 }
 
@@ -37,21 +41,21 @@ func (c *ChargeHiveCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c ChargeHiveCredentials) SupportsSca() bool {
+func (c *ChargeHiveCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c ChargeHiveCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *ChargeHiveCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c ChargeHiveCredentials) CanPlanModeUse(environment.Mode) bool {
+func (c *ChargeHiveCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }
 
-func (c ChargeHiveCredentials) IsRecoveryAgent() bool {
+func (c *ChargeHiveCredentials) IsRecoveryAgent() bool {
 	return false
 }

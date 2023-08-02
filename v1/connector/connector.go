@@ -30,7 +30,6 @@ type Connector struct {
 	ConfigID        string          `json:"configId,omitempty" yaml:"configId,omitempty"`
 	ConfigAuth      string          `json:"configAuth,omitempty" yaml:"configAuth,omitempty"`
 	EnablePCIB      bool            `json:"enablePCIB,omitempty" yaml:"enablePCIB,omitempty"`
-	MID             string          `json:"mid,omitempty" yaml:"mid,omitempty"`
 }
 
 // GetKind returns the Connector kind
@@ -38,8 +37,6 @@ func (c Connector) GetKind() object.Kind { return KindConnector }
 
 // GetVersion returns the Connector version
 func (c Connector) GetVersion() string { return "v1" }
-
-func (c Connector) GetMID() string { return c.MID }
 
 // NewDefinition returns a new connector definition
 func NewDefinition(d *object.Definition) (*Definition, error) {

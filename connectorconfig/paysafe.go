@@ -40,6 +40,10 @@ type PaySafeCredentials struct {
 	ApplePay               *ApplePayEmbedded  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
+func (c *PaySafeCredentials) GetMID() string {
+	return c.AccountID
+}
+
 func (c *PaySafeCredentials) GetGooglePay() *GooglePay {
 	return c.GooglePay
 }
@@ -48,14 +52,14 @@ func (c *PaySafeCredentials) GetApplePay() *ApplePayEmbedded {
 	return c.ApplePay
 }
 
-func (c PaySafeCredentials) GetUseVault() bool {
+func (c *PaySafeCredentials) GetUseVault() bool {
 	if c.UseVault == nil {
 		return false
 	}
 	return *c.UseVault
 }
 
-func (c PaySafeCredentials) GetLibrary() Library {
+func (c *PaySafeCredentials) GetLibrary() Library {
 	return LibraryPaySafe
 }
 
@@ -85,11 +89,11 @@ func (c *PaySafeCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c PaySafeCredentials) SupportsSca() bool {
+func (c *PaySafeCredentials) SupportsSca() bool {
 	return c.Environment != "" && c.AccountID != "" && *c.SingleUseTokenPassword != "" && c.SingleUseTokenUsername != ""
 }
 
-func (c PaySafeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *PaySafeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
@@ -102,13 +106,13 @@ func (c PaySafeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, 
 	return true
 }
 
-func (c PaySafeCredentials) CanPlanModeUse(mode environment.Mode) bool {
+func (c *PaySafeCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == PaySafeEnvironmentLive {
 		return false
 	}
 	return true
 }
 
-func (c PaySafeCredentials) IsRecoveryAgent() bool {
+func (c *PaySafeCredentials) IsRecoveryAgent() bool {
 	return false
 }

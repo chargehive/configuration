@@ -23,7 +23,11 @@ type SandboxCredentials struct {
 	TransactionIDPrefix string      `json:"transactionIDPrefix" yaml:"transactionIDPrefix" validate:"-"`
 }
 
-func (c SandboxCredentials) GetLibrary() Library {
+func (c *SandboxCredentials) GetMID() Library {
+	return "TODO" // todo
+}
+
+func (c *SandboxCredentials) GetLibrary() Library {
 	return LibrarySandbox
 }
 
@@ -49,21 +53,21 @@ func (c *SandboxCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c SandboxCredentials) SupportsSca() bool {
+func (c *SandboxCredentials) SupportsSca() bool {
 	return true
 }
 
-func (c SandboxCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *SandboxCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c SandboxCredentials) CanPlanModeUse(environment.Mode) bool {
+func (c *SandboxCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }
 
-func (c SandboxCredentials) IsRecoveryAgent() bool {
+func (c *SandboxCredentials) IsRecoveryAgent() bool {
 	return false
 }

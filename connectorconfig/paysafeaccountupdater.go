@@ -27,7 +27,11 @@ type PaySafeAccountUpdaterCredentials struct {
 	SFTPHost string `json:"sftpHost" yaml:"sftpHost" validate:"required,gt=0"`
 }
 
-func (c PaySafeAccountUpdaterCredentials) GetLibrary() Library {
+func (c *PaySafeAccountUpdaterCredentials) GetMID() string {
+	return c.MerchantAccountNumber
+}
+
+func (c *PaySafeAccountUpdaterCredentials) GetLibrary() Library {
 	return LibraryPaySafeAccountUpdater
 }
 
@@ -57,17 +61,17 @@ func (c *PaySafeAccountUpdaterCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c PaySafeAccountUpdaterCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *PaySafeAccountUpdaterCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c PaySafeAccountUpdaterCredentials) CanPlanModeUse(environment.Mode) bool {
+func (c *PaySafeAccountUpdaterCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }
 
-func (c PaySafeAccountUpdaterCredentials) IsRecoveryAgent() bool {
+func (c *PaySafeAccountUpdaterCredentials) IsRecoveryAgent() bool {
 	return false
 }

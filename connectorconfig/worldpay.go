@@ -34,6 +34,10 @@ type WorldpayCredentials struct {
 	ApplePay              *ApplePayEmbedded   `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
+func (c *WorldpayCredentials) GetMID() string {
+	return c.MerchantID
+}
+
 func (c *WorldpayCredentials) GetGooglePay() *GooglePay {
 	return c.GooglePay
 }
@@ -42,28 +46,28 @@ func (c *WorldpayCredentials) GetApplePay() *ApplePayEmbedded {
 	return c.ApplePay
 }
 
-func (c WorldpayCredentials) GetCardinalApiIdentifier() string {
+func (c *WorldpayCredentials) GetCardinalApiIdentifier() string {
 	if c.CardinalApiIdentifier == nil {
 		return ""
 	}
 	return *c.CardinalApiIdentifier
 }
 
-func (c WorldpayCredentials) GetCardinalApiKey() string {
+func (c *WorldpayCredentials) GetCardinalApiKey() string {
 	if c.CardinalApiKey == nil {
 		return ""
 	}
 	return *c.CardinalApiKey
 }
 
-func (c WorldpayCredentials) GetCardinalOrgUnitId() string {
+func (c *WorldpayCredentials) GetCardinalOrgUnitId() string {
 	if c.CardinalOrgUnitId == nil {
 		return ""
 	}
 	return *c.CardinalOrgUnitId
 }
 
-func (c WorldpayCredentials) GetLibrary() Library {
+func (c *WorldpayCredentials) GetLibrary() Library {
 	return LibraryWorldpay
 }
 
@@ -94,11 +98,11 @@ func (c *WorldpayCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c WorldpayCredentials) SupportsSca() bool {
+func (c *WorldpayCredentials) SupportsSca() bool {
 	return c.GetCardinalApiIdentifier() != "" && c.GetCardinalApiKey() != "" && c.GetCardinalOrgUnitId() != ""
 }
 
-func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
@@ -111,7 +115,7 @@ func (c WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 	return true
 }
 
-func (c WorldpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
+func (c *WorldpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox {
 		if c.Environment == WorldpayEnvironmentProduction || c.Environment == WorldpayEnvironmentProductionTransact {
 			return false
@@ -120,6 +124,6 @@ func (c WorldpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	return true
 }
 
-func (c WorldpayCredentials) IsRecoveryAgent() bool {
+func (c *WorldpayCredentials) IsRecoveryAgent() bool {
 	return false
 }

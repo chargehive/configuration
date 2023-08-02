@@ -31,7 +31,11 @@ type VindiciaCredentials struct {
 	Environment   VindiciaEnvironment `json:"environment" yaml:"environment" validate:"oneof=development stage production"`
 }
 
-func (c VindiciaCredentials) GetLibrary() Library {
+func (c *VindiciaCredentials) GetMID() string {
+	return c.Login
+}
+
+func (c *VindiciaCredentials) GetLibrary() Library {
 	return LibraryVindicia
 }
 
@@ -57,24 +61,24 @@ func (c *VindiciaCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c VindiciaCredentials) SupportsSca() bool {
+func (c *VindiciaCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c VindiciaCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *VindiciaCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c VindiciaCredentials) CanPlanModeUse(mode environment.Mode) bool {
+func (c *VindiciaCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == VindiciaEnvironmentProduction {
 		return false
 	}
 	return true
 }
 
-func (c VindiciaCredentials) IsRecoveryAgent() bool {
+func (c *VindiciaCredentials) IsRecoveryAgent() bool {
 	return true
 }

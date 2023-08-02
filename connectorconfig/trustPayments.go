@@ -31,6 +31,10 @@ type TrustPaymentsCredentials struct {
 	Environment TrustPaymentsEnvironment `json:"environment" yaml:"environment" validate:"oneof=test live"`
 }
 
+func (c *TrustPaymentsCredentials) GetMID() string {
+	return c.Username
+}
+
 func (c *TrustPaymentsCredentials) GetLibrary() Library {
 	return LibraryTrustPayments
 }

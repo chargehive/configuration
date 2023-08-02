@@ -25,7 +25,11 @@ type KountCredentials struct {
 	Environment           KountEnvironment `json:"environment" yaml:"environment" validate:"oneof=test production"`
 }
 
-func (c KountCredentials) GetLibrary() Library {
+func (c *KountCredentials) GetMID() string {
+	return c.MerchantID
+}
+
+func (c *KountCredentials) GetLibrary() Library {
 	return LibraryKount
 }
 
@@ -50,21 +54,21 @@ func (c *KountCredentials) ToConnector() connector.Connector {
 func (c *KountCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
-func (c KountCredentials) SupportsSca() bool {
+func (c *KountCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c KountCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *KountCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c KountCredentials) CanPlanModeUse(environment.Mode) bool {
+func (c *KountCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }
 
-func (c KountCredentials) IsRecoveryAgent() bool {
+func (c *KountCredentials) IsRecoveryAgent() bool {
 	return false
 }

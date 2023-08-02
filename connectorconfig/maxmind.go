@@ -24,7 +24,11 @@ type MaxMindCredentials struct {
 	ServiceType MaxMindMinFraudServiceType `json:"serviceType" yaml:"serviceType" validate:"min=0,max=2"`
 }
 
-func (c MaxMindCredentials) GetLibrary() Library {
+func (c *MaxMindCredentials) GetMID() string {
+	return c.AccountID
+}
+
+func (c *MaxMindCredentials) GetLibrary() Library {
 	return LibraryMaxMind
 }
 
@@ -49,21 +53,21 @@ func (c *MaxMindCredentials) ToConnector() connector.Connector {
 func (c *MaxMindCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
-func (c MaxMindCredentials) SupportsSca() bool {
+func (c *MaxMindCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c MaxMindCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *MaxMindCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c MaxMindCredentials) CanPlanModeUse(environment.Mode) bool {
+func (c *MaxMindCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }
 
-func (c MaxMindCredentials) IsRecoveryAgent() bool {
+func (c *MaxMindCredentials) IsRecoveryAgent() bool {
 	return false
 }

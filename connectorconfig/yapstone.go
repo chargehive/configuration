@@ -21,6 +21,10 @@ type YapstoneCredentials struct {
 	Environment  YapstoneEnvironment `json:"environment" yaml:"environment" validate:"oneof=test live"`
 }
 
+func (c *YapstoneCredentials) GetMID() string {
+	return c.ClientID
+}
+
 func (c *YapstoneCredentials) GetLibrary() Library {
 	return LibraryYapstone
 }

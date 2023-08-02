@@ -20,6 +20,10 @@ type ClearhausCredentials struct {
 	Environment ClearhausEnvironment `json:"environment" yaml:"environment" validate:"required,oneof=test live"`
 }
 
+func (c *ClearhausCredentials) GetMID() string {
+	return c.APIKey
+}
+
 func (c *ClearhausCredentials) GetLibrary() Library {
 	return LibraryClearhaus
 }

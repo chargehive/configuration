@@ -23,56 +23,60 @@ type PayPalWebsitePaymentsProCredentials struct {
 	Environment            PayPalEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox live"`
 }
 
-func (c PayPalWebsitePaymentsProCredentials) GetCardinalProcessorID() string {
+func (c *PayPalWebsitePaymentsProCredentials) GetMID() string {
+	return *c.APIUsername
+}
+
+func (c *PayPalWebsitePaymentsProCredentials) GetCardinalProcessorID() string {
 	if c.CardinalProcessorID == nil {
 		return ""
 	}
 	return *c.CardinalProcessorID
 }
 
-func (c PayPalWebsitePaymentsProCredentials) GetCardinalMerchantID() string {
+func (c *PayPalWebsitePaymentsProCredentials) GetCardinalMerchantID() string {
 	if c.CardinalMerchantID == nil {
 		return ""
 	}
 	return *c.CardinalMerchantID
 }
 
-func (c PayPalWebsitePaymentsProCredentials) GetCardinalTransactionPw() string {
+func (c *PayPalWebsitePaymentsProCredentials) GetCardinalTransactionPw() string {
 	if c.CardinalTransactionPw == nil {
 		return ""
 	}
 	return *c.CardinalTransactionPw
 }
 
-func (c PayPalWebsitePaymentsProCredentials) GetCardinalTransactionURL() string {
+func (c *PayPalWebsitePaymentsProCredentials) GetCardinalTransactionURL() string {
 	if c.CardinalTransactionURL == nil {
 		return ""
 	}
 	return *c.CardinalTransactionURL
 }
 
-func (c PayPalWebsitePaymentsProCredentials) GetCardinalAPIIdentifier() string {
+func (c *PayPalWebsitePaymentsProCredentials) GetCardinalAPIIdentifier() string {
 	if c.CardinalAPIIdentifier == nil {
 		return ""
 	}
 	return *c.CardinalAPIIdentifier
 }
 
-func (c PayPalWebsitePaymentsProCredentials) GetCardinalAPIKey() string {
+func (c *PayPalWebsitePaymentsProCredentials) GetCardinalAPIKey() string {
 	if c.CardinalAPIKey == nil {
 		return ""
 	}
 	return *c.CardinalAPIKey
 }
 
-func (c PayPalWebsitePaymentsProCredentials) GetCardinalOrgUnitID() string {
+func (c *PayPalWebsitePaymentsProCredentials) GetCardinalOrgUnitID() string {
 	if c.CardinalOrgUnitID == nil {
 		return ""
 	}
 	return *c.CardinalOrgUnitID
 }
 
-func (c PayPalWebsitePaymentsProCredentials) GetLibrary() Library {
+func (c *PayPalWebsitePaymentsProCredentials) GetLibrary() Library {
 	return LibraryPayPalWebsitePaymentsPro
 }
 
@@ -108,20 +112,20 @@ func (c *PayPalWebsitePaymentsProCredentials) SupportsSca() bool {
 		c.GetCardinalOrgUnitID() != ""
 }
 
-func (c PayPalWebsitePaymentsProCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *PayPalWebsitePaymentsProCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c PayPalWebsitePaymentsProCredentials) CanPlanModeUse(mode environment.Mode) bool {
+func (c *PayPalWebsitePaymentsProCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == PayPalEnvironmentLive {
 		return false
 	}
 	return true
 }
 
-func (c PayPalWebsitePaymentsProCredentials) IsRecoveryAgent() bool {
+func (c *PayPalWebsitePaymentsProCredentials) IsRecoveryAgent() bool {
 	return false
 }

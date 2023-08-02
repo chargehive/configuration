@@ -25,7 +25,11 @@ type BottomlineCredentials struct {
 	Environment   BottomlineEnvironment `json:"environment" yaml:"environment" validate:"oneof=uat sandbox production"`
 }
 
-func (c BottomlineCredentials) GetLibrary() Library {
+func (c *BottomlineCredentials) GetMID() string {
+	return *c.ClientID
+}
+
+func (c *BottomlineCredentials) GetLibrary() Library {
 	return LibraryBottomline
 }
 
@@ -51,24 +55,24 @@ func (c *BottomlineCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c BottomlineCredentials) SupportsSca() bool {
+func (c *BottomlineCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c BottomlineCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *BottomlineCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c BottomlineCredentials) CanPlanModeUse(mode environment.Mode) bool {
+func (c *BottomlineCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == BottomlineEnvironmentProduction {
 		return false
 	}
 	return true
 }
 
-func (c BottomlineCredentials) IsRecoveryAgent() bool {
+func (c *BottomlineCredentials) IsRecoveryAgent() bool {
 	return false
 }

@@ -28,6 +28,10 @@ type CheckoutCredentials struct {
 	ApplePay               *ApplePayEmbedded   `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
+func (c *CheckoutCredentials) GetMID() string {
+	return *c.PublicKey // todo
+}
+
 func (c *CheckoutCredentials) GetGooglePay() *GooglePay {
 	return c.GooglePay
 }
@@ -36,46 +40,46 @@ func (c *CheckoutCredentials) GetApplePay() *ApplePayEmbedded {
 	return c.ApplePay
 }
 
-func (c CheckoutCredentials) GetPublicKey() string {
+func (c *CheckoutCredentials) GetPublicKey() string {
 	if c.PublicKey == nil {
 		return ""
 	}
 	return *c.PublicKey
 }
 
-func (c CheckoutCredentials) GetSecretKey() string {
+func (c *CheckoutCredentials) GetSecretKey() string {
 	if c.SecretKey == nil {
 		return ""
 	}
 	return *c.SecretKey
 }
 
-func (c CheckoutCredentials) GetAuthorizationHeaderKey() string {
+func (c *CheckoutCredentials) GetAuthorizationHeaderKey() string {
 	if c.AuthorizationHeaderKey == nil {
 		return ""
 	}
 	return *c.AuthorizationHeaderKey
 }
 
-func (c CheckoutCredentials) GetSignatureKey() string {
+func (c *CheckoutCredentials) GetSignatureKey() string {
 	if c.SignatureKey == nil {
 		return ""
 	}
 	return *c.SignatureKey
 }
 
-func (c CheckoutCredentials) GetPlatform() string {
+func (c *CheckoutCredentials) GetPlatform() string {
 	if c.Platform == nil {
 		return "previous"
 	}
 	return *c.Platform
 }
 
-func (c CheckoutCredentials) GetLibrary() Library {
+func (c *CheckoutCredentials) GetLibrary() Library {
 	return LibraryCheckout
 }
 
-func (c CheckoutCredentials) GetSupportedTypes() []LibraryType {
+func (c *CheckoutCredentials) GetSupportedTypes() []LibraryType {
 	return []LibraryType{LibraryTypePayment}
 }
 
@@ -100,11 +104,11 @@ func (c *CheckoutCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c CheckoutCredentials) SupportsSca() bool {
+func (c *CheckoutCredentials) SupportsSca() bool {
 	return c.GetPublicKey() != "" && c.GetSecretKey() != "" && c.Environment != ""
 }
 
-func (c CheckoutCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *CheckoutCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
@@ -117,13 +121,13 @@ func (c CheckoutCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 	return true
 }
 
-func (c CheckoutCredentials) CanPlanModeUse(mode environment.Mode) bool {
+func (c *CheckoutCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == CheckoutEnvironmentProduction {
 		return false
 	}
 	return true
 }
 
-func (c CheckoutCredentials) IsRecoveryAgent() bool {
+func (c *CheckoutCredentials) IsRecoveryAgent() bool {
 	return false
 }
