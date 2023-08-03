@@ -33,10 +33,10 @@ type Connector struct {
 }
 
 // GetKind returns the Connector kind
-func (Connector) GetKind() object.Kind { return KindConnector }
+func (c Connector) GetKind() object.Kind { return KindConnector }
 
 // GetVersion returns the Connector version
-func (Connector) GetVersion() string { return "v1" }
+func (c Connector) GetVersion() string { return "v1" }
 
 // NewDefinition returns a new connector definition
 func NewDefinition(d *object.Definition) (*Definition, error) {

@@ -9,10 +9,15 @@ import (
 )
 
 type StripeCredentials struct {
-	APIKey *string `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
+	AccountID string  `json:"accountId" yaml:"accountId"`
+	APIKey    *string `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
 }
 
-func (c StripeCredentials) GetLibrary() Library {
+func (c *StripeCredentials) GetMID() string {
+	return c.AccountID
+}
+
+func (c *StripeCredentials) GetLibrary() Library {
 	return LibraryStripe
 }
 
@@ -38,22 +43,22 @@ func (c *StripeCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c StripeCredentials) SupportsSca() bool {
+func (c *StripeCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c StripeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *StripeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c StripeCredentials) CanPlanModeUse(environment.Mode) bool {
+func (c *StripeCredentials) CanPlanModeUse(environment.Mode) bool {
 	// todo will require updating when we have test credentials
 	return true
 }
 
-func (c StripeCredentials) IsRecoveryAgent() bool {
+func (c *StripeCredentials) IsRecoveryAgent() bool {
 	return false
 }

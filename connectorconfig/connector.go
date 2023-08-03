@@ -31,3 +31,7 @@ func getCreds(c *connector.Connector, strict bool) (Credentials, error) {
 
 	return credentials, dec.Decode(credentials)
 }
+
+type MerchantIdentifier interface {
+	GetMID() string
+}

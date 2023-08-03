@@ -21,24 +21,28 @@ type AuthorizeCredentials struct {
 	Environment    AuthorizeEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 }
 
-func (c AuthorizeCredentials) GetAPILoginID() string {
+func (c *AuthorizeCredentials) GetMID() string {
+	return c.GetAPILoginID()
+}
+
+func (c *AuthorizeCredentials) GetAPILoginID() string {
 	if c.APILoginID == nil {
 		return ""
 	}
 	return *c.APILoginID
 }
 
-func (c AuthorizeCredentials) GetTransactionKey() string {
+func (c *AuthorizeCredentials) GetTransactionKey() string {
 	if c.TransactionKey == nil {
 		return ""
 	}
 	return *c.TransactionKey
 }
 
-func (c AuthorizeCredentials) GetLibrary() Library {
+func (c *AuthorizeCredentials) GetLibrary() Library {
 	return LibraryAuthorize
 }
-func (c AuthorizeCredentials) GetSupportedTypes() []LibraryType {
+func (c *AuthorizeCredentials) GetSupportedTypes() []LibraryType {
 	return []LibraryType{LibraryTypePayment}
 }
 
@@ -60,24 +64,24 @@ func (c *AuthorizeCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c AuthorizeCredentials) SupportsSca() bool {
+func (c *AuthorizeCredentials) SupportsSca() bool {
 	return c.GetAPILoginID() != "" && c.GetTransactionKey() != ""
 }
 
-func (c AuthorizeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *AuthorizeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c AuthorizeCredentials) CanPlanModeUse(mode environment.Mode) bool {
+func (c *AuthorizeCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == AuthorizeEnvironmentProduction {
 		return false
 	}
 	return true
 }
 
-func (c AuthorizeCredentials) IsRecoveryAgent() bool {
+func (c *AuthorizeCredentials) IsRecoveryAgent() bool {
 	return false
 }

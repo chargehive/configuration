@@ -16,8 +16,13 @@ const (
 )
 
 type ClearhausCredentials struct {
+	MerchantID  string               `json:"merchantId" yaml:"merchantId" validate:"required"`
 	APIKey      string               `json:"apiKey" yaml:"apiKey" validate:"required"`
 	Environment ClearhausEnvironment `json:"environment" yaml:"environment" validate:"required,oneof=test live"`
+}
+
+func (c *ClearhausCredentials) GetMID() string {
+	return c.MerchantID
 }
 
 func (c *ClearhausCredentials) GetLibrary() Library {

@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
@@ -21,11 +22,15 @@ type QualpayCredentials struct {
 	Environment QualPayEnvironment `json:"environment" yaml:"environment" validate:"oneof=test live"`
 }
 
-func (c QualpayCredentials) GetLibrary() Library {
+func (c *QualpayCredentials) GetMID() string {
+	return fmt.Sprintf("%d", c.MerchantID)
+}
+
+func (c *QualpayCredentials) GetLibrary() Library {
 	return LibraryQualPay
 }
 
-func (c QualpayCredentials) GetSupportedTypes() []LibraryType {
+func (c *QualpayCredentials) GetSupportedTypes() []LibraryType {
 	return []LibraryType{LibraryTypePayment}
 }
 
@@ -47,24 +52,24 @@ func (c *QualpayCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c QualpayCredentials) SupportsSca() bool {
+func (c *QualpayCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c QualpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *QualpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c QualpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
+func (c *QualpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == QualPayEnvironmentLive {
 		return false
 	}
 	return true
 }
 
-func (c QualpayCredentials) IsRecoveryAgent() bool {
+func (c *QualpayCredentials) IsRecoveryAgent() bool {
 	return false
 }

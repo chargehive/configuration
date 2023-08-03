@@ -16,7 +16,11 @@ type PayPalExpressCheckoutCredentials struct {
 	Environment         PayPalEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox live"`
 }
 
-func (c PayPalExpressCheckoutCredentials) GetLibrary() Library {
+func (c *PayPalExpressCheckoutCredentials) GetMID() string {
+	return *c.APIUsername
+}
+
+func (c *PayPalExpressCheckoutCredentials) GetLibrary() Library {
 	return LibraryPayPalExpressCheckout
 }
 
@@ -42,11 +46,11 @@ func (c *PayPalExpressCheckoutCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
 
-func (c PayPalExpressCheckoutCredentials) SupportsSca() bool {
+func (c *PayPalExpressCheckoutCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c PayPalExpressCheckoutCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *PayPalExpressCheckoutCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
@@ -55,13 +59,13 @@ func (c PayPalExpressCheckoutCredentials) SupportsMethod(methodType chtype.Payme
 		c.APISignature != nil && *c.APISignature != ""
 }
 
-func (c PayPalExpressCheckoutCredentials) CanPlanModeUse(mode environment.Mode) bool {
+func (c *PayPalExpressCheckoutCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == PayPalEnvironmentLive {
 		return false
 	}
 	return true
 }
 
-func (c PayPalExpressCheckoutCredentials) IsRecoveryAgent() bool {
+func (c *PayPalExpressCheckoutCredentials) IsRecoveryAgent() bool {
 	return false
 }

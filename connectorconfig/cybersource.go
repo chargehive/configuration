@@ -21,7 +21,11 @@ type CyberSourceCredentials struct {
 	Environment    CyberSourceEnvironment `json:"environment" yaml:"environment" validate:"oneof=test live"`
 }
 
-func (c CyberSourceCredentials) GetLibrary() Library {
+func (c *CyberSourceCredentials) GetMID() string {
+	return c.MerchantID
+}
+
+func (c *CyberSourceCredentials) GetLibrary() Library {
 	return LibraryCyberSource
 }
 
@@ -46,21 +50,21 @@ func (c *CyberSourceCredentials) ToConnector() connector.Connector {
 func (c *CyberSourceCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, c)
 }
-func (c CyberSourceCredentials) SupportsSca() bool {
+func (c *CyberSourceCredentials) SupportsSca() bool {
 	return false
 }
 
-func (c CyberSourceCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (c *CyberSourceCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	if !c.GetLibrary().SupportsMethod(methodType, methodProvider) {
 		return false
 	}
 	return true
 }
 
-func (c CyberSourceCredentials) CanPlanModeUse(environment.Mode) bool {
+func (c *CyberSourceCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }
 
-func (c CyberSourceCredentials) IsRecoveryAgent() bool {
+func (c *CyberSourceCredentials) IsRecoveryAgent() bool {
 	return false
 }
