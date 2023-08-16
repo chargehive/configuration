@@ -238,8 +238,8 @@ func buildSpec(conf Template) (object.Specification, error) {
 		return connector.Connector{Library: string(connectorconfig.LibraryClearhaus), Configuration: j}, nil
 	case confTrustPayments:
 		j, _ := json.Marshal(connectorconfig.TrustPaymentsCredentials{
-			Username:    chg,
-			Password:    chg,
+			Username:    &chg,
+			Password:    &chg,
 			SiteRef:     chg,
 			Region:      connectorconfig.TrustPaymentsRegionUS,
 			Environment: connectorconfig.TrustPaymentsEnvironmentTest,
