@@ -24,15 +24,15 @@ const (
 )
 
 type TrustPaymentsCredentials struct {
-	Username    string                   `json:"username" yaml:"username" validate:"required"`
-	Password    string                   `json:"password" yaml:"password" validate:"required"`
+	Username    *string                  `json:"username" yaml:"username" validate:"required"`
+	Password    *string                  `json:"password" yaml:"password" validate:"required"`
 	SiteRef     string                   `json:"siteRef" yaml:"siteRef" validate:"required"`
 	Region      TrustPaymentsRegion      `json:"region" yaml:"region" validate:"oneof=us eu"`
 	Environment TrustPaymentsEnvironment `json:"environment" yaml:"environment" validate:"oneof=test live"`
 }
 
 func (c *TrustPaymentsCredentials) GetMID() string {
-	return c.Username
+	return *c.Username
 }
 
 func (c *TrustPaymentsCredentials) GetLibrary() Library {
@@ -44,7 +44,7 @@ func (c *TrustPaymentsCredentials) GetSupportedTypes() []LibraryType {
 }
 
 func (c *TrustPaymentsCredentials) GetSecureFields() []*string {
-	return []*string{}
+	return []*string{c.Username, c.Password}
 }
 
 func (c *TrustPaymentsCredentials) Validate() error {
