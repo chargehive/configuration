@@ -34,6 +34,15 @@ type WorldpayCredentials struct {
 	ApplePay              *ApplePayEmbedded   `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
+func (c *WorldpayCredentials) GetGooglePayExtraParams() map[string]string {
+	return map[string]string{
+		"vantiv:merchantPayPageId":     c.GooglePayPageId,
+		"vantiv:merchantOrderId":       "YOUR_ORDER_ID",       // todo still need to figure out what to put here
+		"vantiv:merchantTransactionId": "YOUR_TRANSACTION_ID", // todo ...and here
+		"vantiv:merchantReportGroup":   c.ReportGroup,
+	}
+}
+
 func (c *WorldpayCredentials) GetMID() string {
 	return c.MerchantID
 }

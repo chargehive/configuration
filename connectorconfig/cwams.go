@@ -15,6 +15,10 @@ type CWAMSCredentials struct {
 	ApplePay    *ApplePayEmbedded `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
+func (c *CWAMSCredentials) GetGooglePayExtraParams() map[string]string {
+	return nil
+}
+
 func (c *CWAMSCredentials) GetMID() string {
 	return ""
 }
