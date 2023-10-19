@@ -37,8 +37,8 @@ type WorldpayCredentials struct {
 func (c *WorldpayCredentials) GetGooglePayExtraParams() map[string]string {
 	return map[string]string{
 		"vantiv:merchantPayPageId":     c.GooglePayPageId,
-		"vantiv:merchantOrderId":       "YOUR_ORDER_ID",       // todo still need to figure out what to put here
-		"vantiv:merchantTransactionId": "YOUR_TRANSACTION_ID", // todo ...and here
+		"vantiv:merchantOrderId":       "", // todo still need to figure out what to put here
+		"vantiv:merchantTransactionId": "", // todo ...and here
 		"vantiv:merchantReportGroup":   c.ReportGroup,
 	}
 }
