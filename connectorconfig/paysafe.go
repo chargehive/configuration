@@ -40,6 +40,10 @@ type PaySafeCredentials struct {
 	ApplePay               *ApplePayEmbedded  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
+func (c *PaySafeCredentials) GetGooglePayExtraParams() map[string]string {
+	return nil
+}
+
 func (c *PaySafeCredentials) GetMID() string {
 	return c.AccountID
 }
