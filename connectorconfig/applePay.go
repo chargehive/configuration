@@ -30,6 +30,29 @@ type ApplePayCredentials struct {
 	AppleIdentityCertificate *string `json:"appleIdentityCertificate" yaml:"appleIdentityCertificate" validate:"required"`
 	// AppleIdentityPrivateKey Merchant private key generated from the CSR in the Apple Developer Merchant section (must be base64 encoded!)
 	AppleIdentityPrivateKey *string `json:"appleIdentityPrivateKey" yaml:"AppleIdentityPrivateKey" validate:"required"`
+
+	// AppleExistingMethodRequired Chargehive will not use this connector if the customer does not have a apple payment method already saved
+	AppleExistingMethodRequired bool `json:"appleExistingMethodRequired,omitempty" yaml:"appleExistingMethodRequired,omitempty" validate:"-"`
+	// AppleExistingMethodReport Chargehive will request the existing payment method information from ApplePay
+	AppleExistingMethodReport bool `json:"appleExistingMethodReport,omitempty" yaml:"appleExistingMethodReport,omitempty" validate:"-"`
+
+	// AppleCardAllowDebit Allow customer to pay with debit card
+	AppleCardAllowDebit bool `json:"appleCardAllowDebit,omitempty" yaml:"appleCardAllowDebit,omitempty" validate:"-"`
+	// AppleCardAllowCredit Allow customer to pay with credit card
+	AppleCardAllowCredit bool `json:"appleCardAllowCredit,omitempty" yaml:"appleCardAllowCredit,omitempty" validate:"-"`
+
+	// AppleEmailRequired (emailRequired) Set to true to request an email address.
+	AppleEmailRequired bool `json:"appleEmailRequired,omitempty" yaml:"appleEmailRequired,omitempty" validate:"-"`
+
+	// AppleCardBillingAddressReq Set to true if you require a billing address. A billing address should only be requested if it's required to process the transaction
+	AppleCardBillingAddressReq bool `json:"appleCardBillingAddressReq,omitempty" yaml:"appleCardBillingAddressReq,omitempty" validate:"-"`
+	// AppleCardBillingPhoneReq  Set to true if a phone number is required to process the transaction.
+	AppleCardBillingPhoneReq bool `json:"appleCardBillingPhoneReq,omitempty" yaml:"appleCardBillingPhoneReq,omitempty" validate:"-"`
+
+	// AppleCardShippingAddressReq Set to true if you require a shipping address. A shipping address should only be requested if it's required to process the transaction
+	AppleCardShippingAddressReq bool `json:"appleCardShippingAddressReq,omitempty" yaml:"appleCardShippingAddressReq,omitempty" validate:"-"`
+	// AppleCardShippingPhoneReq  Set to true if a phone number is required to process the transaction.
+	AppleCardShippingPhoneReq bool `json:"appleCardShippingPhoneReq,omitempty" yaml:"appleCardShippingPhoneReq,omitempty" validate:"-"`
 }
 
 func (a *ApplePayCredentials) GetMID() string {
@@ -161,4 +184,59 @@ func (a *ApplePayCredentials) GetAppleMerchantDisplayName() string {
 		return ""
 	}
 	return a.AppleMerchantDisplayName
+}
+
+func (a *ApplePayCredentials) GetAppleExistingMethodRequired() bool {
+	if a == nil {
+		return false
+	}
+	return a.AppleExistingMethodRequired
+}
+func (a *ApplePayCredentials) GetAppleExistingMethodReport() bool {
+	if a == nil {
+		return false
+	}
+	return a.AppleExistingMethodReport
+}
+func (a *ApplePayCredentials) GetAppleCardAllowDebit() bool {
+	if a == nil {
+		return false
+	}
+	return a.AppleCardAllowDebit
+}
+func (a *ApplePayCredentials) GetAppleCardAllowCredit() bool {
+	if a == nil {
+		return false
+	}
+	return a.AppleCardAllowCredit
+}
+func (a *ApplePayCredentials) GetAppleEmailRequired() bool {
+	if a == nil {
+		return false
+	}
+	return a.AppleEmailRequired
+}
+func (a *ApplePayCredentials) GetAppleCardBillingAddressReq() bool {
+	if a == nil {
+		return false
+	}
+	return a.AppleCardBillingAddressReq
+}
+func (a *ApplePayCredentials) GetAppleCardBillingPhoneReq() bool {
+	if a == nil {
+		return false
+	}
+	return a.AppleCardBillingPhoneReq
+}
+func (a *ApplePayCredentials) GetAppleCardShippingAddressReq() bool {
+	if a == nil {
+		return false
+	}
+	return a.AppleCardShippingAddressReq
+}
+func (a *ApplePayCredentials) GetAppleCardShippingPhoneReq() bool {
+	if a == nil {
+		return false
+	}
+	return a.AppleCardShippingPhoneReq
 }
