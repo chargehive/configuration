@@ -12,8 +12,10 @@ type GooglePay struct {
 	GoogleEnvironment GoogleEnvironment `json:"googleEnvironment,omitempty" yaml:"googleEnvironment,omitempty" validate:"required_with=GoogleMerchantId,omitempty,oneof=TEST PRODUCTION"`
 	// GoogleMerchantName (merchantInfo.merchantName) Merchant name encoded as UTF-8. Merchant name is rendered in the payment sheet. In TEST environment, or if a merchant isn't recognized, a “Pay Unverified Merchant” message is displayed in the payment sheet.
 	GoogleMerchantName string `json:"googleMerchantName,omitempty" yaml:"googleMerchantName,omitempty" validate:"required_with=GoogleMerchantId"`
-	// GoogleExistingMethodRequired (existingPaymentMethodRequired) If set to true then the IsReadyToPayResponse object includes an additional property that describes the visitor's readiness to pay with one or more payment methods specified in allowedPaymentMethods. (https://developers.google.com/pay/api/web/reference/request-objects#IsReadyToPayRequest)
+	// GoogleExistingMethodRequired Chargehive will not use this connector if the customer does not have a google payment method already saved
 	GoogleExistingMethodRequired bool `json:"googleExistingMethodRequired,omitempty" yaml:"googleExistingMethodRequired,omitempty" validate:"-"`
+	// GoogleExistingMethodReport Chargehive will request the existing payment method information from GooglePay
+	GoogleExistingMethodReport bool `json:"googleExistingMethodReport,omitempty" yaml:"googleExistingMethodReport,omitempty" validate:"-"`
 	// GoogleEmailReq (emailRequired) Set to true to request an email address. (https://developers.google.com/pay/api/web/reference/request-objects#PaymentDataRequest)
 	GoogleEmailReq bool `json:"googleEmailReq,omitempty" yaml:"googleEmailReq,omitempty" validate:"-"`
 	// GoogleAcceptCard (Card {type = "CARD"}) Enable this to allow card payments through GooglePay
@@ -116,6 +118,13 @@ func (g *GooglePay) GetGoogleExistingMethodRequired() bool {
 	}
 
 	return g.GoogleExistingMethodRequired
+}
+func (g *GooglePay) GetGoogleExistingMethodReport() bool {
+	if g == nil {
+		return false
+	}
+
+	return g.GoogleExistingMethodReport
 }
 func (g *GooglePay) GetGoogleEmailReq() bool {
 	if g == nil {
