@@ -25,6 +25,7 @@ type BraintreeCredentials struct {
 	Environment       BraintreeEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 	GooglePay         *GooglePay           `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
 	ApplePay          *ApplePayEmbedded    `json:"applePay,omitempty" yaml:"applePay,omitempty"`
+	TokenizationKey   string               `json:"tokenizationKey,omitempty" yaml:"tokenizationKey,omitempty" validate:"gt=0"`
 }
 
 func (c *BraintreeCredentials) GetMID() string {
