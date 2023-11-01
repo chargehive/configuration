@@ -200,7 +200,9 @@ func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvi
 	case LibraryAuthorize:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibraryBraintree:
-		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD ||
+			(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
+			(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY)
 	case LibraryQualPay:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibraryStripe:
