@@ -107,6 +107,14 @@ func (c *BraintreeCredentials) GetGooglePay() *GooglePay {
 	return c.GooglePay
 }
 
+func (c *BraintreeCredentials) GetGooglePayExtraParams() map[string]string {
+	return map[string]string{
+		"braintree:apiVersion": "v1",
+		"braintree:merchantId": c.MerchantID,
+		"braintree:clientKey":  c.TokenizationKey,
+	}
+}
+
 func (c *BraintreeCredentials) GetApplePay() *ApplePayEmbedded {
 	return c.ApplePay
 }
