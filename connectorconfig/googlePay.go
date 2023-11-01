@@ -46,7 +46,7 @@ type GooglePay struct {
 	// GoogleCardShippingPhoneReq  Set to true if a phone number is required to process the transaction.
 	GoogleCardShippingPhoneReq bool `json:"googleCardShippingPhoneReq,omitempty" yaml:"googleCardShippingPhoneReq,omitempty" validate:"-"`
 	// GoogleCardShippingAddressFormat (Card {parameters.shippingAddressParameters.format) Shipping address format required to complete the transaction.
-	GoogleCardShippingAddressFormat GoogleCardBillingAddressReq `json:"googleCardShippingAddressFormat,omitempty" yaml:"googleCardShippingAddressFormat,omitempty" validate:"required_with=GoogleMerchantId,omitempty,oneof=MIN FULL"`
+	GoogleCardShippingAddressFormat GoogleCardBillingAddressReq `json:"googleCardShippingAddressFormat,omitempty" yaml:"googleCardShippingAddressFormat,omitempty" validate:"omitempty,oneof=MIN FULL"`
 }
 
 func (g *GooglePay) GetSecureFields() []*string {
