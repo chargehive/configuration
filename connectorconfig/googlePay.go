@@ -2,7 +2,7 @@ package connectorconfig
 
 type GooglePayCredential interface {
 	GetGooglePay() *GooglePay
-	GetGooglePayExtraParams() map[string]string
+	GetGooglePayParams() map[string]string
 }
 
 type GooglePay struct {

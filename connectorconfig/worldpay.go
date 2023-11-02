@@ -34,11 +34,13 @@ type WorldpayCredentials struct {
 	ApplePay              *ApplePayEmbedded   `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
-func (c *WorldpayCredentials) GetGooglePayExtraParams() map[string]string {
+func (c *WorldpayCredentials) GetGooglePayParams() map[string]string {
 	return map[string]string{
+		"gateway":                      "worldpay",
+		"gatewayMerchantId":            c.GetGooglePay().GetGoogleCardMerchantId(),
 		"vantiv:merchantPayPageId":     c.GooglePayPageId,
-		"vantiv:merchantOrderId":       "",
-		"vantiv:merchantTransactionId": "",
+		"vantiv:merchantOrderId":       "YOUR_ORDER_ID",
+		"vantiv:merchantTransactionId": "YOUR_TRANSACTION_ID",
 		"vantiv:merchantReportGroup":   c.ReportGroup,
 	}
 }
