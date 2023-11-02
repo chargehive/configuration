@@ -133,7 +133,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 		j, _ := json.Marshal(connectorconfig.AuthorizeCredentials{APILoginID: &chg, TransactionKey: &chg, Environment: "sandbox"})
 		return connector.Connector{Library: string(connectorconfig.LibraryAuthorize), Configuration: j}, nil
 	case confConnBrainTree:
-		j, _ := json.Marshal(connectorconfig.BraintreeCredentials{PublicKey: &chg, PrivateKey: &chg, MerchantID: chg, MerchantAccountID: chg, Currency: "USD", Environment: "sandbox", TokenizationKey: "testKey"})
+		j, _ := json.Marshal(connectorconfig.BraintreeCredentials{PublicKey: &chg, PrivateKey: &chg, MerchantID: chg, MerchantAccountID: chg, Currency: "USD", Environment: "sandbox"})
 		return connector.Connector{Library: string(connectorconfig.LibraryBraintree), Configuration: j}, nil
 	case confConnChargeHive:
 		j, _ := json.Marshal(connectorconfig.ChargeHiveCredentials{})
