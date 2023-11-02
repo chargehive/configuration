@@ -28,8 +28,11 @@ type CheckoutCredentials struct {
 	ApplePay               *ApplePayEmbedded   `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
-func (c *CheckoutCredentials) GetGooglePayExtraParams() map[string]string {
-	return nil
+func (c *CheckoutCredentials) GetGooglePayParams() map[string]string {
+	return map[string]string{
+		"gateway":           "checkout",
+		"gatewayMerchantId": c.GetGooglePay().GetGoogleCardMerchantId(),
+	}
 }
 
 func (c *CheckoutCredentials) GetMID() string {

@@ -25,7 +25,7 @@ type BraintreeCredentials struct {
 	Environment       BraintreeEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 	GooglePay         *GooglePay           `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
 	ApplePay          *ApplePayEmbedded    `json:"applePay,omitempty" yaml:"applePay,omitempty"`
-	TokenizationKey   string               `json:"tokenizationKey,omitempty" yaml:"tokenizationKey,omitempty" validate:"gt=0"`
+	TokenizationKey   string               `json:"tokenizationKey,omitempty" yaml:"tokenizationKey,omitempty" validate:"required_with=GooglePay ApplePay,omitempty,gt=0"`
 }
 
 func (c *BraintreeCredentials) GetMID() string {
@@ -105,6 +105,15 @@ func (c *BraintreeCredentials) IsRecoveryAgent() bool {
 
 func (c *BraintreeCredentials) GetGooglePay() *GooglePay {
 	return c.GooglePay
+}
+
+func (c *BraintreeCredentials) GetGooglePayParams() map[string]string {
+	return map[string]string{
+		"gateway":              "braintree",
+		"braintree:apiVersion": "v1",
+		"braintree:merchantId": c.MerchantID,
+		"braintree:clientKey":  c.TokenizationKey,
+	}
 }
 
 func (c *BraintreeCredentials) GetApplePay() *ApplePayEmbedded {
