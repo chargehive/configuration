@@ -30,7 +30,7 @@ type CheckoutCredentials struct {
 
 func (c *CheckoutCredentials) GetGooglePayParams() map[string]string {
 	return map[string]string{
-		"gateway":           "checkout",
+		"gateway":           "checkoutltd",
 		"gatewayMerchantId": c.GetGooglePay().GetGoogleCardMerchantId(),
 	}
 }
