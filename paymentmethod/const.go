@@ -27,7 +27,9 @@ const (
 	// InfoKeyConnectorToken token for this payment method on the connector
 	InfoKeyConnectorToken InfoKey = "connector_token"
 	// InfoKeyNetworkTransactionID deprecated - should be migrated into a sequence
-	InfoKeyNetworkTransactionID InfoKey = "network_transaction_id"
+	InfoKeyNetworkTransactionID     InfoKey = "network_transaction_id"
+	InfoKeyAuthenticationCryptogram InfoKey = "authentication_cryptogram"
+	InfoKeyAuthenticationECI        InfoKey = "authentication_eci"
 )
 
 // Scheme us a value used to indicate a payment scheme type
