@@ -13,6 +13,8 @@ type BraintreeEnvironment string
 const (
 	BraintreeEnvironmentSandbox    BraintreeEnvironment = "sandbox"
 	BraintreeEnvironmentProduction BraintreeEnvironment = "production"
+
+	braintreeSdkVersion = "3.97.3"
 )
 
 // https://articles.braintreepayments.com/control-panel/important-gateway-credentials
@@ -111,6 +113,7 @@ func (c *BraintreeCredentials) GetGooglePayParams() map[string]string {
 	return map[string]string{
 		"gateway":              "braintree",
 		"braintree:apiVersion": "v1",
+		"braintree:sdkVersion": braintreeSdkVersion,
 		"braintree:merchantId": c.MerchantID,
 		"braintree:clientKey":  c.TokenizationKey,
 	}
