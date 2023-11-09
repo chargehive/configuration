@@ -3,6 +3,7 @@ package connectorconfig
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/chargehive/configuration/paymentmethod"
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
@@ -75,4 +76,17 @@ func (c *QualpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 
 func (c *QualpayCredentials) IsRecoveryAgent() bool {
 	return false
+}
+
+func (c *QualpayCredentials) SupportedSchemes() []paymentmethod.Scheme {
+	return []paymentmethod.Scheme{
+		paymentmethod.SchemeCardVisa,
+		paymentmethod.SchemeCardMasterCard,
+		paymentmethod.SchemeCardDiscover,
+		paymentmethod.SchemeCardAmericanExpress,
+	}
+}
+
+func (c *QualpayCredentials) SupportsNetworkToken() bool {
+	return true
 }

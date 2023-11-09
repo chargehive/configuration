@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"github.com/chargehive/configuration/paymentmethod"
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
@@ -90,5 +91,17 @@ func (c *CWAMSCredentials) CanPlanModeUse(mode environment.Mode) bool {
 }
 
 func (c *CWAMSCredentials) IsRecoveryAgent() bool {
+	return false
+}
+
+func (c *CWAMSCredentials) SupportedSchemes() []paymentmethod.Scheme {
+	return []paymentmethod.Scheme{
+		paymentmethod.SchemeCardVisa,
+		paymentmethod.SchemeCardMasterCard,
+		paymentmethod.SchemeCardAmericanExpress,
+	}
+}
+
+func (c *CWAMSCredentials) SupportsNetworkToken() bool {
 	return false
 }

@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"github.com/chargehive/configuration/paymentmethod"
 	"strings"
 
 	"github.com/chargehive/configuration/environment"
@@ -88,5 +89,20 @@ func (c *TrustPaymentsCredentials) CanPlanModeUse(mode environment.Mode) bool {
 }
 
 func (c *TrustPaymentsCredentials) IsRecoveryAgent() bool {
+	return false
+}
+
+func (c *TrustPaymentsCredentials) SupportedSchemes() []paymentmethod.Scheme {
+	return []paymentmethod.Scheme{
+		paymentmethod.SchemeCardVisa,
+		paymentmethod.SchemeCardMasterCard,
+		paymentmethod.SchemeCardAmericanExpress,
+		paymentmethod.SchemeCardDiscover,
+		paymentmethod.SchemeCardDinersClub,
+		paymentmethod.SchemeCardJCB,
+	}
+}
+
+func (c *TrustPaymentsCredentials) SupportsNetworkToken() bool {
 	return false
 }

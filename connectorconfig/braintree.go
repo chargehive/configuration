@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"github.com/chargehive/configuration/paymentmethod"
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
@@ -125,4 +126,21 @@ func (c *BraintreeCredentials) GetGooglePayParams() map[string]string {
 
 func (c *BraintreeCredentials) GetApplePay() *ApplePayEmbedded {
 	return c.ApplePay
+}
+
+func (c *BraintreeCredentials) SupportedSchemes() []paymentmethod.Scheme {
+	return []paymentmethod.Scheme{
+		paymentmethod.SchemeCardVisa,
+		paymentmethod.SchemeCardMasterCard,
+		paymentmethod.SchemeCardAmericanExpress,
+		paymentmethod.SchemeCardDiscover,
+		paymentmethod.SchemeCardJCB,
+		paymentmethod.SchemeCardDinersClub,
+		paymentmethod.SchemeCardMaestro,
+		paymentmethod.SchemeCardUnionPay,
+	}
+}
+
+func (c *BraintreeCredentials) SupportsNetworkToken() bool {
+	return true
 }

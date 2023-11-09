@@ -2,12 +2,12 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"github.com/chargehive/configuration/paymentmethod"
 	"strings"
 
 	"github.com/chargehive/configuration/v1/connector"
 )
 
-// CreateCredentials create credentials from json
 func GetCredentials(c *connector.Connector) (Credentials, error) {
 	return getCreds(c, false)
 }
@@ -34,4 +34,9 @@ func getCreds(c *connector.Connector, strict bool) (Credentials, error) {
 
 type MerchantIdentifier interface {
 	GetMID() string
+}
+
+type PaymentGateway interface {
+	SupportedSchemes() []paymentmethod.Scheme
+	SupportsNetworkToken() bool
 }
