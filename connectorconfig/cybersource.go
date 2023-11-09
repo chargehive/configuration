@@ -15,6 +15,9 @@ const (
 	CyberSourceEnvironmentLive CyberSourceEnvironment = "live"
 )
 
+// assert interface compliance
+var _ Credentials = (*CyberSourceCredentials)(nil)
+
 type CyberSourceCredentials struct {
 	MerchantID     string                 `json:"merchantID" yaml:"merchantID" validate:"required"`
 	TransactionKey *string                `json:"transactionKey" yaml:"transactionKey" validate:"required,gt=0"`

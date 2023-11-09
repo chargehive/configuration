@@ -21,6 +21,10 @@ type ConnectorAttempt struct {
 	DivisionNumber string `json:"divisionNumber"`
 	Weight         int    `json:"weight"`
 }
+
+// assert interface compliance
+var _ Credentials = (*VindiciaCredentials)(nil)
+
 type VindiciaCredentials struct {
 	Login         string              `json:"login" yaml:"login" validate:"required"`
 	Password      *string             `json:"password" yaml:"password" validate:"required,gt=0"`

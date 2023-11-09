@@ -24,6 +24,9 @@ const (
 	PaysafeLocaleFRCA PaysafeLocale = "fr_CA"
 )
 
+// assert interface compliance
+var _ Credentials = (*PaySafeCredentials)(nil)
+
 type PaySafeCredentials struct {
 	Acquirer               string             `json:"acquirer" yaml:"acquirer" validate:"-"`
 	MerchantURL            string             `json:"merchantURL" yaml:"merchantURL" validate:"required"`

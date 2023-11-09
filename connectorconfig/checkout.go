@@ -15,6 +15,9 @@ const (
 	CheckoutEnvironmentProduction CheckoutEnvironment = "production"
 )
 
+// assert interface compliance
+var _ Credentials = (*CheckoutCredentials)(nil)
+
 type CheckoutCredentials struct {
 	PublicKey              *string             `json:"publicKey" yaml:"publicKey" validate:"required,gt=0"`
 	SecretKey              *string             `json:"secretKey" yaml:"secretKey" validate:"required,gt=0"`

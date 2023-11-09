@@ -8,6 +8,9 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
+// assert interface compliance
+var _ Credentials = (*StripeCredentials)(nil)
+
 type StripeCredentials struct {
 	AccountID string  `json:"accountId" yaml:"accountId"`
 	APIKey    *string `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`

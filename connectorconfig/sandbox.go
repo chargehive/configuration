@@ -18,6 +18,9 @@ const (
 	SandboxModeChaos         SandboxMode = "chaos"
 )
 
+// assert interface compliance
+var _ Credentials = (*SandboxCredentials)(nil)
+
 type SandboxCredentials struct {
 	MerchantID          string      `json:"merchantId" yaml:"merchantID" validate:"-"`
 	Mode                SandboxMode `json:"mode" yaml:"mode" validate:"oneof=dynamic offline delayed random-timeout chaos"`

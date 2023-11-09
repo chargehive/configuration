@@ -15,6 +15,9 @@ const (
 	YapstoneEnvironmentLive YapstoneEnvironment = "live"
 )
 
+// assert interface compliance
+var _ Credentials = (*YapstoneCredentials)(nil)
+
 type YapstoneCredentials struct {
 	ClientID     string              `json:"clientID" yaml:"clientID" validate:"required"`
 	ClientSecret string              `json:"clientSecret" yaml:"clientSecret" validate:"required"`

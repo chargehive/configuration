@@ -13,6 +13,9 @@ import (
 type ApplePayCredential interface {
 }
 
+// assert interface compliance
+var _ Credentials = (*ApplePayCredentials)(nil)
+
 type ApplePayCredentials struct {
 	// Region whether global(empty) or china
 	Region string `json:"region,omitempty" yaml:"region,omitempty" validate:"oneof='' cn"`

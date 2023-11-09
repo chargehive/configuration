@@ -23,6 +23,9 @@ const (
 	TrustPaymentsEnvironmentLive TrustPaymentsEnvironment = "live"
 )
 
+// assert interface compliance
+var _ Credentials = (*TrustPaymentsCredentials)(nil)
+
 type TrustPaymentsCredentials struct {
 	Username    *string                  `json:"username" yaml:"username" validate:"required"`
 	Password    *string                  `json:"password" yaml:"password" validate:"required"`

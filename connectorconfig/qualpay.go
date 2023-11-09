@@ -16,6 +16,9 @@ const (
 	QualPayEnvironmentLive QualPayEnvironment = "live"
 )
 
+// assert interface compliance
+var _ Credentials = (*QualpayCredentials)(nil)
+
 type QualpayCredentials struct {
 	APIKey      *string            `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
 	MerchantID  int64              `json:"merchantID" yaml:"merchantID" validate:"min=1"`

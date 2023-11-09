@@ -15,6 +15,9 @@ const (
 	AuthorizeEnvironmentProduction AuthorizeEnvironment = "production"
 )
 
+// assert interface compliance
+var _ Credentials = (*AuthorizeCredentials)(nil)
+
 type AuthorizeCredentials struct {
 	APILoginID     *string              `json:"apiLoginId" yaml:"apiLoginId" validate:"required,gt=0"`
 	TransactionKey *string              `json:"transactionKey" yaml:"transactionKey" validate:"required,gt=0"`

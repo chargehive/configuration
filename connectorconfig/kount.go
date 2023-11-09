@@ -15,6 +15,9 @@ const (
 	KountEnvironmentProduction KountEnvironment = "production"
 )
 
+// assert interface compliance
+var _ Credentials = (*KountCredentials)(nil)
+
 type KountCredentials struct {
 	SiteID                string           `json:"siteID" yaml:"siteID" validate:"required"`
 	MerchantID            string           `json:"merchantID" yaml:"merchantID" validate:"required"`

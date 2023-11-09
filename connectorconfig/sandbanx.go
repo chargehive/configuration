@@ -8,6 +8,9 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
+// assert interface compliance
+var _ Credentials = (*SandbanxCredentials)(nil)
+
 type SandbanxCredentials struct {
 	MerchantID             string `json:"merchantId" yaml:"merchantID" validate:"-"`
 	ProcessingDelaySeconds int    `json:"processingDelaySeconds" yaml:"processingDelaySeconds" validate:"-"` // seconds to delay processing

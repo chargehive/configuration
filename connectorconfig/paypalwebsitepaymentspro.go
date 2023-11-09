@@ -8,6 +8,9 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
+// assert interface compliance
+var _ Credentials = (*PayPalWebsitePaymentsProCredentials)(nil)
+
 type PayPalWebsitePaymentsProCredentials struct {
 	APIUsername            *string           `json:"apiUsername" yaml:"apiUsername" validate:"required,gt=0"`
 	APIPassword            *string           `json:"apiPassword" yaml:"apiPassword" validate:"required,gt=0"`

@@ -20,6 +20,9 @@ const (
 	WorldpayEnvironmentTransactPreLive    WorldpayEnvironment = "transactprelive"
 )
 
+// assert interface compliance
+var _ Credentials = (*WorldpayCredentials)(nil)
+
 type WorldpayCredentials struct {
 	Username              *string             `json:"username" yaml:"username" validate:"required,gt=0"`
 	Password              *string             `json:"password" yaml:"password" validate:"required,gt=0"`

@@ -8,6 +8,9 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
+// assert interface compliance
+var _ Credentials = (*PaySafeAccountUpdaterCredentials)(nil)
+
 type PaySafeAccountUpdaterCredentials struct {
 	MerchantAccountNumber string  `json:"merchantAccountNumber" yaml:"merchantAccountNumber" validate:"required,gt=0"`
 	StoreID               string  `json:"storeID" yaml:"storeID" validate:"required,gt=0"`

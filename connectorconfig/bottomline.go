@@ -16,6 +16,9 @@ const (
 	BottomlineEnvironmentProduction BottomlineEnvironment = "production"
 )
 
+// assert interface compliance
+var _ Credentials = (*BottomlineCredentials)(nil)
+
 type BottomlineCredentials struct {
 	Username      *string               `json:"username" yaml:"username" validate:"required,gt=0"`
 	Password      *string               `json:"password" yaml:"password" validate:"required,gt=0"`

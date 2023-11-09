@@ -18,6 +18,9 @@ const (
 	MaxMindMinFraudServiceTypeFactors
 )
 
+// assert interface compliance
+var _ Credentials = (*MaxMindCredentials)(nil)
+
 type MaxMindCredentials struct {
 	AccountID   string                     `json:"accountID" yaml:"accountID" validate:"required"`
 	LicenceKey  *string                    `json:"licenceKey" yaml:"licenceKey" validate:"required,gt=0"`

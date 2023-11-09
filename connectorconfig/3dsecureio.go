@@ -15,6 +15,9 @@ const (
 	ThreeDSecureIOEnvironmentProduction ThreeDSecureIOEnvironment = "production"
 )
 
+// assert interface compliance
+var _ Credentials = (*ThreeDSecureIOCredentials)(nil)
+
 type ThreeDSecureIOCredentials struct {
 	ApiKey             *string                   `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
 	MerchantName       string                    `json:"merchantName" yaml:"merchantName"`

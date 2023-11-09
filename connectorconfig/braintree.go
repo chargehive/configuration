@@ -18,6 +18,10 @@ const (
 )
 
 // https://articles.braintreepayments.com/control-panel/important-gateway-credentials
+
+// assert interface compliance
+var _ Credentials = (*BraintreeCredentials)(nil)
+
 type BraintreeCredentials struct {
 	PublicKey         *string              `json:"publicKey" yaml:"publicKey" validate:"required,gt=0"`
 	PrivateKey        *string              `json:"privateKey" yaml:"privateKey" validate:"required,gt=0"`

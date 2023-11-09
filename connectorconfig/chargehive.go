@@ -8,6 +8,9 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
+// assert interface compliance
+var _ Credentials = (*ChargeHiveCredentials)(nil)
+
 type ChargeHiveCredentials struct {
 }
 

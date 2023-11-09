@@ -15,6 +15,9 @@ const (
 	ClearhausEnvironmentLive ClearhausEnvironment = "live"
 )
 
+// assert interface compliance
+var _ Credentials = (*ClearhausCredentials)(nil)
+
 type ClearhausCredentials struct {
 	MerchantID  string               `json:"merchantId" yaml:"merchantId" validate:"required"`
 	APIKey      string               `json:"apiKey" yaml:"apiKey" validate:"required"`

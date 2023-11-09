@@ -8,6 +8,9 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
+// assert interface compliance
+var _ Credentials = (*CWAMSCredentials)(nil)
+
 type CWAMSCredentials struct {
 	TestMode    bool              `json:"testMode" yaml:"testMode"`
 	SecurityKey *string           `json:"securityKey" yaml:"securityKey" validate:"required"`
