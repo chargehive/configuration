@@ -64,6 +64,7 @@ var LibraryRegister = map[Library]bool{
 	LibraryCWAMS:                    true,
 	LibraryYapstone:                 true,
 	LibrarySandbanx:                 true,
+	LibraryThreeDSecureIO:           true,
 }
 
 type LibraryType string
@@ -188,6 +189,10 @@ func (l Library) GetCredential() (Credentials, error) {
 		// Updater libraries
 	case LibraryPaySafeAccountUpdater:
 		return &PaySafeAccountUpdaterCredentials{}, nil
+
+	case LibraryThreeDSecureIO:
+		return &ThreeDSecureIOCredentials{}, nil
+
 	}
 
 	return nil, errors.New("invalid library specified")
