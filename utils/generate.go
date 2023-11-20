@@ -250,8 +250,9 @@ func buildSpec(conf Template) (object.Specification, error) {
 		return connector.Connector{Library: string(connectorconfig.LibraryTrustPayments), Configuration: j}, nil
 	case confCWAMS:
 		j, _ := json.Marshal(connectorconfig.CWAMSCredentials{
-			SecurityKey: &chg,
+			GatewayID:   "12345678",
 			TestMode:    true,
+			SecurityKey: &chg,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryCWAMS), Configuration: j}, nil
 	case confYapstone:

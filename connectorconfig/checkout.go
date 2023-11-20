@@ -36,7 +36,10 @@ func (c *CheckoutCredentials) GetGooglePayParams() map[string]string {
 }
 
 func (c *CheckoutCredentials) GetMID() string {
-	return ""
+	if c.ProcessingChannelID != "" {
+		return c.ProcessingChannelID
+	}
+	return c.GetSecretKey()
 }
 
 func (c *CheckoutCredentials) GetGooglePay() *GooglePay {
