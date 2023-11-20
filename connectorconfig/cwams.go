@@ -9,6 +9,7 @@ import (
 )
 
 type CWAMSCredentials struct {
+	GatewayID   string            `json:"gatewayID" yaml:"gatewayID" validate:"required"`
 	TestMode    bool              `json:"testMode" yaml:"testMode"`
 	SecurityKey *string           `json:"securityKey" yaml:"securityKey" validate:"required"`
 	GooglePay   *GooglePay        `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
@@ -20,7 +21,14 @@ func (c *CWAMSCredentials) GetGooglePayParams() map[string]string {
 }
 
 func (c *CWAMSCredentials) GetMID() string {
-	return ""
+	return c.GetSecurityKey()
+}
+
+func (c *CWAMSCredentials) GetSecurityKey() string {
+	if c.SecurityKey == nil {
+		return ""
+	}
+	return *c.SecurityKey
 }
 
 func (c *CWAMSCredentials) GetGooglePay() *GooglePay {
