@@ -21,10 +21,7 @@ func (c *CWAMSCredentials) GetGooglePayParams() map[string]string {
 }
 
 func (c *CWAMSCredentials) GetMID() string {
-	if c.GatewayID != "" {
-		return c.GatewayID
-	}
-	return c.GetSecurityKey()
+	return c.GatewayID
 }
 
 func (c *CWAMSCredentials) GetSecurityKey() string {
