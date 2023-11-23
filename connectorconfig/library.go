@@ -28,6 +28,7 @@ const (
 	LibraryCWAMS                    Library = "cwams"
 	LibraryYapstone                 Library = "yapstone"
 	LibraryThreeDSecureIO           Library = "threedsecureio"
+	LibraryInovioPay                Library = "inoviopay"
 	LibrarySandbanx                 Library = "sandbanx"
 
 	// Fraud Libraries
@@ -65,6 +66,7 @@ var LibraryRegister = map[Library]bool{
 	LibraryYapstone:                 true,
 	LibrarySandbanx:                 true,
 	LibraryThreeDSecureIO:           true,
+	LibraryInovioPay:                true,
 }
 
 type LibraryType string
@@ -130,6 +132,8 @@ func (l Library) GetDisplayName() string {
 		return "CWAMS"
 	case LibraryYapstone:
 		return "Yapstone"
+	case LibraryInovioPay:
+		return "InovioPay"
 	case LibrarySandbanx:
 		return "SandBanx"
 	}
@@ -192,6 +196,8 @@ func (l Library) GetCredential() (Credentials, error) {
 
 	case LibraryThreeDSecureIO:
 		return &ThreeDSecureIOCredentials{}, nil
+	case LibraryInovioPay:
+		return &InovioPayCredentials{}, nil
 
 	}
 
@@ -253,6 +259,8 @@ func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvi
 	case LibraryYapstone:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibraryThreeDSecureIO:
+		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+	case LibraryInovioPay:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 	case LibrarySandbanx:
 		return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
