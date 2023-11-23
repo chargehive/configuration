@@ -36,6 +36,7 @@ const (
 	confTrustPayments     Template = "con_trust-payments"
 	confCWAMS             Template = "con_cwams"
 	confYapstone          Template = "con_yapstone"
+	confInovioPay         Template = "con_inoviopay"
 
 	// connector Pool
 	confConnectorPool Template = "con_pool"
@@ -77,6 +78,7 @@ var Templates = map[Template]string{
 	confTrustPayments:     "Connector: Trust Payments",
 	confCWAMS:             "Connector: CWAMS",
 	confYapstone:          "Connector: Yapstone",
+	confInovioPay:         "Connector: InovioPay",
 	confConnectorPool:     "Connector Pool",
 	confSlack:             "Integration: Slack",
 	confPolCascade:        "Policy: Cascade",
@@ -262,6 +264,14 @@ func buildSpec(conf Template) (object.Specification, error) {
 			Environment:  connectorconfig.YapstoneEnvironmentTest,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryYapstone), Configuration: j}, nil
+	case confInovioPay:
+		j, _ := json.Marshal(connectorconfig.InovioPayCredentials{
+			Username:    &chg,
+			Password:    &chg,
+			SiteID:      "0",
+			Environment: connectorconfig.InovioPayEnvironmentSandbox,
+		})
+		return connector.Connector{Library: string(connectorconfig.LibraryInovioPay), Configuration: j}, nil
 	case confConnectorPool:
 		return connector.Pool{Restriction: "unrestricted", Connectors: []connector.PoolItem{{ConnectorID: chg}}}, nil
 	case confSlack:
