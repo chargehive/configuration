@@ -266,10 +266,11 @@ func buildSpec(conf Template) (object.Specification, error) {
 		return connector.Connector{Library: string(connectorconfig.LibraryYapstone), Configuration: j}, nil
 	case confInovioPay:
 		j, _ := json.Marshal(connectorconfig.InovioPayCredentials{
-			Username:    &chg,
-			Password:    &chg,
-			SiteID:      "0",
-			Environment: connectorconfig.InovioPayEnvironmentSandbox,
+			Username:          &chg,
+			Password:          &chg,
+			SiteID:            "0",
+			MerchantAccountID: "12345",
+			Environment:       connectorconfig.InovioPayEnvironmentSandbox,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryInovioPay), Configuration: j}, nil
 	case confConnectorPool:
