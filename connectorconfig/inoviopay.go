@@ -16,14 +16,15 @@ const (
 )
 
 type InovioPayCredentials struct {
-	Username    *string              `json:"username" yaml:"username" validate:"required,gt=0"`
-	Password    *string              `json:"password" yaml:"password" validate:"required,gt=0"`
-	SiteID      string               `json:"siteId" yaml:"siteId" validate:"required,gt=0"`
-	Environment InovioPayEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
+	Username          *string              `json:"username" yaml:"username" validate:"required,gt=0"`
+	Password          *string              `json:"password" yaml:"password" validate:"required,gt=0"`
+	SiteID            string               `json:"siteId" yaml:"siteId" validate:"required,gt=0"`
+	MerchantAccountID string               `json:"merchantAccountID" yaml:"MerchantAccountID" validate:"required,gt=0"`
+	Environment       InovioPayEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 }
 
 func (c *InovioPayCredentials) GetMID() string {
-	return c.SiteID
+	return c.MerchantAccountID
 }
 
 func (c *InovioPayCredentials) GetLibrary() Library {
