@@ -8,7 +8,7 @@ import (
 
 type LibraryDef struct {
 	DisplayName    string
-	Credentials    Credentials
+	Credentials    func() Credentials
 	SupportsMethod func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool
 }
 
@@ -76,7 +76,7 @@ func (l Library) GetDisplayName() string {
 func (l Library) GetCredential() (Credentials, error) {
 	lib, ok := LibraryRegister[l]
 	if ok {
-		return lib.Credentials, nil
+		return lib.Credentials(), nil
 	}
 	return nil, errors.New("invalid library specified")
 }
@@ -92,28 +92,28 @@ func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvi
 var LibraryRegister = map[Library]LibraryDef{
 	LibrarySandbox: {
 		DisplayName: "ChargeHive Sandbox",
-		Credentials: &SandboxCredentials{},
+		Credentials: func() Credentials { return &SandboxCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryApplePay: {
 		DisplayName: "ApplePay",
-		Credentials: &ApplePayCredentials{},
+		Credentials: func() Credentials { return &ApplePayCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryAuthorize: {
 		DisplayName: "Authorize",
-		Credentials: &AuthorizeCredentials{},
+		Credentials: func() Credentials { return &AuthorizeCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryBraintree: {
 		DisplayName: "Braintree",
-		Credentials: &BraintreeCredentials{},
+		Credentials: func() Credentials { return &BraintreeCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD ||
 				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
@@ -122,21 +122,21 @@ var LibraryRegister = map[Library]LibraryDef{
 	},
 	LibraryQualPay: {
 		DisplayName: "QualPay",
-		Credentials: &QualpayCredentials{},
+		Credentials: func() Credentials { return &QualpayCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryStripe: {
 		DisplayName: "Stripe",
-		Credentials: &StripeCredentials{},
+		Credentials: func() Credentials { return &StripeCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryPaySafe: {
 		DisplayName: "PaySafe",
-		Credentials: &PaySafeCredentials{},
+		Credentials: func() Credentials { return &PaySafeCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return (methodType == chtype.PAYMENT_METHOD_TYPE_CARD) ||
 				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
@@ -145,14 +145,14 @@ var LibraryRegister = map[Library]LibraryDef{
 	},
 	LibraryPaySafeAccountUpdater: {
 		DisplayName: "PaySafe Account Updater",
-		Credentials: &PaySafeAccountUpdaterCredentials{},
+		Credentials: func() Credentials { return &PaySafeAccountUpdaterCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryWorldpay: {
 		DisplayName: "Worldpay",
-		Credentials: &WorldpayCredentials{},
+		Credentials: func() Credentials { return &WorldpayCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return (methodType == chtype.PAYMENT_METHOD_TYPE_CARD) ||
 				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
@@ -161,35 +161,35 @@ var LibraryRegister = map[Library]LibraryDef{
 	},
 	LibraryPayPalWebsitePaymentsPro: {
 		DisplayName: "PayPal Website Payments Pro",
-		Credentials: &PayPalWebsitePaymentsProCredentials{},
+		Credentials: func() Credentials { return &PayPalWebsitePaymentsProCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryPayPalExpressCheckout: {
 		DisplayName: "PayPal Express Checkout",
-		Credentials: &PayPalExpressCheckoutCredentials{},
+		Credentials: func() Credentials { return &PayPalExpressCheckoutCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_PAYPAL
 		},
 	},
 	LibraryVindicia: {
 		DisplayName: "Vindicia",
-		Credentials: &VindiciaCredentials{},
+		Credentials: func() Credentials { return &VindiciaCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryBottomline: {
 		DisplayName: "Bottomline",
-		Credentials: &BottomlineCredentials{},
+		Credentials: func() Credentials { return &BottomlineCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_DIRECTDEBIT
 		},
 	},
 	LibraryCheckout: {
 		DisplayName: "Checkout.com",
-		Credentials: &CheckoutCredentials{},
+		Credentials: func() Credentials { return &CheckoutCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD ||
 				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
@@ -198,7 +198,7 @@ var LibraryRegister = map[Library]LibraryDef{
 	},
 	LibraryChargeHive: {
 		DisplayName: "ChargeHive",
-		Credentials: &ChargeHiveCredentials{},
+		Credentials: func() Credentials { return &ChargeHiveCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
@@ -207,42 +207,42 @@ var LibraryRegister = map[Library]LibraryDef{
 	// Fraud Libraries
 	LibraryMaxMind: {
 		DisplayName: "MaxMind",
-		Credentials: &MaxMindCredentials{},
+		Credentials: func() Credentials { return &MaxMindCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryCyberSource: {
 		DisplayName: "CyberSource",
-		Credentials: &CyberSourceCredentials{},
+		Credentials: func() Credentials { return &CyberSourceCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryKount: {
 		DisplayName: "Kount",
-		Credentials: &KountCredentials{},
+		Credentials: func() Credentials { return &KountCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryClearhaus: {
 		DisplayName: "Clearhaus",
-		Credentials: &ClearhausCredentials{},
+		Credentials: func() Credentials { return &ClearhausCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryTrustPayments: {
 		DisplayName: "Trust Payments",
-		Credentials: &TrustPaymentsCredentials{},
+		Credentials: func() Credentials { return &TrustPaymentsCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryCWAMS: {
 		DisplayName: "CWAMS",
-		Credentials: &CWAMSCredentials{},
+		Credentials: func() Credentials { return &CWAMSCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return (methodType == chtype.PAYMENT_METHOD_TYPE_CARD) ||
 				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
@@ -251,35 +251,35 @@ var LibraryRegister = map[Library]LibraryDef{
 	},
 	LibraryYapstone: {
 		DisplayName: "Yapstone",
-		Credentials: &YapstoneCredentials{},
+		Credentials: func() Credentials { return &YapstoneCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibrarySandbanx: {
 		DisplayName: "SandBanx",
-		Credentials: &SandbanxCredentials{},
+		Credentials: func() Credentials { return &SandbanxCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryThreeDSecureIO: {
 		DisplayName: "ThreeDSecureIO",
-		Credentials: &ThreeDSecureIOCredentials{},
+		Credentials: func() Credentials { return &ThreeDSecureIOCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryInovioPay: {
 		DisplayName: "InovioPay",
-		Credentials: &InovioPayCredentials{},
+		Credentials: func() Credentials { return &InovioPayCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryNuvei: {
 		DisplayName: "Nuvei",
-		Credentials: &NuveiCredentials{},
+		Credentials: func() Credentials { return &NuveiCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
