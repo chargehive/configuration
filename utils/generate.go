@@ -270,7 +270,8 @@ func buildSpec(conf Template) (object.Specification, error) {
 		j, _ := json.Marshal(connectorconfig.InovioPayCredentials{
 			Username:          &chg,
 			Password:          &chg,
-			SiteID:            "0",
+			SiteID:            "12345",
+			ProductID:         "12345",
 			MerchantAccountID: "12345",
 			Environment:       connectorconfig.InovioPayEnvironmentSandbox,
 		})
