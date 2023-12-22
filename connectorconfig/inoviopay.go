@@ -19,6 +19,7 @@ type InovioPayCredentials struct {
 	Username          *string              `json:"username" yaml:"username" validate:"required,gt=0"`
 	Password          *string              `json:"password" yaml:"password" validate:"required,gt=0"`
 	SiteID            string               `json:"siteId" yaml:"siteId" validate:"required,gt=0"`
+	ProductID         string               `json:"productId" yaml:"productId" validate:"required,gt=0"`
 	MerchantAccountID string               `json:"merchantAccountID" yaml:"MerchantAccountID" validate:"required,gt=0"`
 	Environment       InovioPayEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 }
