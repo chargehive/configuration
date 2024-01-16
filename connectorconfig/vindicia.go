@@ -72,6 +72,10 @@ func (c *VindiciaCredentials) SupportsMethod(methodType chtype.PaymentMethodType
 	return true
 }
 
+func (c *VindiciaCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *VindiciaCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == VindiciaEnvironmentProduction {
 		return false

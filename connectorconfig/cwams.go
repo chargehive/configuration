@@ -82,6 +82,10 @@ func (c *CWAMSCredentials) SupportsMethod(methodType chtype.PaymentMethodType, m
 	return true
 }
 
+func (c *CWAMSCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *CWAMSCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeProduction && !c.TestMode {
 		return true

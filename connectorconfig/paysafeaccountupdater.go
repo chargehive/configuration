@@ -68,6 +68,10 @@ func (c *PaySafeAccountUpdaterCredentials) SupportsMethod(methodType chtype.Paym
 	return true
 }
 
+func (c *PaySafeAccountUpdaterCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *PaySafeAccountUpdaterCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }

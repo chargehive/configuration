@@ -54,6 +54,10 @@ func (c *StripeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, 
 	return true
 }
 
+func (c *StripeCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *StripeCredentials) CanPlanModeUse(environment.Mode) bool {
 	// todo will require updating when we have test credentials
 	return true

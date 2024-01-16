@@ -62,6 +62,10 @@ func (c *ClearhausCredentials) SupportsMethod(methodType chtype.PaymentMethodTyp
 	return true
 }
 
+func (c *ClearhausCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *ClearhausCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeProduction && c.Environment == ClearhausEnvironmentLive {
 		return true

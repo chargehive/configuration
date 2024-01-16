@@ -52,6 +52,10 @@ func (c *ChargeHiveCredentials) SupportsMethod(methodType chtype.PaymentMethodTy
 	return true
 }
 
+func (c *ChargeHiveCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *ChargeHiveCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }

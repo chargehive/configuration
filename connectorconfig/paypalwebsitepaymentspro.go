@@ -119,6 +119,10 @@ func (c *PayPalWebsitePaymentsProCredentials) SupportsMethod(methodType chtype.P
 	return true
 }
 
+func (c *PayPalWebsitePaymentsProCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *PayPalWebsitePaymentsProCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == PayPalEnvironmentLive {
 		return false

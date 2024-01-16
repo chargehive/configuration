@@ -72,6 +72,10 @@ func (c *TrustPaymentsCredentials) SupportsMethod(methodType chtype.PaymentMetho
 	return true
 }
 
+func (c *TrustPaymentsCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *TrustPaymentsCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeProduction && !strings.HasPrefix(c.SiteRef, "test_") && c.Environment == TrustPaymentsEnvironmentLive {
 		return true

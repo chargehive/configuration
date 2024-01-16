@@ -59,6 +59,10 @@ func (c *PayPalExpressCheckoutCredentials) SupportsMethod(methodType chtype.Paym
 		c.APISignature != nil && *c.APISignature != ""
 }
 
+func (c *PayPalExpressCheckoutCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *PayPalExpressCheckoutCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == PayPalEnvironmentLive {
 		return false

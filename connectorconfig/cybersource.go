@@ -61,6 +61,10 @@ func (c *CyberSourceCredentials) SupportsMethod(methodType chtype.PaymentMethodT
 	return true
 }
 
+func (c *CyberSourceCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *CyberSourceCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }

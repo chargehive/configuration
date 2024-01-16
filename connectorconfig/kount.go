@@ -65,6 +65,10 @@ func (c *KountCredentials) SupportsMethod(methodType chtype.PaymentMethodType, m
 	return true
 }
 
+func (c *KountCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *KountCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }

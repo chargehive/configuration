@@ -64,6 +64,10 @@ func (c *MaxMindCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 	return true
 }
 
+func (c *MaxMindCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *MaxMindCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }

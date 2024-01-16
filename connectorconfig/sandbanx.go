@@ -57,6 +57,10 @@ func (c *SandbanxCredentials) SupportsMethod(methodType chtype.PaymentMethodType
 	return true
 }
 
+func (c *SandbanxCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *SandbanxCredentials) CanPlanModeUse(environment.Mode) bool {
 	return true
 }

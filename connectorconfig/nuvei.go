@@ -63,6 +63,10 @@ func (c *NuveiCredentials) SupportsMethod(methodType chtype.PaymentMethodType, m
 	return true
 }
 
+func (c *NuveiCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *NuveiCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == NuveiEnvironmentProduction {
 		return false

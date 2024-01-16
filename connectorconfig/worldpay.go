@@ -126,6 +126,10 @@ func (c *WorldpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType
 	return true
 }
 
+func (c *WorldpayCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *WorldpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox {
 		if c.Environment == WorldpayEnvironmentProduction || c.Environment == WorldpayEnvironmentProductionTransact {

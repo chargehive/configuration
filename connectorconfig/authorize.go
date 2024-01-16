@@ -75,6 +75,10 @@ func (c *AuthorizeCredentials) SupportsMethod(methodType chtype.PaymentMethodTyp
 	return true
 }
 
+func (c *AuthorizeCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *AuthorizeCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == AuthorizeEnvironmentProduction {
 		return false
