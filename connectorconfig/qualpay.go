@@ -63,6 +63,10 @@ func (c *QualpayCredentials) SupportsMethod(methodType chtype.PaymentMethodType,
 	return true
 }
 
+func (c *QualpayCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *QualpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == QualPayEnvironmentLive {
 		return false

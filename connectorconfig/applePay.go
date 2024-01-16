@@ -97,6 +97,10 @@ func (a *ApplePayCredentials) SupportsMethod(methodType chtype.PaymentMethodType
 	return false
 }
 
+func (a *ApplePayCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (a *ApplePayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	return true
 }

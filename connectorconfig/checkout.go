@@ -129,6 +129,10 @@ func (c *CheckoutCredentials) SupportsMethod(methodType chtype.PaymentMethodType
 	return true
 }
 
+func (c *CheckoutCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *CheckoutCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == CheckoutEnvironmentProduction {
 		return false

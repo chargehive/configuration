@@ -94,6 +94,10 @@ func (c *BraintreeCredentials) SupportsMethod(methodType chtype.PaymentMethodTyp
 	return true
 }
 
+func (c *BraintreeCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *BraintreeCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == BraintreeEnvironmentProduction {
 		return false

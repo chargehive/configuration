@@ -72,6 +72,10 @@ func (c *ThreeDSecureIOCredentials) SupportsMethod(methodType chtype.PaymentMeth
 	return true
 }
 
+func (c *ThreeDSecureIOCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *ThreeDSecureIOCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == ThreeDSecureIOEnvironmentProduction {
 		return false

@@ -62,6 +62,10 @@ func (c *YapstoneCredentials) SupportsMethod(methodType chtype.PaymentMethodType
 	return true
 }
 
+func (c *YapstoneCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *YapstoneCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeProduction && c.Environment == YapstoneEnvironmentLive {
 		return true

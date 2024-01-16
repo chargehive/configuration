@@ -65,6 +65,10 @@ func (c *InovioPayCredentials) SupportsMethod(methodType chtype.PaymentMethodTyp
 	return true
 }
 
+func (c *InovioPayCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *InovioPayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == InovioPayEnvironmentProduction {
 		return false

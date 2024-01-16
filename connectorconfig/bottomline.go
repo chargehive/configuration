@@ -66,6 +66,10 @@ func (c *BottomlineCredentials) SupportsMethod(methodType chtype.PaymentMethodTy
 	return true
 }
 
+func (c *BottomlineCredentials) SupportsCountry(country string) bool {
+	return true
+}
+
 func (c *BottomlineCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == BottomlineEnvironmentProduction {
 		return false
