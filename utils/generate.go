@@ -38,6 +38,7 @@ const (
 	confYapstone          Template = "con_yapstone"
 	confInovioPay         Template = "con_inoviopay"
 	confNuvei             Template = "con_nuvei"
+	confGPayments         Template = "con_gpayments"
 
 	// connector Pool
 	confConnectorPool Template = "con_pool"
@@ -81,6 +82,7 @@ var Templates = map[Template]string{
 	confYapstone:          "Connector: Yapstone",
 	confInovioPay:         "Connector: InovioPay",
 	confNuvei:             "Connector: Nuvei",
+	confGPayments:         "Connector: GPayments",
 	confConnectorPool:     "Connector Pool",
 	confSlack:             "Integration: Slack",
 	confPolCascade:        "Policy: Cascade",
@@ -284,6 +286,15 @@ func buildSpec(conf Template) (object.Specification, error) {
 			Environment:       connectorconfig.NuveiEnvironmentSandbox,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryNuvei), Configuration: j}, nil
+	case confGPayments:
+		j, _ := json.Marshal(connectorconfig.GPaymentsCredentials{
+			MerchantID:                  &chg,
+			MerchantCertificate:         &chg,
+			MerchantCertificatePassword: &chg,
+			CACertificates:              &chg,
+			Environment:                 connectorconfig.GPaymentsEnvironmentSandbox,
+		})
+		return connector.Connector{Library: string(connectorconfig.LibraryGPayments), Configuration: j}, nil
 	case confConnectorPool:
 		return connector.Pool{Restriction: "unrestricted", Connectors: []connector.PoolItem{{ConnectorID: chg}}}, nil
 	case confSlack:

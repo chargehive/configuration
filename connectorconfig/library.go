@@ -36,6 +36,7 @@ const (
 	LibraryThreeDSecureIO           Library = "threedsecureio"
 	LibraryInovioPay                Library = "inoviopay"
 	LibraryNuvei                    Library = "nuvei"
+	LibraryGPayments                Library = "gpayments"
 	LibrarySandbanx                 Library = "sandbanx"
 
 	// Fraud Libraries
@@ -280,6 +281,13 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibraryNuvei: {
 		DisplayName: "Nuvei",
 		Credentials: func() Credentials { return &NuveiCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+	LibraryGPayments: {
+		DisplayName: "GPayments",
+		Credentials: func() Credentials { return &GPaymentsCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
