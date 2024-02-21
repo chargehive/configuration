@@ -19,33 +19,34 @@ type Template string
 
 const (
 	// connectors
+	confConnAdyen         Template = "con_adyen"
 	confConnAuthorize     Template = "con_authorize"
 	confConnBlueSnap      Template = "con_blueSnap"
 	confConnBrainTree     Template = "con_brainTree"
 	confConnChargeHive    Template = "con_chargeHive"
+	confConnClearhaus     Template = "con_clearhaus"
+	confConnCWAMS         Template = "con_cwams"
 	confConnCyberSource   Template = "con_cyberSource"
+	confConnGPayments     Template = "con_gpayments"
+	confConnInovioPay     Template = "con_inoviopay"
 	confConnMaxMind       Template = "con_maxMind"
+	confConnNuvei         Template = "con_nuvei"
 	confConnPayPalExpress Template = "con_payPalExpressCheckout"
 	confConnPayPalWPP     Template = "con_payPalWPP"
 	confConnPaysafe       Template = "con_paysafe"
 	confConnQualPay       Template = "con_qualPay"
 	confConnSandbox       Template = "con_sandbox"
 	confConnStripe        Template = "con_stripe"
+	confConnTrustPayments Template = "con_trust-payments"
 	confConnVindicia      Template = "con_vindicia"
 	confConnWorldPay      Template = "con_worldPay"
-	confClearhaus         Template = "con_clearhaus"
-	confTrustPayments     Template = "con_trust-payments"
-	confCWAMS             Template = "con_cwams"
-	confYapstone          Template = "con_yapstone"
-	confInovioPay         Template = "con_inoviopay"
-	confNuvei             Template = "con_nuvei"
-	confGPayments         Template = "con_gpayments"
+	confConnYapstone      Template = "con_yapstone"
 
 	// connector Pool
 	confConnectorPool Template = "con_pool"
 
 	// integration
-	confSlack Template = "int_slack"
+	confIntSlack Template = "int_slack"
 
 	// policy
 	confPolCascade       Template = "pol_cascade"
@@ -64,28 +65,30 @@ const (
 )
 
 var Templates = map[Template]string{
+	confConnAdyen:         "Connector: Adyen",
 	confConnAuthorize:     "Connector: Authorize.net",
+	confConnBlueSnap:      "Connector: BlueSnap",
 	confConnBrainTree:     "Connector: Braintree",
 	confConnChargeHive:    "Connector: ChargeHive (fraud)",
+	confConnClearhaus:     "Connector: Clearhaus",
+	confConnCWAMS:         "Connector: CWAMS",
 	confConnCyberSource:   "Connector: Cybersource (fraud)",
+	confConnectorPool:     "Connector Pool",
+	confConnGPayments:     "Connector: GPayments",
+	confConnInovioPay:     "Connector: InovioPay",
 	confConnMaxMind:       "Connector: MaxMind (fraud)",
+	confConnNuvei:         "Connector: Nuvei",
 	confConnPayPalExpress: "Connector: Paypal Express Checkout",
 	confConnPayPalWPP:     "Connector: Paypal Website Payments Pro",
 	confConnPaysafe:       "Connector: Paysafe",
 	confConnQualPay:       "Connector: QualPay",
 	confConnSandbox:       "Connector: ChargeHive Sandbox",
 	confConnStripe:        "Connector: Stripe",
+	confConnTrustPayments: "Connector: Trust Payments",
 	confConnVindicia:      "Connector: Vindicia",
 	confConnWorldPay:      "Connector: Worldpay",
-	confClearhaus:         "Connector: Clearhaus",
-	confTrustPayments:     "Connector: Trust Payments",
-	confCWAMS:             "Connector: CWAMS",
-	confYapstone:          "Connector: Yapstone",
-	confInovioPay:         "Connector: InovioPay",
-	confNuvei:             "Connector: Nuvei",
-	confGPayments:         "Connector: GPayments",
-	confConnectorPool:     "Connector Pool",
-	confSlack:             "Integration: Slack",
+	confConnYapstone:      "Connector: Yapstone",
+	confIntSlack:          "Integration: Slack",
 	confPolCascade:        "Policy: Cascade",
 	confPolChargeExpiry:   "Policy: Charge Expiry",
 	confPolFraud:          "Policy: Fraud",
@@ -136,6 +139,12 @@ func Generate(conf Template, version string, pretty bool) ([]byte, error) {
 
 func buildSpec(conf Template) (object.Specification, error) {
 	switch conf {
+	case confConnAdyen:
+		j, _ := json.Marshal(connectorconfig.AdyenCredentials{
+			Environment: connectorconfig.AdyenEnvironmentSandbox,
+			MID:         chg,
+		})
+		return connector.Connector{Library: string(connectorconfig.LibraryAuthorize), Configuration: j}, nil
 	case confConnAuthorize:
 		j, _ := json.Marshal(connectorconfig.AuthorizeCredentials{APILoginID: &chg, TransactionKey: &chg, Environment: "sandbox"})
 		return connector.Connector{Library: string(connectorconfig.LibraryAuthorize), Configuration: j}, nil
@@ -245,14 +254,14 @@ func buildSpec(conf Template) (object.Specification, error) {
 		})
 
 		return connector.Connector{Library: string(connectorconfig.LibraryWorldpay), Configuration: j}, nil
-	case confClearhaus:
+	case confConnClearhaus:
 		j, _ := json.Marshal(connectorconfig.ClearhausCredentials{
 			MerchantID:  chg,
 			APIKey:      chg,
 			Environment: connectorconfig.ClearhausEnvironmentTest,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryClearhaus), Configuration: j}, nil
-	case confTrustPayments:
+	case confConnTrustPayments:
 		j, _ := json.Marshal(connectorconfig.TrustPaymentsCredentials{
 			Username:    &chg,
 			Password:    &chg,
@@ -261,21 +270,21 @@ func buildSpec(conf Template) (object.Specification, error) {
 			Environment: connectorconfig.TrustPaymentsEnvironmentTest,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryTrustPayments), Configuration: j}, nil
-	case confCWAMS:
+	case confConnCWAMS:
 		j, _ := json.Marshal(connectorconfig.CWAMSCredentials{
 			GatewayID:   "12345678",
 			TestMode:    true,
 			SecurityKey: &chg,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryCWAMS), Configuration: j}, nil
-	case confYapstone:
+	case confConnYapstone:
 		j, _ := json.Marshal(connectorconfig.YapstoneCredentials{
 			ClientID:     chg,
 			ClientSecret: chg,
 			Environment:  connectorconfig.YapstoneEnvironmentTest,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryYapstone), Configuration: j}, nil
-	case confInovioPay:
+	case confConnInovioPay:
 		j, _ := json.Marshal(connectorconfig.InovioPayCredentials{
 			Username:          &chg,
 			Password:          &chg,
@@ -285,7 +294,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 			Environment:       connectorconfig.InovioPayEnvironmentSandbox,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryInovioPay), Configuration: j}, nil
-	case confNuvei:
+	case confConnNuvei:
 		j, _ := json.Marshal(connectorconfig.NuveiCredentials{
 			MerchantID:        &chg,
 			MerchantSiteID:    &chg,
@@ -293,7 +302,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 			Environment:       connectorconfig.NuveiEnvironmentSandbox,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryNuvei), Configuration: j}, nil
-	case confGPayments:
+	case confConnGPayments:
 		j, _ := json.Marshal(connectorconfig.GPaymentsCredentials{
 			MerchantID:                  &chg,
 			MerchantCertificate:         &chg,
@@ -304,7 +313,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 		return connector.Connector{Library: string(connectorconfig.LibraryGPayments), Configuration: j}, nil
 	case confConnectorPool:
 		return connector.Pool{Restriction: "unrestricted", Connectors: []connector.PoolItem{{ConnectorID: chg}}}, nil
-	case confSlack:
+	case confIntSlack:
 		return integration.Slack{AccessToken: chg, TeamName: chg, TeamID: chg, TransactionNotifications: new(bool), Webhook: &integration.SlackWebhook{Url: chg, Channel: chg, ConfigurationUrl: chg}}, nil
 	case confPolCascade:
 		return policy.CascadePolicy{Rules: []policy.CascadeRule{{Library: connectorconfig.Library(chg), OriginalResponseCode: chg}}}, nil

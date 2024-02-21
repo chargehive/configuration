@@ -17,6 +17,7 @@ type Library string
 const (
 	// Payment Libraries
 	LibrarySandbox                  Library = "sandbox" // Connector for testing Charge hive
+	LibraryAdyen                    Library = "adyen"
 	LibraryApplePay                 Library = "applepay"
 	LibraryAuthorize                Library = "authorize"
 	LibraryBraintree                Library = "braintree"
@@ -95,6 +96,13 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibrarySandbox: {
 		DisplayName: "ChargeHive Sandbox",
 		Credentials: func() Credentials { return &SandboxCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+	LibraryAdyen: {
+		DisplayName: "Adyen",
+		Credentials: func() Credentials { return &AdyenCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
