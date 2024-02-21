@@ -20,6 +20,7 @@ const (
 	LibraryApplePay                 Library = "applepay"
 	LibraryAuthorize                Library = "authorize"
 	LibraryBraintree                Library = "braintree"
+	LibraryBlueSnap                 Library = "bluesnap"
 	LibraryQualPay                  Library = "qualpay"
 	LibraryStripe                   Library = "stripe"
 	LibraryPaySafe                  Library = "paysafe"
@@ -108,6 +109,13 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibraryAuthorize: {
 		DisplayName: "Authorize",
 		Credentials: func() Credentials { return &AuthorizeCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+	LibraryBlueSnap: {
+		DisplayName: "BlueSnap",
+		Credentials: func() Credentials { return &BlueSnapCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},

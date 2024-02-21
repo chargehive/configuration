@@ -20,6 +20,7 @@ type Template string
 const (
 	// connectors
 	confConnAuthorize     Template = "con_authorize"
+	confConnBlueSnap      Template = "con_blueSnap"
 	confConnBrainTree     Template = "con_brainTree"
 	confConnChargeHive    Template = "con_chargeHive"
 	confConnCyberSource   Template = "con_cyberSource"
@@ -192,6 +193,12 @@ func buildSpec(conf Template) (object.Specification, error) {
 	case confConnStripe:
 		j, _ := json.Marshal(connectorconfig.StripeCredentials{APIKey: &chg})
 		return connector.Connector{Library: string(connectorconfig.LibraryStripe), Configuration: j}, nil
+	case confConnBlueSnap:
+		j, _ := json.Marshal(connectorconfig.BlueSnapCredentials{
+			StoreID:     "store-id",
+			Environment: connectorconfig.BlueSnapEnvironmentSandbox,
+		})
+		return connector.Connector{Library: string(connectorconfig.LibraryBlueSnap), Configuration: j}, nil
 	case confConnVindicia:
 		j, _ := json.Marshal(connectorconfig.VindiciaCredentials{Login: chg, Password: &chg, HMACKey: &chg, PGPPrivateKey: &chg, Environment: "development", ConnectorPool: []connectorconfig.ConnectorAttempt{{ConnectorID: "", DivisionNumber: "", Weight: 0}}})
 		return connector.Connector{Library: string(connectorconfig.LibraryVindicia), Configuration: j}, nil
