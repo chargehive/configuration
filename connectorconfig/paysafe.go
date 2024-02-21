@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"strings"
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
@@ -120,7 +121,7 @@ func (c *PaySafeCredentials) SupportsCountry(country string) bool {
 		return true
 	}
 	for _, v := range paysafeAllowedCountires {
-		if v == country {
+		if strings.EqualFold(v, country) {
 			return true
 		}
 	}
