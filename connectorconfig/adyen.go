@@ -62,7 +62,7 @@ func (c *AdyenCredentials) SupportsMethod(methodType chtype.PaymentMethodType, m
 	return true
 }
 
-var adyenAllowedCountires = []string{}
+var adyenAllowedCountires = []string{"AT", "AU", "BE", "CA", "CH", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GR", "IE", "IT", "LI", "LT", "LU", "LV", "MC", "MT", "NL", "NO", "PL", "PT", "SE", "SI", "SK", "US"}
 
 func (c *AdyenCredentials) SupportsCountry(country string) bool {
 	if country == "" {
