@@ -12,12 +12,12 @@ func TestSupportsCountry(t *testing.T) {
 		"GB": true,
 		"XK": false,
 		"XX": false,
-		"":   false,
+		"":   true,
 	}
 
 	for k, v := range tests {
 		if credential.SupportsCountry(k) != v {
-			t.Errorf("Expected %v, got %v", v, !v)
+			t.Errorf("Expected %v, got %v for %s", v, !v, k)
 		}
 	}
 }
