@@ -144,7 +144,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 			Environment: connectorconfig.AdyenEnvironmentSandbox,
 			MID:         chg,
 		})
-		return connector.Connector{Library: string(connectorconfig.LibraryAuthorize), Configuration: j}, nil
+		return connector.Connector{Library: string(connectorconfig.LibraryAdyen), Configuration: j}, nil
 	case confConnAuthorize:
 		j, _ := json.Marshal(connectorconfig.AuthorizeCredentials{APILoginID: &chg, TransactionKey: &chg, Environment: "sandbox"})
 		return connector.Connector{Library: string(connectorconfig.LibraryAuthorize), Configuration: j}, nil
