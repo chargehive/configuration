@@ -16,12 +16,12 @@ type TokenExAccountUpdaterCredentials struct {
 	DecryptionPGPPrivateKey           *string `json:"decPGPPrivate" yaml:"decPGPPrivate" validate:"required,gt=0"`
 	DecryptionPGPPrivateKeyPassphrase *string `json:"decPGPPrivatePassphrase" yaml:"decPGPPrivatePassphrase" validate:"required"`
 
-	SFTPUsername *string `json:"SFTPUsername" yaml:"SFTPUsername" validate:"required,gt=0"`
+	SFTPUsername string  `json:"SFTPUsername" yaml:"SFTPUsername" validate:"required,gt=0"`
 	SFTPPassword *string `json:"SFTPPassword" yaml:"SFTPPassword" validate:"required,gt=0"`
 }
 
 func (c *TokenExAccountUpdaterCredentials) GetMID() string {
-	return *c.SFTPUsername
+	return c.SFTPUsername
 }
 
 func (c *TokenExAccountUpdaterCredentials) GetLibrary() Library {
@@ -37,7 +37,7 @@ func (c *TokenExAccountUpdaterCredentials) Validate() error {
 }
 
 func (c *TokenExAccountUpdaterCredentials) GetSecureFields() []*string {
-	return []*string{c.SFTPUsername, c.DecryptionPGPPrivateKey, c.SFTPPassword, c.DecryptionPGPPrivateKeyPassphrase}
+	return []*string{c.DecryptionPGPPrivateKey, c.SFTPPassword, c.DecryptionPGPPrivateKeyPassphrase}
 }
 
 func (c *TokenExAccountUpdaterCredentials) ToConnector() connector.Connector {
