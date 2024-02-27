@@ -41,6 +41,7 @@ const (
 	confConnVindicia      Template = "con_vindicia"
 	confConnWorldPay      Template = "con_worldPay"
 	confConnYapstone      Template = "con_yapstone"
+	confConnTokenEx       Template = "con_tokenex"
 
 	// connector Pool
 	confConnectorPool Template = "con_pool"
@@ -311,6 +312,17 @@ func buildSpec(conf Template) (object.Specification, error) {
 			Environment:                 connectorconfig.GPaymentsEnvironmentSandbox,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryGPayments), Configuration: j}, nil
+	case confConnTokenEx:
+		j, _ := json.Marshal(connectorconfig.TokenExAccountUpdaterCredentials{
+			EncryptionPGPPublicKey:            chg,
+			DecryptionPGPPrivateKey:           &chg,
+			DecryptionPGPPrivateKeyPassphrase: &chg,
+			SFTPUsername:                      chg,
+			SFTPPassword:                      &chg,
+			Environment:                       connectorconfig.TokenExEnvironmentSandbox,
+			Region:                            connectorconfig.TokenExRegionUS,
+		})
+		return connector.Connector{Library: string(connectorconfig.LibraryTokenExAccountUpdater), Configuration: j}, nil
 	case confConnectorPool:
 		return connector.Pool{Restriction: "unrestricted", Connectors: []connector.PoolItem{{ConnectorID: chg}}}, nil
 	case confIntSlack:
