@@ -49,6 +49,7 @@ const (
 
 	// Updater Libraries
 	LibraryPaySafeAccountUpdater Library = "paysafe-accountupdater"
+	LibraryTokenExAccountUpdater Library = "tokenex-accountupdater"
 )
 
 type LibraryType string
@@ -304,6 +305,13 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibraryGPayments: {
 		DisplayName: "GPayments",
 		Credentials: func() Credentials { return &GPaymentsCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+	LibraryTokenExAccountUpdater: {
+		DisplayName: "TokenEx Account Updater",
+		Credentials: func() Credentials { return &TokenExAccountUpdaterCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
