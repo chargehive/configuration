@@ -8,6 +8,20 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
+type TokenExEnvironment string
+
+const (
+	TokenExEnvironmentSandbox    TokenExEnvironment = "sandbox"
+	TokenExEnvironmentProduction TokenExEnvironment = "production"
+)
+
+type TokenExRegion string
+
+const (
+	TokenExRegionUS TokenExRegion = "us"
+	TokenExRegionEU TokenExRegion = "eu"
+)
+
 type TokenExAccountUpdaterCredentials struct {
 	// Encryption PGP key provided TO you BY TokenEx (note this is a separate pair from DecryptionPGPPrivateKey.)
 	EncryptionPGPPublicKey string `json:"encPGPPublic" yaml:"encPGPPublic" validate:"required,gt=0"`
@@ -18,6 +32,9 @@ type TokenExAccountUpdaterCredentials struct {
 
 	SFTPUsername string  `json:"SFTPUsername" yaml:"SFTPUsername" validate:"required,gt=0"`
 	SFTPPassword *string `json:"SFTPPassword" yaml:"SFTPPassword" validate:"required,gt=0"`
+
+	Environment TokenExEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
+	Region      TokenExRegion      `json:"region" yaml:"region" validate:"oneof=us eu"`
 }
 
 func (c *TokenExAccountUpdaterCredentials) GetMID() string {
