@@ -233,3 +233,9 @@ func (g *GooglePay) GetGoogleCardMerchantId() string {
 	}
 	return g.GoogleCardMerchantId
 }
+func (g *GooglePay) GetGoogleAcquirerCountry() string {
+	if g == nil {
+		return ""
+	}
+	return g.GoogleAcquirerCountry
+}
