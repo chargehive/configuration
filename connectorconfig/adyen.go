@@ -20,7 +20,7 @@ type AdyenCredentials struct {
 	Environment     AdyenEnvironment `json:"environment" yaml:"environment" validate:"required,oneof=sandbox production"`
 	MerchantAccount string           `json:"merchantAccount" yaml:"merchantAccount" validate:"required"`
 	ApiKey          *string          `json:"apiKey" yaml:"apiKey" validate:"required"`
-	ApiPrefix       *string          `json:"apiPrefix" yaml:"apiPrefix" validate:"required"`
+	ApiPrefix       string           `json:"apiPrefix" yaml:"apiPrefix" validate:"required"`
 }
 
 func (c *AdyenCredentials) GetMID() string {
@@ -36,7 +36,7 @@ func (c *AdyenCredentials) GetSupportedTypes() []LibraryType {
 }
 
 func (c *AdyenCredentials) GetSecureFields() []*string {
-	return []*string{c.ApiKey, c.ApiPrefix}
+	return []*string{c.ApiKey}
 }
 
 func (c *AdyenCredentials) Validate() error {
