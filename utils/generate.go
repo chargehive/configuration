@@ -142,8 +142,10 @@ func buildSpec(conf Template) (object.Specification, error) {
 	switch conf {
 	case confConnAdyen:
 		j, _ := json.Marshal(connectorconfig.AdyenCredentials{
-			Environment: connectorconfig.AdyenEnvironmentSandbox,
-			MID:         chg,
+			Environment:     connectorconfig.AdyenEnvironmentSandbox,
+			MerchantAccount: chg,
+			ApiKey:          &chg,
+			ApiPrefix:       chg,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryAdyen), Configuration: j}, nil
 	case confConnAuthorize:
