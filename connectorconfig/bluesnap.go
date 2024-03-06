@@ -19,6 +19,9 @@ const (
 type BlueSnapCredentials struct {
 	StoreID     string              `json:"storeID" yaml:"storeID" validate:"required,gt=0"`
 	Environment BlueSnapEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
+	Username    *string             `json:"username" yaml:"username" validate:"required,gt=0"`
+	Password    *string             `json:"password" yaml:"password" validate:"required,gt=0"`
+	Descriptor  string              `json:"descriptor" yaml:"descriptor"`
 }
 
 func (c *BlueSnapCredentials) GetMID() string {
@@ -34,7 +37,7 @@ func (c *BlueSnapCredentials) GetSupportedTypes() []LibraryType {
 }
 
 func (c *BlueSnapCredentials) GetSecureFields() []*string {
-	return nil
+	return []*string{c.Username, c.Password}
 }
 
 func (c *BlueSnapCredentials) Validate() error {
