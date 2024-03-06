@@ -209,6 +209,9 @@ func buildSpec(conf Template) (object.Specification, error) {
 		j, _ := json.Marshal(connectorconfig.BlueSnapCredentials{
 			StoreID:     "store-id",
 			Environment: connectorconfig.BlueSnapEnvironmentSandbox,
+			Username:    &chg,
+			Password:    &chg,
+			Descriptor:  chg,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryBlueSnap), Configuration: j}, nil
 	case confConnVindicia:
