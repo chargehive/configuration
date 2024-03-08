@@ -44,9 +44,6 @@ type ScaPolicy struct {
 
 	// ShouldAuthOnError if true and an error response is returned from the connector; proceed to auth anyway
 	ShouldAuthOnError *bool `json:"shouldAuthOnError" yaml:"shouldAuthOnError" validate:"required"`
-
-	// ConnectorID is the connector to use for SCA
-	ConnectorID string `json:"connectorID" yaml:"connectorID"`
 }
 
 func (s ScaPolicy) GetScaRequired() bool {
