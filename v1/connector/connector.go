@@ -30,6 +30,7 @@ type Connector struct {
 	ConfigID        string          `json:"configId,omitempty" yaml:"configId,omitempty"`
 	ConfigAuth      string          `json:"configAuth,omitempty" yaml:"configAuth,omitempty"`
 	EnablePCIB      bool            `json:"enablePCIB,omitempty" yaml:"enablePCIB,omitempty"`
+	SCAConnectorID  bool            `json:"scaConnectorID,omitempty" yaml:"scaConnectorID,omitempty"`
 }
 
 // GetKind returns the Connector kind
