@@ -21,6 +21,7 @@ type AdyenCredentials struct {
 	MerchantAccount string           `json:"merchantAccount" yaml:"merchantAccount" validate:"required"`
 	ApiKey          *string          `json:"apiKey" yaml:"apiKey" validate:"required"`
 	ApiPrefix       string           `json:"apiPrefix" yaml:"apiPrefix" validate:"required"`
+	HMACKey         *string          `json:"hmacKey" yaml:"hmacKey" validate:"required"`
 }
 
 func (c *AdyenCredentials) GetMID() string {
