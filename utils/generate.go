@@ -146,6 +146,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 			MerchantAccount: chg,
 			ApiKey:          &chg,
 			ApiPrefix:       chg,
+			HMACKey:         &chg,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryAdyen), Configuration: j}, nil
 	case confConnAuthorize:
