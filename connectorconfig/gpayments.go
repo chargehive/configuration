@@ -16,7 +16,8 @@ const (
 )
 
 type GPaymentsCredentials struct {
-	MerchantID                  *string              `json:"merchantID" yaml:"merchantID" validate:"required,gt=0"`
+	MerchantName                string               `json:"merchantName" yaml:"merchantName" validate:"required,gt=0"`
+	MerchantID                  string               `json:"merchantID" yaml:"merchantID" validate:"required,gt=0"`
 	MerchantCertificate         *string              `json:"merchantCertificate" yaml:"merchantCertificate" validate:"required,gt=0"`
 	MerchantCertificatePassword *string              `json:"merchantCertificatePassword" yaml:"merchantCertificatePassword" validate:"required,gt=0"`
 	CACertificates              *string              `json:"CACertificates" yaml:"CACertificates" validate:"required,gt=0"`
@@ -24,7 +25,7 @@ type GPaymentsCredentials struct {
 }
 
 func (c *GPaymentsCredentials) GetMID() string {
-	return *c.MerchantID
+	return c.MerchantID
 }
 
 func (c *GPaymentsCredentials) GetLibrary() Library {

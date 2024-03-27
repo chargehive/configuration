@@ -311,7 +311,8 @@ func buildSpec(conf Template) (object.Specification, error) {
 		return connector.Connector{Library: string(connectorconfig.LibraryNuvei), Configuration: j}, nil
 	case confConnGPayments:
 		j, _ := json.Marshal(connectorconfig.GPaymentsCredentials{
-			MerchantID:                  &chg,
+			MerchantName:                chg,
+			MerchantID:                  chg,
 			MerchantCertificate:         &chg,
 			MerchantCertificatePassword: &chg,
 			CACertificates:              &chg,
