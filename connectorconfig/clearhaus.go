@@ -20,9 +20,7 @@ type ClearhausCredentials struct {
 	MerchantDescriptor string               `json:"merchantDescriptor" yaml:"merchantDescriptor" validate:"-"`
 	Environment        ClearhausEnvironment `json:"environment" yaml:"environment" validate:"required,oneof=test live"`
 
-	APIKey            *string `json:"apiKey" yaml:"apiKey" validate:"required"`
-	SigningApiKey     *string `json:"signingApiKey" yaml:"signingApiKey" validate:"required"`
-	SigningPrivateKey *string `json:"signingPrivateKey" yaml:"signingPrivateKey" validate:"required"`
+	APIKey *string `json:"apiKey" yaml:"apiKey" validate:"required"`
 }
 
 func (c *ClearhausCredentials) GetMID() string {
@@ -38,7 +36,7 @@ func (c *ClearhausCredentials) GetSupportedTypes() []LibraryType {
 }
 
 func (c *ClearhausCredentials) GetSecureFields() []*string {
-	return []*string{c.APIKey, c.SigningApiKey, c.SigningPrivateKey}
+	return []*string{c.APIKey}
 }
 
 func (c *ClearhausCredentials) Validate() error {
