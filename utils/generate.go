@@ -264,7 +264,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 	case confConnClearhaus:
 		j, _ := json.Marshal(connectorconfig.ClearhausCredentials{
 			MerchantID:  chg,
-			APIKey:      chg,
+			APIKey:      &chg,
 			Environment: connectorconfig.ClearhausEnvironmentTest,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryClearhaus), Configuration: j}, nil
