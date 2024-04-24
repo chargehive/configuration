@@ -9,23 +9,11 @@ import (
 )
 
 type StickyIOCredentials struct {
-	ApiKey             *string                   `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
-	MerchantName       string                    `json:"merchantName" yaml:"merchantName"`
-	MCC                string                    `json:"mcc" yaml:"mcc"`
-	AcquirerBIN        string                    `json:"acquirerBIN" yaml:"acquirerBIN"`
-	AcquirerMerchantID string                    `json:"acquirerMerchantID" yaml:"acquirerMerchantID"`
-	Environment        ThreeDSecureIOEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
-}
-
-func (c *StickyIOCredentials) GetMID() string {
-	return c.MerchantName
+	ApiKey string `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
 }
 
 func (c *StickyIOCredentials) GetApiKey() string {
-	if c.ApiKey == nil {
-		return ""
-	}
-	return *c.ApiKey
+	return c.ApiKey
 }
 
 func (c *StickyIOCredentials) GetLibrary() Library {
@@ -41,7 +29,7 @@ func (c *StickyIOCredentials) Validate() error {
 }
 
 func (c *StickyIOCredentials) GetSecureFields() []*string {
-	return []*string{c.ApiKey}
+	return []*string{}
 }
 
 func (c *StickyIOCredentials) ToConnector() connector.Connector {
