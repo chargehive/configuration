@@ -50,6 +50,9 @@ const (
 	// Updater Libraries
 	LibraryPaySafeAccountUpdater Library = "paysafe-accountupdater"
 	LibraryTokenExAccountUpdater Library = "tokenex-accountupdater"
+
+	// Scheduler Libraries
+	LibraryStickyIO Library = "sticky-io"
 )
 
 type LibraryType string
@@ -60,6 +63,7 @@ const (
 	LibraryTypeMethodUpdater  LibraryType = "methodUpdater"
 	LibraryTypeRecoveryAgent  LibraryType = "recoveryAgent"
 	LibraryTypeAuthentication LibraryType = "authentication"
+	LibraryTypeScheduler      LibraryType = "scheduler"
 )
 
 var LibraryTypeRegister = map[LibraryType]bool{
@@ -67,6 +71,7 @@ var LibraryTypeRegister = map[LibraryType]bool{
 	LibraryTypeFraud:          true,
 	LibraryTypeRecoveryAgent:  true,
 	LibraryTypeAuthentication: true,
+	LibraryTypeScheduler:      true,
 }
 
 func (l Library) GetDisplayName() string {
@@ -312,6 +317,14 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibraryTokenExAccountUpdater: {
 		DisplayName: "TokenEx Account Updater",
 		Credentials: func() Credentials { return &TokenExAccountUpdaterCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+
+	LibraryStickyIO: {
+		DisplayName: "Sticky IO",
+		Credentials: func() Credentials { return &StickyIOCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
