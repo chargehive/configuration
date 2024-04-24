@@ -8,7 +8,7 @@ import (
 )
 
 // KindConnectorScheduler is the identifier for an Connector scheduler config
-const KindConnectorScheduler object.Kind = "SchedulerConnector"
+const KindConnectorScheduler object.Kind = "ConnectorScheduler"
 
 // Connector is a schedule that can determine the next run time based on a connector
 type Connector struct {
