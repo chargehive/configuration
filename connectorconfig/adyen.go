@@ -95,3 +95,7 @@ func (c *AdyenCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *AdyenCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *AdyenCredentials) Supports3RI() bool {
+	return false
+}

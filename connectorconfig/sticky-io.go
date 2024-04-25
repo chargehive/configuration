@@ -64,3 +64,7 @@ func (c *StickyIOCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *StickyIOCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *StickyIOCredentials) Supports3RI() bool {
+	return false
+}

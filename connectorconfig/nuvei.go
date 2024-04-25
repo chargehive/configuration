@@ -77,3 +77,7 @@ func (c *NuveiCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *NuveiCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *NuveiCredentials) Supports3RI() bool {
+	return false
+}

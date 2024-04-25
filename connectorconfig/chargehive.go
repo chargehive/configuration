@@ -63,3 +63,7 @@ func (c *ChargeHiveCredentials) CanPlanModeUse(environment.Mode) bool {
 func (c *ChargeHiveCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *ChargeHiveCredentials) Supports3RI() bool {
+	return false
+}

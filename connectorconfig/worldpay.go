@@ -142,3 +142,7 @@ func (c *WorldpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *WorldpayCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *WorldpayCredentials) Supports3RI() bool {
+	return false
+}

@@ -79,3 +79,7 @@ func (c *GPaymentsCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *GPaymentsCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *GPaymentsCredentials) Supports3RI() bool {
+	return true
+}

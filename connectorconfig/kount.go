@@ -76,3 +76,7 @@ func (c *KountCredentials) CanPlanModeUse(environment.Mode) bool {
 func (c *KountCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *KountCredentials) Supports3RI() bool {
+	return false
+}

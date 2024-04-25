@@ -83,3 +83,7 @@ func (c *ClearhausCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *ClearhausCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *ClearhausCredentials) Supports3RI() bool {
+	return false
+}

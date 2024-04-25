@@ -91,3 +91,7 @@ func (c *TrustPaymentsCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *TrustPaymentsCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *TrustPaymentsCredentials) Supports3RI() bool {
+	return false
+}

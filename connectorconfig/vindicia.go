@@ -86,3 +86,7 @@ func (c *VindiciaCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *VindiciaCredentials) IsRecoveryAgent() bool {
 	return true
 }
+
+func (c *VindiciaCredentials) Supports3RI() bool {
+	return false
+}

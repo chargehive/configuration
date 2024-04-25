@@ -79,3 +79,7 @@ func (c *InovioPayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *InovioPayCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *InovioPayCredentials) Supports3RI() bool {
+	return false
+}

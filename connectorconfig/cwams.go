@@ -101,3 +101,7 @@ func (c *CWAMSCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *CWAMSCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *CWAMSCredentials) Supports3RI() bool {
+	return false
+}

@@ -18,4 +18,5 @@ type Credentials interface {
 	SupportsCountry(country string) bool
 	CanPlanModeUse(mode environment.Mode) bool // Determine if this plan mode can use this configuration
 	IsRecoveryAgent() bool
+	Supports3RI() bool
 }

@@ -66,3 +66,7 @@ func (c *StripeCredentials) CanPlanModeUse(environment.Mode) bool {
 func (c *StripeCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *StripeCredentials) Supports3RI() bool {
+	return false
+}

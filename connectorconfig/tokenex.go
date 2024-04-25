@@ -89,3 +89,7 @@ func (c *TokenExAccountUpdaterCredentials) CanPlanModeUse(environment.Mode) bool
 func (c *TokenExAccountUpdaterCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *TokenExAccountUpdaterCredentials) Supports3RI() bool {
+	return false
+}

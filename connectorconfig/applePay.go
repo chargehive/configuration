@@ -109,6 +109,10 @@ func (a *ApplePayCredentials) IsRecoveryAgent() bool {
 	return false
 }
 
+func (a *ApplePayCredentials) Supports3RI() bool {
+	return false
+}
+
 func (a *ApplePayCredentials) GetSecureFields() []*string {
 	if a == nil {
 		return nil

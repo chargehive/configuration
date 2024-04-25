@@ -79,3 +79,7 @@ func (c *PaySafeAccountUpdaterCredentials) CanPlanModeUse(environment.Mode) bool
 func (c *PaySafeAccountUpdaterCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *PaySafeAccountUpdaterCredentials) Supports3RI() bool {
+	return false
+}

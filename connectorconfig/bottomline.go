@@ -80,3 +80,7 @@ func (c *BottomlineCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *BottomlineCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *BottomlineCredentials) Supports3RI() bool {
+	return false
+}

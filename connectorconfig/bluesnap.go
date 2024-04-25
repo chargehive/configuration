@@ -95,3 +95,7 @@ func (c *BlueSnapCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *BlueSnapCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *BlueSnapCredentials) Supports3RI() bool {
+	return false
+}

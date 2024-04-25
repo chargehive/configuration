@@ -24,4 +24,6 @@ type AttemptConfig struct {
 
 	// OverridePoolConnectorIDs will use this connectors instead of the ones in the pool
 	OverridePoolConnectorIDs []string `json:"overridePoolConnectorIDs,omitempty" yaml:"overridePoolConnectorIDs,omitempty" validate:"dive,lowercase"`
+
+	Prefer3RI bool `json:"prefer3RI,omitempty" yaml:"prefer3RI,omitempty"`
 }
