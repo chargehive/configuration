@@ -30,6 +30,7 @@ type Connector struct {
 	ConfigID        string          `json:"configId,omitempty" yaml:"configId,omitempty"`
 	ConfigAuth      string          `json:"configAuth,omitempty" yaml:"configAuth,omitempty"`
 	EnablePCIB      bool            `json:"enablePCIB,omitempty" yaml:"enablePCIB,omitempty"`
+	Enable3RI       bool            `json:"enable3RI,omitempty" yaml:"enable3RI,omitempty"`
 	SCAConnectorID  string          `json:"scaConnectorID,omitempty" yaml:"scaConnectorID,omitempty"`
 }
 
