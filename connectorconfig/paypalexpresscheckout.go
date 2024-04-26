@@ -73,3 +73,7 @@ func (c *PayPalExpressCheckoutCredentials) CanPlanModeUse(mode environment.Mode)
 func (c *PayPalExpressCheckoutCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *PayPalExpressCheckoutCredentials) Supports3RI() bool {
+	return false
+}

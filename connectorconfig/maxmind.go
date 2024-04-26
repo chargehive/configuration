@@ -75,3 +75,7 @@ func (c *MaxMindCredentials) CanPlanModeUse(environment.Mode) bool {
 func (c *MaxMindCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *MaxMindCredentials) Supports3RI() bool {
+	return false
+}

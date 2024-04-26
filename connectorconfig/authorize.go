@@ -89,3 +89,7 @@ func (c *AuthorizeCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *AuthorizeCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *AuthorizeCredentials) Supports3RI() bool {
+	return false
+}

@@ -81,3 +81,7 @@ func (c *YapstoneCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *YapstoneCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *YapstoneCredentials) Supports3RI() bool {
+	return false
+}

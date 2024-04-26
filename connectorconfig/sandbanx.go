@@ -68,3 +68,7 @@ func (c *SandbanxCredentials) CanPlanModeUse(environment.Mode) bool {
 func (c *SandbanxCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *SandbanxCredentials) Supports3RI() bool {
+	return false
+}

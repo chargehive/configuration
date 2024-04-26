@@ -143,3 +143,7 @@ func (c *CheckoutCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *CheckoutCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *CheckoutCredentials) Supports3RI() bool {
+	return false
+}

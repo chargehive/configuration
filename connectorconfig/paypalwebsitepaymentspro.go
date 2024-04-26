@@ -133,3 +133,7 @@ func (c *PayPalWebsitePaymentsProCredentials) CanPlanModeUse(mode environment.Mo
 func (c *PayPalWebsitePaymentsProCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *PayPalWebsitePaymentsProCredentials) Supports3RI() bool {
+	return false
+}

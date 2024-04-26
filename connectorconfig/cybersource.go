@@ -72,3 +72,7 @@ func (c *CyberSourceCredentials) CanPlanModeUse(environment.Mode) bool {
 func (c *CyberSourceCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *CyberSourceCredentials) Supports3RI() bool {
+	return false
+}

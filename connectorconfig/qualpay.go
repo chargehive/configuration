@@ -77,3 +77,7 @@ func (c *QualpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 func (c *QualpayCredentials) IsRecoveryAgent() bool {
 	return false
 }
+
+func (c *QualpayCredentials) Supports3RI() bool {
+	return false
+}

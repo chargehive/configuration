@@ -126,3 +126,7 @@ func (c *BraintreeCredentials) GetGooglePayParams() map[string]string {
 func (c *BraintreeCredentials) GetApplePay() *ApplePayEmbedded {
 	return c.ApplePay
 }
+
+func (c *BraintreeCredentials) Supports3RI() bool {
+	return false
+}
