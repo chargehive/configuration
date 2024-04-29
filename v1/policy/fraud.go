@@ -38,6 +38,16 @@ const (
 	FraudCheckTimeOnDemand FraudCheckTime = "ondemand"
 )
 
+// FraudDeclineReason are the suggestions for declining a charge
+type FraudDeclineReason string
+
+const (
+	FraudDeclineOnInvalid      FraudDeclineReason = "invalid"
+	FraudDeclineOnNoSuggestion FraudDeclineReason = "no-suggestion"
+	FraudDeclineOnReview       FraudDeclineReason = "review"
+	FraudDeclineOnDeny         FraudDeclineReason = "deny"
+)
+
 // FraudPolicy is the policy ran against a charge to determine its fraud status
 type FraudPolicy struct {
 	// ConnectorIDs is the IDs of the fraud connectors
@@ -48,6 +58,8 @@ type FraudPolicy struct {
 
 	// CheckType is the type of check that should be performed for this policy
 	CheckType FraudCheckType `json:"checkType" yaml:"checkType" validate:"oneof=all failover"`
+
+	DeclineOn []string `json:"declineOn" yaml:"declineOn" validate:"dive,oneof=invalid no-suggestion review deny"`
 }
 
 // GetKind returns the FraudPolicy kind
