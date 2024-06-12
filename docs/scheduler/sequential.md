@@ -1,7 +1,7 @@
 # Sequential Scheduler
 
 The sequential scheduler allows for a sequence or schedule of connectors to be used when attempting to complete a charge. 
-They are mapped by attempt number.
+They are mapped by attempt number and are zero indexed, so the first attempt should have an index of 1.
 
 ## Format
 As with all configs, the standard wrapper is used.
@@ -106,18 +106,6 @@ Value| Definition
   },
   "spec": {
     "schedules": {
-      "0": {
-        "attemptConfig": {
-          "poolType": "cascade",
-          "methodSelector": "primary",
-          "connectorLimit": 0,
-          "methodLimit": 0,
-          "cascadeDelay": null,
-          "overridePoolConnectorIDs": [
-            "sandbox-connector"
-          ]
-        }
-      },
       "1": {
         "attemptConfig": {
           "poolType": "cascade",
