@@ -53,25 +53,30 @@ const (
 
 	// Scheduler Libraries
 	LibraryStickyIO Library = "sticky-io"
+
+	// Tokenization Libraries
+	LibraryTokenExNetworkTokenization Library = "tokenex-networktokenization"
 )
 
 type LibraryType string
 
 const (
-	LibraryTypePayment        LibraryType = "payment"
-	LibraryTypeFraud          LibraryType = "fraud"
-	LibraryTypeMethodUpdater  LibraryType = "methodUpdater"
-	LibraryTypeRecoveryAgent  LibraryType = "recoveryAgent"
-	LibraryTypeAuthentication LibraryType = "authentication"
-	LibraryTypeScheduler      LibraryType = "scheduler"
+	LibraryTypePayment             LibraryType = "payment"
+	LibraryTypeFraud               LibraryType = "fraud"
+	LibraryTypeMethodUpdater       LibraryType = "methodUpdater"
+	LibraryTypeRecoveryAgent       LibraryType = "recoveryAgent"
+	LibraryTypeAuthentication      LibraryType = "authentication"
+	LibraryTypeScheduler           LibraryType = "scheduler"
+	LibraryTypeNetworkTokenization LibraryType = "networkTokenization"
 )
 
 var LibraryTypeRegister = map[LibraryType]bool{
-	LibraryTypePayment:        true,
-	LibraryTypeFraud:          true,
-	LibraryTypeRecoveryAgent:  true,
-	LibraryTypeAuthentication: true,
-	LibraryTypeScheduler:      true,
+	LibraryTypePayment:             true,
+	LibraryTypeFraud:               true,
+	LibraryTypeRecoveryAgent:       true,
+	LibraryTypeAuthentication:      true,
+	LibraryTypeScheduler:           true,
+	LibraryTypeNetworkTokenization: true,
 }
 
 func (l Library) GetDisplayName() string {
@@ -317,6 +322,13 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibraryTokenExAccountUpdater: {
 		DisplayName: "TokenEx Account Updater",
 		Credentials: func() Credentials { return &TokenExAccountUpdaterCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+	LibraryTokenExNetworkTokenization: {
+		DisplayName: "TokenEx Network Tokenization",
+		Credentials: func() Credentials { return &TokenExNetworkTokenizationCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
