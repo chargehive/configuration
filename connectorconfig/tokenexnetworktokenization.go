@@ -16,11 +16,11 @@ type TokenExNetworkTokenizationCredentials struct {
 }
 
 func (c *TokenExNetworkTokenizationCredentials) GetLibrary() Library {
-	return LibraryTokenExAccountUpdater
+	return LibraryTokenExNetworkTokenization
 }
 
 func (c *TokenExNetworkTokenizationCredentials) GetSupportedTypes() []LibraryType {
-	return []LibraryType{LibraryTypeMethodUpdater}
+	return []LibraryType{LibraryTypeNetworkTokenization}
 }
 
 func (c *TokenExNetworkTokenizationCredentials) Validate() error {
