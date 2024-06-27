@@ -37,7 +37,7 @@ type PaySafeCredentials struct {
 	UseVault               *bool              `json:"useVault" yaml:"useVault" validate:"required"`
 	SingleUseTokenPassword *string            `json:"singleUseTokenPassword" yaml:"singleUseTokenPassword" validate:"required"` // string* needs "required" to ensure nil is never returned
 	SingleUseTokenUsername string             `json:"singleUseTokenUsername" yaml:"singleUseTokenUsername" validate:"-"`        // string will default to empty string
-	GooglePay              *GooglePay         `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	GooglePay              *GooglePayEmbedded `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
 	ApplePay               *ApplePayEmbedded  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
@@ -52,7 +52,7 @@ func (c *PaySafeCredentials) GetMID() string {
 	return c.AccountID
 }
 
-func (c *PaySafeCredentials) GetGooglePay() *GooglePay {
+func (c *PaySafeCredentials) GetGooglePay() *GooglePayEmbedded {
 	return c.GooglePay
 }
 

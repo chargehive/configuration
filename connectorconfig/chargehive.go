@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"encoding/json"
+	"errors"
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
@@ -9,6 +10,8 @@ import (
 )
 
 type ChargeHiveCredentials struct {
+	GooglePay *GooglePayEmbedded `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay  *ApplePayEmbedded  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
 func (c *ChargeHiveCredentials) GetMID() string {
@@ -20,10 +23,20 @@ func (c *ChargeHiveCredentials) GetLibrary() Library {
 }
 
 func (c *ChargeHiveCredentials) GetSupportedTypes() []LibraryType {
-	return []LibraryType{LibraryTypeFraud}
+	return []LibraryType{LibraryTypePayment}
 }
 
 func (c *ChargeHiveCredentials) Validate() error {
+	if c.GooglePay != nil {
+		if !c.GooglePay.IsValid() {
+			return errors.New("invalid google pay configuration")
+		}
+	}
+	if c.ApplePay != nil {
+		if !c.ApplePay.IsValid() {
+			return errors.New("invalid apple pay configuration")
+		}
+	}
 	return nil
 }
 
@@ -66,4 +79,12 @@ func (c *ChargeHiveCredentials) IsRecoveryAgent() bool {
 
 func (c *ChargeHiveCredentials) Supports3RI() bool {
 	return false
+}
+
+func (c *ChargeHiveCredentials) GetApplePay() *ApplePayEmbedded {
+	return c.ApplePay
+}
+
+func (c *ChargeHiveCredentials) GetGooglePay() *GooglePayEmbedded {
+	return c.GooglePay
 }

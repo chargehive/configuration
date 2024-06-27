@@ -30,7 +30,7 @@ type WorldpayCredentials struct {
 	CardinalApiKey        *string             `json:"cardinalApiKey" yaml:"cardinalApiKey" validate:"required"`
 	CardinalOrgUnitId     *string             `json:"cardinalOrgUnitId" yaml:"cardinalOrgUnitId" validate:"required"`
 	GooglePayPageId       string              `json:"googlePayPageId"` // vantiv:merchantPayPageId
-	GooglePay             *GooglePay          `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	GooglePay             *GooglePayEmbedded  `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
 	ApplePay              *ApplePayEmbedded   `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
@@ -49,7 +49,7 @@ func (c *WorldpayCredentials) GetMID() string {
 	return c.MerchantID
 }
 
-func (c *WorldpayCredentials) GetGooglePay() *GooglePay {
+func (c *WorldpayCredentials) GetGooglePay() *GooglePayEmbedded {
 	return c.GooglePay
 }
 
