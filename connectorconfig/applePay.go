@@ -248,3 +248,16 @@ func (a *ApplePayCredentials) GetAppleCardShippingPhoneReq() bool {
 	}
 	return a.AppleCardShippingPhoneReq
 }
+
+type ApplePayOptions interface {
+	GetAppleMerchantIdentifier() string
+	GetAppleExistingMethodRequired() bool
+	GetAppleExistingMethodReport() bool
+	GetAppleCardAllowDebit() bool
+	GetAppleCardAllowCredit() bool
+	GetAppleEmailRequired() bool
+	GetAppleCardBillingAddressReq() bool
+	GetAppleCardBillingPhoneReq() bool
+	GetAppleCardShippingAddressReq() bool
+	GetAppleCardShippingPhoneReq() bool
+}

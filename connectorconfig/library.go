@@ -19,6 +19,7 @@ const (
 	LibrarySandbox                  Library = "sandbox" // Connector for testing Charge hive
 	LibraryAdyen                    Library = "adyen"
 	LibraryApplePay                 Library = "applepay"
+	LibraryGooglePay                Library = "googlepay"
 	LibraryAuthorize                Library = "authorize"
 	LibraryBraintree                Library = "braintree"
 	LibraryBlueSnap                 Library = "bluesnap"
@@ -121,6 +122,13 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibraryApplePay: {
 		DisplayName: "ApplePay",
 		Credentials: func() Credentials { return &ApplePayCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+	LibraryGooglePay: {
+		DisplayName: "GooglePayEmbedded",
+		Credentials: func() Credentials { return &GooglePayCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
@@ -228,7 +236,9 @@ var LibraryRegister = map[Library]LibraryDef{
 		DisplayName: "ChargeHive",
 		Credentials: func() Credentials { return &ChargeHiveCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
-			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD ||
+				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
+				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY)
 		},
 	},
 

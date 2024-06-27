@@ -238,7 +238,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 				AppleMerchantCapabilities: []connectorconfig.AppleMerchantCapability{connectorconfig.AppleMerchantCapabilitysupports3DS},
 			},
 			GooglePayPageId: chg,
-			GooglePay: &connectorconfig.GooglePay{
+			GooglePay: &connectorconfig.GooglePayEmbedded{
 				GoogleEnvironment:               connectorconfig.GoogleEnvironmentTEST,
 				GoogleMerchantId:                chg,
 				GoogleMerchantName:              chg,
@@ -256,7 +256,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 				GoogleCardShippingAddressFormat: connectorconfig.GoogleCardBillingAddressReqMIN,
 				GoogleCardShippingPhoneReq:      false,
 				GoogleCardTokenType:             connectorconfig.GoogleCardTokenTypeGATEWAY,
-				GoogleCardGateway:               connectorconfig.GoogleCardGatewayVANTIV,
+				GoogleCardGateway:               string(connectorconfig.GoogleCardGatewayVANTIV),
 				GoogleCardMerchantId:            chg,
 			},
 		})
