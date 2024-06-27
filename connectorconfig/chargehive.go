@@ -88,3 +88,10 @@ func (c *ChargeHiveCredentials) GetApplePay() *ApplePayEmbedded {
 func (c *ChargeHiveCredentials) GetGooglePay() *GooglePayEmbedded {
 	return c.GooglePay
 }
+
+func (c *ChargeHiveCredentials) GetGooglePayParams() map[string]string {
+	return map[string]string{
+		"gateway":           "chargehive",
+		"gatewayMerchantId": c.GetGooglePay().GetGoogleCardMerchantId(),
+	}
+}
