@@ -8,7 +8,7 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
-type GooglePayCredentials interface {
+type GooglePayCredential interface {
 	GetGoogleCardGateway() string
 	GetGoogleCardMerchantId() string
 	GetGoogleAcquirerCountry() string
@@ -27,11 +27,11 @@ type GooglePayCredentials interface {
 }
 
 type GooglePayEmbeddedCredential interface {
-	GetGooglePay() *GooglePayCredential
+	GetGooglePay() *GooglePayCredentials
 	GetGooglePayParams() map[string]string
 }
 
-type GooglePayCredential struct {
+type GooglePayCredentials struct {
 	// ConnectorID The ID of the connector that provides the GooglePay service
 	ConnectorID string `json:"googlePayConnectorID,omitempty" yaml:"googlePayConnectorID,omitempty" validate:"-"`
 
@@ -81,72 +81,72 @@ type GooglePayCredential struct {
 	GoogleAcquirerCountry string `json:"googleAcquirerCountry,omitempty" yaml:"googleAcquirerCountry,omitempty" validate:"omitempty,oneof=AF AX AL DZ AS AD AO AI AQ AG AR AM AW AU AT AZ BS BH BD BB BY BE BZ BJ BM BT BO BQ BA BW BV BR IO BN BG BF BI KH CM CA CV KY CF TD CL CN CX CC CO KM CG CD CK CR CI HR CU CW CY CZ DK DJ DM DO EC EG SV GQ ER EE ET FK FO FJ FI FR GF PF TF GA GM GE DE GH GI GR GL GD GP GU GT GG GN GW GY HT HM HN HK HU IS IN ID IR IQ IE IM IL IT JM JP JE JO KZ KE KI KP KR KW KG LA LV LB LS LR LY LI LT LU MO MK MG MW MY MV ML MT MH MQ MR MU YT MX FM MD MC MN ME MS MA MZ MM NA NR NP NC NZ NI NE NG NU NF MP NO OM PK PW PS PA PG PY PE PH PN PL PT PR QA RE RO RU RW BL SH KN LC MF VC WS SM ST SA SN RS SC SL SG SX SK SI SB SO ZA GS SS ES LK PM SD SR SJ SZ SE CH SY TW TJ TZ TH NL TL TG TK TO TT TN TR TM TC TV UG UA AE GB US UM UY UZ VU VA VE VN VG VI WF EH YE ZM ZW"`
 }
 
-func (g *GooglePayCredential) GetGooglePayParams() map[string]string {
+func (g *GooglePayCredentials) GetGooglePayParams() map[string]string {
 	return map[string]string{
 		"gateway":           g.GetGoogleCardGateway(),
 		"gatewayMerchantId": g.GetGoogleCardMerchantId(),
 	}
 }
 
-func (g *GooglePayCredential) GetMID() string {
+func (g *GooglePayCredentials) GetMID() string {
 	return g.GoogleMerchantId
 }
 
-func (g *GooglePayCredential) GetLibrary() Library {
+func (g *GooglePayCredentials) GetLibrary() Library {
 	return LibraryGooglePay
 }
 
-func (g *GooglePayCredential) GetSupportedTypes() []LibraryType {
+func (g *GooglePayCredentials) GetSupportedTypes() []LibraryType {
 	return []LibraryType{}
 }
 
-func (g *GooglePayCredential) Validate() error {
+func (g *GooglePayCredentials) Validate() error {
 	return nil
 }
 
-func (g *GooglePayCredential) ToConnector() connector.Connector {
+func (g *GooglePayCredentials) ToConnector() connector.Connector {
 	con := connector.Connector{Library: string(g.GetLibrary())}
 	con.Configuration, _ = json.Marshal(g)
 	return con
 }
 
-func (g *GooglePayCredential) FromJson(input []byte) error {
+func (g *GooglePayCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, g)
 }
 
-func (g *GooglePayCredential) SupportsSca() bool {
+func (g *GooglePayCredentials) SupportsSca() bool {
 	return false
 }
 
-func (g *GooglePayCredential) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (g *GooglePayCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	// this connector does not directly support any types, GooglePayEmbedded tokens are processed through another connector
 	return false
 }
 
-func (g *GooglePayCredential) SupportsCountry(country string) bool {
+func (g *GooglePayCredentials) SupportsCountry(country string) bool {
 	return true
 }
 
-func (g *GooglePayCredential) CanPlanModeUse(mode environment.Mode) bool {
+func (g *GooglePayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	return true
 }
 
-func (g *GooglePayCredential) IsRecoveryAgent() bool {
+func (g *GooglePayCredentials) IsRecoveryAgent() bool {
 	return false
 }
 
-func (g *GooglePayCredential) Supports3RI() bool {
+func (g *GooglePayCredentials) Supports3RI() bool {
 	return false
 }
 
-func (g *GooglePayCredential) GetSecureFields() []*string {
+func (g *GooglePayCredentials) GetSecureFields() []*string {
 	if g == nil {
 		return nil
 	}
 	return []*string{}
 }
 
-func (g *GooglePayCredential) IsValid() bool {
+func (g *GooglePayCredentials) IsValid() bool {
 	if g == nil {
 		return false
 	}
@@ -156,138 +156,138 @@ func (g *GooglePayCredential) IsValid() bool {
 		g.Validate() == nil
 }
 
-func (g *GooglePayCredential) GetGoogleMerchantId() string {
+func (g *GooglePayCredentials) GetGoogleMerchantId() string {
 	if g == nil {
 		return ""
 	}
 	return g.GoogleMerchantId
 }
-func (g *GooglePayCredential) GetGoogleEnvironment() GoogleEnvironment {
+func (g *GooglePayCredentials) GetGoogleEnvironment() GoogleEnvironment {
 	if g == nil {
 		return ""
 	}
 
 	return g.GoogleEnvironment
 }
-func (g *GooglePayCredential) GetGoogleMerchantName() string {
+func (g *GooglePayCredentials) GetGoogleMerchantName() string {
 	if g == nil {
 		return ""
 	}
 
 	return g.GoogleMerchantName
 }
-func (g *GooglePayCredential) GetGoogleExistingMethodRequired() bool {
+func (g *GooglePayCredentials) GetGoogleExistingMethodRequired() bool {
 	if g == nil {
 		return false
 	}
 
 	return g.GoogleExistingMethodRequired
 }
-func (g *GooglePayCredential) GetGoogleExistingMethodReport() bool {
+func (g *GooglePayCredentials) GetGoogleExistingMethodReport() bool {
 	if g == nil {
 		return false
 	}
 
 	return g.GoogleExistingMethodReport
 }
-func (g *GooglePayCredential) GetGoogleEmailReq() bool {
+func (g *GooglePayCredentials) GetGoogleEmailReq() bool {
 	if g == nil {
 		return false
 	}
 
 	return g.GoogleEmailReq
 }
-func (g *GooglePayCredential) GetGoogleAcceptCard() bool {
+func (g *GooglePayCredentials) GetGoogleAcceptCard() bool {
 	if g == nil {
 		return false
 	}
 
 	return g.GoogleAcceptCard
 }
-func (g *GooglePayCredential) GetGoogleCardAuthMethods() []GoogleCardAuthMethod {
+func (g *GooglePayCredentials) GetGoogleCardAuthMethods() []GoogleCardAuthMethod {
 	if g == nil {
 		return nil
 	}
 	return g.GoogleCardAuthMethods
 }
-func (g *GooglePayCredential) GetGoogleCardNetworks() []GoogleCardNetwork {
+func (g *GooglePayCredentials) GetGoogleCardNetworks() []GoogleCardNetwork {
 	if g == nil {
 		return nil
 	}
 
 	return g.GoogleCardNetworks
 }
-func (g *GooglePayCredential) GetGoogleCardAllowPrepaid() bool {
+func (g *GooglePayCredentials) GetGoogleCardAllowPrepaid() bool {
 	if g == nil {
 		return false
 	}
 
 	return g.GoogleCardAllowPrepaid
 }
-func (g *GooglePayCredential) GetGoogleCardAllowCredit() bool {
+func (g *GooglePayCredentials) GetGoogleCardAllowCredit() bool {
 	if g == nil {
 		return false
 	}
 
 	return g.GoogleCardAllowCredit
 }
-func (g *GooglePayCredential) GetGoogleCardBillingAddressReq() bool {
+func (g *GooglePayCredentials) GetGoogleCardBillingAddressReq() bool {
 	if g == nil {
 		return false
 	}
 	return g.GoogleCardBillingAddressReq
 }
-func (g *GooglePayCredential) GetGoogleCardBillingAddressFormat() GoogleCardBillingAddressReq {
+func (g *GooglePayCredentials) GetGoogleCardBillingAddressFormat() GoogleCardBillingAddressReq {
 	if g == nil {
 		return ""
 	}
 
 	return g.GoogleCardBillingAddressFormat
 }
-func (g *GooglePayCredential) GetGoogleCardBillingPhoneReq() bool {
+func (g *GooglePayCredentials) GetGoogleCardBillingPhoneReq() bool {
 	if g == nil {
 		return false
 	}
 	return g.GoogleCardBillingPhoneReq
 }
-func (g *GooglePayCredential) GetGoogleCardShippingAddressReq() bool {
+func (g *GooglePayCredentials) GetGoogleCardShippingAddressReq() bool {
 	if g == nil {
 		return false
 	}
 	return g.GoogleCardShippingAddressReq
 }
-func (g *GooglePayCredential) GetGoogleCardShippingAddressFormat() GoogleCardBillingAddressReq {
+func (g *GooglePayCredentials) GetGoogleCardShippingAddressFormat() GoogleCardBillingAddressReq {
 	if g == nil {
 		return ""
 	}
 
 	return g.GoogleCardShippingAddressFormat
 }
-func (g *GooglePayCredential) GetGoogleCardShippingPhoneReq() bool {
+func (g *GooglePayCredentials) GetGoogleCardShippingPhoneReq() bool {
 	if g == nil {
 		return false
 	}
 	return g.GoogleCardShippingPhoneReq
 }
-func (g *GooglePayCredential) GetGoogleCardTokenType() GoogleTokenType {
+func (g *GooglePayCredentials) GetGoogleCardTokenType() GoogleTokenType {
 	if g == nil {
 		return ""
 	}
 	return g.GoogleCardTokenType
 }
-func (g *GooglePayCredential) GetGoogleCardGateway() string {
+func (g *GooglePayCredentials) GetGoogleCardGateway() string {
 	if g == nil {
 		return ""
 	}
 	return g.GoogleCardGateway
 }
-func (g *GooglePayCredential) GetGoogleCardMerchantId() string {
+func (g *GooglePayCredentials) GetGoogleCardMerchantId() string {
 	if g == nil {
 		return ""
 	}
 	return g.GoogleCardMerchantId
 }
-func (g *GooglePayCredential) GetGoogleAcquirerCountry() string {
+func (g *GooglePayCredentials) GetGoogleAcquirerCountry() string {
 	if g == nil {
 		return ""
 	}

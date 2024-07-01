@@ -121,14 +121,14 @@ var LibraryRegister = map[Library]LibraryDef{
 	},
 	LibraryApplePay: {
 		DisplayName: "ApplePay",
-		Credentials: func() Credentials { return &ApplePayCredential{} },
+		Credentials: func() Credentials { return &ApplePayCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
 	LibraryGooglePay: {
 		DisplayName: "GooglePayEmbedded",
-		Credentials: func() Credentials { return &GooglePayCredential{} },
+		Credentials: func() Credentials { return &GooglePayCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},

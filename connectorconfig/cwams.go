@@ -9,11 +9,11 @@ import (
 )
 
 type CWAMSCredentials struct {
-	GatewayID   string               `json:"gatewayID" yaml:"gatewayID" validate:"required"`
-	TestMode    bool                 `json:"testMode" yaml:"testMode"`
-	SecurityKey *string              `json:"securityKey" yaml:"securityKey" validate:"required"`
-	GooglePay   *GooglePayCredential `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
-	ApplePay    *ApplePayCredential  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
+	GatewayID   string                `json:"gatewayID" yaml:"gatewayID" validate:"required"`
+	TestMode    bool                  `json:"testMode" yaml:"testMode"`
+	SecurityKey *string               `json:"securityKey" yaml:"securityKey" validate:"required"`
+	GooglePay   *GooglePayCredentials `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay    *ApplePayCredentials  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
 func (c *CWAMSCredentials) GetGooglePayParams() map[string]string {
@@ -31,11 +31,11 @@ func (c *CWAMSCredentials) GetSecurityKey() string {
 	return *c.SecurityKey
 }
 
-func (c *CWAMSCredentials) GetGooglePay() *GooglePayCredential {
+func (c *CWAMSCredentials) GetGooglePay() *GooglePayCredentials {
 	return c.GooglePay
 }
 
-func (c *CWAMSCredentials) GetApplePay() *ApplePayCredential {
+func (c *CWAMSCredentials) GetApplePay() *ApplePayCredentials {
 	return c.ApplePay
 }
 

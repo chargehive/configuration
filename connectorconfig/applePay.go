@@ -10,7 +10,7 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
-type ApplePayCredentials interface {
+type ApplePayCredential interface {
 	GetAppleMerchantIdentifier() string
 	GetAppleMerchantPublicKey() string
 	GetAppleMerchantDisplayName() string
@@ -32,10 +32,10 @@ type ApplePayCredentials interface {
 }
 
 type ApplePayEmbeddedCredential interface {
-	GetApplePay() *ApplePayCredential
+	GetApplePay() *ApplePayCredentials
 }
 
-type ApplePayCredential struct {
+type ApplePayCredentials struct {
 	// Region whether global(empty) or china
 	Region string `json:"region,omitempty" yaml:"region,omitempty" validate:"oneof='' cn"`
 
@@ -83,54 +83,54 @@ type ApplePayCredential struct {
 	AppleCardShippingPhoneReq bool `json:"appleCardShippingPhoneReq,omitempty" yaml:"appleCardShippingPhoneReq,omitempty" validate:"-"`
 }
 
-func (a *ApplePayCredential) GetMID() string {
+func (a *ApplePayCredentials) GetMID() string {
 	return a.AppleMerchantIdentifier
 }
 
-func (a *ApplePayCredential) GetLibrary() Library {
+func (a *ApplePayCredentials) GetLibrary() Library {
 	return LibraryApplePay
 }
 
-func (a *ApplePayCredential) GetSupportedTypes() []LibraryType {
+func (a *ApplePayCredentials) GetSupportedTypes() []LibraryType {
 	return []LibraryType{}
 }
 
-func (a *ApplePayCredential) ToConnector() connector.Connector {
+func (a *ApplePayCredentials) ToConnector() connector.Connector {
 	con := connector.Connector{Library: string(a.GetLibrary())}
 	con.Configuration, _ = json.Marshal(a)
 	return con
 }
 
-func (a *ApplePayCredential) FromJson(input []byte) error {
+func (a *ApplePayCredentials) FromJson(input []byte) error {
 	return json.Unmarshal(input, a)
 }
 
-func (a *ApplePayCredential) SupportsSca() bool {
+func (a *ApplePayCredentials) SupportsSca() bool {
 	return false
 }
 
-func (a *ApplePayCredential) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+func (a *ApplePayCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 	// this connector does not directly support any types, ApplePay tokens are processed through another connector
 	return false
 }
 
-func (a *ApplePayCredential) SupportsCountry(country string) bool {
+func (a *ApplePayCredentials) SupportsCountry(country string) bool {
 	return true
 }
 
-func (a *ApplePayCredential) CanPlanModeUse(mode environment.Mode) bool {
+func (a *ApplePayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	return true
 }
 
-func (a *ApplePayCredential) IsRecoveryAgent() bool {
+func (a *ApplePayCredentials) IsRecoveryAgent() bool {
 	return false
 }
 
-func (a *ApplePayCredential) Supports3RI() bool {
+func (a *ApplePayCredentials) Supports3RI() bool {
 	return false
 }
 
-func (a *ApplePayCredential) GetSecureFields() []*string {
+func (a *ApplePayCredentials) GetSecureFields() []*string {
 	if a == nil {
 		return nil
 	}
@@ -166,7 +166,7 @@ const (
 	AppleSupportedNetworkVPay            AppleSupportedNetwork = "vPay"
 )
 
-func (a *ApplePayCredential) Validate() error {
+func (a *ApplePayCredentials) Validate() error {
 	if a.AppleMerchantIdentifier != "" {
 		// ensure certificates are valid
 		certData, _ := base64.StdEncoding.DecodeString(a.GetAppleIdentityCertificate())
@@ -177,7 +177,7 @@ func (a *ApplePayCredential) Validate() error {
 	return nil
 }
 
-func (a *ApplePayCredential) IsValid() bool {
+func (a *ApplePayCredentials) IsValid() bool {
 	if a == nil {
 		return false
 	}
@@ -187,23 +187,23 @@ func (a *ApplePayCredential) IsValid() bool {
 		a.GetAppleMerchantPrivateKey() != "")
 }
 
-func (a *ApplePayCredential) GetAppleIdentityPrivateKey() string {
+func (a *ApplePayCredentials) GetAppleIdentityPrivateKey() string {
 	return a.getAppleIdentityPrivateKey()
 }
 
-func (a *ApplePayCredential) GetAppleIdentityCertificate() string {
+func (a *ApplePayCredentials) GetAppleIdentityCertificate() string {
 	return a.getAppleIdentityCertificate()
 }
 
-func (a *ApplePayCredential) GetAppleMerchantPrivateKey() string {
+func (a *ApplePayCredentials) GetAppleMerchantPrivateKey() string {
 	return a.getAppleIdentityPrivateKey()
 }
 
-func (a *ApplePayCredential) GetAppleMerchantCertificate() string {
+func (a *ApplePayCredentials) GetAppleMerchantCertificate() string {
 	return a.getAppleIdentityCertificate()
 }
 
-func (a *ApplePayCredential) getAppleIdentityPrivateKey() string {
+func (a *ApplePayCredentials) getAppleIdentityPrivateKey() string {
 	if a == nil {
 		return ""
 	}
@@ -218,7 +218,7 @@ func (a *ApplePayCredential) getAppleIdentityPrivateKey() string {
 	return *key
 }
 
-func (a *ApplePayCredential) getAppleIdentityCertificate() string {
+func (a *ApplePayCredentials) getAppleIdentityCertificate() string {
 	if a == nil {
 		return ""
 	}
@@ -234,14 +234,14 @@ func (a *ApplePayCredential) getAppleIdentityCertificate() string {
 	return *cert
 }
 
-func (a *ApplePayCredential) GetAppleMerchantIdentifier() string {
+func (a *ApplePayCredentials) GetAppleMerchantIdentifier() string {
 	if a == nil {
 		return ""
 	}
 	return a.AppleMerchantIdentifier
 }
 
-func (a *ApplePayCredential) GetAppleMerchantDisplayName() string {
+func (a *ApplePayCredentials) GetAppleMerchantDisplayName() string {
 	if a == nil {
 		return ""
 	}
@@ -250,73 +250,73 @@ func (a *ApplePayCredential) GetAppleMerchantDisplayName() string {
 
 // GetAppleMerchantPublicKey
 // Deprecated: use GetAppleMerchantCertificate instead
-func (a *ApplePayCredential) GetAppleMerchantPublicKey() string {
+func (a *ApplePayCredentials) GetAppleMerchantPublicKey() string {
 	return a.GetAppleMerchantCertificate()
 }
 
-func (a *ApplePayCredential) GetAppleExistingMethodRequired() bool {
+func (a *ApplePayCredentials) GetAppleExistingMethodRequired() bool {
 	if a == nil {
 		return false
 	}
 	return a.AppleExistingMethodRequired
 }
-func (a *ApplePayCredential) GetAppleExistingMethodReport() bool {
+func (a *ApplePayCredentials) GetAppleExistingMethodReport() bool {
 	if a == nil {
 		return false
 	}
 	return a.AppleExistingMethodReport
 }
-func (a *ApplePayCredential) GetAppleCardAllowDebit() bool {
+func (a *ApplePayCredentials) GetAppleCardAllowDebit() bool {
 	if a == nil {
 		return false
 	}
 	return a.AppleCardAllowDebit
 }
-func (a *ApplePayCredential) GetAppleCardAllowCredit() bool {
+func (a *ApplePayCredentials) GetAppleCardAllowCredit() bool {
 	if a == nil {
 		return false
 	}
 	return a.AppleCardAllowCredit
 }
-func (a *ApplePayCredential) GetAppleEmailRequired() bool {
+func (a *ApplePayCredentials) GetAppleEmailRequired() bool {
 	if a == nil {
 		return false
 	}
 	return a.AppleEmailRequired
 }
-func (a *ApplePayCredential) GetAppleCardBillingAddressReq() bool {
+func (a *ApplePayCredentials) GetAppleCardBillingAddressReq() bool {
 	if a == nil {
 		return false
 	}
 	return a.AppleCardBillingAddressReq
 }
-func (a *ApplePayCredential) GetAppleCardBillingPhoneReq() bool {
+func (a *ApplePayCredentials) GetAppleCardBillingPhoneReq() bool {
 	if a == nil {
 		return false
 	}
 	return a.AppleCardBillingPhoneReq
 }
-func (a *ApplePayCredential) GetAppleCardShippingAddressReq() bool {
+func (a *ApplePayCredentials) GetAppleCardShippingAddressReq() bool {
 	if a == nil {
 		return false
 	}
 	return a.AppleCardShippingAddressReq
 }
-func (a *ApplePayCredential) GetAppleCardShippingPhoneReq() bool {
+func (a *ApplePayCredentials) GetAppleCardShippingPhoneReq() bool {
 	if a == nil {
 		return false
 	}
 	return a.AppleCardShippingPhoneReq
 }
 
-func (a *ApplePayCredential) GetAppleSupportedNetworks() []AppleSupportedNetwork {
+func (a *ApplePayCredentials) GetAppleSupportedNetworks() []AppleSupportedNetwork {
 	if a == nil {
 		return nil
 	}
 	return a.AppleSupportedNetworks
 }
 
-func (a *ApplePayCredential) GetAppleMerchantCapabilities() []AppleMerchantCapability {
+func (a *ApplePayCredentials) GetAppleMerchantCapabilities() []AppleMerchantCapability {
 	if a == nil {
 		return nil
 	}
