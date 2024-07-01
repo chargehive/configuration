@@ -25,8 +25,8 @@ type BraintreeCredentials struct {
 	MerchantAccountID string               `json:"merchantAccountID" yaml:"merchantAccountID" validate:"-"`
 	Currency          string               `json:"currency" yaml:"currency" validate:"oneof=AED AMD AOA ARS AUD AWG AZN BAM BBD BDT BGN BIF BMD BND BOB BRL BSD BWP BYN BZD CAD CHF CLP CNY COP CRC CVE CZK DJF DKK DOP DZD EGP ETB EUR FJD FKP GBP GEL GHS GIP GMD GNF GTQ GYD HKD HNL HRK HTG HUF IDR ILS INR ISK JMD JPY KES KGS KHR KMF KRW KYD KZT LAK LBP LKR LRD LSL LTL MAD MDL MKD MNT MOP MUR MVR MWK MXN MYR MZN NAD NGN NIO NOK NPR NZD PAB PEN PGK PHP PKR PLN PYG QAR RON RSD RUB RWF SAR SBD SCR SEK SGD SHP SLL SOS SRD STD SVC SYP SZL THB TJS TOP TRY TTD TWD TZS UAH UGX USD UYU UZS VES VND VUV WST XAF XCD XOF XPF YER ZAR ZMK ZWD"`
 	Environment       BraintreeEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
-	GooglePay         *GooglePayEmbedded   `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
-	ApplePay          *ApplePayEmbedded    `json:"applePay,omitempty" yaml:"applePay,omitempty"`
+	GooglePay         *GooglePayCredential `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay          *ApplePayCredential  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 	TokenizationKey   string               `json:"tokenizationKey,omitempty" yaml:"tokenizationKey,omitempty" validate:"required_with=GooglePayEmbedded ApplePay,omitempty,gt=0"`
 }
 
@@ -109,7 +109,7 @@ func (c *BraintreeCredentials) IsRecoveryAgent() bool {
 	return false
 }
 
-func (c *BraintreeCredentials) GetGooglePay() *GooglePayEmbedded {
+func (c *BraintreeCredentials) GetGooglePay() *GooglePayCredential {
 	return c.GooglePay
 }
 
@@ -123,7 +123,7 @@ func (c *BraintreeCredentials) GetGooglePayParams() map[string]string {
 	}
 }
 
-func (c *BraintreeCredentials) GetApplePay() *ApplePayEmbedded {
+func (c *BraintreeCredentials) GetApplePay() *ApplePayCredential {
 	return c.ApplePay
 }
 
