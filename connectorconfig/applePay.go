@@ -50,9 +50,9 @@ type ApplePayCredentials struct {
 	AppleIdentityCertificate *string `json:"appleIdentityCertificate" yaml:"appleIdentityCertificate" validate:"required_without=AppleMerchantCertificate"`
 	// AppleIdentityPrivateKey Merchant private key generated from the CSR in the Apple Developer Merchant section (must be base64 encoded!)
 	AppleIdentityPrivateKey *string `json:"appleIdentityPrivateKey" yaml:"AppleIdentityPrivateKey" validate:"required_without=AppleMerchantPrivateKey"`
-	// AppleMerchantCertificate is deprecated. Use AppleIdentityCertificate
+	// Deprecated. Use AppleIdentityCertificate
 	AppleMerchantCertificate *string `json:"appleMerchantCertificate" yaml:"appleMerchantCertificate" validate:"required_without=AppleIdentityCertificate"`
-	// AppleMerchantPrivateKey is deprecated. Use AppleIdentityPrivateKey
+	// Deprecated. Use AppleIdentityPrivateKey
 	AppleMerchantPrivateKey *string `json:"appleMerchantPrivateKey" yaml:"appleMerchantPrivateKey" validate:"required_without=AppleIdentityPrivateKey"`
 	// AppleSupportedNetworks Specifies which card networks will be accepted by ApplePay
 	AppleSupportedNetworks []AppleSupportedNetwork `json:"appleSupportedNetworks,omitempty" yaml:"appleSupportedNetworks,omitempty" validate:"required_with=AppleMerchantIdentifier,dive,oneof=amex cartesBancaires chinaUnionPay discover eftpos electron elo interac jcb mada maestro masterCard privateLabel visa vPay"`
@@ -183,8 +183,8 @@ func (a *ApplePayCredentials) IsValid() bool {
 	}
 	return a.ConnectorID != "" || (a.GetAppleMerchantIdentifier() != "" &&
 		a.GetAppleMerchantDisplayName() != "" &&
-		a.GetAppleMerchantCertificate() != "" &&
-		a.GetAppleMerchantPrivateKey() != "")
+		a.GetAppleIdentityCertificate() != "" &&
+		a.GetAppleIdentityPrivateKey() != "")
 }
 
 func (a *ApplePayCredentials) GetAppleIdentityPrivateKey() string {
@@ -218,12 +218,12 @@ func (a *ApplePayCredentials) GetAppleIdentityCertificate() string {
 	return *cert
 }
 
-// GetAppleMerchantPrivateKey is deprecated, use GetAppleIdentityPrivateKey instead
+// Deprecated: use GetAppleIdentityPrivateKey instead
 func (a *ApplePayCredentials) GetAppleMerchantPrivateKey() string {
 	return a.GetAppleIdentityPrivateKey()
 }
 
-// GetAppleMerchantCertificate is deprecated, use GetAppleIdentityCertificate instead
+// Deprecated: use GetAppleIdentityCertificate instead
 func (a *ApplePayCredentials) GetAppleMerchantCertificate() string {
 	return a.GetAppleIdentityCertificate()
 }
