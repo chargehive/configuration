@@ -21,17 +21,17 @@ const (
 )
 
 type WorldpayCredentials struct {
-	Username              *string             `json:"username" yaml:"username" validate:"required,gt=0"`
-	Password              *string             `json:"password" yaml:"password" validate:"required,gt=0"`
-	MerchantID            string              `json:"merchantID" yaml:"merchantID" validate:"gte=1,lte=50"`
-	ReportGroup           string              `json:"reportGroup" yaml:"reportGroup" validate:"gte=1,lte=25"`
-	Environment           WorldpayEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox postlive transactpostlive production productiontransact prelive transactprelive"`
-	CardinalApiIdentifier *string             `json:"cardinalApiIdentifier" yaml:"cardinalApiIdentifier" validate:"required"`
-	CardinalApiKey        *string             `json:"cardinalApiKey" yaml:"cardinalApiKey" validate:"required"`
-	CardinalOrgUnitId     *string             `json:"cardinalOrgUnitId" yaml:"cardinalOrgUnitId" validate:"required"`
-	GooglePayPageId       string              `json:"googlePayPageId"` // vantiv:merchantPayPageId
-	GooglePay             *GooglePayEmbedded  `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
-	ApplePay              *ApplePayEmbedded   `json:"applePay,omitempty" yaml:"applePay,omitempty"`
+	Username              *string               `json:"username" yaml:"username" validate:"required,gt=0"`
+	Password              *string               `json:"password" yaml:"password" validate:"required,gt=0"`
+	MerchantID            string                `json:"merchantID" yaml:"merchantID" validate:"gte=1,lte=50"`
+	ReportGroup           string                `json:"reportGroup" yaml:"reportGroup" validate:"gte=1,lte=25"`
+	Environment           WorldpayEnvironment   `json:"environment" yaml:"environment" validate:"oneof=sandbox postlive transactpostlive production productiontransact prelive transactprelive"`
+	CardinalApiIdentifier *string               `json:"cardinalApiIdentifier" yaml:"cardinalApiIdentifier" validate:"required"`
+	CardinalApiKey        *string               `json:"cardinalApiKey" yaml:"cardinalApiKey" validate:"required"`
+	CardinalOrgUnitId     *string               `json:"cardinalOrgUnitId" yaml:"cardinalOrgUnitId" validate:"required"`
+	GooglePayPageId       string                `json:"googlePayPageId"` // vantiv:merchantPayPageId
+	GooglePay             *GooglePayCredentials `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay              *ApplePayCredentials  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
 func (c *WorldpayCredentials) GetGooglePayParams() map[string]string {
@@ -49,11 +49,11 @@ func (c *WorldpayCredentials) GetMID() string {
 	return c.MerchantID
 }
 
-func (c *WorldpayCredentials) GetGooglePay() *GooglePayEmbedded {
+func (c *WorldpayCredentials) GetGooglePay() *GooglePayCredentials {
 	return c.GooglePay
 }
 
-func (c *WorldpayCredentials) GetApplePay() *ApplePayEmbedded {
+func (c *WorldpayCredentials) GetApplePay() *ApplePayCredentials {
 	return c.ApplePay
 }
 

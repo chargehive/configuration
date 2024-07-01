@@ -10,8 +10,8 @@ import (
 )
 
 type ChargeHiveCredentials struct {
-	GooglePay *GooglePayEmbedded `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
-	ApplePay  *ApplePayEmbedded  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
+	GooglePay *GooglePayCredentials `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay  *ApplePayCredentials  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
 func (c *ChargeHiveCredentials) GetMID() string {
@@ -81,11 +81,11 @@ func (c *ChargeHiveCredentials) Supports3RI() bool {
 	return false
 }
 
-func (c *ChargeHiveCredentials) GetApplePay() *ApplePayEmbedded {
+func (c *ChargeHiveCredentials) GetApplePay() *ApplePayCredentials {
 	return c.ApplePay
 }
 
-func (c *ChargeHiveCredentials) GetGooglePay() *GooglePayEmbedded {
+func (c *ChargeHiveCredentials) GetGooglePay() *GooglePayCredentials {
 	return c.GooglePay
 }
 
