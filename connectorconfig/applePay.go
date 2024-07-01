@@ -188,22 +188,6 @@ func (a *ApplePayCredentials) IsValid() bool {
 }
 
 func (a *ApplePayCredentials) GetAppleIdentityPrivateKey() string {
-	return a.getAppleIdentityPrivateKey()
-}
-
-func (a *ApplePayCredentials) GetAppleIdentityCertificate() string {
-	return a.getAppleIdentityCertificate()
-}
-
-func (a *ApplePayCredentials) GetAppleMerchantPrivateKey() string {
-	return a.getAppleIdentityPrivateKey()
-}
-
-func (a *ApplePayCredentials) GetAppleMerchantCertificate() string {
-	return a.getAppleIdentityCertificate()
-}
-
-func (a *ApplePayCredentials) getAppleIdentityPrivateKey() string {
 	if a == nil {
 		return ""
 	}
@@ -218,7 +202,7 @@ func (a *ApplePayCredentials) getAppleIdentityPrivateKey() string {
 	return *key
 }
 
-func (a *ApplePayCredentials) getAppleIdentityCertificate() string {
+func (a *ApplePayCredentials) GetAppleIdentityCertificate() string {
 	if a == nil {
 		return ""
 	}
@@ -232,6 +216,14 @@ func (a *ApplePayCredentials) getAppleIdentityCertificate() string {
 		return ""
 	}
 	return *cert
+}
+
+func (a *ApplePayCredentials) GetAppleMerchantPrivateKey() string {
+	return a.GetAppleIdentityPrivateKey()
+}
+
+func (a *ApplePayCredentials) GetAppleMerchantCertificate() string {
+	return a.GetAppleIdentityCertificate()
 }
 
 func (a *ApplePayCredentials) GetAppleMerchantIdentifier() string {
