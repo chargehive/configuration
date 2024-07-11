@@ -23,7 +23,6 @@ const (
 	confConnAuthorize     Template = "con_authorize"
 	confConnBlueSnap      Template = "con_blueSnap"
 	confConnBrainTree     Template = "con_brainTree"
-	confConnChargeHive    Template = "con_chargeHive"
 	confConnClearhaus     Template = "con_clearhaus"
 	confConnCWAMS         Template = "con_cwams"
 	confConnCyberSource   Template = "con_cyberSource"
@@ -71,7 +70,6 @@ var Templates = map[Template]string{
 	confConnAuthorize:     "Connector: Authorize.net",
 	confConnBlueSnap:      "Connector: BlueSnap",
 	confConnBrainTree:     "Connector: Braintree",
-	confConnChargeHive:    "Connector: ChargeHive (fraud)",
 	confConnClearhaus:     "Connector: Clearhaus",
 	confConnCWAMS:         "Connector: CWAMS",
 	confConnCyberSource:   "Connector: Cybersource (fraud)",
@@ -156,9 +154,6 @@ func buildSpec(conf Template) (object.Specification, error) {
 	case confConnBrainTree:
 		j, _ := json.Marshal(connectorconfig.BraintreeCredentials{PublicKey: &chg, PrivateKey: &chg, MerchantID: chg, MerchantAccountID: chg, Currency: "USD", Environment: "sandbox"})
 		return connector.Connector{Library: string(connectorconfig.LibraryBraintree), Configuration: j}, nil
-	case confConnChargeHive:
-		j, _ := json.Marshal(connectorconfig.ChargeHiveCredentials{})
-		return connector.Connector{Library: string(connectorconfig.LibraryChargeHive), Configuration: j}, nil
 	case confConnCyberSource:
 		j, _ := json.Marshal(connectorconfig.CyberSourceCredentials{MerchantID: chg, TransactionKey: &chg, Environment: "test"})
 		return connector.Connector{Library: string(connectorconfig.LibraryCyberSource), Configuration: j}, nil
