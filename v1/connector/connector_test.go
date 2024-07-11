@@ -27,7 +27,7 @@ func TestConnectorValidate(t *testing.T) {
 	t.Run("invalid library", func(t *testing.T) {
 		con := &Connector{
 			ProcessingState: ProcessingStateLive,
-			Library:         "xxx",
+			Library:         "chargehive",
 			Configuration:   []byte("xxxx"),
 			ConfigID:        "",
 			ConfigAuth:      "",
