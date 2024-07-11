@@ -25,7 +25,7 @@ const (
 // Connector is a configuration file for a single payment processing entity
 type Connector struct {
 	ProcessingState ProcessingState `json:"processingState,omitempty" yaml:"processingState,omitempty"`
-	Library         string          `json:"library" yaml:"library" validate:"omitempty,oneof=adyen bluesnap gpayments nuvei inoviopay threedsecureio sandbox sandbanx applepay authorize braintree qualpay stripe paysafe worldpay paypal-websitepaymentspro paypal-expresscheckout vindicia chargehive maxmind cybersource paysafe-accountupdater bottomline checkout kount clearhaus trust-payments cwams yapstone tokenex-accountupdater tokenex-networktokenization sticky-io googlepay"`
+	Library         string          `json:"library" yaml:"library" validate:"omitempty,oneof=adyen bluesnap gpayments nuvei inoviopay threedsecureio sandbox sandbanx applepay authorize braintree qualpay stripe paysafe worldpay paypal-websitepaymentspro paypal-expresscheckout vindicia maxmind cybersource paysafe-accountupdater bottomline checkout kount clearhaus trust-payments cwams yapstone tokenex-accountupdater tokenex-networktokenization sticky-io googlepay"`
 	Configuration   []byte          `json:"configuration" yaml:"configuration" validate:"required"`
 	ConfigID        string          `json:"configId,omitempty" yaml:"configId,omitempty"`
 	ConfigAuth      string          `json:"configAuth,omitempty" yaml:"configAuth,omitempty"`
