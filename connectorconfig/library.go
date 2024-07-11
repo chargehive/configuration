@@ -232,16 +232,6 @@ var LibraryRegister = map[Library]LibraryDef{
 				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY)
 		},
 	},
-	LibraryChargeHive: {
-		DisplayName: "ChargeHive",
-		Credentials: func() Credentials { return &ChargeHiveCredentials{} },
-		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
-			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD ||
-				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
-				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY)
-		},
-	},
-
 	// Fraud Libraries
 	LibraryMaxMind: {
 		DisplayName: "MaxMind",
