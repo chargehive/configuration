@@ -15,6 +15,7 @@ type LibraryDef struct {
 type Library string
 
 const (
+	LibraryNone Library = ""
 	// Payment Libraries
 	LibrarySandbox                  Library = "sandbox" // Connector for testing Charge hive
 	LibraryAdyen                    Library = "adyen"
@@ -105,6 +106,13 @@ func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvi
 }
 
 var LibraryRegister = map[Library]LibraryDef{
+	LibraryNone: {
+		DisplayName: "None",
+		Credentials: func() Credentials { return &NoLibrary{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return false
+		},
+	},
 	LibrarySandbox: {
 		DisplayName: "ChargeHive Sandbox",
 		Credentials: func() Credentials { return &SandboxCredentials{} },

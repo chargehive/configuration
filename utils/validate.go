@@ -65,6 +65,11 @@ func Validate(rawJson []byte, version string) map[string]string {
 			result["connector error"] = err.Error()
 			return result
 		}
+
+		if conn.GetLibrary() == connectorconfig.LibraryNone {
+			return result
+		}
+
 		err = validate.Struct(conn)
 		if err != nil {
 			errs := err.(validator.ValidationErrors)
