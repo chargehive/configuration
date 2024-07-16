@@ -11,6 +11,8 @@ const (
 	PredicateOperatorDoesNotExists PredicateOperator = "DoesNotExists"
 	PredicateOperatorGreaterThan   PredicateOperator = "Gt"
 	PredicateOperatorLessThan      PredicateOperator = "Lt"
+	PredicateOperatorLike          PredicateOperator = "Like"
+	PredicateOperatorInLike        PredicateOperator = "InLike"
 )
 
 type OperatorConversion string
