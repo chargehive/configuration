@@ -66,7 +66,7 @@ func (n NoLibrary) SupportsCountry(country string) bool {
 }
 
 func (n NoLibrary) CanPlanModeUse(mode environment.Mode) bool {
-	return false
+	return true
 }
 
 func (n NoLibrary) IsRecoveryAgent() bool {
