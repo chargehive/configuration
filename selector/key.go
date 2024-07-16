@@ -167,6 +167,7 @@ const ( // Payment Method
 	KeyMethodExpiry               Key = "method.expiry"                  // e.g. "1509984191" unix timestamp
 	KeyMethodType                 Key = "method.type"                    // e.g. 0-4 PAYMENT_METHOD_TYPE_CARD
 	KeyMethodProvider             Key = "method.provider"                // e.g. 0-5 PAYMENT_METHOD_PROVIDER_FORM
+	KeyMethodInfoCardBin          Key = "method.info.card.bin"           // e.g. "998981" 6 digits
 	KeyMethodInfoCardLastFour     Key = "method.info.card.last.four"     // e.g. "1234"
 	KeyMethodInfoIssuer           Key = "method.info.issuer"             // e.g. "credit"
 	KeyMethodInfoAccountHolder    Key = "method.info.account.holder"     // e.g. "John Smith"
@@ -322,6 +323,7 @@ var KeyRegister = map[Key]bool{
 	KeyMethodExpiry:                               true,
 	KeyMethodType:                                 true,
 	KeyMethodProvider:                             true,
+	KeyMethodInfoCardBin:                          true,
 	KeyMethodInfoCardLastFour:                     true,
 	KeyMethodInfoIssuer:                           true,
 	KeyMethodInfoAccountHolder:                    true,
