@@ -17,11 +17,13 @@ const (
 )
 
 type AdyenCredentials struct {
-	Environment     AdyenEnvironment `json:"environment" yaml:"environment" validate:"required,oneof=sandbox production"`
-	MerchantAccount string           `json:"merchantAccount" yaml:"merchantAccount" validate:"required"`
-	ApiKey          *string          `json:"apiKey" yaml:"apiKey" validate:"required"`
-	ApiPrefix       string           `json:"apiPrefix" yaml:"apiPrefix" validate:"required"`
-	HMACKey         *string          `json:"hmacKey" yaml:"hmacKey" validate:"required"`
+	Environment     AdyenEnvironment      `json:"environment" yaml:"environment" validate:"required,oneof=sandbox production"`
+	MerchantAccount string                `json:"merchantAccount" yaml:"merchantAccount" validate:"required"`
+	ApiKey          *string               `json:"apiKey" yaml:"apiKey" validate:"required"`
+	ApiPrefix       string                `json:"apiPrefix" yaml:"apiPrefix" validate:"required"`
+	HMACKey         *string               `json:"hmacKey" yaml:"hmacKey" validate:"required"`
+	GooglePay       *GooglePayCredentials `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay        *ApplePayCredentials  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
 func (c *AdyenCredentials) GetMID() string {
@@ -98,4 +100,19 @@ func (c *AdyenCredentials) IsRecoveryAgent() bool {
 
 func (c *AdyenCredentials) Supports3RI() bool {
 	return false
+}
+
+func (c *AdyenCredentials) GetGooglePayParams() map[string]string {
+	return map[string]string{
+		"gateway":           "adyen",
+		"gatewayMerchantId": c.GetGooglePay().GetGoogleCardMerchantId(),
+	}
+}
+
+func (c *AdyenCredentials) GetGooglePay() *GooglePayCredentials {
+	return c.GooglePay
+}
+
+func (c *AdyenCredentials) GetApplePay() *ApplePayCredentials {
+	return c.ApplePay
 }

@@ -124,7 +124,9 @@ var LibraryRegister = map[Library]LibraryDef{
 		DisplayName: "Adyen",
 		Credentials: func() Credentials { return &AdyenCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
-			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD ||
+				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
+				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY)
 		},
 	},
 	LibraryApplePay: {
