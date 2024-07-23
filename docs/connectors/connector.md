@@ -57,13 +57,14 @@ Here are the configuration options for each of the connectors for the Payment Pr
 
 #### Payment Providers
 
-- [Authorize.net](#authorizenet)
+[//]: # (- [Authorize.net]&#40;#authorizenet&#41;)
 - [Braintree](#braintree)
 - [PayPal Express Checkout](#paypal---express-checkout)
 - [PayPal Website Payments Pro](#paypal---website-payments-pro)
 - [Paysafe](#paysafe)
 - [Qualpay](#qualpay)
-- [Sandbox](#sandbox)
+
+[//]: # (- [Sandbox]&#40;#sandbox&#41;)
 - [Stripe](#stripe)
 - [Vindicia](#vindicia)
 - [Checkout](#checkout)
@@ -78,24 +79,38 @@ Here are the configuration options for each of the connectors for the Payment Pr
 
 ---
 
-### Authorize.net
+[//]: # ()
+[//]: # (### Authorize.net)
 
-Library: `authorize`  
-Configuration:
+[//]: # ()
+[//]: # (Library: `authorize`  )
 
-```json  
-{
-  "APILoginID": "xxxxxxxxxxxx",
-  "TransactionKey": "xxxxxxxxxxxx",
-  "Environment": "xxxxxxxxxxxx"
-}  
-```  
+[//]: # (Configuration:)
 
-|      FieldName | Definition                                                                                              |   
-|---------------:|:--------------------------------------------------------------------------------------------------------|
-|     APILoginID | The Api Login ID from your Authorize.net account found in Account -> API Credentials & Keys             |
-| TransactionKey | The Transaction Key obtained from your Authorize.net account found in Account -> API Credentials & Keys |
-|    Environment | Must be either "sandbox" or "production"                                                                |
+[//]: # ()
+[//]: # (```json  )
+
+[//]: # ({)
+
+[//]: # (  "APILoginID": "xxxxxxxxxxxx",)
+
+[//]: # (  "TransactionKey": "xxxxxxxxxxxx",)
+
+[//]: # (  "Environment": "xxxxxxxxxxxx")
+
+[//]: # (}  )
+
+[//]: # (```  )
+[//]: # ()
+[//]: # (|      FieldName | Definition                                                                                              |   )
+
+[//]: # (|---------------:|:--------------------------------------------------------------------------------------------------------|)
+
+[//]: # (|     APILoginID | The Api Login ID from your Authorize.net account found in Account -> API Credentials & Keys             |)
+
+[//]: # (| TransactionKey | The Transaction Key obtained from your Authorize.net account found in Account -> API Credentials & Keys |)
+
+[//]: # (|    Environment | Must be either "sandbox" or "production"                                                                |)
 
 ### Braintree
 
@@ -206,7 +221,8 @@ Configuration:
   "Currency": "USD",
   "UseVault": "false",
   "SingleUseTokenUsername": "xxxxxxxxxxxx",
-  "SingleUseTokenPassword": "xxxxxxxxxxxx"
+  "SingleUseTokenPassword": "xxxxxxxxxxxx",
+  "merchantURL":"xxxxxxxxxxxx"
 }
 ```
 
@@ -215,17 +231,18 @@ Configuration:
 -----------------------:|:---  
 Acquirer | The Acquirer bank setup for this merchant account (optional, if you are not using a defined acquirer this can
 be left blank)
-AccountID | The AccountID for this merchant account
-APIUsername | The API Username from your merchant account in your account settings API page
-APIPassword | The API Password from your merchant account in your account settings API page
+AccountID | The AccountID for this merchant account (10 digit numeric ID)
+APIUsername | The API Public Key Username from your merchant account in your account settings API keys page
+APIPassword | The API Public Key Password from your merchant account in your account settings API keys page
 Environment | Must be "MOCK", "TEST" or "LIVE"  
 Country | Optional string field for country. Must be in two character country format (e.g. ["US", "DE", "FR"])
 Currency | The currency setup for this merchant account, in standard three character format (e.g. ["GBP", "USD", "EUR"])
-UseVault | Boolean field can be set to "true" or "false"  
-SingleUseTokenUsername | The Single Use Token Username in your account settings API page. If this is entered the
+UseVault | Boolean field can be set to "true" or "false" - Vault is Paysafe's customer Vault for tokenizing Payment Methods. Payment methods are already Tokenized in Chargehive so this should be set to 'false'  
+SingleUseTokenUsername | The Single Use Token (Public Key) Username in your account settings API Keys page. If this is entered the
 Password must be entered as well  
-SingleUseTokenPassword | The Single Use Token Password in your account settings API page. If this is entered the
+SingleUseTokenPassword | The Single Use Token (Public Key) Password in your account settings API Keys page. If this is entered the
 Username must be entered as well
+Merchant URL | The url your Order Form is hosted on
 
 ### QualPay
 
@@ -234,35 +251,46 @@ Configuration:
 
 ```json
 {
-  "APIKey": "xxxxxxxxxxxx",
-  "MerchantID": "int64",
-  "Environment": "test"
+  "apiKey": "xxxxxxxxxxxx",
+  "merchantID": "int64",
+  "environment": "test"
 }
 ```
 
-|   FieldName | Definition                                                           |
-|------------:|:---------------------------------------------------------------------|
-|      APIKey | Your Qualpay API Key from your Qualpay account administration        |
-|  MerchantID | This is your Qualpay Merchant ID. It must be a 64 character integer. |
-| Environment | Must be "test" or "live"                                             |
+|   FieldName | Definition                                                                                     |
+|------------:|:-----------------------------------------------------------------------------------------------|
+|      APIKey | Your Qualpay API Key from your Qualpay account Administration -> Security -> API Security Keys |
+|  MerchantID | This is your Qualpay Merchant ID. It must be a 64 character integer. It can be found in account Administration -> Security -> API Security Keys       |
+| Environment | Must be "test" or "live"                                                                       |
 
-### SandBox
+[//]: # (### SandBox)
 
-Library: `sandbox`  
-Configuration:
+[//]: # ()
+[//]: # (Library: `sandbox`  )
 
-```json  
-{
-  "Mode": "dynamic",
-  "TransactionIDPrefix": "xxxxxxxxxxxx"
-}  
-```  
+[//]: # (Configuration:)
 
-           FieldName | Definition   
+[//]: # ()
+[//]: # (```json  )
 
---------------------:|:---  
-Mode | Must be "dynamic", "offline", "delayed", "random-timeout" or "chaos"  
-TransactionIDPrefix | Prepends transactions with this prefix
+[//]: # ({)
+
+[//]: # (  "Mode": "dynamic",)
+
+[//]: # (  "TransactionIDPrefix": "xxxxxxxxxxxx")
+
+[//]: # (}  )
+
+[//]: # (```  )
+[//]: # ()
+[//]: # (           FieldName | Definition   )
+
+[//]: # ()
+[//]: # (--------------------:|:---  )
+
+[//]: # (Mode | Must be "dynamic", "offline", "delayed", "random-timeout" or "chaos"  )
+
+[//]: # (TransactionIDPrefix | Prepends transactions with this prefix)
 
 ### Stripe
 
@@ -324,12 +352,12 @@ Configuration:
               FieldName | Definition
 
 -----------------------:|:---   
-publicKey | The Public Key of this account. This can be found in settings page of Hub
-secretKey | The Secret Key of this account. This can be found in settings page of Hub
+publicKey | The Public Key of this account. This can be found in Developers -> Keys -> API Keys
+secretKey | The Secret Key of this account. This can be found in Developers -> Keys -> API Keys
 currency | The currency to process with this account
 environment | Must be "sandbox" or "production"
-signatureKey | Obtained from Checkout dashboard Notification configuration
-authorizationHeaderKey | Obtained from Checkout dashboard Notification configuration
+signatureKey | This can be found in Developers -> Keys -> Access Keys (Key Value)
+authorizationHeaderKey | This can be found in Developers -> Keys -> Access Keys (Key ID)
 platform | must be `default` or `previous`
 
 ---
@@ -339,7 +367,7 @@ platform | must be `default` or `previous`
 Library: `worldpay`  
 Configuration:
 
-```json
+```json 
 {
   "Username": "xxxxxxxxxxxx",
   "Password": "xxxxxxxxxxxx",
@@ -396,7 +424,7 @@ Configuration:
 
 ---------------:|:---   
 MerchantID | The Merchant ID on your Cybersource Account
-TransactionKey | The Transaction Key generated in Cybersource on Payment Configuration -> Key Management
+TransactionKey | Generate a new REST API Key in Cybersource account Payment Configuration -> Key Management. The Secret Key is the Transaction Key needed here.
 Environment | Must be either "test" or "live"
 
 ### Kount
@@ -419,12 +447,12 @@ Configuration:
              FieldName | Definition
 
 ----------------------:|:---   
-siteID | The site ID on your Kount Account
-merchantID | The Merchant Id of your Kount Account
-configKey | The configuration key defined within your Kount account
-apiKey | The API key defined in your Kount account
-dataCollectorURL | The Kount data collection URL and will be test or a production URL depending on the environment
-riskInquiryServiceURL | The Kount risk inquiry URL and will be test or a production URL depending on the environment
+siteID | The site ID for your Kount Account - this will be given to you by Kount
+merchantID | The Merchant Id for your Kount Account - this will be given to you by Kount
+configKey | The configuration key for your Kount account - this will be given to you by Kount
+apiKey | The API key for your Kount account -> Admin -> API Keys, create a new Key.
+dataCollectorURL | The Kount data collection URL and will be test or a production URL depending on the environment. Kount will provide this.
+riskInquiryServiceURL | The Kount risk inquiry URL and will be test or a production URL depending on the environment. Kount will provide this.
 environment | Must be either "test" or "production"
 
 ### MaxMind
