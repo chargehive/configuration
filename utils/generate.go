@@ -42,6 +42,7 @@ const (
 	confConnYapstone      Template = "con_yapstone"
 	confConnTokenEx       Template = "con_tokenex"
 	confConnTokenExNT     Template = "con_tokenex_network_tokenization"
+	confConnFlexPay       Template = "con_flexpay"
 
 	// connector Pool
 	confConnectorPool Template = "con_pool"
@@ -88,6 +89,7 @@ var Templates = map[Template]string{
 	confConnVindicia:      "Connector: Vindicia",
 	confConnWorldPay:      "Connector: Worldpay",
 	confConnYapstone:      "Connector: Yapstone",
+	confConnFlexPay:       "Connector: FlexPay",
 	confIntSlack:          "Integration: Slack",
 	confPolCascade:        "Policy: Cascade",
 	confPolChargeExpiry:   "Policy: Charge Expiry",
@@ -334,6 +336,12 @@ func buildSpec(conf Template) (object.Specification, error) {
 			APIKey:      &chg,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryTokenExNetworkTokenization), Configuration: j}, nil
+	case confConnFlexPay:
+		j, _ := json.Marshal(connectorconfig.FlexPayCredentials{
+			Environment: connectorconfig.FlexPayEnvironmentSandbox,
+			ApiKey:      &chg,
+		})
+		return connector.Connector{Library: string(connectorconfig.LibraryFlexPay), Configuration: j}, nil
 	case confConnectorPool:
 		return connector.Pool{Restriction: "unrestricted", Connectors: []connector.PoolItem{{ConnectorID: chg}}}, nil
 	case confIntSlack:

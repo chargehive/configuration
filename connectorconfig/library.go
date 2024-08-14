@@ -42,6 +42,7 @@ const (
 	LibraryNuvei                    Library = "nuvei"
 	LibraryGPayments                Library = "gpayments"
 	LibrarySandbanx                 Library = "sandbanx"
+	LibraryFlexPay                  Library = "flexpay"
 
 	// Fraud Libraries
 	LibraryChargeHive  Library = "chargehive"
@@ -347,6 +348,13 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibraryStickyIO: {
 		DisplayName: "Sticky IO",
 		Credentials: func() Credentials { return &StickyIOCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+	LibraryFlexPay: {
+		DisplayName: "FlexPay",
+		Credentials: func() Credentials { return &FlexPayCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
