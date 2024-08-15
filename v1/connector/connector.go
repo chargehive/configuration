@@ -48,7 +48,10 @@ func NewDefinition(d *object.Definition) (*Definition, error) {
 }
 
 // Definition is the connector definition structure
-type Definition struct{ def *object.Definition }
+type Definition struct {
+	object.DefinitionHolder
+	def *object.Definition
+}
 
 // Definition returns the Definition for a connector
 func (d *Definition) Definition() *object.Definition { return d.def }
