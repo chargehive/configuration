@@ -26,4 +26,6 @@ type AttemptConfig struct {
 	OverridePoolConnectorIDs []string `json:"overridePoolConnectorIDs,omitempty" yaml:"overridePoolConnectorIDs,omitempty" validate:"dive,lowercase"`
 
 	Prefer3RI bool `json:"prefer3RI,omitempty" yaml:"prefer3RI,omitempty"`
+
+	PreferNetworkToken bool `json:"preferNetworkToken,omitempty" yaml:"preferNetworkToken,omitempty"`
 }
