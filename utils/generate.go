@@ -362,7 +362,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 	case confPolSCA:
 		return policy.ScaPolicy{ShouldIdentify: new(bool), ShouldChallengeOptional: new(bool), ShouldByPassChallenge: "cascade", ShouldAuthOnError: new(bool), RequireSca: new(bool)}, nil
 	case confPolRecaptcha:
-		return policy.RecaptchaPolicy{SecretKey: "abc123", BlockThreshold: 50}, nil
+		return policy.RecaptchaPolicy{ClientKey: "123abc", SecretKey: "abc123", BlockThreshold: 50}, nil
 	case confSchInitiator:
 		return scheduler.Initiator{Type: scheduler.InitiatorTypeAuth, InitialConnector: scheduler.ConnectorSelectorConfig, AttemptConfig: &scheduler.AttemptConfig{PoolType: scheduler.PoolTypeCascade, MethodSelector: scheduler.MethodSelectorPrimaryMethod, OverridePoolConnectorIDs: []string{}, CascadeDelay: new(time.Duration)}}, nil
 	case confSchOnDemand:
