@@ -20,7 +20,7 @@ type RecaptchaPolicy struct {
 func (RecaptchaPolicy) GetKind() object.Kind { return KindPolicyRecaptcha }
 
 // GetVersion returns the RecaptchaPolicy version
-func (RecaptchaPolicy) GetVersion() string { return "v3" }
+func (RecaptchaPolicy) GetVersion() string { return "v1" }
 
 // NewRecaptchaDefinition creates a new RecaptchaDefinition
 func NewRecaptchaDefinition(d *object.Definition) (*RecaptchaDefinition, error) {
