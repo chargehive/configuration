@@ -12,7 +12,7 @@ const KindPolicyRecaptcha object.Kind = "PolicyRecaptcha"
 
 // RecaptchaPolicy is the policy ran against a charge to determine its Recaptcha status
 type RecaptchaPolicy struct {
-	ServerKey      string `json:"serverKey" yaml:"serverKey" validate:"required"`
+	SecretKey      string `json:"secretKey" yaml:"secretKey" validate:"required"`
 	BlockThreshold int    `json:"blockThreshold" yaml:"blockThreshold" validate:"required,min=0,max=100"`
 }
 
