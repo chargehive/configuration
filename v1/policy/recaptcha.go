@@ -10,16 +10,6 @@ import (
 // KindPolicyRecaptcha is the identifier for a PolicyRecaptcha config
 const KindPolicyRecaptcha object.Kind = "PolicyRecaptcha"
 
-// RecaptchaDeclineReason are the suggestions for declining a charge
-type RecaptchaDeclineReason string
-
-const (
-	RecaptchaDeclineOnInvalid      RecaptchaDeclineReason = "invalid"
-	RecaptchaDeclineOnNoSuggestion RecaptchaDeclineReason = "no-suggestion"
-	RecaptchaDeclineOnReview       RecaptchaDeclineReason = "review"
-	RecaptchaDeclineOnDeny         RecaptchaDeclineReason = "deny"
-)
-
 // RecaptchaPolicy is the policy ran against a charge to determine its Recaptcha status
 type RecaptchaPolicy struct {
 	ServerKey      string `json:"serverKey" yaml:"serverKey" validate:"required"`
