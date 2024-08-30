@@ -49,6 +49,7 @@ const (
 	LibraryMaxMind     Library = "maxmind"
 	LibraryCyberSource Library = "cybersource"
 	LibraryKount       Library = "kount"
+	LibraryRecaptcha   Library = "recaptcha"
 
 	// Updater Libraries
 	LibraryPaySafeAccountUpdater Library = "paysafe-accountupdater"
