@@ -11,7 +11,7 @@ import (
 type RecaptchaCredentials struct {
 	SiteKey        string  `json:"siteKey" yaml:"siteKey" validate:"required"`
 	SecretKey      string  `json:"secretKey" yaml:"secretKey" validate:"required"`
-	BlockThreshold float32 `json:"blockThreshold" yaml:"blockThreshold" validate:"required,min=0,max=1"`
+	BlockThreshold float32 `json:"blockThreshold" yaml:"blockThreshold" validate:"min=0,max=1"`
 }
 
 func (c *RecaptchaCredentials) GetLibrary() Library {
