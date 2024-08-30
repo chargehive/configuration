@@ -49,6 +49,7 @@ const (
 	LibraryMaxMind     Library = "maxmind"
 	LibraryCyberSource Library = "cybersource"
 	LibraryKount       Library = "kount"
+	LibraryRecaptcha   Library = "recaptcha"
 
 	// Updater Libraries
 	LibraryPaySafeAccountUpdater Library = "paysafe-accountupdater"
@@ -263,6 +264,13 @@ var LibraryRegister = map[Library]LibraryDef{
 		Credentials: func() Credentials { return &KountCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+	LibraryRecaptcha: {
+		DisplayName: "Recaptcha",
+		Credentials: func() Credentials { return &RecaptchaCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return true
 		},
 	},
 	LibraryClearhaus: {
