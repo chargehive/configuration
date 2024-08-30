@@ -10,7 +10,7 @@ import (
 
 type RecaptchaCredentials struct {
 	SiteKey        string  `json:"siteKey" yaml:"siteKey" validate:"required"`
-	SecretKey      *string `json:"secretKey" yaml:"secretKey" validate:"required"`
+	SecretKey      string  `json:"secretKey" yaml:"secretKey" validate:"required"`
 	BlockThreshold float32 `json:"blockThreshold" yaml:"blockThreshold" validate:"required,min=0,max=1"`
 }
 
@@ -27,7 +27,7 @@ func (c *RecaptchaCredentials) Validate() error {
 }
 
 func (c *RecaptchaCredentials) GetSecureFields() []*string {
-	return []*string{c.SecretKey}
+	return []*string{}
 }
 
 func (c *RecaptchaCredentials) ToConnector() connector.Connector {
