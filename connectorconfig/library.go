@@ -266,6 +266,13 @@ var LibraryRegister = map[Library]LibraryDef{
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
+	LibraryRecaptcha: {
+		DisplayName: "Recaptcha",
+		Credentials: func() Credentials { return &RecaptchaCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return true
+		},
+	},
 	LibraryClearhaus: {
 		DisplayName: "Clearhaus",
 		Credentials: func() Credentials { return &ClearhausCredentials{} },
