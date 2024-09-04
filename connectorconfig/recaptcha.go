@@ -9,9 +9,8 @@ import (
 )
 
 type RecaptchaCredentials struct {
-	SiteKey        string  `json:"siteKey" yaml:"siteKey" validate:"required"`
-	SecretKey      string  `json:"secretKey" yaml:"secretKey" validate:"required"`
-	BlockThreshold float32 `json:"blockThreshold" yaml:"blockThreshold" validate:"min=0,max=1"`
+	SiteKey   string `json:"siteKey" yaml:"siteKey" validate:"required"`
+	ProjectID string `json:"projectId" yaml:"projectId" validate:"required"`
 }
 
 func (c *RecaptchaCredentials) GetLibrary() Library {
