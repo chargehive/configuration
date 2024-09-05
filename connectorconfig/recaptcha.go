@@ -11,7 +11,7 @@ import (
 type RecaptchaSuggestionRange struct {
 	Min    float32 `json:"min" yaml:"min" validate:"required"`
 	Max    float32 `json:"max" yaml:"max" validate:"required"`
-	Action string  `json:"suggestion" yaml:"suggestion" validate:"required, oneof=review allow deny"`
+	Action string  `json:"action" yaml:"action" validate:"required, oneof=review allow deny"`
 }
 
 type RecaptchaCredentials struct {
