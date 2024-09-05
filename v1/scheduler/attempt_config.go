@@ -28,4 +28,6 @@ type AttemptConfig struct {
 	Prefer3RI bool `json:"prefer3RI,omitempty" yaml:"prefer3RI,omitempty"`
 
 	PreferNetworkToken bool `json:"preferNetworkToken,omitempty" yaml:"preferNetworkToken,omitempty"`
+
+	RecoveryAgentConnectorID string `json:"recoveryAgentConnectorID" yaml:"recoveryAgentConnectorID"`
 }
