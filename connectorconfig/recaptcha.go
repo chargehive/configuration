@@ -8,9 +8,16 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
+type RecaptchaSuggestionRange struct {
+	Min    float32 `json:"min" yaml:"min" validate:"required"`
+	Max    float32 `json:"max" yaml:"max" validate:"required"`
+	Action string  `json:"action" yaml:"action" validate:"required, oneof=review allow deny"`
+}
+
 type RecaptchaCredentials struct {
-	SiteKey   string `json:"siteKey" yaml:"siteKey" validate:"required"`
-	ProjectID string `json:"projectId" yaml:"projectId" validate:"required"`
+	SiteKey     string                     `json:"siteKey" yaml:"siteKey" validate:"required"`
+	ProjectID   string                     `json:"projectId" yaml:"projectId" validate:"required"`
+	Suggestions []RecaptchaSuggestionRange `json:"suggestions" yaml:"suggestions"`
 }
 
 func (c *RecaptchaCredentials) GetLibrary() Library {
