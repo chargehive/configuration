@@ -1,6 +1,6 @@
 module github.com/chargehive/configuration
 
-go 1.21
+go 1.22
 
 require (
 	github.com/chargehive/proto v1.13.0
