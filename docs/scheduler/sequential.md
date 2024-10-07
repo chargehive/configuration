@@ -117,10 +117,10 @@ Value| Definition
 
 Value | Definition
 -----------:|:--------------------------
-     "None" |will ignore the TimeSyncHour value
- "Earliest" |will run the transaction at the earliest sync hour relative to TimeSync
-   "Latest" |will run the transaction at the latest sync hour relative to TimeSync
-  "Closest" |will run the transaction at the closest sync hour relative to TimeSync
+"None" |will ignore the TimeSyncHour value
+"Earliest" |will run the transaction at the earliest sync hour relative to TimeSync
+"Latest" |will run the transaction at the latest sync hour relative to TimeSync
+"Closest" |will run the transaction at the closest sync hour relative to TimeSync
 
 ### TimeSyncZone Values
 
@@ -139,13 +139,13 @@ Value | Definition
 
  Value | Definition 
 ------:|:-----------
-     1 | Monday     
-     2 | Tuesday    
-     3 | Wednesday  
-     4 | Thursday   
-     5 | Friday     
-     6 | Saturday   
-     7 | Sunday     
+1 | Monday     
+2 | Tuesday    
+3 | Wednesday  
+4 | Thursday   
+5 | Friday     
+6 | Saturday   
+7 | Sunday     
 
 ## Full Example
 
