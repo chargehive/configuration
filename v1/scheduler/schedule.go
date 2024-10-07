@@ -24,4 +24,10 @@ type Schedule struct {
 
 	// TimeSyncZone indicates the timezone that the TimeSyncHour is relative to. Ignored if TimeDelaySync is set to None
 	TimeSyncZone TimeZone `json:"timeSyncZone" yaml:"timeSyncZone" validate:"oneof=ULT UTC CIT"`
+
+	// DayOfMonth is the day of the month to process the schedule
+	DayOfMonth int `json:"dayOfMonth" yaml:"dayOfMonth" validate:"min=1,max=31"`
+
+	// DayOfWeek is the day of the week to process the schedule (1 = Monday) - Sunday moved to 7 to leave 0 as an ignored value
+	DayOfWeek int `json:"dayOfWeek" yaml:"dayOfWeek" validate:"min=1,max=7"`
 }
