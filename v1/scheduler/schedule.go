@@ -26,7 +26,7 @@ type Schedule struct {
 	TimeSyncZone TimeZone `json:"timeSyncZone" yaml:"timeSyncZone" validate:"oneof=ULT UTC CIT"`
 
 	// DayOfMonth is the day of the month to process the schedule
-	DayOfMonth int `json:"dayOfMonth" yaml:"dayOfMonth" validate:"min=0,max=31"`
+	DayOfMonth int `json:"dayOfMonth" yaml:"dayOfMonth" validate:"min=0,max=28"`
 
 	// DayOfWeek is the day of the week to process the schedule (1 = Monday) - Sunday moved to 7 to leave 0 as an ignored value
 	DayOfWeek int `json:"dayOfWeek" yaml:"dayOfWeek" validate:"min=0,max=7"`
