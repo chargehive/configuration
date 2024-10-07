@@ -115,8 +115,8 @@ Value| Definition
 
 ### TimeDelaySync Values
 
-Value| Definition
----:|:---
+Value | Definition
+-----------:|:--------------------------
      "None" |will ignore the TimeSyncHour value
  "Earliest" |will run the transaction at the earliest sync hour relative to TimeSync
    "Latest" |will run the transaction at the latest sync hour relative to TimeSync
