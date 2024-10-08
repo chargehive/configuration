@@ -131,3 +131,26 @@ const (
 	// TimeZoneCIT Charge Initialisation Time (Midnight = Charge Time)
 	TimeZoneCIT TimeZone = "CIT"
 )
+
+type DayType string
+
+const (
+	// DayTypeNone indicates no specific day type
+	DayTypeNone DayType = ""
+	// DayTypeWeekday indicates a weekday Monday to Friday
+	DayTypeWeekday DayType = "weekday"
+	// DayTypeWeekend indicates a weekend day Saturday or Sunday
+	DayTypeWeekend DayType = "weekend"
+)
+
+type DayShift string
+
+const (
+	DayShiftNone DayShift = ""
+	// DayShiftForward move the date forward to match the day
+	DayShiftForward DayShift = "forward"
+	// DayShiftBackward move the date backward to match the day
+	DayShiftBackward DayShift = "backward"
+	// DayShiftClosest move the date to the closest day
+	DayShiftClosest DayShift = "closest"
+)
