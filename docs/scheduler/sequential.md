@@ -75,7 +75,7 @@ timeDelay| true     |Amount of time to wait before processing after TimeDelayOri
 timeWindowHours| false    |Specifies the available duration for the transaction to be queued within
 timeSyncHour| true     |An hour designation (0-23) i.e 2 == 2AM. Ignored if TimeDelaySync is set to None
 [timeSyncZone](#timesynczone-values)| true     |Indicates the timezone that the TimeSyncHour is relative to. Ignored if TimeDelaySync is set to None
-dayOfMonth| false    |Day of the month to run (1-28)
+dayOfMonth| false    |Day of the month to run (1-31)
 dayOfWeek| false    |Day of the week to run (1-7) (Monday = 1, Sunday = 7)
 
 ### AttemptConfig Definition

@@ -16,7 +16,7 @@ type Schedule struct {
 	DelayDays int `json:"delayDays,omitempty" yaml:"delayDays" validate:"gte=0"`
 
 	// DayOfMonth is the day of the month to process the schedule
-	DayOfMonth int `json:"dayOfMonth,omitempty" yaml:"dayOfMonth" validate:"min=0,max=28"`
+	DayOfMonth int `json:"dayOfMonth,omitempty" yaml:"dayOfMonth" validate:"min=0,max=31"`
 
 	// DayOfWeek is the day of the week to process the schedule (1 = Monday) - Sunday moved to 7 to leave 0 as an ignored value
 	DayOfWeek int `json:"dayOfWeek,omitempty" yaml:"dayOfWeek" validate:"min=0,max=7"`
