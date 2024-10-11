@@ -5,6 +5,7 @@ type Key string
 const (
 	KeyNow           Key = "now"
 	KeyRandomPercent Key = "randompercent"
+	KeyBucketBPID    Key = "bucket.bpid"
 )
 
 const ( // Assemble Properties
