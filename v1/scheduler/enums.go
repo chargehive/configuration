@@ -154,3 +154,14 @@ const (
 	// DayShiftClosest move the date to the closest day
 	DayShiftClosest DayShift = "closest"
 )
+
+type ConnectorRetryType string
+
+const (
+	// ConnectorRetryTypeNone No retry
+	ConnectorRetryTypeNone ConnectorRetryType = ""
+	// ConnectorRetryTypeTokenToPan Use the token first, cascade to Pan if available
+	ConnectorRetryTypeTokenToPan ConnectorRetryType = "token-pan"
+	// ConnectorRetryTypePanToToken Use the Pan first, cascade to Token if available
+	ConnectorRetryTypePanToToken ConnectorRetryType = "pan-token"
+)
