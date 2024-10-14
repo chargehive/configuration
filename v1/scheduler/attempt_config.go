@@ -10,6 +10,9 @@ type AttemptConfig struct {
 	// MethodSelector indicates how payment method should be selected for this attempt
 	MethodSelector MethodSelector `json:"methodSelector" yaml:"methodSelector" validate:"oneof=primary backup all all-backup"`
 
+	// ConnectorRetryType indicates how the attempt should retry (on the same connector), if needed
+	ConnectorRetryType ConnectorRetryType `json:"connectorRetryType" yaml:"connectorRetryType" validate:"oneof='' token-pan pan-token"`
+
 	// ConnectorLimit is a maximum number of connectors to process within an attempt per method
 	ConnectorLimit int32 `json:"connectorLimit" yaml:"connectorLimit" validate:"min=0,max=1000"`
 
