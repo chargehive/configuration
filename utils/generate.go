@@ -53,6 +53,7 @@ const (
 	// policy
 	confPolCascade       Template = "pol_cascade"
 	confPolChargeExpiry  Template = "pol_chargeExpiry"
+	confPolCharge        Template = "pol_charge"
 	confPolFraud         Template = "pol_fraud"
 	confPolMethodLock    Template = "pol_methodLock"
 	confPolMethodUpgrade Template = "pol_methodUpgrade"
@@ -92,6 +93,7 @@ var Templates = map[Template]string{
 	confConnFlexPay:       "Connector: FlexPay",
 	confIntSlack:          "Integration: Slack",
 	confPolCascade:        "Policy: Cascade",
+	confPolCharge:         "Policy: Charge",
 	confPolChargeExpiry:   "Policy: Charge Expiry",
 	confPolFraud:          "Policy: Fraud",
 	confPolMethodLock:     "Policy: Method Lock",
@@ -350,6 +352,8 @@ func buildSpec(conf Template) (object.Specification, error) {
 		return policy.CascadePolicy{Rules: []policy.CascadeRule{{Library: connectorconfig.Library(chg), OriginalResponseCode: chg}}}, nil
 	case confPolChargeExpiry:
 		return policy.ChargeExpiryPolicy{}, nil
+	case confPolCharge:
+		return policy.ChargePolicy{}, nil
 	case confPolFraud:
 		return policy.FraudPolicy{ConnectorIDs: []string{chg}, CheckTime: "preauth-first", CheckType: "all"}, nil
 	case confPolMethodLock:
