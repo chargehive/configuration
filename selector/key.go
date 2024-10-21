@@ -180,6 +180,7 @@ const ( // Payment Method
 var KeyRegister = map[Key]bool{
 	KeyNow:                            true,
 	KeyRandomPercent:                  true,
+	KeyBucketBPID:                     true,
 	KeyChargeLabel:                    true,
 	KeyChargeCurrentTransactionNumber: true,
 	KeyChargeCurrentAttemptNumber:     true,
