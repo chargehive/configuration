@@ -13,6 +13,8 @@ const (
 	PredicateOperatorLessThan      PredicateOperator = "Lt"
 	PredicateOperatorLike          PredicateOperator = "Like"
 	PredicateOperatorInLike        PredicateOperator = "InLike"
+	PredicateOperatorNotLike       PredicateOperator = "NotLike"
+	PredicateOperatorNotInLike     PredicateOperator = "NotInLike"
 )
 
 type OperatorConversion string
