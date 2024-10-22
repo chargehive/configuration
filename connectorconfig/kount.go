@@ -15,14 +15,20 @@ const (
 	KountEnvironmentProduction KountEnvironment = "production"
 )
 
+type KountCustomData struct {
+	Key   string `json:"key" yaml:"key" validate:"required"`
+	Value string `json:"value" yaml:"value"`
+}
+
 type KountCredentials struct {
-	SiteID                string           `json:"siteID" yaml:"siteID" validate:"required"`
-	MerchantID            string           `json:"merchantID" yaml:"merchantID" validate:"required"`
-	ConfigKey             string           `json:"configKey" yaml:"configKey" validate:"required"`
-	APIKey                string           `json:"apiKey" yaml:"apiKey" validate:"required"`
-	DataCollectorURL      string           `json:"dataCollectorURL" yaml:"dataCollectorURL" validate:"required"`
-	RiskInquiryServiceURL string           `json:"riskInquiryServiceURL" yaml:"riskInquiryServiceURL" validate:"required"`
-	Environment           KountEnvironment `json:"environment" yaml:"environment" validate:"oneof=test production"`
+	SiteID                string            `json:"siteID" yaml:"siteID" validate:"required"`
+	MerchantID            string            `json:"merchantID" yaml:"merchantID" validate:"required"`
+	ConfigKey             string            `json:"configKey" yaml:"configKey" validate:"required"`
+	APIKey                string            `json:"apiKey" yaml:"apiKey" validate:"required"`
+	DataCollectorURL      string            `json:"dataCollectorURL" yaml:"dataCollectorURL" validate:"required"`
+	RiskInquiryServiceURL string            `json:"riskInquiryServiceURL" yaml:"riskInquiryServiceURL" validate:"required"`
+	Environment           KountEnvironment  `json:"environment" yaml:"environment" validate:"oneof=test production"`
+	DefaultCustomData     []KountCustomData `json:"defaultCustomData" yaml:"defaultCustomData"`
 }
 
 func (c *KountCredentials) GetMID() string {
