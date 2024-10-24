@@ -19,6 +19,7 @@ type GooglePayCredential interface {
 	GetGoogleCardAllowPrepaid() bool
 	GetGoogleCardAllowCredit() bool
 	GetGoogleCardBillingAddressReq() bool
+	GetGoogleCardBillingAddressFormat() GoogleCardBillingAddressFormat
 	GetGoogleCardBillingPhoneReq() bool
 	GetGoogleCardShippingAddressReq() bool
 	GetGoogleCardShippingPhoneReq() bool
@@ -62,7 +63,7 @@ type GooglePayCredentials struct {
 	// GoogleCardBillingPhoneReq (Card {parameters.billingAddressParameters.phoneNumberRequired) Set to true if a phone number is required to process the transaction.
 	GoogleCardBillingPhoneReq bool `json:"googleCardBillingPhoneReq,omitempty" yaml:"googleCardBillingPhoneReq,omitempty" validate:"-"`
 	// GoogleCardBillingAddressFormat (Card {parameters.billingAddressParameters.format) Billing address format required to complete the transaction.
-	GoogleCardBillingAddressFormat GoogleCardBillingAddressReq `json:"googleCardBillingAddressFormat,omitempty" yaml:"googleCardBillingAddressFormat,omitempty" validate:"required_with=GoogleMerchantId,omitempty,oneof=MIN FULL"`
+	GoogleCardBillingAddressFormat GoogleCardBillingAddressFormat `json:"googleCardBillingAddressFormat,omitempty" yaml:"googleCardBillingAddressFormat,omitempty" validate:"required_with=GoogleMerchantId,omitempty,oneof=MIN FULL"`
 	// GoogleCardTokenType (Card {tokenizationSpecification.type})
 	GoogleCardTokenType GoogleTokenType `json:"googleCardTokenType,omitempty" yaml:"googleCardTokenType,omitempty" validate:"required_with=GoogleMerchantId,omitempty,oneof=DIRECT PAYMENT_GATEWAY"`
 	// GoogleCardGateway (Card {tokenizationSpecification.parameters.gateway}) https://developers.google.com/pay/api/web/reference/request-objects#gateway
@@ -74,8 +75,6 @@ type GooglePayCredentials struct {
 	GoogleCardShippingAddressReq bool `json:"googleCardShippingAddressReq,omitempty" yaml:"googleCardShippingAddressReq,omitempty" validate:"-"`
 	// GoogleCardShippingPhoneReq  Set to true if a phone number is required to process the transaction.
 	GoogleCardShippingPhoneReq bool `json:"googleCardShippingPhoneReq,omitempty" yaml:"googleCardShippingPhoneReq,omitempty" validate:"-"`
-	// GoogleCardShippingAddressFormat (Card {parameters.shippingAddressParameters.format) Shipping address format required to complete the transaction.
-	GoogleCardShippingAddressFormat GoogleCardBillingAddressReq `json:"googleCardShippingAddressFormat,omitempty" yaml:"googleCardShippingAddressFormat,omitempty" validate:"omitempty,oneof=MIN FULL"`
 
 	// GoogleAcquirerCountry The ISO 3166-1 alpha-2 country code where the transaction is processed. This property is required for merchants who process transactions in European Economic Area (EEA) countries and any other countries that are subject to Strong Customer Authentication (SCA). Merchants must specify the acquirer bank country code.
 	GoogleAcquirerCountry string `json:"googleAcquirerCountry,omitempty" yaml:"googleAcquirerCountry,omitempty" validate:"omitempty,oneof=AF AX AL DZ AS AD AO AI AQ AG AR AM AW AU AT AZ BS BH BD BB BY BE BZ BJ BM BT BO BQ BA BW BV BR IO BN BG BF BI KH CM CA CV KY CF TD CL CN CX CC CO KM CG CD CK CR CI HR CU CW CY CZ DK DJ DM DO EC EG SV GQ ER EE ET FK FO FJ FI FR GF PF TF GA GM GE DE GH GI GR GL GD GP GU GT GG GN GW GY HT HM HN HK HU IS IN ID IR IQ IE IM IL IT JM JP JE JO KZ KE KI KP KR KW KG LA LV LB LS LR LY LI LT LU MO MK MG MW MY MV ML MT MH MQ MR MU YT MX FM MD MC MN ME MS MA MZ MM NA NR NP NC NZ NI NE NG NU NF MP NO OM PK PW PS PA PG PY PE PH PN PL PT PR QA RE RO RU RW BL SH KN LC MF VC WS SM ST SA SN RS SC SL SG SX SK SI SB SO ZA GS SS ES LK PM SD SR SJ SZ SE CH SY TW TJ TZ TH NL TL TG TK TO TT TN TR TM TC TV UG UA AE GB US UM UY UZ VU VA VE VN VG VI WF EH YE ZM ZW"`
@@ -237,7 +236,7 @@ func (g *GooglePayCredentials) GetGoogleCardBillingAddressReq() bool {
 	}
 	return g.GoogleCardBillingAddressReq
 }
-func (g *GooglePayCredentials) GetGoogleCardBillingAddressFormat() GoogleCardBillingAddressReq {
+func (g *GooglePayCredentials) GetGoogleCardBillingAddressFormat() GoogleCardBillingAddressFormat {
 	if g == nil {
 		return ""
 	}
@@ -255,13 +254,6 @@ func (g *GooglePayCredentials) GetGoogleCardShippingAddressReq() bool {
 		return false
 	}
 	return g.GoogleCardShippingAddressReq
-}
-func (g *GooglePayCredentials) GetGoogleCardShippingAddressFormat() GoogleCardBillingAddressReq {
-	if g == nil {
-		return ""
-	}
-
-	return g.GoogleCardShippingAddressFormat
 }
 func (g *GooglePayCredentials) GetGoogleCardShippingPhoneReq() bool {
 	if g == nil {
@@ -295,17 +287,17 @@ func (g *GooglePayCredentials) GetGoogleAcquirerCountry() string {
 }
 
 type (
-	GoogleEnvironment           string
-	GoogleCardGateway           string
-	GoogleCardAuthMethod        string
-	GoogleTokenType             string
-	GoogleCardNetwork           string
-	GoogleCardBillingAddressReq string
+	GoogleEnvironment              string
+	GoogleCardGateway              string
+	GoogleCardAuthMethod           string
+	GoogleTokenType                string
+	GoogleCardNetwork              string
+	GoogleCardBillingAddressFormat string
 )
 
 const (
-	GoogleCardBillingAddressReqMIN  GoogleCardBillingAddressReq = "MIN"  // Name, country code, and postal code (default).
-	GoogleCardBillingAddressReqFULL GoogleCardBillingAddressReq = "FULL" // Name, street address, locality, region, country code, and postal code.
+	GoogleCardBillingAddressReqMIN  GoogleCardBillingAddressFormat = "MIN"  // Name, country code, and postal code (default).
+	GoogleCardBillingAddressReqFULL GoogleCardBillingAddressFormat = "FULL" // Name, street address, locality, region, country code, and postal code.
 
 	GoogleEnvironmentTEST GoogleEnvironment = "TEST"
 	GoogleEnvironmentPROD GoogleEnvironment = "PRODUCTION"
