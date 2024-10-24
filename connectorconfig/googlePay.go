@@ -19,6 +19,7 @@ type GooglePayCredential interface {
 	GetGoogleCardAllowPrepaid() bool
 	GetGoogleCardAllowCredit() bool
 	GetGoogleCardBillingAddressReq() bool
+	GetGoogleCardBillingAddressFormat() GoogleCardBillingAddressFormat
 	GetGoogleCardBillingPhoneReq() bool
 	GetGoogleCardShippingAddressReq() bool
 	GetGoogleCardShippingPhoneReq() bool
@@ -62,7 +63,7 @@ type GooglePayCredentials struct {
 	// GoogleCardBillingPhoneReq (Card {parameters.billingAddressParameters.phoneNumberRequired) Set to true if a phone number is required to process the transaction.
 	GoogleCardBillingPhoneReq bool `json:"googleCardBillingPhoneReq,omitempty" yaml:"googleCardBillingPhoneReq,omitempty" validate:"-"`
 	// GoogleCardBillingAddressFormat (Card {parameters.billingAddressParameters.format) Billing address format required to complete the transaction.
-	GoogleCardBillingAddressFormat GoogleCardBillingAddressReq `json:"googleCardBillingAddressFormat,omitempty" yaml:"googleCardBillingAddressFormat,omitempty" validate:"required_with=GoogleMerchantId,omitempty,oneof=MIN FULL"`
+	GoogleCardBillingAddressFormat GoogleCardBillingAddressFormat `json:"googleCardBillingAddressFormat,omitempty" yaml:"googleCardBillingAddressFormat,omitempty" validate:"required_with=GoogleMerchantId,omitempty,oneof=MIN FULL"`
 	// GoogleCardTokenType (Card {tokenizationSpecification.type})
 	GoogleCardTokenType GoogleTokenType `json:"googleCardTokenType,omitempty" yaml:"googleCardTokenType,omitempty" validate:"required_with=GoogleMerchantId,omitempty,oneof=DIRECT PAYMENT_GATEWAY"`
 	// GoogleCardGateway (Card {tokenizationSpecification.parameters.gateway}) https://developers.google.com/pay/api/web/reference/request-objects#gateway
@@ -237,7 +238,7 @@ func (g *GooglePayCredentials) GetGoogleCardBillingAddressReq() bool {
 	}
 	return g.GoogleCardBillingAddressReq
 }
-func (g *GooglePayCredentials) GetGoogleCardBillingAddressFormat() GoogleCardBillingAddressReq {
+func (g *GooglePayCredentials) GetGoogleCardBillingAddressFormat() GoogleCardBillingAddressFormat {
 	if g == nil {
 		return ""
 	}
@@ -295,17 +296,17 @@ func (g *GooglePayCredentials) GetGoogleAcquirerCountry() string {
 }
 
 type (
-	GoogleEnvironment           string
-	GoogleCardGateway           string
-	GoogleCardAuthMethod        string
-	GoogleTokenType             string
-	GoogleCardNetwork           string
-	GoogleCardBillingAddressReq string
+	GoogleEnvironment              string
+	GoogleCardGateway              string
+	GoogleCardAuthMethod           string
+	GoogleTokenType                string
+	GoogleCardNetwork              string
+	GoogleCardBillingAddressFormat string
 )
 
 const (
-	GoogleCardBillingAddressReqMIN  GoogleCardBillingAddressReq = "MIN"  // Name, country code, and postal code (default).
-	GoogleCardBillingAddressReqFULL GoogleCardBillingAddressReq = "FULL" // Name, street address, locality, region, country code, and postal code.
+	GoogleCardBillingAddressReqMIN  GoogleCardBillingAddressFormat = "MIN"  // Name, country code, and postal code (default).
+	GoogleCardBillingAddressReqFULL GoogleCardBillingAddressFormat = "FULL" // Name, street address, locality, region, country code, and postal code.
 
 	GoogleEnvironmentTEST GoogleEnvironment = "TEST"
 	GoogleEnvironmentPROD GoogleEnvironment = "PRODUCTION"
