@@ -47,7 +47,7 @@ func TestValidation(t *testing.T) {
 	// _ = PrettyPrint(errs)
 	assert.Equal(t, 2, len(errs))
 	assert.Equal(t, errs["PayPalWebsitePaymentsProCredentials.SupportedCurrencies[0]"], "SupportedCurrencies[0] must be one of [AUD BRL CAD CZK DKK EUR HKD HUF INR ILS JPY MYR MXN TWD NZD NOK PHP PLN GBP RUB SGD SEK CHF THB USD]")
-	assert.Equal(t, errs["Definition.Selector.Expressions[0].Operator"], "Operator must be one of [Equal NotEqual In NotIn Exists DoesNotExists Gt Lt Like InLike]")
+	assert.Equal(t, errs["Definition.Selector.Expressions[0].Operator"], "Operator must be one of [Equal NotEqual In NotIn Exists DoesNotExists Gt Lt Like InLike NotLike NotInLike]")
 }
 
 func TestLowerCaseName(t *testing.T) {
