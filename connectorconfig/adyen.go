@@ -2,8 +2,6 @@ package connectorconfig
 
 import (
 	"encoding/json"
-	"strings"
-
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
@@ -67,18 +65,8 @@ func (c *AdyenCredentials) SupportsMethod(methodType chtype.PaymentMethodType, m
 	return true
 }
 
-var adyenAllowedCountires = []string{"AT", "AU", "BE", "CA", "CH", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GR", "IE", "IT", "LI", "LT", "LU", "LV", "MC", "MT", "NL", "NO", "PL", "PT", "SE", "SI", "SK", "US"}
-
 func (c *AdyenCredentials) SupportsCountry(country string) bool {
-	if country == "" {
-		return true
-	}
-	for _, v := range adyenAllowedCountires {
-		if strings.EqualFold(v, country) {
-			return true
-		}
-	}
-	return false
+	return true
 }
 
 func (c *AdyenCredentials) CanPlanModeUse(mode environment.Mode) bool {
