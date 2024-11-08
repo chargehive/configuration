@@ -32,5 +32,7 @@ type AttemptConfig struct {
 
 	PreferNetworkToken bool `json:"preferNetworkToken,omitempty" yaml:"preferNetworkToken,omitempty"`
 
+	ShouldTokenize bool `json:"shouldTokenize,omitempty" yaml:"shouldTokenize,omitempty"`
+
 	RecoveryAgentConnectorID string `json:"recoveryAgentConnectorID" yaml:"recoveryAgentConnectorID"`
 }
