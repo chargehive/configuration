@@ -2,6 +2,7 @@ package connectorconfig
 
 import (
 	"encoding/json"
+
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
@@ -15,13 +16,14 @@ const (
 )
 
 type AdyenCredentials struct {
-	Environment     AdyenEnvironment      `json:"environment" yaml:"environment" validate:"required,oneof=sandbox production"`
-	MerchantAccount string                `json:"merchantAccount" yaml:"merchantAccount" validate:"required"`
-	ApiKey          *string               `json:"apiKey" yaml:"apiKey" validate:"required"`
-	ApiPrefix       string                `json:"apiPrefix" yaml:"apiPrefix" validate:"required"`
-	HMACKey         *string               `json:"hmacKey" yaml:"hmacKey" validate:"required"`
-	GooglePay       *GooglePayCredentials `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
-	ApplePay        *ApplePayCredentials  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
+	Environment        AdyenEnvironment      `json:"environment" yaml:"environment" validate:"required,oneof=sandbox production"`
+	MerchantAccount    string                `json:"merchantAccount" yaml:"merchantAccount" validate:"required"`
+	MerchantDescriptor string                `json:"merchantDescriptor" yaml:"merchantDescriptor" validate:"-"`
+	ApiKey             *string               `json:"apiKey" yaml:"apiKey" validate:"required"`
+	ApiPrefix          string                `json:"apiPrefix" yaml:"apiPrefix" validate:"required"`
+	HMACKey            *string               `json:"hmacKey" yaml:"hmacKey" validate:"required"`
+	GooglePay          *GooglePayCredentials `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay           *ApplePayCredentials  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
 func (c *AdyenCredentials) GetMID() string {

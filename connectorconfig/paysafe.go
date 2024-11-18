@@ -28,6 +28,7 @@ const (
 type PaySafeCredentials struct {
 	Acquirer               string                `json:"acquirer" yaml:"acquirer" validate:"-"`
 	MerchantURL            string                `json:"merchantURL" yaml:"merchantURL" validate:"required"`
+	MerchantDescriptor     string                `json:"merchantDescriptor" yaml:"merchantDescriptor" validate:"-"`
 	AccountID              string                `json:"accountID" yaml:"accountID" validate:"required"`
 	APIUsername            *string               `json:"apiUsername" yaml:"apiUsername" validate:"required,gt=0"`
 	APIPassword            *string               `json:"apiPassword" yaml:"apiPassword" validate:"required,gt=0"`
