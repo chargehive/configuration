@@ -332,7 +332,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 		return connector.Connector{Library: string(connectorconfig.LibraryTokenExAccountUpdater), Configuration: j}, nil
 	case confConnTokenExApi:
 		j, _ := json.Marshal(connectorconfig.TokenExApiAccountUpdaterCredentials{
-			TokenexID:   chg,
+			TokenExID:   chg,
 			ApiKey:      &chg,
 			Environment: connectorconfig.TokenExEnvironmentSandbox,
 		})
