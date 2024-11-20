@@ -41,6 +41,7 @@ const (
 	confConnWorldPay      Template = "con_worldPay"
 	confConnYapstone      Template = "con_yapstone"
 	confConnTokenEx       Template = "con_tokenex"
+	confConnTokenExApi    Template = "con_tokenex_api"
 	confConnTokenExNT     Template = "con_tokenex_network_tokenization"
 	confConnFlexPay       Template = "con_flexpay"
 
@@ -329,6 +330,13 @@ func buildSpec(conf Template) (object.Specification, error) {
 			Region:                            connectorconfig.TokenExRegionUS,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryTokenExAccountUpdater), Configuration: j}, nil
+	case confConnTokenExApi:
+		j, _ := json.Marshal(connectorconfig.TokenExApiAccountUpdaterCredentials{
+			TokenexID:   chg,
+			ApiKey:      &chg,
+			Environment: connectorconfig.TokenExEnvironmentSandbox,
+		})
+		return connector.Connector{Library: string(connectorconfig.LibraryTokenExApiAccountUpdater), Configuration: j}, nil
 	case confConnTokenExNT:
 		j, _ := json.Marshal(connectorconfig.TokenExNetworkTokenizationCredentials{
 			Environment: connectorconfig.TokenExEnvironmentSandbox,
