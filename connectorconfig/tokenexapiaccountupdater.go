@@ -9,14 +9,14 @@ import (
 )
 
 type TokenExApiAccountUpdaterCredentials struct {
-	TokenexID string  `json:"tokenexID" yaml:"tokenexID" validate:"required,gt=0"`
+	TokenExID string  `json:"tokenExID" yaml:"tokenExID" validate:"required,gt=0"`
 	ApiKey    *string `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
 
 	Environment TokenExEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 }
 
 func (c *TokenExApiAccountUpdaterCredentials) GetMID() string {
-	return c.TokenexID
+	return c.TokenExID
 }
 
 func (c *TokenExApiAccountUpdaterCredentials) GetLibrary() Library {
