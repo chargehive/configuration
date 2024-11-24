@@ -9,8 +9,9 @@ import (
 )
 
 type StripeCredentials struct {
-	AccountID string  `json:"accountId" yaml:"accountId"`
-	APIKey    *string `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
+	AccountID          string  `json:"accountId" yaml:"accountId"`
+	MerchantDescriptor string  `json:"merchantDescriptor" yaml:"merchantDescriptor" validate:"-"`
+	APIKey             *string `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
 }
 
 func (c *StripeCredentials) GetMID() string {
