@@ -169,6 +169,6 @@ const (
 type ChargeType string
 
 const (
-	ChargeTypeDefault ChargeType = ""
-	ChargeTypeAdhoc              = "adhoc"
+	ChargeTypeDefault     ChargeType = ""
+	ChargeTypeUnscheduled            = "unscheduled"
 )
