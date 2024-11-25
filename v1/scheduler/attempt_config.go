@@ -35,4 +35,6 @@ type AttemptConfig struct {
 	ShouldTokenize bool `json:"shouldTokenize,omitempty" yaml:"shouldTokenize,omitempty"`
 
 	RecoveryAgentConnectorID string `json:"recoveryAgentConnectorID" yaml:"recoveryAgentConnectorID"`
+
+	ChargeType ChargeType `json:"chargeType" yaml:"chargeType" validate:"oneof='' unscheduled"`
 }

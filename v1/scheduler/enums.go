@@ -165,3 +165,10 @@ const (
 	// ConnectorRetryTypePanToToken Use the Pan first, cascade to Token if available
 	ConnectorRetryTypePanToToken ConnectorRetryType = "pan-token"
 )
+
+type ChargeType string
+
+const (
+	ChargeTypeDefault     ChargeType = ""
+	ChargeTypeUnscheduled            = "unscheduled"
+)
