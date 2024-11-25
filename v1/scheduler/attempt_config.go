@@ -36,5 +36,5 @@ type AttemptConfig struct {
 
 	RecoveryAgentConnectorID string `json:"recoveryAgentConnectorID" yaml:"recoveryAgentConnectorID"`
 
-	ChargeType ChargeType `json:"chargeType" yaml:"chargeType" validate:"oneof='' adhoc"`
+	ChargeType ChargeType `json:"chargeType" yaml:"chargeType" validate:"oneof='' unscheduled"`
 }
