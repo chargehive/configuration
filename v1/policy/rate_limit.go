@@ -13,7 +13,7 @@ const KindPolicyRateLimit object.Kind = "RateLimitPolicy"
 type RateLimitKey string
 
 type RateLimitIPOptions struct {
-	MaskBits int32 `json:"maskBits" yaml:"maskBits" validate:"required,min=0"`
+	MaskBits int32 `json:"maskBits" yaml:"maskBits" validate:"required,oneof=16 24 32"`
 }
 
 const (
