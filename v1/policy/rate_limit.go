@@ -1,6 +1,9 @@
 package policy
 
 import (
+	"encoding/json"
+	"errors"
+
 	"github.com/chargehive/configuration/object"
 )
 
@@ -31,3 +34,22 @@ type RateLimitPolicy struct {
 func (r RateLimitPolicy) GetKind() object.Kind { return KindPolicyRateLimit }
 
 func (r RateLimitPolicy) GetVersion() string { return "v1" }
+
+type RateLimitDefinition struct{ def *object.Definition }
+
+// NewRateLimitDefinition creates a new RateLimitDefinition
+func NewRateLimitDefinition(d *object.Definition) (*RateLimitDefinition, error) {
+	if _, ok := d.Spec.(*RateLimitPolicy); ok {
+		return &RateLimitDefinition{def: d}, nil
+	}
+	return nil, errors.New("invalid Rate Limit Policy object")
+}
+
+// Definition returns the RateLimitDefinition structure
+func (d *RateLimitDefinition) Definition() *object.Definition { return d.def }
+
+// MarshalJSON returns the JSON value for the RateLimitDefinition
+func (d *RateLimitDefinition) MarshalJSON() ([]byte, error) { return json.Marshal(d.def) }
+
+// Spec returns the RateLimitPolicy contained within the RateLimitDefinition
+func (d *RateLimitDefinition) Spec() *RateLimitPolicy { return d.def.Spec.(*RateLimitPolicy) }
