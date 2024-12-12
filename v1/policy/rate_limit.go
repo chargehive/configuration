@@ -12,19 +12,29 @@ const KindPolicyRateLimit object.Kind = "RateLimitPolicy"
 
 type RateLimitKey string
 
+type RateLimitIPOptions struct {
+	MaskBits int32 `json:"maskBits" yaml:"maskBits" validate:"required,oneof=16 24 32"`
+}
+
 const (
-	RateLimitKeyChargePlacementID RateLimitKey = "PlacementID"
-	RateLimitKeyMerchantReference RateLimitKey = "MerchantReference"
-	RateLimitKeyCorrelationID     RateLimitKey = "CorrelationID"
-	RateLimitKeyBillingProfileID  RateLimitKey = "BillingProfileID"
-	RateLimitKeyIP                RateLimitKey = "IP"
-	RateLimitKeyUserAgent         RateLimitKey = "UserAgent"
-	RateLimitKeyPlatform          RateLimitKey = "Platform"
+	RateLimitKeyChargePlacementID    RateLimitKey = "PlacementID"
+	RateLimitKeyMerchantReference    RateLimitKey = "MerchantReference"
+	RateLimitKeyCorrelationID        RateLimitKey = "CorrelationID"
+	RateLimitKeyBillingProfileID     RateLimitKey = "BillingProfileID"
+	RateLimitKeyIP                   RateLimitKey = "IP"
+	RateLimitKeyCurrency             RateLimitKey = "Currency"
+	RateLimitKeyUserAgent            RateLimitKey = "UserAgent"
+	RateLimitKeyDeviceType           RateLimitKey = "DeviceType"
+	RateLimitKeyDeviceBrowser        RateLimitKey = "DeviceBrowser"
+	RateLimitKeyDeviceBrowserVersion RateLimitKey = "DeviceBrowserVersion"
+	RateLimitKeyDeviceFingerprint    RateLimitKey = "DeviceFingerprint"
 )
 
 type RateLimitPolicy struct {
 	// LimitProperty is the property to limit the rate by, global if empty
-	LimitProperty RateLimitKey `json:"limitProperty" yaml:"limitProperty" validate:"oneof=PlacementID MerchantReference CorrelationID BillingProfileID IP UserAgent Platform"`
+	LimitProperty RateLimitKey `json:"limitProperty" yaml:"limitProperty" validate:"oneof=PlacementID MerchantReference CorrelationID BillingProfileID IP Currency UserAgent DeviceType DeviceBrowser DeviceBrowserVersion DeviceFingerprint"`
+	// IPOptions allows for additional rate limiting options for IP based rate limits
+	IPOptions *RateLimitIPOptions `json:"ipOptions" yaml:"ipOptions" validate:"required_if=LimitProperty IP"`
 	// HardLimit is the maximum number of requests allowed in the window
 	HardLimit int32 `json:"hardLimit" yaml:"hardLimit" validate:"required,min=1"`
 	// Window is the time window in minutes that the limit is applied to
