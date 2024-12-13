@@ -32,7 +32,7 @@ const (
 
 type RateLimitPolicy struct {
 	// LimitProperty is the property to limit the rate by, global if empty
-	LimitProperty RateLimitKey `json:"limitProperty" yaml:"limitProperty" validate:"optional,oneof=PlacementID MerchantReference CorrelationID BillingProfileID IP Currency UserAgent DeviceType DeviceBrowser DeviceBrowserVersion DeviceFingerprint"`
+	LimitProperty RateLimitKey `json:"limitProperty" yaml:"limitProperty" validate:"omitempty,oneof=PlacementID MerchantReference CorrelationID BillingProfileID IP Currency UserAgent DeviceType DeviceBrowser DeviceBrowserVersion DeviceFingerprint"`
 	// IPOptions allows for additional rate limiting options for IP based rate limits
 	IPOptions *RateLimitIPOptions `json:"ipOptions" yaml:"ipOptions" validate:"required_if=LimitProperty IP"`
 	// HardLimit is the maximum number of requests allowed in the window
