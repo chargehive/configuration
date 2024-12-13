@@ -49,10 +49,12 @@ const (
 	LibraryMaxMind     Library = "maxmind"
 	LibraryCyberSource Library = "cybersource"
 	LibraryKount       Library = "kount"
+	LibraryRecaptcha   Library = "recaptcha"
 
 	// Updater Libraries
-	LibraryPaySafeAccountUpdater Library = "paysafe-accountupdater"
-	LibraryTokenExAccountUpdater Library = "tokenex-accountupdater"
+	LibraryPaySafeAccountUpdater    Library = "paysafe-accountupdater"
+	LibraryTokenExAccountUpdater    Library = "tokenex-accountupdater"
+	LibraryTokenExApiAccountUpdater Library = "tokenex-api-accountupdater"
 
 	// Scheduler Libraries
 	LibraryStickyIO Library = "sticky-io"
@@ -265,6 +267,13 @@ var LibraryRegister = map[Library]LibraryDef{
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
+	LibraryRecaptcha: {
+		DisplayName: "Recaptcha",
+		Credentials: func() Credentials { return &RecaptchaCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return true
+		},
+	},
 	LibraryClearhaus: {
 		DisplayName: "Clearhaus",
 		Credentials: func() Credentials { return &ClearhausCredentials{} },
@@ -333,6 +342,13 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibraryTokenExAccountUpdater: {
 		DisplayName: "TokenEx Account Updater",
 		Credentials: func() Credentials { return &TokenExAccountUpdaterCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+	LibraryTokenExApiAccountUpdater: {
+		DisplayName: "TokenEx API Account Updater",
+		Credentials: func() Credentials { return &TokenExApiAccountUpdaterCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},

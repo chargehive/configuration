@@ -41,6 +41,7 @@ const (
 	confConnWorldPay      Template = "con_worldPay"
 	confConnYapstone      Template = "con_yapstone"
 	confConnTokenEx       Template = "con_tokenex"
+	confConnTokenExApi    Template = "con_tokenex_api"
 	confConnTokenExNT     Template = "con_tokenex_network_tokenization"
 	confConnFlexPay       Template = "con_flexpay"
 
@@ -53,6 +54,7 @@ const (
 	// policy
 	confPolCascade       Template = "pol_cascade"
 	confPolChargeExpiry  Template = "pol_chargeExpiry"
+	confPolCharge        Template = "pol_charge"
 	confPolFraud         Template = "pol_fraud"
 	confPolMethodLock    Template = "pol_methodLock"
 	confPolMethodUpgrade Template = "pol_methodUpgrade"
@@ -92,6 +94,7 @@ var Templates = map[Template]string{
 	confConnFlexPay:       "Connector: FlexPay",
 	confIntSlack:          "Integration: Slack",
 	confPolCascade:        "Policy: Cascade",
+	confPolCharge:         "Policy: Charge",
 	confPolChargeExpiry:   "Policy: Charge Expiry",
 	confPolFraud:          "Policy: Fraud",
 	confPolMethodLock:     "Policy: Method Lock",
@@ -236,25 +239,24 @@ func buildSpec(conf Template) (object.Specification, error) {
 			},
 			GooglePayPageId: chg,
 			GooglePay: &connectorconfig.GooglePayCredentials{
-				GoogleEnvironment:               connectorconfig.GoogleEnvironmentTEST,
-				GoogleMerchantId:                chg,
-				GoogleMerchantName:              chg,
-				GoogleExistingMethodRequired:    false,
-				GoogleEmailReq:                  false,
-				GoogleAcceptCard:                true,
-				GoogleCardAuthMethods:           []connectorconfig.GoogleCardAuthMethod{connectorconfig.GoogleCardAuthMethodPAN, connectorconfig.GoogleCardAuthMethod3DS},
-				GoogleCardNetworks:              []connectorconfig.GoogleCardNetwork{connectorconfig.GoogleCardNetworkAMEX, connectorconfig.GoogleCardNetworkDISCOVER, connectorconfig.GoogleCardNetworkMASTERCARD, connectorconfig.GoogleCardNetworkVISA},
-				GoogleCardAllowPrepaid:          true,
-				GoogleCardAllowCredit:           true,
-				GoogleCardBillingAddressReq:     false,
-				GoogleCardBillingAddressFormat:  connectorconfig.GoogleCardBillingAddressReqMIN,
-				GoogleCardBillingPhoneReq:       false,
-				GoogleCardShippingAddressReq:    false,
-				GoogleCardShippingAddressFormat: connectorconfig.GoogleCardBillingAddressReqMIN,
-				GoogleCardShippingPhoneReq:      false,
-				GoogleCardTokenType:             connectorconfig.GoogleCardTokenTypeGATEWAY,
-				GoogleCardGateway:               string(connectorconfig.GoogleCardGatewayVANTIV),
-				GoogleCardMerchantId:            chg,
+				GoogleEnvironment:              connectorconfig.GoogleEnvironmentTEST,
+				GoogleMerchantId:               chg,
+				GoogleMerchantName:             chg,
+				GoogleExistingMethodRequired:   false,
+				GoogleEmailReq:                 false,
+				GoogleAcceptCard:               true,
+				GoogleCardAuthMethods:          []connectorconfig.GoogleCardAuthMethod{connectorconfig.GoogleCardAuthMethodPAN, connectorconfig.GoogleCardAuthMethod3DS},
+				GoogleCardNetworks:             []connectorconfig.GoogleCardNetwork{connectorconfig.GoogleCardNetworkAMEX, connectorconfig.GoogleCardNetworkDISCOVER, connectorconfig.GoogleCardNetworkMASTERCARD, connectorconfig.GoogleCardNetworkVISA},
+				GoogleCardAllowPrepaid:         true,
+				GoogleCardAllowCredit:          true,
+				GoogleCardBillingAddressReq:    false,
+				GoogleCardBillingAddressFormat: connectorconfig.GoogleCardBillingAddressReqMIN,
+				GoogleCardBillingPhoneReq:      false,
+				GoogleCardShippingAddressReq:   false,
+				GoogleCardShippingPhoneReq:     false,
+				GoogleCardTokenType:            connectorconfig.GoogleCardTokenTypeGATEWAY,
+				GoogleCardGateway:              string(connectorconfig.GoogleCardGatewayVANTIV),
+				GoogleCardMerchantId:           chg,
 			},
 		})
 
@@ -328,6 +330,13 @@ func buildSpec(conf Template) (object.Specification, error) {
 			Region:                            connectorconfig.TokenExRegionUS,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryTokenExAccountUpdater), Configuration: j}, nil
+	case confConnTokenExApi:
+		j, _ := json.Marshal(connectorconfig.TokenExApiAccountUpdaterCredentials{
+			TokenExID:   chg,
+			ApiKey:      &chg,
+			Environment: connectorconfig.TokenExEnvironmentSandbox,
+		})
+		return connector.Connector{Library: string(connectorconfig.LibraryTokenExApiAccountUpdater), Configuration: j}, nil
 	case confConnTokenExNT:
 		j, _ := json.Marshal(connectorconfig.TokenExNetworkTokenizationCredentials{
 			Environment: connectorconfig.TokenExEnvironmentSandbox,
@@ -350,6 +359,8 @@ func buildSpec(conf Template) (object.Specification, error) {
 		return policy.CascadePolicy{Rules: []policy.CascadeRule{{Library: connectorconfig.Library(chg), OriginalResponseCode: chg}}}, nil
 	case confPolChargeExpiry:
 		return policy.ChargeExpiryPolicy{}, nil
+	case confPolCharge:
+		return policy.ChargePolicy{}, nil
 	case confPolFraud:
 		return policy.FraudPolicy{ConnectorIDs: []string{chg}, CheckTime: "preauth-first", CheckType: "all"}, nil
 	case confPolMethodLock:

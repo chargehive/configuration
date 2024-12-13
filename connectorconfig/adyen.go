@@ -2,7 +2,6 @@ package connectorconfig
 
 import (
 	"encoding/json"
-	"strings"
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
@@ -17,13 +16,14 @@ const (
 )
 
 type AdyenCredentials struct {
-	Environment     AdyenEnvironment      `json:"environment" yaml:"environment" validate:"required,oneof=sandbox production"`
-	MerchantAccount string                `json:"merchantAccount" yaml:"merchantAccount" validate:"required"`
-	ApiKey          *string               `json:"apiKey" yaml:"apiKey" validate:"required"`
-	ApiPrefix       string                `json:"apiPrefix" yaml:"apiPrefix" validate:"required"`
-	HMACKey         *string               `json:"hmacKey" yaml:"hmacKey" validate:"required"`
-	GooglePay       *GooglePayCredentials `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
-	ApplePay        *ApplePayCredentials  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
+	Environment        AdyenEnvironment      `json:"environment" yaml:"environment" validate:"required,oneof=sandbox production"`
+	MerchantAccount    string                `json:"merchantAccount" yaml:"merchantAccount" validate:"required"`
+	MerchantDescriptor string                `json:"merchantDescriptor" yaml:"merchantDescriptor" validate:"-"`
+	ApiKey             *string               `json:"apiKey" yaml:"apiKey" validate:"required"`
+	ApiPrefix          string                `json:"apiPrefix" yaml:"apiPrefix" validate:"required"`
+	HMACKey            *string               `json:"hmacKey" yaml:"hmacKey" validate:"required"`
+	GooglePay          *GooglePayCredentials `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay           *ApplePayCredentials  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
 func (c *AdyenCredentials) GetMID() string {
@@ -67,18 +67,8 @@ func (c *AdyenCredentials) SupportsMethod(methodType chtype.PaymentMethodType, m
 	return true
 }
 
-var adyenAllowedCountires = []string{"AT", "AU", "BE", "CA", "CH", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GR", "IE", "IT", "LI", "LT", "LU", "LV", "MC", "MT", "NL", "NO", "PL", "PT", "SE", "SI", "SK", "US"}
-
 func (c *AdyenCredentials) SupportsCountry(country string) bool {
-	if country == "" {
-		return true
-	}
-	for _, v := range adyenAllowedCountires {
-		if strings.EqualFold(v, country) {
-			return true
-		}
-	}
-	return false
+	return true
 }
 
 func (c *AdyenCredentials) CanPlanModeUse(mode environment.Mode) bool {

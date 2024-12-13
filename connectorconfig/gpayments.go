@@ -33,7 +33,7 @@ func (c *GPaymentsCredentials) GetLibrary() Library {
 }
 
 func (c *GPaymentsCredentials) GetSupportedTypes() []LibraryType {
-	return []LibraryType{LibraryTypePayment}
+	return []LibraryType{LibraryTypeAuthentication}
 }
 
 func (c *GPaymentsCredentials) Validate() error {

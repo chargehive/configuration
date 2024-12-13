@@ -79,7 +79,7 @@ func NewFraudDefinition(d *object.Definition) (*FraudDefinition, error) {
 // FraudDefinition is the Fraud config object definition
 type FraudDefinition struct{ def *object.Definition }
 
-// Definition returns the ChargeExpiryDefinition structure
+// Definition returns the FraudDefinition structure
 func (d *FraudDefinition) Definition() *object.Definition { return d.def }
 
 // MarshalJSON returns the JSON value for the FraudDefinition
