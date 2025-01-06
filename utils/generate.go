@@ -334,6 +334,8 @@ func buildSpec(conf Template) (object.Specification, error) {
 		j, _ := json.Marshal(connectorconfig.TokenExApiAccountUpdaterCredentials{
 			TokenExID:   chg,
 			ApiKey:      &chg,
+			MerchantID:  chg,
+			Region:      connectorconfig.TokenExRegionUS,
 			Environment: connectorconfig.TokenExEnvironmentSandbox,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryTokenExApiAccountUpdater), Configuration: j}, nil

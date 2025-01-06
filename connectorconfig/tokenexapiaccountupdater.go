@@ -9,8 +9,10 @@ import (
 )
 
 type TokenExApiAccountUpdaterCredentials struct {
-	TokenExID string  `json:"tokenExID" yaml:"tokenExID" validate:"required,gt=0"`
-	ApiKey    *string `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
+	TokenExID  string        `json:"tokenExID" yaml:"tokenExID" validate:"required,gt=0"`
+	ApiKey     *string       `json:"apiKey" yaml:"apiKey" validate:"required,gt=0"`
+	MerchantID string        `json:"merchantID" yaml:"merchantID" validate:"required,gt=0"`
+	Region     TokenExRegion `json:"region" yaml:"region" validate:"required,oneof=us eu"`
 
 	Environment TokenExEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 }
