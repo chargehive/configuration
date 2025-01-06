@@ -335,7 +335,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 			TokenExID:   chg,
 			ApiKey:      &chg,
 			MerchantID:  chg,
-			Region:      connectorconfig.TokenExRegionUS,
+			Region:      connectorconfig.TokenExRegionEU,
 			Environment: connectorconfig.TokenExEnvironmentSandbox,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryTokenExApiAccountUpdater), Configuration: j}, nil
