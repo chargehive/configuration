@@ -22,6 +22,7 @@ type AdyenCredentials struct {
 	ApiKey             *string               `json:"apiKey" yaml:"apiKey" validate:"required"`
 	ApiPrefix          string                `json:"apiPrefix" yaml:"apiPrefix" validate:"required"`
 	HMACKey            *string               `json:"hmacKey" yaml:"hmacKey" validate:"required"`
+	InlineUpdateKey    *string               `json:"inlineUpdateKey" yaml:"inlineUpdateKey" validate:"required"`
 	GooglePay          *GooglePayCredentials `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
 	ApplePay           *ApplePayCredentials  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
@@ -39,7 +40,7 @@ func (c *AdyenCredentials) GetSupportedTypes() []LibraryType {
 }
 
 func (c *AdyenCredentials) GetSecureFields() []*string {
-	return []*string{c.ApiKey}
+	return []*string{c.ApiKey, c.InlineUpdateKey}
 }
 
 func (c *AdyenCredentials) Validate() error {
