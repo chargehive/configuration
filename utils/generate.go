@@ -151,6 +151,7 @@ func buildSpec(conf Template) (object.Specification, error) {
 			ApiKey:          &chg,
 			ApiPrefix:       chg,
 			HMACKey:         &chg,
+			InlineUpdateKey: &chg,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryAdyen), Configuration: j}, nil
 	case confConnAuthorize:
