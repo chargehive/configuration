@@ -44,6 +44,7 @@ const (
 	confConnTokenExApi    Template = "con_tokenex_api"
 	confConnTokenExNT     Template = "con_tokenex_network_tokenization"
 	confConnFlexPay       Template = "con_flexpay"
+	confConnEpx           Template = "con_epx"
 
 	// connector Pool
 	confConnectorPool Template = "con_pool"
@@ -352,6 +353,17 @@ func buildSpec(conf Template) (object.Specification, error) {
 		j, _ := json.Marshal(connectorconfig.FlexPayCredentials{
 			Environment: connectorconfig.FlexPayEnvironmentSandbox,
 			ApiKey:      &chg,
+		})
+		return connector.Connector{Library: string(connectorconfig.LibraryFlexPay), Configuration: j}, nil
+	case confConnEpx:
+		j, _ := json.Marshal(connectorconfig.EpxCredentials{
+			MerchNbr:                &chg,
+			CustNbr:                 &chg,
+			DbaNbr:                  chg,
+			TerminalNbr:             &chg,
+			MerchantDescriptor:      chg,
+			MerchantDescriptorPhone: chg,
+			Environment:             connectorconfig.EpxEnvironmentSandbox,
 		})
 		return connector.Connector{Library: string(connectorconfig.LibraryFlexPay), Configuration: j}, nil
 	case confConnectorPool:
