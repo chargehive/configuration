@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/chargehive/configuration"
+	"github.com/chargehive/configuration/selector"
 	"github.com/go-playground/assert/v2"
 )
 
@@ -78,6 +79,56 @@ func TestEmptyFields(t *testing.T) {
 	rawJson = []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"change-me","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"paysafe","configuration":"eyJtZXJjaGFudFVybCI6ImNoYW5nZS1tZSIsImFjcXVpcmVyIjoiY2hhbmdlLW1lIiwiYWNjb3VudElEIjoiY2hhbmdlLW1lIiwiYXBpVXNlcm5hbWUiOiJjaGFuZ2UtbWUiLCJhcGlQYXNzd29yZCI6ImNoYW5nZS1tZSIsImVudmlyb25tZW50IjoiTU9DSyIsImNvdW50cnkiOiIiLCJjdXJyZW5jeSI6IlVTRCIsInVzZVZhdWx0IjpmYWxzZSwic2luZ2xlVXNlVG9rZW5QYXNzd29yZCI6IiJ9"}}`)
 	errs = Validate(rawJson, "v1")
 	assert.Equal(t, 0, len(errs))
+}
+
+// Test for invalid predicates
+func TestInvalidPredicates(t *testing.T) {
+
+	var tests = []struct {
+		operator selector.PredicateOperator
+		values   []string
+		valid    bool
+	}{
+		{selector.PredicateOperatorEqual, []string{}, false},
+		{selector.PredicateOperatorEqual, []string{"one"}, true},
+		{selector.PredicateOperatorEqual, []string{"one", "two"}, false},
+
+		{selector.PredicateOperatorNotEqual, []string{}, false},
+		{selector.PredicateOperatorNotEqual, []string{"one"}, true},
+		{selector.PredicateOperatorNotEqual, []string{"one", "two"}, false},
+
+		{selector.PredicateOperatorIn, []string{}, false},
+		{selector.PredicateOperatorIn, []string{"one"}, false},
+		{selector.PredicateOperatorIn, []string{"one", "two"}, true},
+
+		{selector.PredicateOperatorNotIn, []string{}, false},
+		{selector.PredicateOperatorNotIn, []string{"one"}, false},
+		{selector.PredicateOperatorNotIn, []string{"one", "two"}, true},
+
+		{selector.PredicateOperatorInLike, []string{}, false},
+		{selector.PredicateOperatorInLike, []string{"one"}, false},
+		{selector.PredicateOperatorInLike, []string{"one", "two"}, true},
+
+		{selector.PredicateOperatorNotInLike, []string{}, false},
+		{selector.PredicateOperatorNotInLike, []string{"one"}, false},
+		{selector.PredicateOperatorNotInLike, []string{"one", "two"}, true},
+	}
+
+	configuration.Initialise()
+
+	for _, v := range tests {
+
+		values, _ := json.Marshal(v.values)
+		rawJson := []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"change-me","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.label.unsubscribed","operator":"` + string(v.operator) + `","values":` + string(values) + `}]},"spec":{"library":"paysafe","configuration":"eyJtZXJjaGFudFVybCI6ImNoYW5nZS1tZSIsImFjcXVpcmVyIjoiY2hhbmdlLW1lIiwiYWNjb3VudElEIjoiY2hhbmdlLW1lIiwiYXBpVXNlcm5hbWUiOiJjaGFuZ2UtbWUiLCJhcGlQYXNzd29yZCI6ImNoYW5nZS1tZSIsImVudmlyb25tZW50IjoiTU9DSyIsImNvdW50cnkiOiIiLCJjdXJyZW5jeSI6IlVTRCIsInVzZVZhdWx0IjpmYWxzZSwic2luZ2xlVXNlVG9rZW5QYXNzd29yZCI6IiIsInNpbmdsZVVzZVRva2VuVXNlcm5hbWUiOiIifQ=="}}`)
+
+		errs := Validate(rawJson, "v1")
+		if v.valid {
+			assert.Equal(t, 0, len(errs))
+		} else {
+			fmt.Println(errs)
+			assert.Equal(t, 1, len(errs))
+		}
+	}
 }
 
 func PrettyPrint(v interface{}) (err error) {
