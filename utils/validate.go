@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"bytes"
+	"fmt"
 	"strings"
 
 	"github.com/chargehive/configuration/connectorconfig"
@@ -29,6 +31,12 @@ func Validate(rawJson []byte, version string) map[string]string {
 	o, err := object.FromJsonStrict(rawJson)
 	if err != nil {
 		result["json"] = err.Error()
+		return result
+	}
+
+	errs := validatePredicates(o.Selector.Expressions)
+	if errs != "" {
+		result["validation expressions"] = errs
 		return result
 	}
 
@@ -98,4 +106,25 @@ func PredicateKeysValidator(fl validator.FieldLevel) bool {
 func ConnectorLibraryValidator(fl validator.FieldLevel) bool {
 	_, ok := connectorconfig.LibraryRegister[connectorconfig.Library(fl.Field().String())]
 	return ok
+}
+
+func validatePredicates(predicates []selector.Predicate) string {
+
+	buff := bytes.NewBufferString("")
+
+	for _, predicate := range predicates {
+
+		switch predicate.Operator {
+		case selector.PredicateOperatorEqual, selector.PredicateOperatorNotEqual:
+			if len(predicate.Values) != 1 {
+				buff.WriteString(fmt.Sprintf("An %s operator must have exactly one value\n", predicate.Operator))
+			}
+		case selector.PredicateOperatorIn, selector.PredicateOperatorNotIn, selector.PredicateOperatorInLike, selector.PredicateOperatorNotInLike:
+			if len(predicate.Values) <= 1 {
+				buff.WriteString(fmt.Sprintf("An %s operator must have at least two values\n", predicate.Operator))
+			}
+		}
+	}
+
+	return strings.TrimSpace(buff.String())
 }
