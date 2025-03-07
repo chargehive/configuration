@@ -24,6 +24,15 @@ const (
 	SCABypassModeCurrent SCABypassMode = "current"
 )
 
+type ChallengePreference string
+
+const (
+	ChallengePreferenceNone        ChallengePreference = "no-preference"
+	ChallengePreferenceNoChallenge ChallengePreference = "no-challenge"
+	ChallengePreferenceRequested   ChallengePreference = "request"
+	ChallengePreferenceMandated    ChallengePreference = "mandate"
+)
+
 // ScaPolicy options determine how to handle 3DS on connector requests
 type ScaPolicy struct {
 	// RequireSca indicates if a transaction will require SCA facilities. This is used to filter out connectors which cannot complete SCA
@@ -44,6 +53,8 @@ type ScaPolicy struct {
 
 	// ShouldAuthOnError if true and an error response is returned from the connector; proceed to auth anyway
 	ShouldAuthOnError *bool `json:"shouldAuthOnError" yaml:"shouldAuthOnError" validate:"required"`
+
+	ChallengePreference ChallengePreference `json:"challengePreference" yaml:"challengePreference" validate:"omitempty,oneof=no-preference no-challenge requested mandated"`
 }
 
 func (s ScaPolicy) GetScaRequired() bool {
