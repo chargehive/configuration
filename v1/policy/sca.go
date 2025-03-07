@@ -54,7 +54,7 @@ type ScaPolicy struct {
 	// ShouldAuthOnError if true and an error response is returned from the connector; proceed to auth anyway
 	ShouldAuthOnError *bool `json:"shouldAuthOnError" yaml:"shouldAuthOnError" validate:"required"`
 
-	ChallengePreference ChallengePreference `json:"challengePreference" yaml:"challengePreference" validate:"omitempty,oneof=no-preference no-challenge requested mandated"`
+	ChallengePreference ChallengePreference `json:"challengePreference" yaml:"challengePreference" validate:"omitempty,oneof=no-preference no-challenge request mandate"`
 }
 
 func (s ScaPolicy) GetScaRequired() bool {
