@@ -29,8 +29,8 @@ type ChallengePreference string
 const (
 	ChallengePreferenceNone        ChallengePreference = "no-preference"
 	ChallengePreferenceNoChallenge ChallengePreference = "no-challenge"
-	ChallengePreferenceRequested   ChallengePreference = "request"
-	ChallengePreferenceMandated    ChallengePreference = "mandate"
+	ChallengePreferenceRequest     ChallengePreference = "request"
+	ChallengePreferenceMandate     ChallengePreference = "mandate"
 )
 
 // ScaPolicy options determine how to handle 3DS on connector requests
