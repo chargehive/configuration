@@ -8,39 +8,15 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
-type AuthorizeEnvironment string
-
-const (
-	AuthorizeEnvironmentSandbox    AuthorizeEnvironment = "sandbox"
-	AuthorizeEnvironmentProduction AuthorizeEnvironment = "production"
-)
-
 type AuthorizeCredentials struct {
-	APILoginID     *string              `json:"apiLoginId" yaml:"apiLoginId" validate:"required,gt=0"`
-	TransactionKey *string              `json:"transactionKey" yaml:"transactionKey" validate:"required,gt=0"`
-	Environment    AuthorizeEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 }
 
 func (c *AuthorizeCredentials) GetMID() string {
-	return c.GetAPILoginID()
-}
-
-func (c *AuthorizeCredentials) GetAPILoginID() string {
-	if c.APILoginID == nil {
-		return ""
-	}
-	return *c.APILoginID
-}
-
-func (c *AuthorizeCredentials) GetTransactionKey() string {
-	if c.TransactionKey == nil {
-		return ""
-	}
-	return *c.TransactionKey
+	return ""
 }
 
 func (c *AuthorizeCredentials) GetLibrary() Library {
-	return LibraryAuthorize
+	return LibraryAuthorizeNet
 }
 func (c *AuthorizeCredentials) GetSupportedTypes() []LibraryType {
 	return []LibraryType{LibraryTypePayment}
@@ -51,7 +27,7 @@ func (c *AuthorizeCredentials) Validate() error {
 }
 
 func (c *AuthorizeCredentials) GetSecureFields() []*string {
-	return []*string{c.APILoginID, c.TransactionKey}
+	return nil
 }
 
 func (c *AuthorizeCredentials) ToConnector() connector.Connector {
@@ -65,7 +41,7 @@ func (c *AuthorizeCredentials) FromJson(input []byte) error {
 }
 
 func (c *AuthorizeCredentials) SupportsSca() bool {
-	return c.GetAPILoginID() != "" && c.GetTransactionKey() != ""
+	return false
 }
 
 func (c *AuthorizeCredentials) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
@@ -80,9 +56,6 @@ func (c *AuthorizeCredentials) SupportsCountry(country string) bool {
 }
 
 func (c *AuthorizeCredentials) CanPlanModeUse(mode environment.Mode) bool {
-	if mode == environment.ModeSandbox && c.Environment == AuthorizeEnvironmentProduction {
-		return false
-	}
 	return true
 }
 

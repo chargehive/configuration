@@ -21,7 +21,7 @@ const (
 	LibraryAdyen                    Library = "adyen"
 	LibraryApplePay                 Library = "applepay"
 	LibraryGooglePay                Library = "googlepay"
-	LibraryAuthorize                Library = "authorize"
+	LibraryAuthorizeNet             Library = "authorizenet"
 	LibraryBraintree                Library = "braintree"
 	LibraryBlueSnap                 Library = "bluesnap"
 	LibraryQualPay                  Library = "qualpay"
@@ -98,7 +98,7 @@ func (l Library) GetCredential() (Credentials, error) {
 	if ok {
 		return lib.Credentials(), nil
 	}
-	return nil, errors.New("invalid library specified")
+	return nil, errors.New("invalid library specified - " + string(l))
 }
 
 func (l Library) SupportsMethod(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
@@ -147,7 +147,7 @@ var LibraryRegister = map[Library]LibraryDef{
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
-	LibraryAuthorize: {
+	LibraryAuthorizeNet: {
 		DisplayName: "Authorize",
 		Credentials: func() Credentials { return &AuthorizeCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
