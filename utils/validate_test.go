@@ -52,7 +52,7 @@ func TestValidation(t *testing.T) {
 }
 
 func TestLowerCaseName(t *testing.T) {
-	rawJson := []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"UPPERCASE","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"authorize","configuration":"eyJhcGlMb2dpbklkIjoiQ0hBTkdFLU1FIiwidHJhbnNhY3Rpb25LZXkiOiJDSEFOR0UtTUUiLCJlbnZpcm9ubWVudCI6InNhbmRib3gifQ=="}}`)
+	rawJson := []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"UPPERCASE","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"authorizenet","configuration":"e30="}}`)
 	configuration.Initialise()
 	errs := Validate(rawJson, "v1")
 	// _ = PrettyPrint(errs)
