@@ -39,7 +39,7 @@ type AttemptConfig struct {
 	ChargeType ChargeType `json:"chargeType" yaml:"chargeType" validate:"oneof='' unscheduled"`
 
 	// AmountPercentage is the percentage of the full charge amount to attempt e.g. 20% of $100, would attempt $20
-	AmountPercentage int32 `json:"amountPercentage" yaml:"amountPercentage" validate:"min=0,max=100"`
+	AmountPercentage int32 `json:"amountPercentage" yaml:"amountPercentage" validate:"omitempty,min=0,max=100"`
 
 	// MaxAmount is the maximum amount that can be handled in a single attempt, in minor units
 	MaxAmount int64 `json:"maxAmount" yaml:"maxAmount" validate:"omitempty,min=0,max=100000"`
