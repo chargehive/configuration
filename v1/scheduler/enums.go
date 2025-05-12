@@ -172,3 +172,16 @@ const (
 	ChargeTypeDefault     ChargeType = ""
 	ChargeTypeUnscheduled            = "unscheduled"
 )
+
+type UnderPaymentHandler string
+
+const (
+	// UnderPaymentHandlerNone indicates no outstanding handler
+	UnderPaymentHandlerNone UnderPaymentHandler = ""
+	// UnderPaymentHandlerCredit indicates any outstanding amount should be credited
+	UnderPaymentHandlerCredit UnderPaymentHandler = "credit"
+	// UnderPaymentHandlerOutstanding maintains the outstanding amount, leaving for the next attempt
+	UnderPaymentHandlerOutstanding UnderPaymentHandler = "outstanding"
+	// UnderPaymentHandlerLock maintains the outstanding amount and locks the charge
+	UnderPaymentHandlerLock UnderPaymentHandler = "lock"
+)

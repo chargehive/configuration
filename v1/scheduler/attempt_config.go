@@ -37,4 +37,16 @@ type AttemptConfig struct {
 	RecoveryAgentConnectorID string `json:"recoveryAgentConnectorID" yaml:"recoveryAgentConnectorID"`
 
 	ChargeType ChargeType `json:"chargeType" yaml:"chargeType" validate:"oneof='' unscheduled"`
+
+	// AmountPercentage is the percentage of the full charge amount to attempt e.g. 20% of $100, would attempt $20
+	AmountPercentage int32 `json:"amountPercentage" yaml:"amountPercentage" validate:"omitempty,min=0,max=100"`
+
+	// MaxAmount is the maximum amount that can be handled in a single attempt, in minor units
+	MaxAmount int64 `json:"maxAmount" yaml:"maxAmount" validate:"omitempty,min=0,max=100000"`
+
+	// HandleUnderPayment indicates how to handle under payments
+	HandleUnderPayment UnderPaymentHandler `json:"handleUnderPayment" yaml:"handleUnderPayment" validate:"omitempty,oneof=credit outstanding lock"`
+
+	// UnderPaymentLockSeconds is the amount of seconds to lock the charge for if a lock underpayment handler is used
+	UnderPaymentLockSeconds int64 `json:"underPaymentLockSeconds" yaml:"underPaymentLockSeconds" validate:"omitempty,min=0,max=100"`
 }
