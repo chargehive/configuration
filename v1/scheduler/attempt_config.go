@@ -30,7 +30,11 @@ type AttemptConfig struct {
 
 	Prefer3RI bool `json:"prefer3RI,omitempty" yaml:"prefer3RI,omitempty"`
 
+	// PreferNetworkToken indicates if the network token should be used instead of the PAN
+	// Deprecated - use TokenPreference
 	PreferNetworkToken bool `json:"preferNetworkToken,omitempty" yaml:"preferNetworkToken,omitempty"`
+
+	TokenPreference []string `json:"tokenPreference,omitempty" yaml:"tokenPreference,omitempty" validate:"dive,lowercase,oneof=pan connector network-token google-pay apple-pay samsung-pay amazon-pay revolut-pay wechat-pay alipay paypal text-to-pay bacs sepa ach bank-transfer bancontact eps ideal przelewy-24 twint sofort multibanco klarna after-pay coinbase google-play apple-store"`
 
 	ShouldTokenize bool `json:"shouldTokenize,omitempty" yaml:"shouldTokenize,omitempty"`
 

@@ -185,3 +185,36 @@ const (
 	// UnderPaymentHandlerLock maintains the outstanding amount and locks the charge
 	UnderPaymentHandlerLock UnderPaymentHandler = "lock"
 )
+
+type TokenSource string
+
+const (
+	TokenSourcePan          TokenSource = "pan"
+	TokenSourceConnector    TokenSource = "connector"
+	TokenSourceNetworkToken TokenSource = "network-token"
+	TokenSourceGooglePay    TokenSource = "google-pay"
+	TokenSourceApplePay     TokenSource = "apple-pay"
+	TokenSourceSamsungPay   TokenSource = "samsung-pay"
+	TokenSourceAmazonPay    TokenSource = "amazon-pay"
+	TokenSourceRevolutPay   TokenSource = "revolut-pay"
+	TokenSourceWechatPay    TokenSource = "wechat-pay"
+	TokenSourceAlipay       TokenSource = "alipay"
+	TokenSourcePaypal       TokenSource = "paypal"
+	TokenSourceTextToPay    TokenSource = "text-to-pay"
+	TokenSourceBacs         TokenSource = "bacs"
+	TokenSourceSepa         TokenSource = "sepa"
+	TokenSourceAch          TokenSource = "ach"
+	TokenSourceBankTransfer TokenSource = "bank-transfer"
+	TokenSourceBancontact   TokenSource = "bancontact"
+	TokenSourceEps          TokenSource = "eps"
+	TokenSourceIdeal        TokenSource = "ideal"
+	TokenSourcePrzelewy24   TokenSource = "przelewy-24"
+	TokenSourceTwint        TokenSource = "twint"
+	TokenSourceSofort       TokenSource = "sofort"
+	TokenSourceMultibanco   TokenSource = "multibanco"
+	TokenSourceKlarna       TokenSource = "klarna"
+	TokenSourceAfterPay     TokenSource = "after-pay"
+	TokenSourceCoinbase     TokenSource = "coinbase"
+	TokenSourceGooglePlay   TokenSource = "google-play"
+	TokenSourceAppleStore   TokenSource = "apple-store"
+)
