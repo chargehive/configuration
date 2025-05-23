@@ -185,3 +185,36 @@ const (
 	// UnderPaymentHandlerLock maintains the outstanding amount and locks the charge
 	UnderPaymentHandlerLock UnderPaymentHandler = "lock"
 )
+
+type TokenSource string
+
+const (
+	TokenSourcePan          TokenSource = "TS_PAN"
+	TokenSourceConnector    TokenSource = "TS_CONNECTOR"
+	TokenSourceNetworkToken TokenSource = "TS_NETWORK_TOKEN"
+	TokenSourceGooglePay    TokenSource = "TS_GOOGLE_PAY"
+	TokenSourceApplePay     TokenSource = "TS_APPLE_PAY"
+	TokenSourceSamsungPay   TokenSource = "TS_SAMSUNG_PAY"
+	TokenSourceAmazonPay    TokenSource = "TS_AMAZON_PAY"
+	TokenSourceRevolutPay   TokenSource = "TS_REVOLUT_PAY"
+	TokenSourceWechatPay    TokenSource = "TS_WECHAT_PAY"
+	TokenSourceAlipay       TokenSource = "TS_ALIPAY"
+	TokenSourcePaypal       TokenSource = "TS_PAYPAL"
+	TokenSourceTextToPay    TokenSource = "TS_TEXT_TO_PAY"
+	TokenSourceBacs         TokenSource = "TS_BACS"
+	TokenSourceSepa         TokenSource = "TS_SEPA"
+	TokenSourceAch          TokenSource = "TS_ACH"
+	TokenSourceBankTransfer TokenSource = "TS_BANK_TRANSFER"
+	TokenSourceBancontact   TokenSource = "TS_BANCONTACT"
+	TokenSourceEps          TokenSource = "TS_EPS"
+	TokenSourceIdeal        TokenSource = "TS_IDEAL"
+	TokenSourcePrzelewy24   TokenSource = "TS_PRZELEWY24"
+	TokenSourceTwint        TokenSource = "TS_TWINT"
+	TokenSourceSofort       TokenSource = "TS_SOFORT"
+	TokenSourceMultibanco   TokenSource = "TS_MULTIBANCO"
+	TokenSourceKlarna       TokenSource = "TS_KLARNA"
+	TokenSourceAfterPay     TokenSource = "TS_AFTER_PAY"
+	TokenSourceCoinbase     TokenSource = "TS_COINBASE"
+	TokenSourceGooglePlay   TokenSource = "TS_GOOGLE_PLAY"
+	TokenSourceAppleStore   TokenSource = "TS_APPLE_STORE"
+)
