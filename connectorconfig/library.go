@@ -30,6 +30,7 @@ const (
 	LibraryWorldpay                 Library = "worldpay"
 	LibraryPayPalWebsitePaymentsPro Library = "paypal-websitepaymentspro"
 	LibraryPayPalExpressCheckout    Library = "paypal-expresscheckout"
+	LibraryPayPalCompletePayments   Library = "paypal-completepayments"
 	LibraryVindicia                 Library = "vindicia"
 	LibraryBottomline               Library = "bottomline"
 	LibraryCheckout                 Library = "checkout"
@@ -219,6 +220,13 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibraryPayPalExpressCheckout: {
 		DisplayName: "PayPal Express Checkout",
 		Credentials: func() Credentials { return &PayPalExpressCheckoutCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_PAYPAL
+		},
+	},
+	LibraryPayPalCompletePayments: {
+		DisplayName: "PayPal Complete Payments",
+		Credentials: func() Credentials { return &PayPalCompletePaymentsCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_PAYPAL
 		},
