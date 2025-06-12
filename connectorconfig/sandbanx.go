@@ -79,6 +79,10 @@ func (c *SandbanxCredentials) GetGooglePay() *GooglePayCredentials {
 	return c.GooglePay
 }
 
+func (c *SandbanxCredentials) GetGooglePayParams() map[string]string {
+	return nil
+}
+
 func (c *SandbanxCredentials) GetApplePay() *ApplePayCredentials {
 	return c.ApplePay
 }
