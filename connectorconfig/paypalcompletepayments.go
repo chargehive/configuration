@@ -17,7 +17,7 @@ func (c *PayPalCompletePaymentsCredentials) GetMID() string {
 }
 
 func (c *PayPalCompletePaymentsCredentials) GetLibrary() Library {
-	return LibraryPayPalCompletePayments
+	return LibraryPayPal
 }
 
 func (c *PayPalCompletePaymentsCredentials) GetSupportedTypes() []LibraryType {
