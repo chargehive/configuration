@@ -228,7 +228,8 @@ var LibraryRegister = map[Library]LibraryDef{
 		DisplayName: "PayPal Complete Payments",
 		Credentials: func() Credentials { return &PayPalCompletePaymentsCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
-			return methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_PAYPAL
+			return (methodType == chtype.PAYMENT_METHOD_TYPE_CARD) ||
+				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_PAYPAL)
 		},
 	},
 	LibraryVindicia: {
