@@ -30,6 +30,7 @@ const (
 	LibraryWorldpay                 Library = "worldpay"
 	LibraryPayPalWebsitePaymentsPro Library = "paypal-websitepaymentspro"
 	LibraryPayPalExpressCheckout    Library = "paypal-expresscheckout"
+	LibraryPayPal                   Library = "paypal"
 	LibraryVindicia                 Library = "vindicia"
 	LibraryBottomline               Library = "bottomline"
 	LibraryCheckout                 Library = "checkout"
@@ -223,6 +224,14 @@ var LibraryRegister = map[Library]LibraryDef{
 			return methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_PAYPAL
 		},
 	},
+	LibraryPayPal: {
+		DisplayName: "PayPal Complete Payments",
+		Credentials: func() Credentials { return &PayPalCompletePaymentsCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return (methodType == chtype.PAYMENT_METHOD_TYPE_CARD) ||
+				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_PAYPAL)
+		},
+	},
 	LibraryVindicia: {
 		DisplayName: "Vindicia",
 		Credentials: func() Credentials { return &VindiciaCredentials{} },
@@ -309,7 +318,9 @@ var LibraryRegister = map[Library]LibraryDef{
 		DisplayName: "SandBanx",
 		Credentials: func() Credentials { return &SandbanxCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
-			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD ||
+				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
+				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY)
 		},
 	},
 	LibraryThreeDSecureIO: {

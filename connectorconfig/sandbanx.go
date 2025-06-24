@@ -9,11 +9,13 @@ import (
 )
 
 type SandbanxCredentials struct {
-	MerchantID             string `json:"merchantId" yaml:"merchantID" validate:"-"`
-	ProcessingDelaySeconds int    `json:"processingDelaySeconds" yaml:"processingDelaySeconds" validate:"-"` // seconds to delay processing
-	Offline                bool   `json:"offline" yaml:"offline" validate:"-"`                               // Return service unavailable
-	FailAuth               bool   `json:"failAuth" yaml:"failAuth" validate:"-"`                             // Fail to authorize
-	ChaosLevel             int    `json:"chaosLevel" yaml:"chaosLevel" validate:"-"`                         // Percent of errors
+	MerchantID             string                `json:"merchantId" yaml:"merchantID" validate:"-"`
+	ProcessingDelaySeconds int                   `json:"processingDelaySeconds" yaml:"processingDelaySeconds" validate:"-"` // seconds to delay processing
+	Offline                bool                  `json:"offline" yaml:"offline" validate:"-"`                               // Return service unavailable
+	FailAuth               bool                  `json:"failAuth" yaml:"failAuth" validate:"-"`                             // Fail to authorize
+	ChaosLevel             int                   `json:"chaosLevel" yaml:"chaosLevel" validate:"-"`                         // Percent of errors
+	GooglePay              *GooglePayCredentials `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay               *ApplePayCredentials  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
 func (c *SandbanxCredentials) GetMID() string {
@@ -71,4 +73,16 @@ func (c *SandbanxCredentials) IsRecoveryAgent() bool {
 
 func (c *SandbanxCredentials) Supports3RI() bool {
 	return false
+}
+
+func (c *SandbanxCredentials) GetGooglePay() *GooglePayCredentials {
+	return c.GooglePay
+}
+
+func (c *SandbanxCredentials) GetGooglePayParams() map[string]string {
+	return nil
+}
+
+func (c *SandbanxCredentials) GetApplePay() *ApplePayCredentials {
+	return c.ApplePay
 }
