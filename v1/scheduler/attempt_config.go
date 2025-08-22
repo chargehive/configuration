@@ -34,7 +34,7 @@ type AttemptConfig struct {
 	// Deprecated - use PreferredTokens
 	PreferNetworkToken bool `json:"preferNetworkToken,omitempty" yaml:"preferNetworkToken,omitempty"`
 
-	PreferredTokens []TokenSource `json:"preferredTokens,omitempty" yaml:"preferredTokens,omitempty" validate:"dive,lowercase,oneof=TS_PAN TS_CONNECTOR TS_NETWORK_TOKEN TS_GOOGLE_PAY TS_APPLE_PAY TS_SAMSUNG_PAY TS_AMAZON_PAY TS_REVOLUT_PAY TS_WECHAT_PAY TS_ALIPAY TS_PAYPAL TS_TEXT_TO_PAY TS_BACS TS_SEPA TS_ACH TS_BANK_TRANSFER TS_BANCONTACT TS_EPS TS_IDEAL TS_PRZELEWY24 TS_TWINT TS_SOFORT TS_MULTIBANCO TS_KLARNA TS_AFTER_PAY TS_COINBASE TS_GOOGLE_PLAY TS_APPLE_STORE"`
+	PreferredTokens []TokenSource `json:"preferredTokens,omitempty" yaml:"preferredTokens,omitempty" validate:"dive,uppercase,oneof=TS_PAN TS_CONNECTOR TS_NETWORK_TOKEN TS_GOOGLE_PAY TS_APPLE_PAY TS_SAMSUNG_PAY TS_AMAZON_PAY TS_REVOLUT_PAY TS_WECHAT_PAY TS_ALIPAY TS_PAYPAL TS_TEXT_TO_PAY TS_BACS TS_SEPA TS_ACH TS_BANK_TRANSFER TS_BANCONTACT TS_EPS TS_IDEAL TS_PRZELEWY24 TS_TWINT TS_SOFORT TS_MULTIBANCO TS_KLARNA TS_AFTER_PAY TS_COINBASE TS_GOOGLE_PLAY TS_APPLE_STORE"`
 
 	// MethodRefresh indicates if the method should be refreshed before processing
 	MethodRefresh bool `json:"methodRefresh,omitempty" yaml:"methodRefresh,omitempty"`

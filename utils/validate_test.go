@@ -28,6 +28,37 @@ func TestAdditionalUnknownFields(t *testing.T) {
 	assert.Equal(t, errs["json"], "json: unknown field \"bob\"")
 }
 
+// test for additional unknown fields
+func TestTokenType(t *testing.T) {
+	rawJson := []byte(`{"Kind":"SchedulerOnDemand","metadata":{"projectId":"change-me","Name":"change-me","uuid":"","displayName":"","description":"","annotations":null,"labels":null,"disabled":true},"specVersion":"v1","selector":{"priority":50,"expressions":[]},"spec":{
+    "schedule": {
+      "attemptConfig": {
+        "poolType": "single",
+        "methodSelector": "all",
+        "connectorLimit": 1,
+        "methodLimit": 1,
+        "cascadeDelay": 0,
+        "shouldTokenize": true,
+        "preferredTokens": [
+					"TS_NETWORK_TOKEN"
+				],
+        "overridePoolConnectorIDs": [
+          "adyen-usd-test"
+        ]
+      },
+      "timeDelay": 0,
+      "timeDelayOrigin": "initialisation",
+      "timeDelaySync": "Earliest",
+      "timeSyncHour": 0,
+      "timeSyncZone": "CIT"
+    }
+  }}`)
+	configuration.Initialise()
+	errs := Validate(rawJson, "v1")
+	//_ = PrettyPrint(errs)
+	assert.Equal(t, len(errs), 0)
+}
+
 // test for missing field
 func TestMissingFields(t *testing.T) {
 	rawJson := []byte(`{"kind":"Connector","metadata":{"displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"paypal-websitepaymentspro","configuration":"eyJhcGlQYXNzd29yZCI6bnVsbCwiYXBpU2lnbmF0dXJlIjoiQ0hBTkdFLU1FIiwic3VwcG9ydGVkQ3VycmVuY2llcyI6WyJVU0QiXSwiY2FyZGluYWxQcm9jZXNzb3JJRCI6IkNIQU5HRS1NRSIsImNhcmRpbmFsTWVyY2hhbnRJRCI6IkNIQU5HRS1NRSIsImNhcmRpbmFsVHJhbnNhY3Rpb25QdyI6IkNIQU5HRS1NRSIsImNhcmRpbmFsVHJhbnNhY3Rpb25VUkwiOiJDSEFOR0UtTUUiLCJjYXJkaW5hbEFQSUlkZW50aWZpZXIiOiJDSEFOR0UtTUUiLCJjYXJkaW5hbEFQSUtleSI6IkNIQU5HRS1NRSIsImNhcmRpbmFsT3JnVW5pdElEIjoiQ0hBTkdFLU1FIiwiZW52aXJvbm1lbnQiOiJzYW5kYm94In0="}}`)
