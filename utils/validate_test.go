@@ -28,7 +28,7 @@ func TestAdditionalUnknownFields(t *testing.T) {
 	assert.Equal(t, errs["json"], "json: unknown field \"bob\"")
 }
 
-// test for additional unknown fields
+// TestTokenType test for preferredToken
 func TestTokenType(t *testing.T) {
 	rawJson := []byte(`{"Kind":"SchedulerOnDemand","metadata":{"projectId":"change-me","Name":"change-me","uuid":"","displayName":"","description":"","annotations":null,"labels":null,"disabled":true},"specVersion":"v1","selector":{"priority":50,"expressions":[]},"spec":{
     "schedule": {
