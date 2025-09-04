@@ -78,6 +78,10 @@ func Validate(rawJson []byte, version string) map[string]string {
 			return result
 		}
 
+		if c.ConfigurationID != "" {
+			return result
+		}
+
 		err = validate.Struct(conn)
 		if err != nil {
 			errs := err.(validator.ValidationErrors)
