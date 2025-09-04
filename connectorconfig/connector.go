@@ -23,13 +23,16 @@ func getCreds(c *connector.Connector, strict bool) (Credentials, error) {
 		return credentials, err
 	}
 
-	reader := strings.NewReader(string(c.Configuration))
-	dec := json.NewDecoder(reader)
-	if strict {
-		dec.DisallowUnknownFields()
+	if c.Configuration != nil && string(c.Configuration) != "" {
+		reader := strings.NewReader(string(c.Configuration))
+		dec := json.NewDecoder(reader)
+		if strict {
+			dec.DisallowUnknownFields()
+		}
+		err = dec.Decode(credentials)
 	}
 
-	return credentials, dec.Decode(credentials)
+	return credentials, err
 }
 
 type MerchantIdentifier interface {
