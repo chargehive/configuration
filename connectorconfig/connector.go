@@ -23,7 +23,7 @@ func getCreds(c *connector.Connector, strict bool) (Credentials, error) {
 		return credentials, err
 	}
 
-	if c.Configuration != nil && string(c.Configuration) == "" {
+	if c.Configuration != nil && string(c.Configuration) != "" {
 		reader := strings.NewReader(string(c.Configuration))
 		dec := json.NewDecoder(reader)
 		if strict {
