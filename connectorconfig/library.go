@@ -45,6 +45,7 @@ const (
 	LibrarySandbanx                 Library = "sandbanx"
 	LibraryFlexPay                  Library = "flexpay"
 	LibraryEpx                      Library = "epx"
+	LibraryWoodforest               Library = "woodforest"
 
 	// Fraud Libraries
 	LibraryChargeHive  Library = "chargehive"
@@ -390,6 +391,13 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibraryEpx: {
 		DisplayName: "EPX",
 		Credentials: func() Credentials { return &EpxCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+	LibraryWoodforest: {
+		DisplayName: "Woodforest",
+		Credentials: func() Credentials { return &WoodforestCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
