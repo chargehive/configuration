@@ -99,3 +99,7 @@ func (c *BlueSnapCredentials) IsRecoveryAgent() bool {
 func (c *BlueSnapCredentials) Supports3RI() bool {
 	return false
 }
+
+func (g *BlueSnapCredentials) IsAccountUpdater() bool {
+	return false
+}

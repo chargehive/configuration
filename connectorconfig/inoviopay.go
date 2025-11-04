@@ -83,3 +83,7 @@ func (c *InovioPayCredentials) IsRecoveryAgent() bool {
 func (c *InovioPayCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *InovioPayCredentials) IsAccountUpdater() bool {
+	return false
+}

@@ -148,3 +148,7 @@ func (c *CheckoutCredentials) IsRecoveryAgent() bool {
 func (c *CheckoutCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *CheckoutCredentials) IsAccountUpdater() bool {
+	return false
+}

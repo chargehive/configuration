@@ -72,3 +72,7 @@ func (c *RecaptchaCredentials) IsRecoveryAgent() bool {
 func (c *RecaptchaCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *RecaptchaCredentials) IsAccountUpdater() bool {
+	return false
+}

@@ -90,3 +90,7 @@ func (c *ThreeDSecureIOCredentials) IsRecoveryAgent() bool {
 func (c *ThreeDSecureIOCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *ThreeDSecureIOCredentials) IsAccountUpdater() bool {
+	return false
+}

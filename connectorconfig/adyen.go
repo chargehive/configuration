@@ -107,3 +107,7 @@ func (c *AdyenCredentials) GetGooglePay() *GooglePayCredentials {
 func (c *AdyenCredentials) GetApplePay() *ApplePayCredentials {
 	return c.ApplePay
 }
+
+func (c *AdyenCredentials) IsAccountUpdater() bool {
+	return false
+}

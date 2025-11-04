@@ -81,3 +81,7 @@ func (c *QualpayCredentials) IsRecoveryAgent() bool {
 func (c *QualpayCredentials) Supports3RI() bool {
 	return false
 }
+
+func (g *QualpayCredentials) IsAccountUpdater() bool {
+	return false
+}

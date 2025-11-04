@@ -90,3 +90,7 @@ func (c *VindiciaCredentials) IsRecoveryAgent() bool {
 func (c *VindiciaCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *VindiciaCredentials) IsAccountUpdater() bool {
+	return false
+}

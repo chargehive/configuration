@@ -87,3 +87,7 @@ func (c *ClearhausCredentials) IsRecoveryAgent() bool {
 func (c *ClearhausCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *ClearhausCredentials) IsAccountUpdater() bool {
+	return false
+}

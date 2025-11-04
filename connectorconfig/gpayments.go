@@ -83,3 +83,7 @@ func (c *GPaymentsCredentials) IsRecoveryAgent() bool {
 func (c *GPaymentsCredentials) Supports3RI() bool {
 	return true
 }
+
+func (c *GPaymentsCredentials) IsAccountUpdater() bool {
+	return false
+}

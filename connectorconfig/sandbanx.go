@@ -86,3 +86,7 @@ func (c *SandbanxCredentials) GetGooglePayParams() map[string]string {
 func (c *SandbanxCredentials) GetApplePay() *ApplePayCredentials {
 	return c.ApplePay
 }
+
+func (c *SandbanxCredentials) IsAccountUpdater() bool {
+	return false
+}

@@ -84,3 +84,7 @@ func (c *EpxCredentials) IsRecoveryAgent() bool {
 func (c *EpxCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *EpxCredentials) IsAccountUpdater() bool {
+	return false
+}

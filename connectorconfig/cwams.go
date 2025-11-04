@@ -105,3 +105,7 @@ func (c *CWAMSCredentials) IsRecoveryAgent() bool {
 func (c *CWAMSCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *CWAMSCredentials) IsAccountUpdater() bool {
+	return false
+}

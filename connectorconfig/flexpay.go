@@ -79,3 +79,7 @@ func (c *FlexPayCredentials) IsRecoveryAgent() bool {
 func (c *FlexPayCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *FlexPayCredentials) IsAccountUpdater() bool {
+	return false
+}

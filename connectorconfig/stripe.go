@@ -70,3 +70,7 @@ func (c *StripeCredentials) IsRecoveryAgent() bool {
 func (c *StripeCredentials) Supports3RI() bool {
 	return false
 }
+
+func (g *StripeCredentials) IsAccountUpdater() bool {
+	return false
+}

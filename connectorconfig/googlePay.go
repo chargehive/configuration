@@ -138,6 +138,10 @@ func (g *GooglePayCredentials) Supports3RI() bool {
 	return false
 }
 
+func (g *GooglePayCredentials) IsAccountUpdater() bool {
+	return false
+}
+
 func (g *GooglePayCredentials) GetSecureFields() []*string {
 	if g == nil {
 		return nil

@@ -67,3 +67,7 @@ func (c *TokenExNetworkTokenizationCredentials) IsRecoveryAgent() bool {
 func (c *TokenExNetworkTokenizationCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *TokenExNetworkTokenizationCredentials) IsAccountUpdater() bool {
+	return false
+}
