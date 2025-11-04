@@ -95,3 +95,7 @@ func (c *TrustPaymentsCredentials) IsRecoveryAgent() bool {
 func (c *TrustPaymentsCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *TrustPaymentsCredentials) IsAccountUpdater() bool {
+	return false
+}

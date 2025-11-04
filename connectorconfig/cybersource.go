@@ -76,3 +76,7 @@ func (c *CyberSourceCredentials) IsRecoveryAgent() bool {
 func (c *CyberSourceCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *CyberSourceCredentials) IsAccountUpdater() bool {
+	return false
+}

@@ -84,3 +84,7 @@ func (c *BottomlineCredentials) IsRecoveryAgent() bool {
 func (c *BottomlineCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *BottomlineCredentials) IsAccountUpdater() bool {
+	return false
+}

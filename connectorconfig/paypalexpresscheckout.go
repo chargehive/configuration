@@ -77,3 +77,7 @@ func (c *PayPalExpressCheckoutCredentials) IsRecoveryAgent() bool {
 func (c *PayPalExpressCheckoutCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *PayPalExpressCheckoutCredentials) IsAccountUpdater() bool {
+	return false
+}

@@ -79,3 +79,7 @@ func (c *MaxMindCredentials) IsRecoveryAgent() bool {
 func (c *MaxMindCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *MaxMindCredentials) IsAccountUpdater() bool {
+	return false
+}

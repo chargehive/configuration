@@ -131,3 +131,7 @@ func (c *BraintreeCredentials) GetApplePay() *ApplePayCredentials {
 func (c *BraintreeCredentials) Supports3RI() bool {
 	return false
 }
+
+func (g *BraintreeCredentials) IsAccountUpdater() bool {
+	return false
+}

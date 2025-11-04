@@ -137,3 +137,7 @@ func (c *PayPalWebsitePaymentsProCredentials) IsRecoveryAgent() bool {
 func (c *PayPalWebsitePaymentsProCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *PayPalWebsitePaymentsProCredentials) IsAccountUpdater() bool {
+	return false
+}

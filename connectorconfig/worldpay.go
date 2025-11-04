@@ -146,3 +146,7 @@ func (c *WorldpayCredentials) IsRecoveryAgent() bool {
 func (c *WorldpayCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *WorldpayCredentials) IsAccountUpdater() bool {
+	return false
+}

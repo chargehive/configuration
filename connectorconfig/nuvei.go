@@ -81,3 +81,7 @@ func (c *NuveiCredentials) IsRecoveryAgent() bool {
 func (c *NuveiCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *NuveiCredentials) IsAccountUpdater() bool {
+	return false
+}

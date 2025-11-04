@@ -68,3 +68,7 @@ func (c *WoodforestCredentials) IsRecoveryAgent() bool {
 func (c *WoodforestCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *WoodforestCredentials) IsAccountUpdater() bool {
+	return false
+}

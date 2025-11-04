@@ -85,3 +85,7 @@ func (c *YapstoneCredentials) IsRecoveryAgent() bool {
 func (c *YapstoneCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *YapstoneCredentials) IsAccountUpdater() bool {
+	return false
+}

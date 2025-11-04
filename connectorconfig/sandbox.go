@@ -80,3 +80,7 @@ func (c *SandboxCredentials) IsRecoveryAgent() bool {
 func (c *SandboxCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *SandboxCredentials) IsAccountUpdater() bool {
+	return false
+}

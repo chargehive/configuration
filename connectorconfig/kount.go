@@ -86,3 +86,7 @@ func (c *KountCredentials) IsRecoveryAgent() bool {
 func (c *KountCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *KountCredentials) IsAccountUpdater() bool {
+	return false
+}

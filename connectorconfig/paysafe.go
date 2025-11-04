@@ -143,3 +143,7 @@ func (c *PaySafeCredentials) IsRecoveryAgent() bool {
 func (c *PaySafeCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *PaySafeCredentials) IsAccountUpdater() bool {
+	return false
+}

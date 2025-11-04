@@ -316,3 +316,7 @@ func (a *ApplePayCredentials) GetAppleMerchantCapabilities() []AppleMerchantCapa
 	}
 	return a.AppleMerchantCapabilities
 }
+
+func (a *ApplePayCredentials) IsAccountUpdater() bool {
+	return false
+}

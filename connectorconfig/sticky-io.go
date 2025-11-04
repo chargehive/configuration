@@ -68,3 +68,7 @@ func (c *StickyIOCredentials) IsRecoveryAgent() bool {
 func (c *StickyIOCredentials) Supports3RI() bool {
 	return false
 }
+
+func (c *StickyIOCredentials) IsAccountUpdater() bool {
+	return false
+}

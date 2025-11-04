@@ -21,6 +21,7 @@ type Credentials interface {
 	CanPlanModeUse(mode environment.Mode) bool // Determine if this plan mode can use this configuration
 	IsRecoveryAgent() bool
 	Supports3RI() bool
+	IsAccountUpdater() bool
 }
 
 type NoLibrary map[string]any
@@ -74,5 +75,9 @@ func (n NoLibrary) IsRecoveryAgent() bool {
 }
 
 func (n NoLibrary) Supports3RI() bool {
+	return false
+}
+
+func (n NoLibrary) IsAccountUpdater() bool {
 	return false
 }
