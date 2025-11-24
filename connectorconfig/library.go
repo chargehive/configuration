@@ -55,15 +55,17 @@ const (
 	LibraryRecaptcha   Library = "recaptcha"
 
 	// Updater Libraries
-	LibraryPaySafeAccountUpdater    Library = "paysafe-accountupdater"
-	LibraryTokenExAccountUpdater    Library = "tokenex-accountupdater"
-	LibraryTokenExApiAccountUpdater Library = "tokenex-api-accountupdater"
+	LibraryPaySafeAccountUpdater       Library = "paysafe-accountupdater"
+	LibraryTokenExAccountUpdater       Library = "tokenex-accountupdater"
+	LibraryTokenExApiAccountUpdater    Library = "tokenex-api-accountupdater"
+	LibraryPagosRealtimeAccountUpdater Library = "pagos-realtime-accountupdater"
 
 	// Scheduler Libraries
 	LibraryStickyIO Library = "sticky-io"
 
 	// Tokenization Libraries
 	LibraryTokenExNetworkTokenization Library = "tokenex-networktokenization"
+	LibraryPagosNetworkTokenization   Library = "pagos-networktokenization"
 )
 
 type LibraryType string
@@ -398,6 +400,20 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibraryWoodforest: {
 		DisplayName: "Woodforest",
 		Credentials: func() Credentials { return &WoodforestCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+	LibraryPagosNetworkTokenization: {
+		DisplayName: "Pagos Network Tokenization",
+		Credentials: func() Credentials { return &PagosNetworkTokenizationCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+	LibraryPagosRealtimeAccountUpdater: {
+		DisplayName: "Pagos Realtime Account Updater",
+		Credentials: func() Credentials { return &PagosRealtimeAccountUpdaterCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
