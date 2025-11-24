@@ -64,6 +64,7 @@ const (
 
 	// Tokenization Libraries
 	LibraryTokenExNetworkTokenization Library = "tokenex-networktokenization"
+	LibraryPagosNetworkTokenization   Library = "pagos-networktokenization"
 )
 
 type LibraryType string
@@ -398,6 +399,13 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibraryWoodforest: {
 		DisplayName: "Woodforest",
 		Credentials: func() Credentials { return &WoodforestCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+	LibraryPagosNetworkTokenization: {
+		DisplayName: "Pagos Network Tokenization",
+		Credentials: func() Credentials { return &PagosNetworkTokenizationCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
