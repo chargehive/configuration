@@ -93,14 +93,14 @@ func (s ScaPolicy) GetShouldAuthOnError() bool {
 
 func (s ScaPolicy) GetShouldAuthOnN() bool {
 	if s.ShouldAuthOnN == nil {
-		return false
+		return true
 	}
 	return *s.ShouldAuthOnN
 }
 
 func (s ScaPolicy) GetShouldAuthOnR() bool {
 	if s.ShouldAuthOnR == nil {
-		return false
+		return true
 	}
 	return *s.ShouldAuthOnR
 }
