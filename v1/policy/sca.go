@@ -54,6 +54,12 @@ type ScaPolicy struct {
 	// ShouldAuthOnError if true and an error response is returned from the connector; proceed to auth anyway
 	ShouldAuthOnError *bool `json:"shouldAuthOnError" yaml:"shouldAuthOnError" validate:"required"`
 
+	// ShouldAuthOnN if true and an "N" response is returned from the connector; proceed to auth anyway
+	ShouldAuthOnN *bool `json:"shouldAuthOnN" yaml:"shouldAuthOnN" validate:"required"`
+
+	// ShouldAuthOnR if true and an "R" response is returned from the connector; proceed to auth anyway
+	ShouldAuthOnR *bool `json:"shouldAuthOnR" yaml:"shouldAuthOnR" validate:"required"`
+
 	ChallengePreference ChallengePreference `json:"challengePreference" yaml:"challengePreference" validate:"omitempty,oneof=no-preference no-challenge request mandate"`
 }
 
@@ -83,6 +89,20 @@ func (s ScaPolicy) GetShouldAuthOnError() bool {
 		return true
 	}
 	return *s.ShouldAuthOnError
+}
+
+func (s ScaPolicy) GetShouldAuthOnN() bool {
+	if s.ShouldAuthOnN == nil {
+		return true
+	}
+	return *s.ShouldAuthOnN
+}
+
+func (s ScaPolicy) GetShouldAuthOnR() bool {
+	if s.ShouldAuthOnR == nil {
+		return true
+	}
+	return *s.ShouldAuthOnR
 }
 
 // GetKind returns the ScaPolicy kind

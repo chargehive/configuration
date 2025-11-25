@@ -17,7 +17,9 @@ As with all configs, the standard wrapper is used.
     "shouldIdentify": true,             // Enable or disable identification step
     "shouldChallengeOptional": true,    // If challenge is optional from issuer, use this value to decide
     "shouldByPassChallenge": "",        // If challenge is required, override with this value (see below for options)
-    "shouldAuthOnError": true           // If the gateway authentication response is an error, authorize payment anyway
+    "shouldAuthOnError": true,          // If the gateway authentication response is an error, authorize payment anyway
+    "shouldAuthOnN": true,              // If the gateway authentication response is an N, authorize payment anyway
+    "shouldAuthOnR": true               // If the gateway authentication response is an R, authorize payment anyway
   }
 }
 ```
