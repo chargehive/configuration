@@ -66,6 +66,9 @@ const (
 	// Tokenization Libraries
 	LibraryTokenExNetworkTokenization Library = "tokenex-networktokenization"
 	LibraryPagosNetworkTokenization   Library = "pagos-networktokenization"
+
+	// Apple Store
+	LibraryAppleStore Library = "applestore"
 )
 
 type LibraryType string
@@ -78,6 +81,7 @@ const (
 	LibraryTypeAuthentication      LibraryType = "authentication"
 	LibraryTypeScheduler           LibraryType = "scheduler"
 	LibraryTypeNetworkTokenization LibraryType = "networkTokenization"
+	LibraryTypeThirdPartyStore     LibraryType = "thirdPartyStore"
 )
 
 var LibraryTypeRegister = map[LibraryType]bool{
