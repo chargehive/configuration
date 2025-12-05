@@ -422,4 +422,11 @@ var LibraryRegister = map[Library]LibraryDef{
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
 		},
 	},
+	LibraryAppleStore: {
+		DisplayName: "Apple Store",
+		Credentials: func() Credentials { return &AppleStoreCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return false
+		},
+	},
 }
