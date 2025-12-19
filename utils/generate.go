@@ -226,6 +226,8 @@ func buildSpec(conf Template) (object.Specification, error) {
 			Username:              &chg,
 			Password:              &chg,
 			MerchantID:            chg,
+			MerchantURL:           chg,
+			MerchantDescriptor:    chg,
 			ReportGroup:           chg,
 			Environment:           "sandbox",
 			CardinalApiIdentifier: &chg,
