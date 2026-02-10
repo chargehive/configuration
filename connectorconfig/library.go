@@ -68,7 +68,7 @@ const (
 	LibraryPagosNetworkTokenization   Library = "pagos-networktokenization"
 
 	// Apple Store
-	LibraryAppleStore Library = "applestore"
+	LibraryAppleStore Library = "apple-store"
 )
 
 type LibraryType string
