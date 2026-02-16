@@ -66,6 +66,9 @@ const (
 	// Tokenization Libraries
 	LibraryTokenExNetworkTokenization Library = "tokenex-networktokenization"
 	LibraryPagosNetworkTokenization   Library = "pagos-networktokenization"
+
+	// Apple Store
+	LibraryAppleStore Library = "apple-store"
 )
 
 type LibraryType string
@@ -78,6 +81,7 @@ const (
 	LibraryTypeAuthentication      LibraryType = "authentication"
 	LibraryTypeScheduler           LibraryType = "scheduler"
 	LibraryTypeNetworkTokenization LibraryType = "networkTokenization"
+	LibraryTypeThirdPartyStore     LibraryType = "thirdPartyStore"
 )
 
 var LibraryTypeRegister = map[LibraryType]bool{
@@ -416,6 +420,13 @@ var LibraryRegister = map[Library]LibraryDef{
 		Credentials: func() Credentials { return &PagosRealtimeAccountUpdaterCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return methodType == chtype.PAYMENT_METHOD_TYPE_CARD
+		},
+	},
+	LibraryAppleStore: {
+		DisplayName: "Apple Store",
+		Credentials: func() Credentials { return &AppleStoreCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return false
 		},
 	},
 }
