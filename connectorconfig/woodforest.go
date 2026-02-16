@@ -5,6 +5,7 @@ import (
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/grpc/cht"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
@@ -71,4 +72,8 @@ func (c *WoodforestCredentials) Supports3RI() bool {
 
 func (c *WoodforestCredentials) IsAccountUpdater() bool {
 	return false
+}
+
+func (c *WoodforestCredentials) SupportedTokenSources() []cht.TokenSource {
+	return []cht.TokenSource{cht.TS_PAN, cht.TS_NETWORK_TOKEN}
 }

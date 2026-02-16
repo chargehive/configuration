@@ -5,6 +5,7 @@ import (
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/grpc/cht"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
@@ -22,6 +23,7 @@ type Credentials interface {
 	IsRecoveryAgent() bool
 	Supports3RI() bool
 	IsAccountUpdater() bool
+	SupportedTokenSources() []cht.TokenSource
 }
 
 type NoLibrary map[string]any
@@ -80,4 +82,8 @@ func (n NoLibrary) Supports3RI() bool {
 
 func (n NoLibrary) IsAccountUpdater() bool {
 	return false
+}
+
+func (n NoLibrary) SupportedTokenSources() []cht.TokenSource {
+	return nil
 }
