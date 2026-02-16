@@ -5,7 +5,6 @@ import (
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
-	"github.com/chargehive/grpc/cht"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
@@ -111,8 +110,4 @@ func (c *AdyenCredentials) GetApplePay() *ApplePayCredentials {
 
 func (c *AdyenCredentials) IsAccountUpdater() bool {
 	return false
-}
-
-func (c *AdyenCredentials) SupportedTokenSources() []cht.TokenSource {
-	return []cht.TokenSource{cht.TS_PAN, cht.TS_NETWORK_TOKEN, cht.TS_APPLE_PAY, cht.TS_GOOGLE_PAY}
 }

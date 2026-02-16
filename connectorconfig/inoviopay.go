@@ -5,7 +5,6 @@ import (
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
-	"github.com/chargehive/grpc/cht"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
@@ -87,8 +86,4 @@ func (c *InovioPayCredentials) Supports3RI() bool {
 
 func (c *InovioPayCredentials) IsAccountUpdater() bool {
 	return false
-}
-
-func (c *InovioPayCredentials) SupportedTokenSources() []cht.TokenSource {
-	return []cht.TokenSource{cht.TS_PAN}
 }

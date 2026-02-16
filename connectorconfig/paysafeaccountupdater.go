@@ -5,7 +5,6 @@ import (
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
-	"github.com/chargehive/grpc/cht"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
@@ -87,8 +86,4 @@ func (c *PaySafeAccountUpdaterCredentials) Supports3RI() bool {
 
 func (c *PaySafeAccountUpdaterCredentials) IsAccountUpdater() bool {
 	return true
-}
-
-func (c *PaySafeAccountUpdaterCredentials) SupportedTokenSources() []cht.TokenSource {
-	return []cht.TokenSource{cht.TS_PAN}
 }

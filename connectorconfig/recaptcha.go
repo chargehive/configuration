@@ -5,7 +5,6 @@ import (
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
-	"github.com/chargehive/grpc/cht"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
@@ -76,8 +75,4 @@ func (c *RecaptchaCredentials) Supports3RI() bool {
 
 func (c *RecaptchaCredentials) IsAccountUpdater() bool {
 	return false
-}
-
-func (c *RecaptchaCredentials) SupportedTokenSources() []cht.TokenSource {
-	return nil
 }
