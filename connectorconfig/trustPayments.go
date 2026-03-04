@@ -102,5 +102,5 @@ func (c *TrustPaymentsCredentials) IsAccountUpdater() bool {
 }
 
 func (c *TrustPaymentsCredentials) SupportedTokenTypes() []scheduler.TokenSource {
-	return nil
+	return []scheduler.TokenSource{scheduler.TokenSourcePan}
 }

@@ -75,5 +75,5 @@ func (c *WoodforestCredentials) IsAccountUpdater() bool {
 }
 
 func (c *WoodforestCredentials) SupportedTokenTypes() []scheduler.TokenSource {
-	return nil
+	return []scheduler.TokenSource{scheduler.TokenSourcePan, scheduler.TokenSourceNetworkToken}
 }
