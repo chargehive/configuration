@@ -88,5 +88,5 @@ func (g *QualpayCredentials) IsAccountUpdater() bool {
 }
 
 func (g *QualpayCredentials) SupportedTokenTypes() []scheduler.TokenSource {
-	return []scheduler.TokenSource{scheduler.TokenSourcePan}
+	return []scheduler.TokenSource{scheduler.TokenSourcePan, scheduler.TokenSourceNetworkToken}
 }
