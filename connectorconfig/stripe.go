@@ -5,6 +5,7 @@ import (
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/configuration/v1/scheduler"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
@@ -73,4 +74,8 @@ func (c *StripeCredentials) Supports3RI() bool {
 
 func (g *StripeCredentials) IsAccountUpdater() bool {
 	return false
+}
+
+func (g *StripeCredentials) SupportedTokenTypes() []scheduler.TokenSource {
+	return []scheduler.TokenSource{scheduler.TokenSourcePan, scheduler.TokenSourceConnector, scheduler.TokenSourceNetworkToken}
 }

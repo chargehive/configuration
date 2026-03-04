@@ -5,6 +5,7 @@ import (
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/configuration/v1/scheduler"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
@@ -140,6 +141,10 @@ func (g *GooglePayCredentials) Supports3RI() bool {
 
 func (g *GooglePayCredentials) IsAccountUpdater() bool {
 	return false
+}
+
+func (g *GooglePayCredentials) SupportedTokenTypes() []scheduler.TokenSource {
+	return nil
 }
 
 func (g *GooglePayCredentials) GetSecureFields() []*string {

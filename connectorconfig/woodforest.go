@@ -5,6 +5,7 @@ import (
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/configuration/v1/scheduler"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
@@ -71,4 +72,8 @@ func (c *WoodforestCredentials) Supports3RI() bool {
 
 func (c *WoodforestCredentials) IsAccountUpdater() bool {
 	return false
+}
+
+func (c *WoodforestCredentials) SupportedTokenTypes() []scheduler.TokenSource {
+	return []scheduler.TokenSource{scheduler.TokenSourcePan, scheduler.TokenSourceNetworkToken}
 }
