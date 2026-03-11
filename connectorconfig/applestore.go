@@ -73,5 +73,5 @@ func (c *AppleStoreCredentials) IsAccountUpdater() bool {
 }
 
 func (c *AppleStoreCredentials) SupportedTokenTypes() []scheduler.TokenSource {
-	return []scheduler.TokenSource{}
+	return nil
 }
