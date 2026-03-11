@@ -5,6 +5,7 @@ import (
 
 	"github.com/chargehive/configuration/environment"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/configuration/v1/scheduler"
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
@@ -80,4 +81,8 @@ func (c *PayPalExpressCheckoutCredentials) Supports3RI() bool {
 
 func (c *PayPalExpressCheckoutCredentials) IsAccountUpdater() bool {
 	return false
+}
+
+func (c *PayPalExpressCheckoutCredentials) SupportedTokenTypes() []scheduler.TokenSource {
+	return nil
 }
