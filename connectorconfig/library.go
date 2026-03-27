@@ -68,7 +68,8 @@ const (
 	LibraryPagosNetworkTokenization   Library = "pagos-networktokenization"
 
 	// Apple Store
-	LibraryAppleStore Library = "apple-store"
+	LibraryAppleStore  Library = "apple-store"
+	LibraryGoogleStore Library = "google-store"
 )
 
 type LibraryType string
@@ -425,6 +426,13 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibraryAppleStore: {
 		DisplayName: "Apple Store",
 		Credentials: func() Credentials { return &AppleStoreCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return false
+		},
+	},
+	LibraryGoogleStore: {
+		DisplayName: "Google Play Store",
+		Credentials: func() Credentials { return &GoogleStoreCredentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return false
 		},
