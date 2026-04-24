@@ -111,6 +111,13 @@ func (s ScaPolicy) GetShouldAuthOnR() bool {
 	return *s.ShouldAuthOnR
 }
 
+func (s ScaPolicy) GetShouldAuthOnU() bool {
+	if s.ShouldAuthOnU == nil {
+		return true
+	}
+	return *s.ShouldAuthOnU
+}
+
 // GetKind returns the ScaPolicy kind
 func (ScaPolicy) GetKind() object.Kind { return KindPolicySCA }
 
