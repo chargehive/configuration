@@ -54,11 +54,17 @@ type ScaPolicy struct {
 	// ShouldAuthOnError if true and an error response is returned from the connector; proceed to auth anyway
 	ShouldAuthOnError *bool `json:"shouldAuthOnError" yaml:"shouldAuthOnError" validate:"required"`
 
-	// ShouldAuthOnN if true and an "N" response is returned from the connector; proceed to auth anyway
+	// ShouldAuthOnN - Not authenticated — issuer/cardholder actively failed auth
+	// if true and an "N" response is returned from the connector; proceed to auth anyway
 	ShouldAuthOnN *bool `json:"shouldAuthOnN" yaml:"shouldAuthOnN" validate:"required"`
 
-	// ShouldAuthOnR if true and an "R" response is returned from the connector; proceed to auth anyway
+	// ShouldAuthOnR - Rejected by issuer
+	// if true and an "R" response is returned from the connector; proceed to auth anyway
 	ShouldAuthOnR *bool `json:"shouldAuthOnR" yaml:"shouldAuthOnR" validate:"required"`
+
+	// ShouldAuthOnR - Unable to authenticate (technical failure, sometimes also covers "no ACS / card not enrolled")
+	// if true and an "U" response is returned from the connector; proceed to auth anyway
+	ShouldAuthOnU *bool `json:"shouldAuthOnU" yaml:"shouldAuthOnU" validate:"required"`
 
 	ChallengePreference ChallengePreference `json:"challengePreference" yaml:"challengePreference" validate:"omitempty,oneof=no-preference no-challenge request mandate"`
 }
