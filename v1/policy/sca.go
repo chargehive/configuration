@@ -62,7 +62,7 @@ type ScaPolicy struct {
 	// if true and an "R" response is returned from the connector; proceed to auth anyway
 	ShouldAuthOnR *bool `json:"shouldAuthOnR" yaml:"shouldAuthOnR" validate:"required"`
 
-	// ShouldAuthOnR - Unable to authenticate (technical failure, sometimes also covers "no ACS / card not enrolled")
+	// ShouldAuthOnU - Unable to authenticate (technical failure, sometimes also covers "no ACS / card not enrolled")
 	// if true and an "U" response is returned from the connector; proceed to auth anyway
 	ShouldAuthOnU *bool `json:"shouldAuthOnU" yaml:"shouldAuthOnU" validate:"required"`
 
