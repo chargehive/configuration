@@ -15,6 +15,7 @@ func GetHandlers() []object.KindHandler {
 	funcs = append(funcs, methodLockPolicy()...)
 	funcs = append(funcs, methodVerifyPolicy()...)
 	funcs = append(funcs, methodRefreshPolicy()...)
+	funcs = append(funcs, adviceCodesPolicy()...)
 	return funcs
 }
 
@@ -95,5 +96,13 @@ func methodRefreshPolicy() []object.KindHandler {
 	return []object.KindHandler{
 		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &MethodRefreshPolicy{} }),
 		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &MethodRefreshPolicy{} }),
+	}
+}
+
+func adviceCodesPolicy() []object.KindHandler {
+	o := AdviceCodePolicy{}
+	return []object.KindHandler{
+		object.NewKindHandler(o.GetKind(), object.KindHandlerDefaultVersion, func() object.Specification { return &AdviceCodePolicy{} }),
+		object.NewKindHandler(o.GetKind(), o.GetVersion(), func() object.Specification { return &AdviceCodePolicy{} }),
 	}
 }
