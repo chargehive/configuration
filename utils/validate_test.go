@@ -112,6 +112,19 @@ func TestEmptyFields(t *testing.T) {
 	assert.Equal(t, 0, len(errs))
 }
 
+// TestGPaymentsEmptyDeprecatedCerts ensures a gpayments connector with merchantToken set
+// and the deprecated *string cert fields omitted (nil) validates without panicking.
+// Previously this panicked: "Bad field type *string" because required_without passed on a
+// nil pointer and the validator then ran gt=0 against the nil *string.
+func TestGPaymentsEmptyDeprecatedCerts(t *testing.T) {
+	configuration.Initialise()
+
+	// merchantToken set; merchantCertificate / merchantCertificatePassword / CACertificates omitted (nil)
+	rawJson := []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"change-me","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"gpayments","configuration":"eyJtZXJjaGFudE5hbWUiOiJ0ZXN0LW1lcmNoYW50IiwibWVyY2hhbnRJRCI6Im1pZC0xMjMiLCJtZXJjaGFudFRva2VuIjoidG9rZW4tYWJjIiwiZW52aXJvbm1lbnQiOiJzYW5kYm94In0="}}`)
+	errs := Validate(rawJson, "v1")
+	assert.Equal(t, len(errs), 0)
+}
+
 // Test for invalid predicates
 func TestInvalidPredicates(t *testing.T) {
 

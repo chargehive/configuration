@@ -17,12 +17,17 @@ const (
 )
 
 type GPaymentsCredentials struct {
-	MerchantName                string               `json:"merchantName" yaml:"merchantName" validate:"required,gt=0"`
-	MerchantID                  string               `json:"merchantID" yaml:"merchantID" validate:"required,gt=0"`
-	MerchantCertificate         *string              `json:"merchantCertificate" yaml:"merchantCertificate" validate:"required,gt=0"`
-	MerchantCertificatePassword *string              `json:"merchantCertificatePassword" yaml:"merchantCertificatePassword" validate:"required,gt=0"`
-	CACertificates              *string              `json:"CACertificates" yaml:"CACertificates" validate:"required,gt=0"`
-	Environment                 GPaymentsEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
+	MerchantName  string               `json:"merchantName" yaml:"merchantName" validate:"required,gt=0"`
+	MerchantID    string               `json:"merchantID" yaml:"merchantID" validate:"required,gt=0"`
+	MerchantToken string               `json:"merchantToken" yaml:"merchantToken" validate:"required_without_all=MerchantCertificate MerchantCertificatePassword CACertificates,omitempty,gt=0"`
+	Environment   GPaymentsEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
+
+	// Deprecated
+	MerchantCertificate *string `json:"merchantCertificate" yaml:"merchantCertificate" validate:"required_without=MerchantToken,omitempty,gt=0"`
+	// Deprecated
+	MerchantCertificatePassword *string `json:"merchantCertificatePassword" yaml:"merchantCertificatePassword" validate:"required_without=MerchantToken,omitempty,gt=0"`
+	// Deprecated
+	CACertificates *string `json:"CACertificates" yaml:"CACertificates" validate:"required_without=MerchantToken,omitempty,gt=0"`
 }
 
 func (c *GPaymentsCredentials) GetMID() string {
