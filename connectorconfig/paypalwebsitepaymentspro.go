@@ -128,6 +128,9 @@ func (c *PayPalWebsitePaymentsProCredentials) CanPlanModeUse(mode environment.Mo
 	if mode == environment.ModeSandbox && c.Environment == PayPalEnvironmentLive {
 		return false
 	}
+	if mode == environment.ModeProduction && c.Environment == PayPalEnvironmentSandbox {
+		return false
+	}
 	return true
 }
 

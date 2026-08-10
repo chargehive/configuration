@@ -68,6 +68,9 @@ func (c *PayPalExpressCheckoutCredentials) CanPlanModeUse(mode environment.Mode)
 	if mode == environment.ModeSandbox && c.Environment == PayPalEnvironmentLive {
 		return false
 	}
+	if mode == environment.ModeProduction && c.Environment == PayPalEnvironmentSandbox {
+		return false
+	}
 	return true
 }
 

@@ -75,6 +75,9 @@ func (c *EpxCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == EpxEnvironmentProduction {
 		return false
 	}
+	if mode == environment.ModeProduction && c.Environment == EpxEnvironmentSandbox {
+		return false
+	}
 	return true
 }
 

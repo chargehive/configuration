@@ -104,6 +104,9 @@ func (c *BraintreeCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == BraintreeEnvironmentProduction {
 		return false
 	}
+	if mode == environment.ModeProduction && c.Environment == BraintreeEnvironmentSandbox {
+		return false
+	}
 	return true
 }
 

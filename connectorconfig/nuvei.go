@@ -72,6 +72,9 @@ func (c *NuveiCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == NuveiEnvironmentProduction {
 		return false
 	}
+	if mode == environment.ModeProduction && c.Environment == NuveiEnvironmentSandbox {
+		return false
+	}
 	return true
 }
 

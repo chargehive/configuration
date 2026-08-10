@@ -74,6 +74,9 @@ func (c *InovioPayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == InovioPayEnvironmentProduction {
 		return false
 	}
+	if mode == environment.ModeProduction && c.Environment == InovioPayEnvironmentSandbox {
+		return false
+	}
 	return true
 }
 

@@ -79,6 +79,9 @@ func (c *GPaymentsCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == GPaymentsEnvironmentProduction {
 		return false
 	}
+	if mode == environment.ModeProduction && c.Environment == GPaymentsEnvironmentSandbox {
+		return false
+	}
 	return true
 }
 

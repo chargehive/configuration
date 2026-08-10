@@ -139,6 +139,9 @@ func (c *CheckoutCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == CheckoutEnvironmentProduction {
 		return false
 	}
+	if mode == environment.ModeProduction && c.Environment == CheckoutEnvironmentSandbox {
+		return false
+	}
 	return true
 }
 
