@@ -28,7 +28,7 @@ type WorldpayAccessCredentials struct {
 
 func (c *WorldpayAccessCredentials) GetGooglePayParams() map[string]string {
 	return map[string]string{
-		"gateway":           "worldpay",
+		"gateway":           "worldpay-access",
 		"gatewayMerchantId": c.GetGooglePay().GetGoogleCardMerchantId(),
 	}
 }
