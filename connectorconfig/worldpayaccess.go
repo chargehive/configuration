@@ -16,14 +16,22 @@ var (
 	_ MerchantIdentifier          = (*WorldpayAccessCredentials)(nil)
 )
 
+type WorldpayAccessEnvironment string
+
+const (
+	WorldpayAccessEnvironmentTry        WorldpayAccessEnvironment = "try"
+	WorldpayAccessEnvironmentProduction WorldpayAccessEnvironment = "production"
+)
+
 type WorldpayAccessCredentials struct {
-	Username           *string               `json:"username" yaml:"username" validate:"required,gt=0"`
-	Password           *string               `json:"password" yaml:"password" validate:"required,gt=0"`
-	Entity             string                `json:"entity" yaml:"entity" validate:"gte=1,lte=32"`
-	MerchantDescriptor string                `json:"merchantDescriptor" yaml:"merchantDescriptor" validate:"gte=1,lte=24"`
-	MCC                string                `json:"mcc,omitempty" yaml:"mcc,omitempty" validate:"omitempty,len=4,numeric"`
-	GooglePay          *GooglePayCredentials `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
-	ApplePay           *ApplePayCredentials  `json:"applePay,omitempty" yaml:"applePay,omitempty"`
+	Username           *string                   `json:"username" yaml:"username" validate:"required,gt=0"`
+	Password           *string                   `json:"password" yaml:"password" validate:"required,gt=0"`
+	Environment        WorldpayAccessEnvironment `json:"environment" yaml:"environment" validate:"oneof=try production"`
+	Entity             string                    `json:"entity" yaml:"entity" validate:"gte=1,lte=32"`
+	MerchantDescriptor string                    `json:"merchantDescriptor" yaml:"merchantDescriptor" validate:"gte=1,lte=24"`
+	MCC                string                    `json:"mcc,omitempty" yaml:"mcc,omitempty" validate:"omitempty,len=4,numeric"`
+	GooglePay          *GooglePayCredentials     `json:"googlePay,omitempty" yaml:"googlePay,omitempty"`
+	ApplePay           *ApplePayCredentials      `json:"applePay,omitempty" yaml:"applePay,omitempty"`
 }
 
 func (c *WorldpayAccessCredentials) GetGooglePayParams() map[string]string {
@@ -98,7 +106,8 @@ func (c *WorldpayAccessCredentials) SupportsCountry(country string) bool {
 }
 
 func (c *WorldpayAccessCredentials) CanPlanModeUse(mode environment.Mode) bool {
-	return true
+	return mode == environment.ModeSandbox && c.Environment == WorldpayAccessEnvironmentTry ||
+		mode == environment.ModeProduction && c.Environment == WorldpayAccessEnvironmentProduction
 }
 
 func (c *WorldpayAccessCredentials) IsRecoveryAgent() bool {
