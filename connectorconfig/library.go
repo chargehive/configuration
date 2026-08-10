@@ -439,4 +439,13 @@ var LibraryRegister = map[Library]LibraryDef{
 			return false
 		},
 	},
+	LibraryWorldpayAccess: {
+		DisplayName: "Worldpay Access",
+		Credentials: func() Credentials { return &WorldpayAccessCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return (methodType == chtype.PAYMENT_METHOD_TYPE_CARD) ||
+				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
+				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY)
+		},
+	},
 }
