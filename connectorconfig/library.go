@@ -46,6 +46,7 @@ const (
 	LibraryFlexPay                  Library = "flexpay"
 	LibraryEpx                      Library = "epx"
 	LibraryWoodforest               Library = "woodforest"
+	LibraryWorldpayAccess           Library = "worldpay-access"
 
 	// Fraud Libraries
 	LibraryChargeHive  Library = "chargehive"
