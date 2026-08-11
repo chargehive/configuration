@@ -70,6 +70,9 @@ func (c *FlexPayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == FlexPayEnvironmentProduction {
 		return false
 	}
+	if mode == environment.ModeProduction && c.Environment == FlexPayEnvironmentSandbox {
+		return false
+	}
 	return true
 }
 

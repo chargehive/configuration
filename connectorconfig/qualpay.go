@@ -72,6 +72,9 @@ func (c *QualpayCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == QualPayEnvironmentLive {
 		return false
 	}
+	if mode == environment.ModeProduction && c.Environment == QualPayEnvironmentTest {
+		return false
+	}
 	return true
 }
 

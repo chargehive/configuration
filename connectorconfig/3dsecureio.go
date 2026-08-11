@@ -81,6 +81,9 @@ func (c *ThreeDSecureIOCredentials) CanPlanModeUse(mode environment.Mode) bool {
 	if mode == environment.ModeSandbox && c.Environment == ThreeDSecureIOEnvironmentProduction {
 		return false
 	}
+	if mode == environment.ModeProduction && c.Environment == ThreeDSecureIOEnvironmentSandbox {
+		return false
+	}
 	return true
 }
 
