@@ -16,58 +16,57 @@ type Library string
 
 const (
 	LibraryNone Library = ""
-
 	// Payment Libraries
+	LibrarySandbox                  Library = "sandbox" // Connector for testing Charge hive
 	LibraryAdyen                    Library = "adyen"
 	LibraryApplePay                 Library = "applepay"
+	LibraryGooglePay                Library = "googlepay"
 	LibraryAuthorizeNet             Library = "authorizenet"
-	LibraryBlueSnap                 Library = "bluesnap"
-	LibraryBottomline               Library = "bottomline"
 	LibraryBraintree                Library = "braintree"
+	LibraryBlueSnap                 Library = "bluesnap"
+	LibraryQualPay                  Library = "qualpay"
+	LibraryStripe                   Library = "stripe"
+	LibraryPaySafe                  Library = "paysafe"
+	LibraryWorldpay                 Library = "worldpay"
+	LibraryPayPalWebsitePaymentsPro Library = "paypal-websitepaymentspro"
+	LibraryPayPalExpressCheckout    Library = "paypal-expresscheckout"
+	LibraryPayPal                   Library = "paypal"
+	LibraryVindicia                 Library = "vindicia"
+	LibraryBottomline               Library = "bottomline"
 	LibraryCheckout                 Library = "checkout"
 	LibraryClearhaus                Library = "clearhaus"
+	LibraryTrustPayments            Library = "trust-payments"
 	LibraryCWAMS                    Library = "cwams"
-	LibraryEpx                      Library = "epx"
-	LibraryFlexPay                  Library = "flexpay"
-	LibraryGooglePay                Library = "googlepay"
-	LibraryGPayments                Library = "gpayments"
+	LibraryYapstone                 Library = "yapstone"
+	LibraryThreeDSecureIO           Library = "threedsecureio"
 	LibraryInovioPay                Library = "inoviopay"
 	LibraryNuvei                    Library = "nuvei"
-	LibraryPayPal                   Library = "paypal"
-	LibraryPayPalExpressCheckout    Library = "paypal-expresscheckout"
-	LibraryPayPalWebsitePaymentsPro Library = "paypal-websitepaymentspro"
-	LibraryPaySafe                  Library = "paysafe"
-	LibraryQualPay                  Library = "qualpay"
+	LibraryGPayments                Library = "gpayments"
 	LibrarySandbanx                 Library = "sandbanx"
-	LibrarySandbox                  Library = "sandbox" // Connector for testing Charge hive
-	LibraryStripe                   Library = "stripe"
-	LibraryThreeDSecureIO           Library = "threedsecureio"
-	LibraryTrustPayments            Library = "trust-payments"
-	LibraryVindicia                 Library = "vindicia"
+	LibraryFlexPay                  Library = "flexpay"
+	LibraryEpx                      Library = "epx"
 	LibraryWoodforest               Library = "woodforest"
-	LibraryWorldpay                 Library = "worldpay"
 	LibraryWorldpayAccess           Library = "worldpay-access"
-	LibraryYapstone                 Library = "yapstone"
 
 	// Fraud Libraries
 	LibraryChargeHive  Library = "chargehive"
+	LibraryMaxMind     Library = "maxmind"
 	LibraryCyberSource Library = "cybersource"
 	LibraryKount       Library = "kount"
-	LibraryMaxMind     Library = "maxmind"
 	LibraryRecaptcha   Library = "recaptcha"
 
 	// Updater Libraries
-	LibraryPagosRealtimeAccountUpdater Library = "pagos-realtime-accountupdater"
 	LibraryPaySafeAccountUpdater       Library = "paysafe-accountupdater"
 	LibraryTokenExAccountUpdater       Library = "tokenex-accountupdater"
 	LibraryTokenExApiAccountUpdater    Library = "tokenex-api-accountupdater"
+	LibraryPagosRealtimeAccountUpdater Library = "pagos-realtime-accountupdater"
 
 	// Scheduler Libraries
 	LibraryStickyIO Library = "sticky-io"
 
 	// Tokenization Libraries
-	LibraryPagosNetworkTokenization   Library = "pagos-networktokenization"
 	LibraryTokenExNetworkTokenization Library = "tokenex-networktokenization"
+	LibraryPagosNetworkTokenization   Library = "pagos-networktokenization"
 
 	// Apple Store
 	LibraryAppleStore  Library = "apple-store"
