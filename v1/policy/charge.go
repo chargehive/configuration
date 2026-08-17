@@ -3,6 +3,7 @@ package policy
 import (
 	"encoding/json"
 	"errors"
+
 	"github.com/chargehive/configuration/object"
 )
 
@@ -24,9 +25,12 @@ const (
 
 	// RestrictionBlock should block the request
 	RestrictionBlock Restriction = "block"
+
+	// RestrictionVerifySignature requires a valid signature on the charge
+	RestrictionVerifySignature Restriction = "verify-signature"
 )
 
-// ChargePolicy defines the constraints that when exceeded a charge will not expire
+// ChargePolicy defines the constraints that when exceeded, a charge will not expire
 type ChargePolicy struct {
 	// MaxAuthAttempts is the number of auths that can be processed, 0 for unlimited
 	MaxAuthAttempts int64 `json:"authAttempts" yaml:"authAttempts" validate:"min=0"`
@@ -41,16 +45,19 @@ type ChargePolicy struct {
 	AllowAmounts []int64 `json:"allowAmounts" yaml:"allowAmounts"`
 
 	// OnCreation is the restriction on charge creation
-	OnCreation Restriction `json:"onCreation" yaml:"onCreation" validate:"omitempty,oneof='' api-initiate api-verify block"`
+	OnCreation Restriction `json:"onCreation" yaml:"onCreation" validate:"omitempty,oneof='' api-initiate api-verify block verify-signature"`
 
 	// OnAuth is the restriction on charge auth
-	OnAuth Restriction `json:"onAuth" yaml:"onAuth" validate:"omitempty,oneof='' api-initiate api-verify block"`
+	OnAuth Restriction `json:"onAuth" yaml:"onAuth" validate:"omitempty,oneof='' api-initiate api-verify block verify-signature"`
 
 	// OnCapture is the restriction on charge capture
-	OnCapture Restriction `json:"onCapture" yaml:"onCapture" validate:"omitempty,oneof='' api-initiate api-verify block"`
+	OnCapture Restriction `json:"onCapture" yaml:"onCapture" validate:"omitempty,oneof='' api-initiate api-verify block verify-signature"`
 
 	// OnRefund is the restriction on charge refund
-	OnRefund Restriction `json:"onRefund" yaml:"onRefund" validate:"omitempty,oneof='' api-initiate api-verify block"`
+	OnRefund Restriction `json:"onRefund" yaml:"onRefund" validate:"omitempty,oneof='' api-initiate api-verify block verify-signature"`
+
+	// PublicSignatureKey is the public key used to verify signatures on charges
+	PublicSignatureKey string `json:"publicSignatureKey" yaml:"publicSignatureKey"`
 }
 
 // GetKind returns the ChargePolicy kind
