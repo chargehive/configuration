@@ -59,7 +59,8 @@ type ScaPolicy struct {
 	ShouldAuthOnN *bool `json:"shouldAuthOnN" yaml:"shouldAuthOnN" validate:"required"`
 
 	// ShouldAuthOnR - Rejected by issuer
-	// if true and an "R" response is returned from the connector; proceed to auth anyway
+	// if true and an "R" response is returned from the connector; proceed to auth anyway.
+	// Unset resolves to false, unlike the other shouldAuthOnX flags - see GetShouldAuthOnR.
 	ShouldAuthOnR *bool `json:"shouldAuthOnR" yaml:"shouldAuthOnR" validate:"required"`
 
 	// ShouldAuthOnU - Unable to authenticate (technical failure, sometimes also covers "no ACS / card not enrolled")
@@ -69,54 +70,51 @@ type ScaPolicy struct {
 	ChallengePreference ChallengePreference `json:"challengePreference" yaml:"challengePreference" validate:"omitempty,oneof=no-preference no-challenge request mandate"`
 }
 
-func (s ScaPolicy) GetScaRequired() bool {
-	if s.RequireSca == nil {
-		return false
+// scaFlag resolves an unset policy flag. Every flag on ScaPolicy is a pointer so
+// that an omitted field can be told apart from an explicit false, which means each
+// getter has to name the value it falls back to. Keeping the resolution here rather
+// than in each body puts all of those fallbacks in one readable column.
+func scaFlag(value *bool, whenUnset bool) bool {
+	if value == nil {
+		return whenUnset
 	}
-	return *s.RequireSca
+	return *value
 }
 
-func (s ScaPolicy) GetShouldIdentify() bool {
-	if s.ShouldIdentify == nil {
-		return false
-	}
-	return *s.ShouldIdentify
-}
+// GetScaRequired reports whether SCA is required, defaulting to false so a policy
+// that does not ask for authentication does not get it.
+func (s ScaPolicy) GetScaRequired() bool { return scaFlag(s.RequireSca, false) }
 
+// GetShouldIdentify reports whether the identification stages should run, defaulting
+// to false for the same reason as GetScaRequired.
+func (s ScaPolicy) GetShouldIdentify() bool { return scaFlag(s.ShouldIdentify, false) }
+
+// GetShouldChallengeOptional reports whether an optional challenge should be shown,
+// defaulting to false so a challenge is not displayed unless it was asked for.
 func (s ScaPolicy) GetShouldChallengeOptional() bool {
-	if s.ShouldChallengeOptional == nil {
-		return false
-	}
-	return *s.ShouldChallengeOptional
+	return scaFlag(s.ShouldChallengeOptional, false)
 }
 
-func (s ScaPolicy) GetShouldAuthOnError() bool {
-	if s.ShouldAuthOnError == nil {
-		return true
-	}
-	return *s.ShouldAuthOnError
-}
+// GetShouldAuthOnError reports whether to authorize after a connector error,
+// defaulting to true: an error says nothing about the cardholder, so an
+// authentication outage should not decline every payment.
+func (s ScaPolicy) GetShouldAuthOnError() bool { return scaFlag(s.ShouldAuthOnError, true) }
 
-func (s ScaPolicy) GetShouldAuthOnN() bool {
-	if s.ShouldAuthOnN == nil {
-		return true
-	}
-	return *s.ShouldAuthOnN
-}
+// GetShouldAuthOnN reports whether to authorize after a failed authentication,
+// defaulting to true. N is an outcome the merchant may reasonably decide to accept.
+func (s ScaPolicy) GetShouldAuthOnN() bool { return scaFlag(s.ShouldAuthOnN, true) }
 
-func (s ScaPolicy) GetShouldAuthOnR() bool {
-	if s.ShouldAuthOnR == nil {
-		return true
-	}
-	return *s.ShouldAuthOnR
-}
+// GetShouldAuthOnR reports whether to authorize after a rejected authentication.
+//
+// Unlike its siblings this defaults to false. N and U are outcomes the merchant can
+// weigh up, but R is the issuer rejecting authentication and asking that
+// authorization not be attempted at all - so proceeding has to be something a
+// merchant chose, never something inherited from an unset field.
+func (s ScaPolicy) GetShouldAuthOnR() bool { return scaFlag(s.ShouldAuthOnR, false) }
 
-func (s ScaPolicy) GetShouldAuthOnU() bool {
-	if s.ShouldAuthOnU == nil {
-		return true
-	}
-	return *s.ShouldAuthOnU
-}
+// GetShouldAuthOnU reports whether to authorize when authentication could not be
+// performed, defaulting to true: U is a technical failure rather than a refusal.
+func (s ScaPolicy) GetShouldAuthOnU() bool { return scaFlag(s.ShouldAuthOnU, true) }
 
 // GetKind returns the ScaPolicy kind
 func (ScaPolicy) GetKind() object.Kind { return KindPolicySCA }
