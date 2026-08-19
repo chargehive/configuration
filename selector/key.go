@@ -183,6 +183,10 @@ const ( // Payment Method
 )
 
 var KeyRegister = map[Key]bool{
+	KeyChargeID:                       true,
+	KeyChargeProjectID:                true,
+	KeyChargeBPID:                     true,
+	KeyChargeMHID:                     true,
 	KeyNow:                            true,
 	KeyRandomPercent:                  true,
 	KeyBucketBPID:                     true,
