@@ -43,7 +43,7 @@ const ( // Charge Definition
 	KeyChargeID        Key = "charge.id"
 	KeyChargeProjectID Key = "charge.project.id"
 	KeyChargeBPID      Key = "charge.bpid"
-	KeyChargeMUID      Key = "charge.muid"
+	KeyChargeMHID      Key = "charge.mhid"
 )
 
 const ( // Charge Meta
