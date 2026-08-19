@@ -39,6 +39,11 @@ const ( // Charge Definition
 	KeyChargeUserLocation        Key = "charge.userLocation"
 	KeyChargeEnvironment         Key = "charge.environment"
 	KeyChargePreferredMethodType Key = "charge.preferredMethodType"
+
+	KeyChargeID        Key = "charge.id"
+	KeyChargeProjectID Key = "charge.project.id"
+	KeyChargeBPID      Key = "charge.bpid"
+	KeyChargeMUID      Key = "charge.muid"
 )
 
 const ( // Charge Meta
