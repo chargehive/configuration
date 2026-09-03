@@ -47,6 +47,7 @@ const (
 	LibraryEpx                      Library = "epx"
 	LibraryWoodforest               Library = "woodforest"
 	LibraryWorldpayAccess           Library = "worldpay-access"
+	LibraryShift4                   Library = "shift4"
 
 	// Fraud Libraries
 	LibraryChargeHive  Library = "chargehive"
@@ -441,6 +442,15 @@ var LibraryRegister = map[Library]LibraryDef{
 	LibraryWorldpayAccess: {
 		DisplayName: "Worldpay Access",
 		Credentials: func() Credentials { return &WorldpayAccessCredentials{} },
+		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
+			return (methodType == chtype.PAYMENT_METHOD_TYPE_CARD) ||
+				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
+				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_GOOGLEPAY)
+		},
+	},
+	LibraryShift4: {
+		DisplayName: "Shift4",
+		Credentials: func() Credentials { return &Shift4Credentials{} },
 		SupportsMethod: func(methodType chtype.PaymentMethodType, methodProvider chtype.PaymentMethodProvider) bool {
 			return (methodType == chtype.PAYMENT_METHOD_TYPE_CARD) ||
 				(methodType == chtype.PAYMENT_METHOD_TYPE_DIGITALWALLET && methodProvider == chtype.PAYMENT_METHOD_PROVIDER_APPLEPAY) ||
