@@ -33,9 +33,6 @@ type Shift4Credentials struct {
 }
 
 func (c *Shift4Credentials) GetGooglePayParams() map[string]string {
-	// TODO(shift4-onboarding): confirm the Google Pay gateway identifier for
-	// the Shift4/Credorax gateway with the account manager before production
-	// Google Pay gateway-token traffic ("credorax" was the historic id).
 	return map[string]string{
 		"gateway":           "shift4",
 		"gatewayMerchantId": c.GetGooglePay().GetGoogleCardMerchantId(),
