@@ -24,7 +24,7 @@ const (
 )
 
 type Shift4Credentials struct {
-	MerchantID         *string               `json:"merchantId" yaml:"merchantId" validate:"required,gt=0"`
+	MerchantID         string                `json:"merchantId" yaml:"merchantId" validate:"gte=1,lte=32"`
 	SignatureKey       *string               `json:"signatureKey" yaml:"signatureKey" validate:"required,gt=0"`
 	Environment        Shift4Environment     `json:"environment" yaml:"environment" validate:"oneof=integration production"`
 	MerchantDescriptor string                `json:"merchantDescriptor,omitempty" yaml:"merchantDescriptor,omitempty" validate:"omitempty,lte=25"`
@@ -43,10 +43,7 @@ func (c *Shift4Credentials) GetGooglePay() *GooglePayCredentials { return c.Goog
 func (c *Shift4Credentials) GetApplePay() *ApplePayCredentials   { return c.ApplePay }
 
 func (c *Shift4Credentials) GetMID() string {
-	if c.MerchantID == nil {
-		return ""
-	}
-	return *c.MerchantID
+	return c.MerchantID
 }
 
 func (c *Shift4Credentials) GetLibrary() Library { return LibraryShift4 }

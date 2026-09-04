@@ -11,7 +11,7 @@ func strPtr(s string) *string { return &s }
 
 func TestShift4Credentials(t *testing.T) {
 	c := &Shift4Credentials{
-		MerchantID:   strPtr("MID123"),
+		MerchantID:   "MID123",
 		SignatureKey: strPtr("key"),
 		Environment:  Shift4EnvironmentIntegration,
 	}
