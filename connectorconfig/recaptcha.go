@@ -28,13 +28,29 @@ const (
 	// 1.0 is very likely fraud, 0.0 very likely legitimate - the opposite direction to
 	// riskAnalysis.
 	RecaptchaSuggestionSourceTransactionRisk RecaptchaSuggestionSource = "transactionRisk"
+
+	// RecaptchaSuggestionSourceCardTestingRisk matches
+	// fraudPreventionAssessment.cardTestingVerdict.risk: how likely the attempt is part
+	// of a card testing attack. 1.0 is highest risk.
+	RecaptchaSuggestionSourceCardTestingRisk RecaptchaSuggestionSource = "cardTestingRisk"
+
+	// RecaptchaSuggestionSourceStolenInstrumentRisk matches
+	// fraudPreventionAssessment.stolenInstrumentVerdict.risk: how likely the instrument
+	// is not the payer's. 1.0 is highest risk.
+	RecaptchaSuggestionSourceStolenInstrumentRisk RecaptchaSuggestionSource = "stolenInstrumentRisk"
+
+	// RecaptchaSuggestionSourceBehavioralTrust matches
+	// fraudPreventionAssessment.behavioralTrustVerdict.trust: how trustworthily the
+	// attempt behaved. 1.0 is MOST trustworthy - this runs with riskAnalysis, against the
+	// three risk scores, so a deny range here sits at the bottom and not the top.
+	RecaptchaSuggestionSourceBehavioralTrust RecaptchaSuggestionSource = "behavioralTrust"
 )
 
 type RecaptchaSuggestionRange struct {
 	// Source selects which score Min and Max apply to. Empty means
 	// RecaptchaSuggestionSourceRiskAnalysis, so ranges written before this field existed
 	// keep working unchanged.
-	Source RecaptchaSuggestionSource `json:"source,omitempty" yaml:"source,omitempty" validate:"omitempty,oneof=recaptcha transactionRisk"`
+	Source RecaptchaSuggestionSource `json:"source,omitempty" yaml:"source,omitempty" validate:"omitempty,oneof=recaptcha transactionRisk cardTestingRisk stolenInstrumentRisk behavioralTrust"`
 	Min    float32                   `json:"min" yaml:"min" validate:"required"`
 	Max    float32                   `json:"max" yaml:"max" validate:"required"`
 	Action string                    `json:"action" yaml:"action" validate:"required, oneof=review allow deny"`
