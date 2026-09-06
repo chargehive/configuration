@@ -9,10 +9,43 @@ import (
 	"github.com/chargehive/proto/golang/chargehive/chtype"
 )
 
+// RecaptchaSuggestionSource names the reCAPTCHA score a suggestion range is matched
+// against. The two scores answer different questions and run in opposite directions, so a
+// range is only meaningful alongside the score it was written for.
+//
+// Kept in step with psp-configuration/recaptcha.SuggestionSource, which is where the
+// connector reads it.
+type RecaptchaSuggestionSource string
+
+const (
+	// RecaptchaSuggestionSourceRiskAnalysis matches riskAnalysis.score: how likely the
+	// session is a human rather than automation. 1.0 is very likely legitimate, 0.0 very
+	// likely a bot. This is the default, and what an unset source means.
+	RecaptchaSuggestionSourceRiskAnalysis RecaptchaSuggestionSource = "recaptcha"
+
+	// RecaptchaSuggestionSourceTransactionRisk matches
+	// fraudPreventionAssessment.transactionRisk: how likely the payment is fraudulent.
+	// 1.0 is very likely fraud, 0.0 very likely legitimate - the opposite direction to
+	// riskAnalysis.
+	RecaptchaSuggestionSourceTransactionRisk RecaptchaSuggestionSource = "transactionRisk"
+)
+
 type RecaptchaSuggestionRange struct {
-	Min    float32 `json:"min" yaml:"min" validate:"required"`
-	Max    float32 `json:"max" yaml:"max" validate:"required"`
-	Action string  `json:"action" yaml:"action" validate:"required, oneof=review allow deny"`
+	// Source selects which score Min and Max apply to. Empty means
+	// RecaptchaSuggestionSourceRiskAnalysis, so ranges written before this field existed
+	// keep working unchanged.
+	Source RecaptchaSuggestionSource `json:"source,omitempty" yaml:"source,omitempty" validate:"omitempty,oneof=recaptcha transactionRisk"`
+	Min    float32                   `json:"min" yaml:"min" validate:"required"`
+	Max    float32                   `json:"max" yaml:"max" validate:"required"`
+	Action string                    `json:"action" yaml:"action" validate:"required, oneof=review allow deny"`
+}
+
+// GetSource returns the source the range matches against, resolving the empty default.
+func (r RecaptchaSuggestionRange) GetSource() RecaptchaSuggestionSource {
+	if r.Source == "" {
+		return RecaptchaSuggestionSourceRiskAnalysis
+	}
+	return r.Source
 }
 
 type RecaptchaCredentials struct {
