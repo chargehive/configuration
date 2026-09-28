@@ -17,17 +17,19 @@ type RateLimitIPOptions struct {
 }
 
 const (
-	RateLimitKeyChargePlacementID    RateLimitKey = "PlacementID"
-	RateLimitKeyMerchantReference    RateLimitKey = "MerchantReference"
-	RateLimitKeyCorrelationID        RateLimitKey = "CorrelationID"
-	RateLimitKeyBillingProfileID     RateLimitKey = "BillingProfileID"
-	RateLimitKeyIP                   RateLimitKey = "IP"
-	RateLimitKeyCurrency             RateLimitKey = "Currency"
-	RateLimitKeyUserAgent            RateLimitKey = "UserAgent"
-	RateLimitKeyDeviceType           RateLimitKey = "DeviceType"
-	RateLimitKeyDeviceBrowser        RateLimitKey = "DeviceBrowser"
-	RateLimitKeyDeviceBrowserVersion RateLimitKey = "DeviceBrowserVersion"
-	RateLimitKeyDeviceFingerprint    RateLimitKey = "DeviceFingerprint"
+	RateLimitKeyChargePlacementID         RateLimitKey = "PlacementID"
+	RateLimitKeyMerchantReference         RateLimitKey = "MerchantReference"
+	RateLimitKeyCorrelationID             RateLimitKey = "CorrelationID"
+	RateLimitKeyBillingProfileID          RateLimitKey = "BillingProfileID"
+	RateLimitKeyIP                        RateLimitKey = "IP"
+	RateLimitKeyCurrency                  RateLimitKey = "Currency"
+	RateLimitKeyUserAgent                 RateLimitKey = "UserAgent"
+	RateLimitKeyDeviceType                RateLimitKey = "DeviceType"
+	RateLimitKeyDeviceBrowser             RateLimitKey = "DeviceBrowser"
+	RateLimitKeyDeviceBrowserVersion      RateLimitKey = "DeviceBrowserVersion"
+	RateLimitKeyDeviceFingerprint         RateLimitKey = "DeviceFingerprint"
+	RateLimitKeyMethodMerchantFingerprint RateLimitKey = "MFP"
+	RateLimitKeyMethodProfileFingerprint  RateLimitKey = "PFP"
 )
 
 type RateLimitPolicy struct {
