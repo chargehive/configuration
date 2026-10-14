@@ -27,7 +27,7 @@ As with all configs, the standard wrapper is used.
 FieldName | Required | Definition 
 ---:|---|:---
 connectorIDs|true|List of fraud connector IDs to apply the policy to. These must be **fraud** connectors
-[checkTimes](#fraudchecktime)|true| Sets when to fraud check. `preauth-first` and `preauth-every` cannot be used together, and `ondemand` cannot be used with any other time
+[checkTimes](#fraudchecktime)|true| Sets when to fraud check. A policy runs either before the auth (`preauth-first` or `preauth-every`, not both) or after the payment (any of `auth-success`, `auth-decline`, `capture-success`, `capture-decline`), not both; `ondemand` cannot be used with any other time
 checkTime|false| Deprecated: a single check time, used in place of checkTimes. Accepts `preauth-first`, `preauth-every`, `auth-success` and `ondemand`
 [checkType](#fraudchecktype)|true| Sets how it works through the connectors
 
@@ -63,7 +63,7 @@ value | Definition
     "ConnectorIDs": [
       "fraud-default"
     ],
-    "CheckTimes": ["preauth-first", "capture-success"],
+    "CheckTimes": ["preauth-first"],
     "CheckType": "failover"
   }
 }

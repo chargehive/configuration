@@ -195,7 +195,9 @@ func TestFraudPolicyCheckTimes(t *testing.T) {
 	}{
 		{"single check time", `"checkTime":"auth-success"`, true},
 		{"check times", `"checkTimes":["auth-success","capture-success","capture-decline"]`, true},
-		{"declined auths", `"checkTimes":["preauth-first","auth-decline"]`, true},
+		{"declined auths", `"checkTimes":["auth-success","auth-decline"]`, true},
+		{"before and after the auth", `"checkTimes":["preauth-first","auth-success"]`, false},
+		{"before the auth and after the capture", `"checkTimes":["preauth-every","capture-decline"]`, false},
 		{"neither", `"declineOn":[]`, false},
 		{"both fields", `"checkTime":"auth-success","checkTimes":["capture-success"]`, false},
 		{"capture time as single check time", `"checkTime":"capture-success"`, false},

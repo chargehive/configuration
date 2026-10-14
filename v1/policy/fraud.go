@@ -50,12 +50,23 @@ const (
 )
 
 // ValidFraudCheckTimes reports whether a policy may run at all of the given times together. A
-// pre-auth policy runs before either the first auth or every auth, and an on-demand policy runs
-// at no other time.
+// policy decides on one side of the payment: before the auth, at either the first auth or every
+// auth, or after the payment, at any of the auth and capture outcomes. An on-demand policy runs at
+// no other time.
 func ValidFraudCheckTimes(times []FraudCheckTime) bool {
 	has := map[FraudCheckTime]bool{}
+	var pre, post bool
 	for _, t := range times {
 		has[t] = true
+		switch t {
+		case FraudCheckTimePreFirstAuth, FraudCheckTimePreEveryAuth:
+			pre = true
+		case FraudCheckTimeAuthSuccess, FraudCheckTimeAuthDecline, FraudCheckTimeCaptureSuccess, FraudCheckTimeCaptureDecline:
+			post = true
+		}
+	}
+	if pre && post {
+		return false
 	}
 	if has[FraudCheckTimePreFirstAuth] && has[FraudCheckTimePreEveryAuth] {
 		return false
