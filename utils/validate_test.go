@@ -186,26 +186,22 @@ func PrettyPrint(v interface{}) (err error) {
 func TestFraudPolicyCheckTimes(t *testing.T) {
 	configuration.Initialise()
 	policy := func(spec string) []byte {
-		return []byte(`{"kind":"PolicyFraud","metadata":{"projectId":"change-me","name":"change-me"},"specVersion":"v1","selector":{},"spec":{"connectorIDs":["fraud-kount"],"checkType":"all",` + spec + `}}`)
+		return []byte(`{"kind":"PolicyFraud","metadata":{"projectId":"change-me","name":"change-me"},"specVersion":"v1","selector":{},"spec":{"connectorIDs":["fraud-kount"],"checkType":"all"` + spec + `}}`)
 	}
 	tests := []struct {
 		name  string
 		spec  string
 		valid bool
 	}{
-		{"single check time", `"checkTime":"auth-success"`, true},
-		{"check times", `"checkTimes":["auth-success","capture-success","capture-decline"]`, true},
-		{"declined auths", `"checkTimes":["auth-success","auth-decline"]`, true},
-		{"before and after the auth", `"checkTimes":["preauth-first","auth-success"]`, false},
-		{"before the auth and after the capture", `"checkTimes":["preauth-every","capture-decline"]`, false},
-		{"neither", `"declineOn":[]`, false},
-		{"both fields", `"checkTime":"auth-success","checkTimes":["capture-success"]`, false},
-		{"capture time as single check time", `"checkTime":"capture-success"`, false},
-		{"unknown time", `"checkTimes":["settled"]`, false},
-		{"repeated time", `"checkTimes":["auth-success","auth-success"]`, false},
-		{"first and every auth", `"checkTimes":["preauth-first","preauth-every"]`, false},
-		{"on demand with another", `"checkTimes":["ondemand","auth-success"]`, false},
-		{"on demand alone", `"checkTimes":["ondemand"]`, true},
+		{"check time for every payment", `,"checkTime":"auth-success"`, true},
+		{"per initiator", `,"customerCheckTime":"preauth-every","merchantCheckTime":"postcapture"`, true},
+		{"customers after the auth", `,"customerCheckTime":"postauth"`, true},
+		{"merchants only", `,"merchantCheckTime":"postauth"`, true},
+		{"neither", ``, false},
+		{"check time with a per-initiator time", `,"checkTime":"preauth-every","merchantCheckTime":"postcapture"`, false},
+		{"post-capture as the check time for every payment", `,"checkTime":"postcapture"`, false},
+		{"merchants before the auth", `,"merchantCheckTime":"preauth-first"`, false},
+		{"unknown time", `,"customerCheckTime":"settled"`, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

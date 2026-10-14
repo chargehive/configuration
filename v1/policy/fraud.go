@@ -3,7 +3,6 @@ package policy
 import (
 	"encoding/json"
 	"errors"
-	"slices"
 
 	"github.com/chargehive/configuration/object"
 )
@@ -32,47 +31,22 @@ const (
 	// FraudCheckTimePreEveryAuth indicates that a fraud scan should check before every auth
 	FraudCheckTimePreEveryAuth FraudCheckTime = "preauth-every"
 
-	// FraudCheckTimeAuthSuccess indicates that a fraud scan should run after a successful auth
+	// FraudCheckTimeAuthSuccess indicates that a fraud scan should run after a successful auth.
+	//
+	// Deprecated: use FraudCheckTimePostAuth, which a CheckTime of auth-success runs as.
 	FraudCheckTimeAuthSuccess FraudCheckTime = "auth-success"
 
-	// FraudCheckTimeAuthDecline indicates that a fraud scan should run after a declined auth
-	FraudCheckTimeAuthDecline FraudCheckTime = "auth-decline"
+	// FraudCheckTimePostAuth indicates that a fraud scan should run after an auth's outcome, approved
+	// or declined, while an approved auth can still be voided before it is captured
+	FraudCheckTimePostAuth FraudCheckTime = "postauth"
 
-	// FraudCheckTimeCaptureSuccess indicates that a fraud scan should run after a successful
-	// capture, which is a sale or the capture of an earlier auth
-	FraudCheckTimeCaptureSuccess FraudCheckTime = "capture-success"
-
-	// FraudCheckTimeCaptureDecline indicates that a fraud scan should run after a declined capture
-	FraudCheckTimeCaptureDecline FraudCheckTime = "capture-decline"
+	// FraudCheckTimePostCapture indicates that a fraud scan should run after a capture's outcome,
+	// collected or declined. A capture is a sale or the capture of an earlier auth.
+	FraudCheckTimePostCapture FraudCheckTime = "postcapture"
 
 	// FraudCheckTimeOnDemand indicates that a fraud scan should run on demand only
 	FraudCheckTimeOnDemand FraudCheckTime = "ondemand"
 )
-
-// ValidFraudCheckTimes reports whether a policy may run at all of the given times together. A
-// policy decides on one side of the payment: before the auth, at either the first auth or every
-// auth, or after the payment, at any of the auth and capture outcomes. An on-demand policy runs at
-// no other time.
-func ValidFraudCheckTimes(times []FraudCheckTime) bool {
-	has := map[FraudCheckTime]bool{}
-	var pre, post bool
-	for _, t := range times {
-		has[t] = true
-		switch t {
-		case FraudCheckTimePreFirstAuth, FraudCheckTimePreEveryAuth:
-			pre = true
-		case FraudCheckTimeAuthSuccess, FraudCheckTimeAuthDecline, FraudCheckTimeCaptureSuccess, FraudCheckTimeCaptureDecline:
-			post = true
-		}
-	}
-	if pre && post {
-		return false
-	}
-	if has[FraudCheckTimePreFirstAuth] && has[FraudCheckTimePreEveryAuth] {
-		return false
-	}
-	return !has[FraudCheckTimeOnDemand] || len(has) == 1
-}
 
 // FraudDeclineReason are the suggestions for declining a charge
 type FraudDeclineReason string
@@ -89,13 +63,19 @@ type FraudPolicy struct {
 	// ConnectorIDs is the IDs of the fraud connectors
 	ConnectorIDs []string `json:"connectorIDs" yaml:"connectorIDs" validate:"min=1,dive,lowercase"`
 
-	// CheckTime is the time we should be running a fraud scan
+	// CheckTime is the time we should be running a fraud scan, for every payment
 	//
-	// Deprecated: use CheckTimes.
-	CheckTime FraudCheckTime `json:"checkTime,omitempty" yaml:"checkTime,omitempty" validate:"required_without=CheckTimes,excluded_with=CheckTimes,omitempty,oneof=preauth-first preauth-every auth-success ondemand"`
+	// Deprecated: use CustomerCheckTime and MerchantCheckTime.
+	CheckTime FraudCheckTime `json:"checkTime,omitempty" yaml:"checkTime,omitempty" validate:"required_without_all=CustomerCheckTime MerchantCheckTime,excluded_with=CustomerCheckTime MerchantCheckTime,omitempty,oneof=preauth-first preauth-every auth-success ondemand"`
 
-	// CheckTimes are the times we should be running a fraud scan
-	CheckTimes []FraudCheckTime `json:"checkTimes,omitempty" yaml:"checkTimes,omitempty" validate:"required_without=CheckTime,omitempty,unique,fraud-check-times,dive,oneof=preauth-first preauth-every auth-success auth-decline capture-success capture-decline ondemand"`
+	// CustomerCheckTime is when to run a fraud scan for a customer-initiated payment. Unset, the
+	// policy does not check customer-initiated payments.
+	CustomerCheckTime FraudCheckTime `json:"customerCheckTime,omitempty" yaml:"customerCheckTime,omitempty" validate:"omitempty,oneof=preauth-first preauth-every postauth postcapture ondemand"`
+
+	// MerchantCheckTime is when to run a fraud scan for a merchant-initiated payment, which has no
+	// customer present to collect device data from before the auth. Unset, the policy does not
+	// check merchant-initiated payments.
+	MerchantCheckTime FraudCheckTime `json:"merchantCheckTime,omitempty" yaml:"merchantCheckTime,omitempty" validate:"omitempty,oneof=postauth postcapture ondemand"`
 
 	// CheckType is the type of check that should be performed for this policy
 	CheckType FraudCheckType `json:"checkType" yaml:"checkType" validate:"oneof=all failover"`
@@ -103,9 +83,19 @@ type FraudPolicy struct {
 	DeclineOn []string `json:"declineOn" yaml:"declineOn" validate:"dive,oneof=invalid no-suggestion review deny"`
 }
 
-// RunsAt reports whether the policy runs at the given time.
-func (p FraudPolicy) RunsAt(t FraudCheckTime) bool {
-	return p.CheckTime == t || slices.Contains(p.CheckTimes, t)
+// CheckTimeFor returns when the policy runs for a payment initiated by the customer or the merchant,
+// or "" when it does not check that payment.
+func (p FraudPolicy) CheckTimeFor(customerInitiated bool) FraudCheckTime {
+	if p.CheckTime != "" {
+		if p.CheckTime == FraudCheckTimeAuthSuccess {
+			return FraudCheckTimePostAuth
+		}
+		return p.CheckTime
+	}
+	if customerInitiated {
+		return p.CustomerCheckTime
+	}
+	return p.MerchantCheckTime
 }
 
 // GetKind returns the FraudPolicy kind
