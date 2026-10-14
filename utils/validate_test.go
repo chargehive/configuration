@@ -182,3 +182,35 @@ func PrettyPrint(v interface{}) (err error) {
 	}
 	return
 }
+
+func TestFraudPolicyCheckTimes(t *testing.T) {
+	configuration.Initialise()
+	policy := func(spec string) []byte {
+		return []byte(`{"kind":"PolicyFraud","metadata":{"projectId":"change-me","name":"change-me"},"specVersion":"v1","selector":{},"spec":{"connectorIDs":["fraud-kount"],"checkType":"all",` + spec + `}}`)
+	}
+	tests := []struct {
+		name  string
+		spec  string
+		valid bool
+	}{
+		{"single check time", `"checkTime":"auth-success"`, true},
+		{"check times", `"checkTimes":["auth-success","capture-success","capture-decline"]`, true},
+		{"declined auths", `"checkTimes":["preauth-first","auth-decline"]`, true},
+		{"neither", `"declineOn":[]`, false},
+		{"both fields", `"checkTime":"auth-success","checkTimes":["capture-success"]`, false},
+		{"capture time as single check time", `"checkTime":"capture-success"`, false},
+		{"unknown time", `"checkTimes":["settled"]`, false},
+		{"repeated time", `"checkTimes":["auth-success","auth-success"]`, false},
+		{"first and every auth", `"checkTimes":["preauth-first","preauth-every"]`, false},
+		{"on demand with another", `"checkTimes":["ondemand","auth-success"]`, false},
+		{"on demand alone", `"checkTimes":["ondemand"]`, true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			errs := Validate(policy(tt.spec), "v1")
+			if (len(errs) == 0) != tt.valid {
+				t.Errorf("valid = %v, want %v: %v", len(errs) == 0, tt.valid, errs)
+			}
+		})
+	}
+}

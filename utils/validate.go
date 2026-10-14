@@ -9,6 +9,7 @@ import (
 	"github.com/chargehive/configuration/object"
 	"github.com/chargehive/configuration/selector"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/configuration/v1/policy"
 	"github.com/go-playground/locales/en"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
@@ -45,6 +46,9 @@ func Validate(rawJson []byte, version string) map[string]string {
 	err = validate.RegisterValidation("predicate-key", PredicateKeysValidator)
 	if err == nil {
 		err = validate.RegisterValidation("connector-library", ConnectorLibraryValidator)
+	}
+	if err == nil {
+		err = validate.RegisterValidation("fraud-check-times", FraudCheckTimesValidator)
 	}
 	if err != nil {
 		result["validation registration"] = err.Error()
@@ -110,6 +114,11 @@ func PredicateKeysValidator(fl validator.FieldLevel) bool {
 func ConnectorLibraryValidator(fl validator.FieldLevel) bool {
 	_, ok := connectorconfig.LibraryRegister[connectorconfig.Library(fl.Field().String())]
 	return ok
+}
+
+func FraudCheckTimesValidator(fl validator.FieldLevel) bool {
+	times, ok := fl.Field().Interface().([]policy.FraudCheckTime)
+	return ok && policy.ValidFraudCheckTimes(times)
 }
 
 func validatePredicates(predicates []selector.Predicate) string {

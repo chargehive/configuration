@@ -17,7 +17,7 @@ As with all configs, the standard wrapper is used.
     "connectorIDs": [               // List of fraud connector IDs to apply the policy to
       "fraud-chargehive",
     ],
-    "checkTime": "ondemand",        // Sets when to fraud check
+    "checkTimes": ["ondemand"],     // Sets when to fraud check
     "checkType": "all"              // Sets how it works through the connectors
   }
 }
@@ -27,7 +27,8 @@ As with all configs, the standard wrapper is used.
 FieldName | Required | Definition 
 ---:|---|:---
 connectorIDs|true|List of fraud connector IDs to apply the policy to. These must be **fraud** connectors
-[checkTime](#fraudchecktime)|true| Sets when to fraud check
+[checkTimes](#fraudchecktime)|true| Sets when to fraud check. `preauth-first` and `preauth-every` cannot be used together, and `ondemand` cannot be used with any other time
+checkTime|false| Deprecated: a single check time, used in place of checkTimes. Accepts `preauth-first`, `preauth-every`, `auth-success` and `ondemand`
 [checkType](#fraudchecktype)|true| Sets how it works through the connectors
 
 ### FraudCheckType
@@ -42,6 +43,9 @@ value | Definition
 "preauth-first" | Indicates that a fraud scan should check before the first auth
 "preauth-every" | Indicates that a fraud scan should check before every auth
 "auth-success" | Indicates that a fraud scan should run after a successful auth
+"auth-decline" | Indicates that a fraud scan should run after a declined auth
+"capture-success" | Indicates that a fraud scan should run after a successful capture, which is a sale or the capture of an earlier auth
+"capture-decline" | Indicates that a fraud scan should run after a declined capture
 "ondemand" | Indicates that a fraud scan should run on demand only
 
 ## Full Example
@@ -59,7 +63,7 @@ value | Definition
     "ConnectorIDs": [
       "fraud-default"
     ],
-    "CheckTime": "preauth-first",
+    "CheckTimes": ["preauth-first", "capture-success"],
     "CheckType": "failover"
   }
 }
