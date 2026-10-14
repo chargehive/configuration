@@ -73,7 +73,8 @@ type FraudPolicy struct {
 
 	// MerchantCheck runs the fraud scan for a merchant-initiated payment after the payment's outcome,
 	// in place of at CheckTime. A merchant-initiated payment has no customer present to collect
-	// device data from, so it is reported rather than decided.
+	// device data from, so it is reported rather than decided. A sale counts as merchant-initiated
+	// whoever initiated it, since it runs asynchronously.
 	MerchantCheck bool `json:"merchantCheck,omitempty" yaml:"merchantCheck,omitempty" validate:"excluded_if=CheckTime ondemand"`
 
 	// CheckType is the type of check that should be performed for this policy
