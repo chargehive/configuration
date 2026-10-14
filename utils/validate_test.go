@@ -194,14 +194,14 @@ func TestFraudPolicyCheckTimes(t *testing.T) {
 		valid bool
 	}{
 		{"before the auth", `"checkTime":"preauth-every"`, true},
-		{"merchant check", `"checkTime":"preauth-every","merchantCheck":true`, true},
+		{"send MIT", `"checkTime":"preauth-every","sendMIT":true`, true},
 		{"after the auth", `"checkTime":"postauth"`, true},
-		{"after the capture", `"checkTime":"postcapture","merchantCheck":true`, true},
+		{"after the capture", `"checkTime":"postcapture","sendMIT":true`, true},
 		{"auth-success", `"checkTime":"auth-success"`, true},
 		{"on demand", `"checkTime":"ondemand"`, true},
-		{"merchant check on demand", `"checkTime":"ondemand","merchantCheck":true`, false},
-		{"merchant check as a check time", `"checkTime":"postpayment"`, false},
-		{"no check time", `"merchantCheck":true`, false},
+		{"send MIT on demand", `"checkTime":"ondemand","sendMIT":true`, false},
+		{"send MIT as a check time", `"checkTime":"postpayment"`, false},
+		{"no check time", `"sendMIT":true`, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

@@ -18,7 +18,7 @@ As with all configs, the standard wrapper is used.
       "fraud-chargehive",
     ],
     "checkTime": "preauth-every",   // Sets when to fraud check
-    "merchantCheck": true,          // Sends merchant-initiated payments (MIT) to the connectors
+    "sendMIT": true,          // Sends merchant-initiated payments (MIT) to the connectors
     "checkType": "all"              // Sets how it works through the connectors
   }
 }
@@ -29,7 +29,7 @@ FieldName | Required | Definition
 ---:|---|:---
 connectorIDs|true|List of fraud connector IDs to apply the policy to. These must be **fraud** connectors
 [checkTime](#fraudchecktime)|true| Sets when to fraud check
-merchantCheck|false| Sends merchant-initiated payments (MIT) to the connectors once they have an outcome. Every sale counts as merchant-initiated. Cannot be used with `ondemand`
+sendMIT|false| Sends merchant-initiated payments (MIT) to the connectors once they have an outcome. Every sale counts as merchant-initiated. Cannot be used with `ondemand`
 [checkType](#fraudchecktype)|true| Sets how it works through the connectors
 
 ### FraudCheckType

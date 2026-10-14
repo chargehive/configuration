@@ -9,7 +9,7 @@ func TestFraudPolicyCheckTimeFor(t *testing.T) {
 		customer, merchant FraudCheckTime
 	}{
 		{"every payment", FraudPolicy{CheckTime: FraudCheckTimePreEveryAuth}, FraudCheckTimePreEveryAuth, FraudCheckTimePreEveryAuth},
-		{"merchant check", FraudPolicy{CheckTime: FraudCheckTimePreEveryAuth, MerchantCheck: true}, FraudCheckTimePreEveryAuth, FraudCheckTimePostPayment},
+		{"send MIT", FraudPolicy{CheckTime: FraudCheckTimePreEveryAuth, SendMIT: true}, FraudCheckTimePreEveryAuth, FraudCheckTimePostPayment},
 		{"auth-success runs after the auth", FraudPolicy{CheckTime: FraudCheckTimeAuthSuccess}, FraudCheckTimePostAuth, FraudCheckTimePostAuth},
 		{"after the capture", FraudPolicy{CheckTime: FraudCheckTimePostCapture}, FraudCheckTimePostCapture, FraudCheckTimePostCapture},
 	}
