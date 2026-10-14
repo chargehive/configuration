@@ -8,11 +8,10 @@ func TestFraudPolicyCheckTimeFor(t *testing.T) {
 		policy             FraudPolicy
 		customer, merchant FraudCheckTime
 	}{
-		{"per initiator", FraudPolicy{CustomerCheckTime: FraudCheckTimePreEveryAuth, MerchantCheckTime: FraudCheckTimePostCapture}, FraudCheckTimePreEveryAuth, FraudCheckTimePostCapture},
-		{"customers only", FraudPolicy{CustomerCheckTime: FraudCheckTimePostAuth}, FraudCheckTimePostAuth, ""},
-		{"merchants only", FraudPolicy{MerchantCheckTime: FraudCheckTimePostCapture}, "", FraudCheckTimePostCapture},
-		{"check time for every payment", FraudPolicy{CheckTime: FraudCheckTimePreFirstAuth}, FraudCheckTimePreFirstAuth, FraudCheckTimePreFirstAuth},
+		{"every payment", FraudPolicy{CheckTime: FraudCheckTimePreEveryAuth}, FraudCheckTimePreEveryAuth, FraudCheckTimePreEveryAuth},
+		{"merchant check", FraudPolicy{CheckTime: FraudCheckTimePreEveryAuth, MerchantCheck: true}, FraudCheckTimePreEveryAuth, FraudCheckTimePostPayment},
 		{"auth-success runs after the auth", FraudPolicy{CheckTime: FraudCheckTimeAuthSuccess}, FraudCheckTimePostAuth, FraudCheckTimePostAuth},
+		{"after the capture", FraudPolicy{CheckTime: FraudCheckTimePostCapture}, FraudCheckTimePostCapture, FraudCheckTimePostCapture},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

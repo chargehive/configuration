@@ -17,8 +17,8 @@ As with all configs, the standard wrapper is used.
     "connectorIDs": [               // List of fraud connector IDs to apply the policy to
       "fraud-chargehive",
     ],
-    "customerCheckTime": "preauth-every", // Sets when to fraud check a customer-initiated payment
-    "merchantCheckTime": "postcapture",   // Sets when to fraud check a merchant-initiated payment
+    "checkTime": "preauth-every",   // Sets when to fraud check
+    "merchantCheck": true,          // Checks merchant-initiated payments after their outcome instead
     "checkType": "all"              // Sets how it works through the connectors
   }
 }
@@ -28,9 +28,8 @@ As with all configs, the standard wrapper is used.
 FieldName | Required | Definition 
 ---:|---|:---
 connectorIDs|true|List of fraud connector IDs to apply the policy to. These must be **fraud** connectors
-[customerCheckTime](#fraudchecktime)|false| Sets when to fraud check a customer-initiated payment. Unset, customer-initiated payments are not checked
-[merchantCheckTime](#fraudchecktime)|false| Sets when to fraud check a merchant-initiated payment: `postauth`, `postcapture` or `ondemand`. Unset, merchant-initiated payments are not checked
-[checkTime](#fraudchecktime)|false| Deprecated: sets when to fraud check every payment, in place of customerCheckTime and merchantCheckTime. Accepts `preauth-first`, `preauth-every`, `auth-success` (run as `postauth`) and `ondemand`
+[checkTime](#fraudchecktime)|true| Sets when to fraud check
+merchantCheck|false| Checks a merchant-initiated payment once, after its outcome (a sale's, or an auth's when it is authed before it is captured), in place of at checkTime. Such a payment has no customer present, so it is reported rather than decided. Cannot be used with `ondemand`
 [checkType](#fraudchecktype)|true| Sets how it works through the connectors
 
 ### FraudCheckType
@@ -46,7 +45,7 @@ value | Definition
 "preauth-every" | Indicates that a fraud scan should check before every auth
 "postauth" | Indicates that a fraud scan should run after an auth's outcome, approved or declined, while an approved auth can still be voided before it is captured
 "postcapture" | Indicates that a fraud scan should run after a capture's outcome, collected or declined. A capture is a sale or the capture of an earlier auth
-"auth-success" | Deprecated, `checkTime` only: runs as `postauth`
+"auth-success" | Deprecated: runs as `postauth`
 "ondemand" | Indicates that a fraud scan should run on demand only
 
 ## Full Example
@@ -64,8 +63,7 @@ value | Definition
     "ConnectorIDs": [
       "fraud-default"
     ],
-    "CustomerCheckTime": "preauth-first",
-    "MerchantCheckTime": "postcapture",
+    "CheckTime": "preauth-first",
     "CheckType": "failover"
   }
 }

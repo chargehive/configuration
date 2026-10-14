@@ -186,22 +186,22 @@ func PrettyPrint(v interface{}) (err error) {
 func TestFraudPolicyCheckTimes(t *testing.T) {
 	configuration.Initialise()
 	policy := func(spec string) []byte {
-		return []byte(`{"kind":"PolicyFraud","metadata":{"projectId":"change-me","name":"change-me"},"specVersion":"v1","selector":{},"spec":{"connectorIDs":["fraud-kount"],"checkType":"all"` + spec + `}}`)
+		return []byte(`{"kind":"PolicyFraud","metadata":{"projectId":"change-me","name":"change-me"},"specVersion":"v1","selector":{},"spec":{"connectorIDs":["fraud-kount"],"checkType":"all",` + spec + `}}`)
 	}
 	tests := []struct {
 		name  string
 		spec  string
 		valid bool
 	}{
-		{"check time for every payment", `,"checkTime":"auth-success"`, true},
-		{"per initiator", `,"customerCheckTime":"preauth-every","merchantCheckTime":"postcapture"`, true},
-		{"customers after the auth", `,"customerCheckTime":"postauth"`, true},
-		{"merchants only", `,"merchantCheckTime":"postauth"`, true},
-		{"neither", ``, false},
-		{"check time with a per-initiator time", `,"checkTime":"preauth-every","merchantCheckTime":"postcapture"`, false},
-		{"post-capture as the check time for every payment", `,"checkTime":"postcapture"`, false},
-		{"merchants before the auth", `,"merchantCheckTime":"preauth-first"`, false},
-		{"unknown time", `,"customerCheckTime":"settled"`, false},
+		{"before the auth", `"checkTime":"preauth-every"`, true},
+		{"merchant check", `"checkTime":"preauth-every","merchantCheck":true`, true},
+		{"after the auth", `"checkTime":"postauth"`, true},
+		{"after the capture", `"checkTime":"postcapture","merchantCheck":true`, true},
+		{"auth-success", `"checkTime":"auth-success"`, true},
+		{"on demand", `"checkTime":"ondemand"`, true},
+		{"merchant check on demand", `"checkTime":"ondemand","merchantCheck":true`, false},
+		{"merchant check as a check time", `"checkTime":"postpayment"`, false},
+		{"no check time", `"merchantCheck":true`, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

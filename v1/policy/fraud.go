@@ -31,9 +31,9 @@ const (
 	// FraudCheckTimePreEveryAuth indicates that a fraud scan should check before every auth
 	FraudCheckTimePreEveryAuth FraudCheckTime = "preauth-every"
 
-	// FraudCheckTimeAuthSuccess indicates that a fraud scan should run after a successful auth.
+	// FraudCheckTimeAuthSuccess indicates that a fraud scan should run after the auth.
 	//
-	// Deprecated: use FraudCheckTimePostAuth, which a CheckTime of auth-success runs as.
+	// Deprecated: use FraudCheckTimePostAuth, which auth-success runs as.
 	FraudCheckTimeAuthSuccess FraudCheckTime = "auth-success"
 
 	// FraudCheckTimePostAuth indicates that a fraud scan should run after an auth's outcome, approved
@@ -43,6 +43,11 @@ const (
 	// FraudCheckTimePostCapture indicates that a fraud scan should run after a capture's outcome,
 	// collected or declined. A capture is a sale or the capture of an earlier auth.
 	FraudCheckTimePostCapture FraudCheckTime = "postcapture"
+
+	// FraudCheckTimePostPayment is when MerchantCheck runs a fraud scan on a merchant-initiated
+	// payment: after the payment's outcome, which is a sale's, or an auth's for a payment that is
+	// authed before it is captured. It is set by MerchantCheck rather than as a CheckTime.
+	FraudCheckTimePostPayment FraudCheckTime = "postpayment"
 
 	// FraudCheckTimeOnDemand indicates that a fraud scan should run on demand only
 	FraudCheckTimeOnDemand FraudCheckTime = "ondemand"
@@ -63,19 +68,13 @@ type FraudPolicy struct {
 	// ConnectorIDs is the IDs of the fraud connectors
 	ConnectorIDs []string `json:"connectorIDs" yaml:"connectorIDs" validate:"min=1,dive,lowercase"`
 
-	// CheckTime is the time we should be running a fraud scan, for every payment
-	//
-	// Deprecated: use CustomerCheckTime and MerchantCheckTime.
-	CheckTime FraudCheckTime `json:"checkTime,omitempty" yaml:"checkTime,omitempty" validate:"required_without_all=CustomerCheckTime MerchantCheckTime,excluded_with=CustomerCheckTime MerchantCheckTime,omitempty,oneof=preauth-first preauth-every auth-success ondemand"`
+	// CheckTime is the time we should be running a fraud scan
+	CheckTime FraudCheckTime `json:"checkTime" yaml:"checkTime" validate:"oneof=preauth-first preauth-every auth-success postauth postcapture ondemand"`
 
-	// CustomerCheckTime is when to run a fraud scan for a customer-initiated payment. Unset, the
-	// policy does not check customer-initiated payments.
-	CustomerCheckTime FraudCheckTime `json:"customerCheckTime,omitempty" yaml:"customerCheckTime,omitempty" validate:"omitempty,oneof=preauth-first preauth-every postauth postcapture ondemand"`
-
-	// MerchantCheckTime is when to run a fraud scan for a merchant-initiated payment, which has no
-	// customer present to collect device data from before the auth. Unset, the policy does not
-	// check merchant-initiated payments.
-	MerchantCheckTime FraudCheckTime `json:"merchantCheckTime,omitempty" yaml:"merchantCheckTime,omitempty" validate:"omitempty,oneof=postauth postcapture ondemand"`
+	// MerchantCheck runs the fraud scan for a merchant-initiated payment after the payment's outcome,
+	// in place of at CheckTime. A merchant-initiated payment has no customer present to collect
+	// device data from, so it is reported rather than decided.
+	MerchantCheck bool `json:"merchantCheck,omitempty" yaml:"merchantCheck,omitempty" validate:"excluded_if=CheckTime ondemand"`
 
 	// CheckType is the type of check that should be performed for this policy
 	CheckType FraudCheckType `json:"checkType" yaml:"checkType" validate:"oneof=all failover"`
@@ -83,19 +82,15 @@ type FraudPolicy struct {
 	DeclineOn []string `json:"declineOn" yaml:"declineOn" validate:"dive,oneof=invalid no-suggestion review deny"`
 }
 
-// CheckTimeFor returns when the policy runs for a payment initiated by the customer or the merchant,
-// or "" when it does not check that payment.
+// CheckTimeFor returns when the policy runs for a payment initiated by the customer or the merchant.
 func (p FraudPolicy) CheckTimeFor(customerInitiated bool) FraudCheckTime {
-	if p.CheckTime != "" {
-		if p.CheckTime == FraudCheckTimeAuthSuccess {
-			return FraudCheckTimePostAuth
-		}
-		return p.CheckTime
+	if !customerInitiated && p.MerchantCheck {
+		return FraudCheckTimePostPayment
 	}
-	if customerInitiated {
-		return p.CustomerCheckTime
+	if p.CheckTime == FraudCheckTimeAuthSuccess {
+		return FraudCheckTimePostAuth
 	}
-	return p.MerchantCheckTime
+	return p.CheckTime
 }
 
 // GetKind returns the FraudPolicy kind
