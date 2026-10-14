@@ -18,7 +18,7 @@ As with all configs, the standard wrapper is used.
       "fraud-chargehive",
     ],
     "checkTime": "preauth-every",   // Sets when to fraud check
-    "sendMIT": true,          // Sends merchant-initiated payments (MIT) to the connectors
+    "sendMIT": true,                // Sends merchant-initiated payments (MIT) to the connectors
     "checkType": "all"              // Sets how it works through the connectors
   }
 }
