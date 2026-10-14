@@ -25,6 +25,9 @@ type PayPalWebsitePaymentsProCredentials struct {
 }
 
 func (c *PayPalWebsitePaymentsProCredentials) GetMID() string {
+	if c.APIUsername == nil {
+		return ""
+	}
 	return *c.APIUsername
 }
 

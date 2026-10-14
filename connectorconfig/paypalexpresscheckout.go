@@ -18,6 +18,9 @@ type PayPalExpressCheckoutCredentials struct {
 }
 
 func (c *PayPalExpressCheckoutCredentials) GetMID() string {
+	if c.APIUsername == nil {
+		return ""
+	}
 	return *c.APIUsername
 }
 

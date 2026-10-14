@@ -24,6 +24,9 @@ type QualpayCredentials struct {
 }
 
 func (c *QualpayCredentials) GetMID() string {
+	if c.MerchantID == 0 {
+		return ""
+	}
 	return fmt.Sprintf("%d", c.MerchantID)
 }
 

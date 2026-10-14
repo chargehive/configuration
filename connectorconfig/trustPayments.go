@@ -33,6 +33,9 @@ type TrustPaymentsCredentials struct {
 }
 
 func (c *TrustPaymentsCredentials) GetMID() string {
+	if c.Username == nil {
+		return ""
+	}
 	return *c.Username
 }
 
