@@ -44,9 +44,8 @@ const (
 	// collected or declined. A capture is a sale or the capture of an earlier auth.
 	FraudCheckTimePostCapture FraudCheckTime = "postcapture"
 
-	// FraudCheckTimePostPayment is when MerchantCheck runs a fraud scan on a merchant-initiated
-	// payment: after the payment's outcome, which is a sale's, or an auth's for a payment that is
-	// authed before it is captured. It is set by MerchantCheck rather than as a CheckTime.
+	// FraudCheckTimePostPayment is when MerchantCheck sends a merchant-initiated payment: once it
+	// has an outcome. It is set by MerchantCheck rather than as a CheckTime.
 	FraudCheckTimePostPayment FraudCheckTime = "postpayment"
 
 	// FraudCheckTimeOnDemand indicates that a fraud scan should run on demand only
@@ -71,10 +70,8 @@ type FraudPolicy struct {
 	// CheckTime is the time we should be running a fraud scan
 	CheckTime FraudCheckTime `json:"checkTime" yaml:"checkTime" validate:"oneof=preauth-first preauth-every auth-success postauth postcapture ondemand"`
 
-	// MerchantCheck runs the fraud scan for a merchant-initiated payment after the payment's outcome,
-	// in place of at CheckTime. A merchant-initiated payment has no customer present to collect
-	// device data from, so it is reported rather than decided. A sale counts as merchant-initiated
-	// whoever initiated it, since it runs asynchronously.
+	// MerchantCheck sends merchant-initiated payments (MIT) to the policy's connectors once they
+	// have an outcome. Every sale counts as merchant-initiated.
 	MerchantCheck bool `json:"merchantCheck,omitempty" yaml:"merchantCheck,omitempty" validate:"excluded_if=CheckTime ondemand"`
 
 	// CheckType is the type of check that should be performed for this policy
