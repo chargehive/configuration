@@ -70,16 +70,16 @@ type FraudPolicy struct {
 	// CheckTime is the time we should be running a fraud scan
 	CheckTime FraudCheckTime `json:"checkTime" yaml:"checkTime" validate:"oneof=preauth-first preauth-every auth-success postauth postcapture ondemand"`
 
-	// RecordMIT also sends merchant-initiated payments (MIT), such as renewals, to the policy's
-	// connectors once they complete, without requesting a decision.
-	RecordMIT bool `json:"recordMIT,omitempty" yaml:"recordMIT,omitempty" validate:"excluded_if=CheckTime ondemand"`
-
 	// CheckType is the type of check that should be performed for this policy
 	CheckType FraudCheckType `json:"checkType" yaml:"checkType" validate:"oneof=all failover"`
 
 	// RecordOnly sends payments to the policy's connectors without requesting a decision, so the
 	// policy declines nothing. DeclineOn is kept, and applies again when RecordOnly is turned off.
 	RecordOnly bool `json:"recordOnly,omitempty" yaml:"recordOnly,omitempty"`
+
+	// RecordMIT also sends merchant-initiated payments (MIT), such as renewals, to the policy's
+	// connectors once they complete, without requesting a decision.
+	RecordMIT bool `json:"recordMIT,omitempty" yaml:"recordMIT,omitempty" validate:"excluded_if=CheckTime ondemand"`
 
 	DeclineOn []string `json:"declineOn" yaml:"declineOn" validate:"dive,oneof=invalid no-suggestion review deny"`
 }
