@@ -40,7 +40,7 @@ const (
 	FraudCheckTimeOnDemand FraudCheckTime = "ondemand"
 )
 
-// FraudTransactionType is the payment step a fraud policy runs at.
+// FraudTransactionType is the transaction a fraud policy runs at.
 type FraudTransactionType string
 
 const (
@@ -66,14 +66,14 @@ const (
 	FraudPositionPostDecline FraudPosition = "post-decline"
 	// FraudPositionOnDemand runs when a fraud scan is requested for the charge, outside any
 	// transaction.
-	FraudPositionOnDemand FraudPosition = "ondemand"
+	FraudPositionOnDemand FraudPosition = "on-demand"
 )
 
 // FraudAttempts is which of a charge's attempts at the transaction a fraud policy runs on.
 type FraudAttempts string
 
 const (
-	// FraudAttemptsFirst runs on the charge's first attempt only.
+	// FraudAttemptsFirst runs on the charge's first attempt at the transaction only.
 	FraudAttemptsFirst FraudAttempts = "first"
 	// FraudAttemptsEvery runs on every attempt.
 	FraudAttemptsEvery FraudAttempts = "every"
@@ -83,11 +83,11 @@ const (
 type FraudMode string
 
 const (
-	// FraudModeScan asks the connectors for a result, which the merchant, or declineOn before the
-	// transaction, can act on.
+	// FraudModeScan asks the connectors for a result. The merchant receives it in the fraud scan
+	// webhook, and before the transaction, declineOn can decline the transaction on it.
 	FraudModeScan FraudMode = "scan"
-	// FraudModeInform sends the payment to the connectors for their records, with no result asked
-	// for. A connector that can only scan is skipped.
+	// FraudModeInform sends the payment to the connectors for their records, without asking for a
+	// result. A connector that has no way to receive a payment without scanning it is skipped.
 	FraudModeInform FraudMode = "inform"
 	// FraudModeNone leaves the payment out.
 	FraudModeNone FraudMode = "none"
@@ -113,11 +113,11 @@ type FraudPolicy struct {
 	// Deprecated: set TransactionType, Position, Attempts, CIT and MIT instead.
 	CheckTime FraudCheckTime `json:"checkTime,omitempty" yaml:"checkTime,omitempty" validate:"required_without=Position,excluded_with=Position,omitempty,oneof=preauth-first preauth-every auth-success ondemand"`
 
-	// TransactionType is the payment step the policy runs at. It is not set for an on-demand policy.
+	// TransactionType is the transaction the policy runs at. An on-demand policy has none.
 	TransactionType FraudTransactionType `json:"transactionType,omitempty" yaml:"transactionType,omitempty" validate:"omitempty,oneof=auth capture-auth capture"`
 
 	// Position is when the policy runs relative to its transaction.
-	Position FraudPosition `json:"position,omitempty" yaml:"position,omitempty" validate:"fraud-trigger,omitempty,oneof=pre post post-success post-decline ondemand"`
+	Position FraudPosition `json:"position,omitempty" yaml:"position,omitempty" validate:"fraud-trigger,omitempty,oneof=pre post post-success post-decline on-demand"`
 
 	// Attempts is which of the charge's attempts at the transaction the policy runs on: every one
 	// when not set.
@@ -132,7 +132,7 @@ type FraudPolicy struct {
 	// CheckType is the type of check that should be performed for this policy
 	CheckType FraudCheckType `json:"checkType" yaml:"checkType" validate:"oneof=all failover"`
 
-	// DeclineOn are the scan results that decline the transaction, for a policy that scans before it.
+	// DeclineOn are the scan results that decline the transaction, when the policy scans before it.
 	DeclineOn []string `json:"declineOn" yaml:"declineOn" validate:"dive,oneof=invalid no-suggestion review deny"`
 }
 
@@ -179,8 +179,9 @@ func (t FraudTrigger) Mode(customerInitiated bool) FraudMode {
 	return t.MIT
 }
 
-// Runs reports whether the trigger runs at the transaction and position given. A post-success or
-// post-decline trigger runs at post with that outcome; a post trigger runs on either.
+// Runs reports whether the trigger runs at the transaction and position given, where position is
+// pre, post-success or post-decline for the transaction's outcome, or on-demand. A post trigger
+// runs after either outcome.
 func (t FraudTrigger) Runs(transactionType FraudTransactionType, position FraudPosition) bool {
 	if t.TransactionType != transactionType {
 		return false
