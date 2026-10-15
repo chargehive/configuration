@@ -44,8 +44,8 @@ const (
 	// collected or declined. A capture is a sale or the capture of an earlier auth.
 	FraudCheckTimePostCapture FraudCheckTime = "postcapture"
 
-	// FraudCheckTimePostPayment is when SendMIT sends a merchant-initiated payment: once it
-	// has an outcome. It is set by SendMIT rather than as a CheckTime.
+	// FraudCheckTimePostPayment is when RecordMIT records a merchant-initiated payment: once it has
+	// an outcome. It is set by RecordMIT rather than as a CheckTime.
 	FraudCheckTimePostPayment FraudCheckTime = "postpayment"
 
 	// FraudCheckTimeOnDemand indicates that a fraud scan should run on demand only
@@ -70,9 +70,9 @@ type FraudPolicy struct {
 	// CheckTime is the time we should be running a fraud scan
 	CheckTime FraudCheckTime `json:"checkTime" yaml:"checkTime" validate:"oneof=preauth-first preauth-every auth-success postauth postcapture ondemand"`
 
-	// SendMIT sends merchant-initiated payments (MIT) to the policy's connectors once they
+	// RecordMIT records merchant-initiated payments (MIT) with the policy's connectors once they
 	// have an outcome. Every sale counts as merchant-initiated.
-	SendMIT bool `json:"sendMIT,omitempty" yaml:"sendMIT,omitempty" validate:"excluded_if=CheckTime ondemand"`
+	RecordMIT bool `json:"recordMIT,omitempty" yaml:"recordMIT,omitempty" validate:"excluded_if=CheckTime ondemand"`
 
 	// CheckType is the type of check that should be performed for this policy
 	CheckType FraudCheckType `json:"checkType" yaml:"checkType" validate:"oneof=all failover"`
@@ -87,7 +87,7 @@ type FraudPolicy struct {
 
 // CheckTimeFor returns when the policy runs for a payment initiated by the customer or the merchant.
 func (p FraudPolicy) CheckTimeFor(customerInitiated bool) FraudCheckTime {
-	if !customerInitiated && p.SendMIT {
+	if !customerInitiated && p.RecordMIT {
 		return FraudCheckTimePostPayment
 	}
 	if p.CheckTime == FraudCheckTimeAuthSuccess {
