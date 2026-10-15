@@ -1,5 +1,5 @@
 # Fraud Policy
-A fraud policy sets which fraud connectors check a charge's payments, at which transaction, and whether each payment is scanned for a result or only sent to the connectors for their records.
+A fraud policy sets which fraud connectors check a charge's payments, at which transaction or on request, and whether each payment is scanned for a result or only sent to the connectors for their records.
 
 ## Format
 As with all configs, the standard wrapper is used.
@@ -32,9 +32,9 @@ As with all configs, the standard wrapper is used.
 FieldName | Required | Definition 
 ---:|---|:---
 connectorIDs|true|List of fraud connector IDs to apply the policy to. These must be **fraud** connectors
-[transactionType](#fraudtransactiontype)|true| The transaction the policy runs at. Leave it out when `position` is `on-demand`
-[position](#fraudposition)|true| When the policy runs, relative to the transaction
-[attempts](#fraudattempts)|false| Which of the charge's attempts at the transaction the policy runs on. Defaults to `every`
+[transactionType](#fraudtransactiontype)|true| The transaction the policy runs at, or `on-demand`
+[position](#fraudposition)|true| When the policy runs, relative to the transaction. Leave it out for `on-demand`
+[attempts](#fraudattempts)|false| Which of the charge's attempts at the transaction the policy runs on. Defaults to `every`. Leave it out for `on-demand`
 [cit](#fraudmode)|false| What the policy does with a customer-initiated payment. Defaults to `none`
 [mit](#fraudmode)|false| What the policy does with a merchant-initiated payment, such as a renewal. Defaults to `none`
 [checkType](#fraudchecktype)|true| Sets how it works through the connectors
@@ -49,6 +49,7 @@ value | Definition
 "auth" | An authorisation
 "capture-auth" | The capture of an earlier authorisation
 "capture" | A payment captured without an earlier authorisation
+"on-demand" | A fraud scan requested for the charge through the API, outside any payment. It scans the charge and its stored payment method, without a payment's outcome
 
 ### FraudPosition
 value | Definition 
@@ -57,7 +58,6 @@ value | Definition
 "post" | After the transaction, whether it was approved or declined
 "post-success" | After the transaction is approved
 "post-decline" | After the transaction is declined
-"on-demand" | When a fraud scan is requested for the charge through the API, outside any transaction
 
 The result of a scan after the transaction is sent to the merchant in the fraud scan webhook, so they can act on it, for example by voiding an authorisation or refunding a capture.
 
@@ -88,7 +88,7 @@ value | transactionType | position | attempts
 "preauth-first" | `auth` | `pre` | `first`
 "preauth-every" | `auth` | `pre` | `every`
 "auth-success" | `auth` | `post-success` | `every`
-"ondemand" | | `on-demand` |
+"ondemand" | `on-demand` | |
 
 ## Full Example
 

@@ -15,7 +15,7 @@ func TestFraudPolicyTrigger(t *testing.T) {
 		{"auth-success", FraudPolicy{CheckTime: FraudCheckTimeAuthSuccess},
 			FraudTrigger{FraudTransactionTypeAuth, FraudPositionPostSuccess, FraudAttemptsEvery, FraudModeScan, FraudModeScan}},
 		{"ondemand", FraudPolicy{CheckTime: FraudCheckTimeOnDemand},
-			FraudTrigger{"", FraudPositionOnDemand, FraudAttemptsEvery, FraudModeScan, FraudModeScan}},
+			FraudTrigger{FraudTransactionTypeOnDemand, "", FraudAttemptsEvery, FraudModeScan, FraudModeScan}},
 		{"set out in full", FraudPolicy{TransactionType: FraudTransactionTypeCapture, Position: FraudPositionPost, Attempts: FraudAttemptsFirst, CIT: FraudModeScan, MIT: FraudModeInform},
 			FraudTrigger{FraudTransactionTypeCapture, FraudPositionPost, FraudAttemptsFirst, FraudModeScan, FraudModeInform}},
 		{"defaults", FraudPolicy{TransactionType: FraudTransactionTypeAuth, Position: FraudPositionPre, CIT: FraudModeScan},
@@ -44,6 +44,16 @@ func TestFraudTriggerRuns(t *testing.T) {
 	declines := FraudTrigger{TransactionType: FraudTransactionTypeAuth, Position: FraudPositionPostDecline}
 	if declines.Runs(FraudTransactionTypeAuth, FraudPositionPostSuccess) || !declines.Runs(FraudTransactionTypeAuth, FraudPositionPostDecline) {
 		t.Error("a post-decline trigger runs on a decline only")
+	}
+}
+
+func TestFraudTriggerRunsOnDemand(t *testing.T) {
+	onDemand := FraudTrigger{TransactionType: FraudTransactionTypeOnDemand}
+	if !onDemand.Runs(FraudTransactionTypeOnDemand, "") {
+		t.Error("an on-demand trigger runs when a scan is requested")
+	}
+	if onDemand.Runs(FraudTransactionTypeAuth, FraudPositionPre) {
+		t.Error("an on-demand trigger does not run at a payment")
 	}
 }
 

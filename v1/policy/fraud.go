@@ -50,6 +50,8 @@ const (
 	FraudTransactionTypeCaptureAuth FraudTransactionType = "capture-auth"
 	// FraudTransactionTypeCapture is a payment captured without an earlier authorisation.
 	FraudTransactionTypeCapture FraudTransactionType = "capture"
+	// FraudTransactionTypeOnDemand is a fraud scan requested for the charge, outside any payment.
+	FraudTransactionTypeOnDemand FraudTransactionType = "on-demand"
 )
 
 // FraudPosition is when a fraud policy runs relative to its transaction.
@@ -64,9 +66,6 @@ const (
 	FraudPositionPostSuccess FraudPosition = "post-success"
 	// FraudPositionPostDecline runs after the transaction is declined.
 	FraudPositionPostDecline FraudPosition = "post-decline"
-	// FraudPositionOnDemand runs when a fraud scan is requested for the charge, outside any
-	// transaction.
-	FraudPositionOnDemand FraudPosition = "on-demand"
 )
 
 // FraudAttempts is which of a charge's attempts at the transaction a fraud policy runs on.
@@ -111,16 +110,17 @@ type FraudPolicy struct {
 	// CheckTime is the time we should be running a fraud scan.
 	//
 	// Deprecated: set TransactionType, Position, Attempts, CIT and MIT instead.
-	CheckTime FraudCheckTime `json:"checkTime,omitempty" yaml:"checkTime,omitempty" validate:"required_without=Position,excluded_with=Position,omitempty,oneof=preauth-first preauth-every auth-success ondemand"`
+	CheckTime FraudCheckTime `json:"checkTime,omitempty" yaml:"checkTime,omitempty" validate:"required_without=TransactionType,excluded_with=TransactionType,omitempty,oneof=preauth-first preauth-every auth-success ondemand"`
 
-	// TransactionType is the transaction the policy runs at. An on-demand policy has none.
-	TransactionType FraudTransactionType `json:"transactionType,omitempty" yaml:"transactionType,omitempty" validate:"omitempty,oneof=auth capture-auth capture"`
+	// TransactionType is the transaction the policy runs at, or on-demand for a scan requested for
+	// the charge.
+	TransactionType FraudTransactionType `json:"transactionType,omitempty" yaml:"transactionType,omitempty" validate:"fraud-trigger,omitempty,oneof=auth capture-auth capture on-demand"`
 
-	// Position is when the policy runs relative to its transaction.
-	Position FraudPosition `json:"position,omitempty" yaml:"position,omitempty" validate:"fraud-trigger,omitempty,oneof=pre post post-success post-decline on-demand"`
+	// Position is when the policy runs relative to its transaction. An on-demand policy has none.
+	Position FraudPosition `json:"position,omitempty" yaml:"position,omitempty" validate:"omitempty,oneof=pre post post-success post-decline"`
 
 	// Attempts is which of the charge's attempts at the transaction the policy runs on: every one
-	// when not set.
+	// when not set. An on-demand policy has none.
 	Attempts FraudAttempts `json:"attempts,omitempty" yaml:"attempts,omitempty" validate:"omitempty,oneof=first every"`
 
 	// CIT is what the policy does with a customer-initiated payment: none when not set.
@@ -156,7 +156,7 @@ func (p FraudPolicy) Trigger() FraudTrigger {
 	case FraudCheckTimeAuthSuccess:
 		return FraudTrigger{FraudTransactionTypeAuth, FraudPositionPostSuccess, FraudAttemptsEvery, FraudModeScan, FraudModeScan}
 	case FraudCheckTimeOnDemand:
-		return FraudTrigger{"", FraudPositionOnDemand, FraudAttemptsEvery, FraudModeScan, FraudModeScan}
+		return FraudTrigger{FraudTransactionTypeOnDemand, "", FraudAttemptsEvery, FraudModeScan, FraudModeScan}
 	}
 	t := FraudTrigger{p.TransactionType, p.Position, p.Attempts, p.CIT, p.MIT}
 	if t.Attempts == "" {
@@ -180,11 +180,14 @@ func (t FraudTrigger) Mode(customerInitiated bool) FraudMode {
 }
 
 // Runs reports whether the trigger runs at the transaction and position given, where position is
-// pre, post-success or post-decline for the transaction's outcome, or on-demand. A post trigger
-// runs after either outcome.
+// pre, or post-success or post-decline for the transaction's outcome. A post trigger runs after
+// either outcome, and an on-demand trigger whenever a scan is requested.
 func (t FraudTrigger) Runs(transactionType FraudTransactionType, position FraudPosition) bool {
 	if t.TransactionType != transactionType {
 		return false
+	}
+	if t.TransactionType == FraudTransactionTypeOnDemand {
+		return true
 	}
 	if t.Position == FraudPositionPost {
 		return position == FraudPositionPostSuccess || position == FraudPositionPostDecline
@@ -193,14 +196,20 @@ func (t FraudTrigger) Runs(transactionType FraudTransactionType, position FraudP
 }
 
 // ValidFraudTrigger reports whether a policy's trigger fields fit together: an on-demand policy
-// has no transaction type, every other policy has one, and a policy does something with at least
-// one initiator's payments.
+// has no position or attempts, every other policy has a position, and a policy does something
+// with at least one initiator's payments.
 func ValidFraudTrigger(p FraudPolicy) bool {
-	if p.Position == "" {
-		return p.TransactionType == "" && p.Attempts == "" && p.CIT == "" && p.MIT == ""
-	}
-	if (p.Position == FraudPositionOnDemand) != (p.TransactionType == "") {
-		return false
+	switch p.TransactionType {
+	case "":
+		return p.Position == "" && p.Attempts == "" && p.CIT == "" && p.MIT == ""
+	case FraudTransactionTypeOnDemand:
+		if p.Position != "" || p.Attempts != "" {
+			return false
+		}
+	default:
+		if p.Position == "" {
+			return false
+		}
 	}
 	t := p.Trigger()
 	return t.CIT != FraudModeNone || t.MIT != FraudModeNone
