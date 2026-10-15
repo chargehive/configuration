@@ -37,12 +37,11 @@ const (
 	FraudCheckTimeAuthSuccess FraudCheckTime = "auth-success"
 
 	// FraudCheckTimePostAuth indicates that a fraud scan should run after an auth's outcome, approved
-	// or declined, while an approved auth can still be voided before it is captured
+	// or declined. An approved auth can still be voided before it is captured.
 	FraudCheckTimePostAuth FraudCheckTime = "postauth"
 
 	// FraudCheckTimePostCapture indicates that a fraud scan should run after a capture's outcome,
-	// collected or declined. A capture is a payment captured directly from a stored payment method,
-	// or the capture of an earlier authorisation.
+	// collected or declined.
 	FraudCheckTimePostCapture FraudCheckTime = "postcapture"
 
 	// FraudCheckTimePostPayment is when RecordMIT sends a merchant-initiated payment: once it has
