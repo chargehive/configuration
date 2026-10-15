@@ -21,7 +21,9 @@ const (
 	FraudCheckTypeFailover FraudCheckType = "failover"
 )
 
-// FraudCheckTime are the types of times that we can perform a fraud scan
+// FraudCheckTime are the types of times that we can perform a fraud scan.
+//
+// Deprecated: set TransactionType, Position, Attempts, CIT and MIT instead.
 type FraudCheckTime string
 
 const (
@@ -31,25 +33,64 @@ const (
 	// FraudCheckTimePreEveryAuth indicates that a fraud scan should check before every auth
 	FraudCheckTimePreEveryAuth FraudCheckTime = "preauth-every"
 
-	// FraudCheckTimeAuthSuccess indicates that a fraud scan should run after the auth.
-	//
-	// Deprecated: use FraudCheckTimePostAuth, which auth-success runs as.
+	// FraudCheckTimeAuthSuccess indicates that a fraud scan should run after a successful auth
 	FraudCheckTimeAuthSuccess FraudCheckTime = "auth-success"
-
-	// FraudCheckTimePostAuth indicates that a fraud scan should run after an auth's outcome, approved
-	// or declined. An approved auth can still be voided before it is captured.
-	FraudCheckTimePostAuth FraudCheckTime = "postauth"
-
-	// FraudCheckTimePostCapture indicates that a fraud scan should run after a capture's outcome,
-	// collected or declined.
-	FraudCheckTimePostCapture FraudCheckTime = "postcapture"
-
-	// FraudCheckTimePostPayment is when RecordMIT sends a merchant-initiated payment: once it has
-	// completed. It is set by RecordMIT rather than as a CheckTime.
-	FraudCheckTimePostPayment FraudCheckTime = "postpayment"
 
 	// FraudCheckTimeOnDemand indicates that a fraud scan should run on demand only
 	FraudCheckTimeOnDemand FraudCheckTime = "ondemand"
+)
+
+// FraudTransactionType is the payment step a fraud policy runs at.
+type FraudTransactionType string
+
+const (
+	// FraudTransactionTypeAuth is an authorisation.
+	FraudTransactionTypeAuth FraudTransactionType = "auth"
+	// FraudTransactionTypeCaptureAuth is the capture of an earlier authorisation.
+	FraudTransactionTypeCaptureAuth FraudTransactionType = "capture-auth"
+	// FraudTransactionTypeCapture is a payment captured without an earlier authorisation.
+	FraudTransactionTypeCapture FraudTransactionType = "capture"
+)
+
+// FraudPosition is when a fraud policy runs relative to its transaction.
+type FraudPosition string
+
+const (
+	// FraudPositionPre runs before the transaction, where a scan's result can decline it.
+	FraudPositionPre FraudPosition = "pre"
+	// FraudPositionPost runs after the transaction, approved or declined.
+	FraudPositionPost FraudPosition = "post"
+	// FraudPositionPostSuccess runs after the transaction is approved.
+	FraudPositionPostSuccess FraudPosition = "post-success"
+	// FraudPositionPostDecline runs after the transaction is declined.
+	FraudPositionPostDecline FraudPosition = "post-decline"
+	// FraudPositionOnDemand runs when a fraud scan is requested for the charge, outside any
+	// transaction.
+	FraudPositionOnDemand FraudPosition = "ondemand"
+)
+
+// FraudAttempts is which of a charge's attempts at the transaction a fraud policy runs on.
+type FraudAttempts string
+
+const (
+	// FraudAttemptsFirst runs on the charge's first attempt only.
+	FraudAttemptsFirst FraudAttempts = "first"
+	// FraudAttemptsEvery runs on every attempt.
+	FraudAttemptsEvery FraudAttempts = "every"
+)
+
+// FraudMode is what a fraud policy does with a payment.
+type FraudMode string
+
+const (
+	// FraudModeScan asks the connectors for a result, which the merchant, or declineOn before the
+	// transaction, can act on.
+	FraudModeScan FraudMode = "scan"
+	// FraudModeInform sends the payment to the connectors for their records, with no result asked
+	// for. A connector that can only scan is skipped.
+	FraudModeInform FraudMode = "inform"
+	// FraudModeNone leaves the payment out.
+	FraudModeNone FraudMode = "none"
 )
 
 // FraudDeclineReason are the suggestions for declining a charge
@@ -67,32 +108,101 @@ type FraudPolicy struct {
 	// ConnectorIDs is the IDs of the fraud connectors
 	ConnectorIDs []string `json:"connectorIDs" yaml:"connectorIDs" validate:"min=1,dive,lowercase"`
 
-	// CheckTime is the time we should be running a fraud scan
-	CheckTime FraudCheckTime `json:"checkTime" yaml:"checkTime" validate:"oneof=preauth-first preauth-every auth-success postauth postcapture ondemand"`
+	// CheckTime is the time we should be running a fraud scan.
+	//
+	// Deprecated: set TransactionType, Position, Attempts, CIT and MIT instead.
+	CheckTime FraudCheckTime `json:"checkTime,omitempty" yaml:"checkTime,omitempty" validate:"required_without=Position,excluded_with=Position,omitempty,oneof=preauth-first preauth-every auth-success ondemand"`
+
+	// TransactionType is the payment step the policy runs at. It is not set for an on-demand policy.
+	TransactionType FraudTransactionType `json:"transactionType,omitempty" yaml:"transactionType,omitempty" validate:"omitempty,oneof=auth capture-auth capture"`
+
+	// Position is when the policy runs relative to its transaction.
+	Position FraudPosition `json:"position,omitempty" yaml:"position,omitempty" validate:"fraud-trigger,omitempty,oneof=pre post post-success post-decline ondemand"`
+
+	// Attempts is which of the charge's attempts at the transaction the policy runs on: every one
+	// when not set.
+	Attempts FraudAttempts `json:"attempts,omitempty" yaml:"attempts,omitempty" validate:"omitempty,oneof=first every"`
+
+	// CIT is what the policy does with a customer-initiated payment: none when not set.
+	CIT FraudMode `json:"cit,omitempty" yaml:"cit,omitempty" validate:"omitempty,oneof=scan inform none"`
+
+	// MIT is what the policy does with a merchant-initiated payment: none when not set.
+	MIT FraudMode `json:"mit,omitempty" yaml:"mit,omitempty" validate:"omitempty,oneof=scan inform none"`
 
 	// CheckType is the type of check that should be performed for this policy
 	CheckType FraudCheckType `json:"checkType" yaml:"checkType" validate:"oneof=all failover"`
 
-	// RecordOnly sends payments to the policy's connectors without requesting a decision, so the
-	// policy declines nothing. DeclineOn is kept, and applies again when RecordOnly is turned off.
-	RecordOnly bool `json:"recordOnly,omitempty" yaml:"recordOnly,omitempty"`
-
-	// RecordMIT also sends merchant-initiated payments (MIT), such as renewals, to the policy's
-	// connectors once they complete, without requesting a decision.
-	RecordMIT bool `json:"recordMIT,omitempty" yaml:"recordMIT,omitempty" validate:"excluded_if=CheckTime ondemand"`
-
+	// DeclineOn are the scan results that decline the transaction, for a policy that scans before it.
 	DeclineOn []string `json:"declineOn" yaml:"declineOn" validate:"dive,oneof=invalid no-suggestion review deny"`
 }
 
-// CheckTimeFor returns when the policy runs for a payment initiated by the customer or the merchant.
-func (p FraudPolicy) CheckTimeFor(customerInitiated bool) FraudCheckTime {
-	if !customerInitiated && p.RecordMIT {
-		return FraudCheckTimePostPayment
+// FraudTrigger is when a fraud policy runs and what it does there.
+type FraudTrigger struct {
+	TransactionType FraudTransactionType
+	Position        FraudPosition
+	Attempts        FraudAttempts
+	CIT             FraudMode
+	MIT             FraudMode
+}
+
+// Trigger returns when the policy runs and what it does there, reading a CheckTime as the trigger it
+// stands for.
+func (p FraudPolicy) Trigger() FraudTrigger {
+	switch p.CheckTime {
+	case FraudCheckTimePreFirstAuth:
+		return FraudTrigger{FraudTransactionTypeAuth, FraudPositionPre, FraudAttemptsFirst, FraudModeScan, FraudModeScan}
+	case FraudCheckTimePreEveryAuth:
+		return FraudTrigger{FraudTransactionTypeAuth, FraudPositionPre, FraudAttemptsEvery, FraudModeScan, FraudModeScan}
+	case FraudCheckTimeAuthSuccess:
+		return FraudTrigger{FraudTransactionTypeAuth, FraudPositionPostSuccess, FraudAttemptsEvery, FraudModeScan, FraudModeScan}
+	case FraudCheckTimeOnDemand:
+		return FraudTrigger{"", FraudPositionOnDemand, FraudAttemptsEvery, FraudModeScan, FraudModeScan}
 	}
-	if p.CheckTime == FraudCheckTimeAuthSuccess {
-		return FraudCheckTimePostAuth
+	t := FraudTrigger{p.TransactionType, p.Position, p.Attempts, p.CIT, p.MIT}
+	if t.Attempts == "" {
+		t.Attempts = FraudAttemptsEvery
 	}
-	return p.CheckTime
+	if t.CIT == "" {
+		t.CIT = FraudModeNone
+	}
+	if t.MIT == "" {
+		t.MIT = FraudModeNone
+	}
+	return t
+}
+
+// Mode returns what the trigger does with a payment initiated by the customer or the merchant.
+func (t FraudTrigger) Mode(customerInitiated bool) FraudMode {
+	if customerInitiated {
+		return t.CIT
+	}
+	return t.MIT
+}
+
+// Runs reports whether the trigger runs at the transaction and position given. A post-success or
+// post-decline trigger runs at post with that outcome; a post trigger runs on either.
+func (t FraudTrigger) Runs(transactionType FraudTransactionType, position FraudPosition) bool {
+	if t.TransactionType != transactionType {
+		return false
+	}
+	if t.Position == FraudPositionPost {
+		return position == FraudPositionPostSuccess || position == FraudPositionPostDecline
+	}
+	return t.Position == position
+}
+
+// ValidFraudTrigger reports whether a policy's trigger fields fit together: an on-demand policy
+// has no transaction type, every other policy has one, and a policy does something with at least
+// one initiator's payments.
+func ValidFraudTrigger(p FraudPolicy) bool {
+	if p.Position == "" {
+		return p.TransactionType == "" && p.Attempts == "" && p.CIT == "" && p.MIT == ""
+	}
+	if (p.Position == FraudPositionOnDemand) != (p.TransactionType == "") {
+		return false
+	}
+	t := p.Trigger()
+	return t.CIT != FraudModeNone || t.MIT != FraudModeNone
 }
 
 // GetKind returns the FraudPolicy kind

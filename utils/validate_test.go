@@ -193,18 +193,21 @@ func TestFraudPolicyCheckTimes(t *testing.T) {
 		spec  string
 		valid bool
 	}{
-		{"before the auth", `"checkTime":"preauth-every"`, true},
-		{"record MIT", `"checkTime":"preauth-every","recordMIT":true`, true},
-		{"after the auth", `"checkTime":"postauth"`, true},
-		{"after the capture", `"checkTime":"postcapture","recordMIT":true`, true},
-		{"auth-success", `"checkTime":"auth-success"`, true},
-		{"on demand", `"checkTime":"ondemand"`, true},
-		{"record MIT on demand", `"checkTime":"ondemand","recordMIT":true`, false},
-		{"record MIT as a check time", `"checkTime":"postpayment"`, false},
-		{"no check time", `"recordMIT":true`, false},
-		{"record only", `"checkTime":"preauth-every","recordOnly":true`, true},
-		{"record only with empty declineOn", `"checkTime":"preauth-every","recordOnly":true,"declineOn":[]`, true},
-		{"record only keeping declineOn", `"checkTime":"preauth-every","recordOnly":true,"declineOn":["deny"]`, true},
+		{"check time", `"checkTime":"preauth-every"`, true},
+		{"check time on demand", `"checkTime":"ondemand"`, true},
+		{"set out in full", `"transactionType":"auth","position":"pre","attempts":"first","cit":"scan","mit":"inform"`, true},
+		{"after a capture", `"transactionType":"capture","position":"post","mit":"inform"`, true},
+		{"scan after a capture", `"transactionType":"capture","position":"post-success","cit":"scan"`, true},
+		{"on demand", `"position":"ondemand","cit":"scan","mit":"scan"`, true},
+		{"neither", `"declineOn":[]`, false},
+		{"check time with a position", `"checkTime":"preauth-every","position":"pre","transactionType":"auth","cit":"scan"`, false},
+		{"new check time value", `"checkTime":"postauth"`, false},
+		{"no transaction type", `"position":"pre","cit":"scan"`, false},
+		{"on demand with a transaction type", `"transactionType":"auth","position":"ondemand","cit":"scan"`, false},
+		{"nothing for either initiator", `"transactionType":"auth","position":"pre","cit":"none"`, false},
+		{"trigger fields without a position", `"checkTime":"preauth-every","cit":"inform"`, false},
+		{"unknown mode", `"transactionType":"auth","position":"pre","cit":"decide"`, false},
+		{"unknown transaction type", `"transactionType":"sale","position":"pre","cit":"scan"`, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

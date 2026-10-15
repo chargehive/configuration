@@ -2,25 +2,54 @@ package policy
 
 import "testing"
 
-func TestFraudPolicyCheckTimeFor(t *testing.T) {
+func TestFraudPolicyTrigger(t *testing.T) {
 	tests := []struct {
-		name               string
-		policy             FraudPolicy
-		customer, merchant FraudCheckTime
+		name   string
+		policy FraudPolicy
+		want   FraudTrigger
 	}{
-		{"every payment", FraudPolicy{CheckTime: FraudCheckTimePreEveryAuth}, FraudCheckTimePreEveryAuth, FraudCheckTimePreEveryAuth},
-		{"record MIT", FraudPolicy{CheckTime: FraudCheckTimePreEveryAuth, RecordMIT: true}, FraudCheckTimePreEveryAuth, FraudCheckTimePostPayment},
-		{"auth-success runs after the auth", FraudPolicy{CheckTime: FraudCheckTimeAuthSuccess}, FraudCheckTimePostAuth, FraudCheckTimePostAuth},
-		{"after the capture", FraudPolicy{CheckTime: FraudCheckTimePostCapture}, FraudCheckTimePostCapture, FraudCheckTimePostCapture},
+		{"preauth-first", FraudPolicy{CheckTime: FraudCheckTimePreFirstAuth},
+			FraudTrigger{FraudTransactionTypeAuth, FraudPositionPre, FraudAttemptsFirst, FraudModeScan, FraudModeScan}},
+		{"preauth-every", FraudPolicy{CheckTime: FraudCheckTimePreEveryAuth},
+			FraudTrigger{FraudTransactionTypeAuth, FraudPositionPre, FraudAttemptsEvery, FraudModeScan, FraudModeScan}},
+		{"auth-success", FraudPolicy{CheckTime: FraudCheckTimeAuthSuccess},
+			FraudTrigger{FraudTransactionTypeAuth, FraudPositionPostSuccess, FraudAttemptsEvery, FraudModeScan, FraudModeScan}},
+		{"ondemand", FraudPolicy{CheckTime: FraudCheckTimeOnDemand},
+			FraudTrigger{"", FraudPositionOnDemand, FraudAttemptsEvery, FraudModeScan, FraudModeScan}},
+		{"set out in full", FraudPolicy{TransactionType: FraudTransactionTypeCapture, Position: FraudPositionPost, Attempts: FraudAttemptsFirst, CIT: FraudModeScan, MIT: FraudModeInform},
+			FraudTrigger{FraudTransactionTypeCapture, FraudPositionPost, FraudAttemptsFirst, FraudModeScan, FraudModeInform}},
+		{"defaults", FraudPolicy{TransactionType: FraudTransactionTypeAuth, Position: FraudPositionPre, CIT: FraudModeScan},
+			FraudTrigger{FraudTransactionTypeAuth, FraudPositionPre, FraudAttemptsEvery, FraudModeScan, FraudModeNone}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tt.policy.CheckTimeFor(true); got != tt.customer {
-				t.Errorf("customer-initiated: expected %q, got %q", tt.customer, got)
-			}
-			if got := tt.policy.CheckTimeFor(false); got != tt.merchant {
-				t.Errorf("merchant-initiated: expected %q, got %q", tt.merchant, got)
+			if got := tt.policy.Trigger(); got != tt.want {
+				t.Errorf("expected %+v, got %+v", tt.want, got)
 			}
 		})
+	}
+}
+
+func TestFraudTriggerRuns(t *testing.T) {
+	post := FraudTrigger{TransactionType: FraudTransactionTypeCapture, Position: FraudPositionPost}
+	if !post.Runs(FraudTransactionTypeCapture, FraudPositionPostSuccess) || !post.Runs(FraudTransactionTypeCapture, FraudPositionPostDecline) {
+		t.Error("a post trigger runs on either outcome")
+	}
+	if post.Runs(FraudTransactionTypeCaptureAuth, FraudPositionPostSuccess) {
+		t.Error("a trigger runs only at its own transaction type")
+	}
+	if post.Runs(FraudTransactionTypeCapture, FraudPositionPre) {
+		t.Error("a post trigger does not run before the transaction")
+	}
+	declines := FraudTrigger{TransactionType: FraudTransactionTypeAuth, Position: FraudPositionPostDecline}
+	if declines.Runs(FraudTransactionTypeAuth, FraudPositionPostSuccess) || !declines.Runs(FraudTransactionTypeAuth, FraudPositionPostDecline) {
+		t.Error("a post-decline trigger runs on a decline only")
+	}
+}
+
+func TestFraudTriggerMode(t *testing.T) {
+	tr := FraudTrigger{CIT: FraudModeScan, MIT: FraudModeInform}
+	if tr.Mode(true) != FraudModeScan || tr.Mode(false) != FraudModeInform {
+		t.Error("each initiator has its own mode")
 	}
 }
