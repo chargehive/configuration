@@ -44,8 +44,8 @@ value | Definition
 ---:|:---
 "preauth-first" | Indicates that a fraud scan should check before the first auth
 "preauth-every" | Indicates that a fraud scan should check before every auth
-"postauth" | Indicates that a fraud scan should run after an auth's outcome, approved or declined, while an approved auth can still be voided before it is captured
-"postcapture" | Indicates that a fraud scan should run after a capture's outcome, collected or declined. A capture is a payment captured directly from a stored payment method, or the capture of an earlier authorisation
+"postauth" | Indicates that a fraud scan should run after an auth's outcome, approved or declined. An approved auth can still be voided before it is captured
+"postcapture" | Indicates that a fraud scan should run after a capture's outcome, collected or declined.
 "auth-success" | Deprecated: runs as `postauth`
 "ondemand" | Indicates that a fraud scan should run on demand only
 
