@@ -9,7 +9,7 @@ As with all configs, the standard wrapper is used.
   "kind": "PolicyFraud",            // Must be set to "PolicyFraud"
   "metadata": {
     "projectId": "test-project",    // Must be set to the ChargeHive Project ID you were issued with
-    "name": "ondemand-fraud"        // Set this to a memorable name for the fraud policy, no spaces, all lowercase
+    "name": "preauth-fraud"         // Set this to a memorable name for the fraud policy, no spaces, all lowercase
   },
   "specVersion": "v1",              // Must be set to the correct version
   "selector": {},                   // May be used to apply this to a subset of charges
@@ -17,9 +17,13 @@ As with all configs, the standard wrapper is used.
     "connectorIDs": [               // List of fraud connector IDs to apply the policy to
       "fraud-chargehive",
     ],
-    "checkTime": "preauth-every",   // Sets when to fraud check
+    "transactionType": "auth",      // The payment step the policy runs at
+    "position": "pre",              // When the policy runs relative to that step
+    "attempts": "every",            // Which attempts at that step the policy runs on
+    "cit": "scan",                  // What to do with a customer-initiated payment
+    "mit": "inform",                // What to do with a merchant-initiated payment
     "checkType": "all",             // Sets how it works through the connectors
-    "recordMIT": true               // Also sends merchant-initiated payments, such as renewals
+    "declineOn": ["deny"]           // Scan results that decline the payment, before it
   }
 }
 ```
@@ -28,10 +32,45 @@ As with all configs, the standard wrapper is used.
 FieldName | Required | Definition 
 ---:|---|:---
 connectorIDs|true|List of fraud connector IDs to apply the policy to. These must be **fraud** connectors
-[checkTime](#fraudchecktime)|true| Sets when to fraud check
+[transactionType](#fraudtransactiontype)|true, except for `ondemand`| The payment step the policy runs at
+[position](#fraudposition)|true| When the policy runs relative to its payment step
+[attempts](#fraudattempts)|false| Which of the charge's attempts at the payment step the policy runs on. Defaults to `every`
+[cit](#fraudmode)|false| What the policy does with a customer-initiated payment. Defaults to `none`
+[mit](#fraudmode)|false| What the policy does with a merchant-initiated payment, such as a renewal. Defaults to `none`
 [checkType](#fraudchecktype)|true| Sets how it works through the connectors
-recordOnly|false| Sends payments to the fraud connectors without requesting a decision, so the policy declines nothing. `declineOn` is ignored while it is set, and applies again when it is turned off. A connector that can only give decisions is skipped
-recordMIT|false| Also sends merchant-initiated payments, such as renewals, to the fraud connectors once they complete, approved or declined. No decision is requested for them. Cannot be used with `ondemand`
+declineOn|false| Scan results that decline the payment. Applies to a policy that scans before its payment step
+[checkTime](#fraudchecktime)|false| Deprecated: sets when to fraud check, in place of the fields above
+
+### FraudTransactionType
+value | Definition 
+---:|:---
+"auth" | An authorisation
+"capture-auth" | The capture of an earlier authorisation
+"capture" | A payment captured without an earlier authorisation
+
+### FraudPosition
+value | Definition 
+---:|:---
+"pre" | Before the payment step. A scan's result can decline the payment through `declineOn`
+"post" | After the payment step, approved or declined
+"post-success" | After the payment step is approved
+"post-decline" | After the payment step is declined
+"ondemand" | When a fraud scan is requested for the charge. Has no `transactionType`
+
+A scan after the payment step still returns its result to the merchant, who can act on it, for example by voiding an auth or refunding a capture.
+
+### FraudAttempts
+value | Definition 
+---:|:---
+"first" | The charge's first attempt only
+"every" | Every attempt
+
+### FraudMode
+value | Definition 
+---:|:---
+"scan" | Asks the fraud connectors for a result. Some providers, such as Kount, charge for this
+"inform" | Sends the payment to the fraud connectors for their records, without asking for a result. A connector that can only scan is skipped
+"none" | Leaves the payment out
 
 ### FraudCheckType
 value | Definition 
@@ -40,14 +79,14 @@ value | Definition
 "failover"|Will perform a fraud check on one connector ID at a time, stopping at the first success
 
 ### FraudCheckTime
-value | Definition 
+Deprecated. Each value runs as the fields above, scanning both customer- and merchant-initiated payments.
+
+value | Runs as
 ---:|:---
-"preauth-first" | Indicates that a fraud scan should check before the first auth
-"preauth-every" | Indicates that a fraud scan should check before every auth
-"postauth" | Indicates that a fraud scan should run after an auth's outcome, approved or declined. An approved auth can still be voided before it is captured
-"postcapture" | Indicates that a fraud scan should run after a capture's outcome, collected or declined.
-"auth-success" | Deprecated: runs as `postauth`
-"ondemand" | Indicates that a fraud scan should run on demand only
+"preauth-first" | `auth`, `pre`, `first`
+"preauth-every" | `auth`, `pre`, `every`
+"auth-success" | `auth`, `post-success`, `every`
+"ondemand" | `ondemand`
 
 ## Full Example
 
@@ -56,16 +95,18 @@ value | Definition
   "kind": "PolicyFraud",
   "metadata": {
     "projectId": "test-project",
-    "name": "default-fraud"
+    "name": "renewal-fraud"
   },
   "specVersion": "v1",
   "selector": {},
   "spec": {
-    "ConnectorIDs": [
+    "connectorIDs": [
       "fraud-default"
     ],
-    "CheckTime": "preauth-first",
-    "CheckType": "failover"
+    "transactionType": "capture",
+    "position": "post",
+    "mit": "inform",
+    "checkType": "all"
   }
 }
 ```
