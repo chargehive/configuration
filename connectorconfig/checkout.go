@@ -38,6 +38,9 @@ func (c *CheckoutCredentials) GetGooglePayParams() map[string]string {
 	}
 }
 
+// GetMID returns the merchantID credential. It is a label Chargehive assigns per
+// connector, shared across a project's currency connectors, and Kount, IsSameGateway
+// and SimilarConnectors all key on it. The processing channel stays a routing setting.
 func (c *CheckoutCredentials) GetMID() string {
 	return c.MerchantID
 }
