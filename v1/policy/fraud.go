@@ -71,7 +71,8 @@ type FraudPolicy struct {
 	CheckTime FraudCheckTime `json:"checkTime" yaml:"checkTime" validate:"oneof=preauth-first preauth-every auth-success postauth postcapture ondemand"`
 
 	// RecordMIT also sends merchant-initiated payments (MIT), such as renewals, to the policy's
-	// connectors once they complete, without requesting a decision. Every sale counts as
+	// connectors once they complete, without requesting a decision. A payment captured
+	// directly from a stored payment method, without an authorisation first, counts as
 	// merchant-initiated.
 	RecordMIT bool `json:"recordMIT,omitempty" yaml:"recordMIT,omitempty" validate:"excluded_if=CheckTime ondemand"`
 
