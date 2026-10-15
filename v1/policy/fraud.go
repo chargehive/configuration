@@ -78,10 +78,11 @@ type FraudPolicy struct {
 	CheckType FraudCheckType `json:"checkType" yaml:"checkType" validate:"oneof=all failover"`
 
 	// RecordOnly keeps the connectors informed of each payment without asking for a result to act
-	// on, so a policy with it declines nothing.
+	// on, so a policy with it declines nothing: DeclineOn is kept, and applies again when RecordOnly
+	// is turned off.
 	RecordOnly bool `json:"recordOnly,omitempty" yaml:"recordOnly,omitempty"`
 
-	DeclineOn []string `json:"declineOn" yaml:"declineOn" validate:"record-only-declines,dive,oneof=invalid no-suggestion review deny"`
+	DeclineOn []string `json:"declineOn" yaml:"declineOn" validate:"dive,oneof=invalid no-suggestion review deny"`
 }
 
 // CheckTimeFor returns when the policy runs for a payment initiated by the customer or the merchant.

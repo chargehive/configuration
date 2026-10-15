@@ -46,9 +46,6 @@ func Validate(rawJson []byte, version string) map[string]string {
 	if err == nil {
 		err = validate.RegisterValidation("connector-library", ConnectorLibraryValidator)
 	}
-	if err == nil {
-		err = validate.RegisterValidation("record-only-declines", RecordOnlyDeclinesValidator)
-	}
 	if err != nil {
 		result["validation registration"] = err.Error()
 		return result
@@ -113,13 +110,6 @@ func PredicateKeysValidator(fl validator.FieldLevel) bool {
 func ConnectorLibraryValidator(fl validator.FieldLevel) bool {
 	_, ok := connectorconfig.LibraryRegister[connectorconfig.Library(fl.Field().String())]
 	return ok
-}
-
-// RecordOnlyDeclinesValidator reports whether a fraud policy's DeclineOn is empty when the policy
-// is RecordOnly, which never has a result to decline on.
-func RecordOnlyDeclinesValidator(fl validator.FieldLevel) bool {
-	recordOnly := fl.Parent().FieldByName("RecordOnly")
-	return !recordOnly.IsValid() || !recordOnly.Bool() || fl.Field().Len() == 0
 }
 
 func validatePredicates(predicates []selector.Predicate) string {

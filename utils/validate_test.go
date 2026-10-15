@@ -204,7 +204,7 @@ func TestFraudPolicyCheckTimes(t *testing.T) {
 		{"no check time", `"sendMIT":true`, false},
 		{"record only", `"checkTime":"preauth-every","recordOnly":true`, true},
 		{"record only with empty declineOn", `"checkTime":"preauth-every","recordOnly":true,"declineOn":[]`, true},
-		{"record only declining", `"checkTime":"preauth-every","recordOnly":true,"declineOn":["deny"]`, false},
+		{"record only keeping declineOn", `"checkTime":"preauth-every","recordOnly":true,"declineOn":["deny"]`, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
