@@ -18,7 +18,7 @@ As with all configs, the standard wrapper is used.
       "fraud-chargehive",
     ],
     "checkTime": "preauth-every",   // Sets when to fraud check
-    "recordMIT": true,              // Records merchant-initiated payments (MIT) with the connectors
+    "recordMIT": true,              // Also sends merchant-initiated payments, such as renewals
     "checkType": "all"              // Sets how it works through the connectors
   }
 }
@@ -29,8 +29,8 @@ FieldName | Required | Definition
 ---:|---|:---
 connectorIDs|true|List of fraud connector IDs to apply the policy to. These must be **fraud** connectors
 [checkTime](#fraudchecktime)|true| Sets when to fraud check
-recordMIT|false| Records merchant-initiated payments (MIT) with the connectors once they have an outcome. Every sale counts as merchant-initiated. Cannot be used with `ondemand`
-recordOnly|false| Keeps the connectors informed of each payment without asking for a result to act on, so the policy declines nothing. `declineOn` is ignored while it is set, and applies again when it is turned off. A connector whose service can't record a payment without assessing it skips it
+recordMIT|false| Also sends merchant-initiated payments, such as renewals, to the fraud connectors once they complete, approved or declined. No decision is requested for them. Every sale counts as merchant-initiated. Cannot be used with `ondemand`
+recordOnly|false| Sends payments to the fraud connectors without requesting a decision, so the policy declines nothing. `declineOn` is ignored while it is set, and applies again when it is turned off. A connector that can only give decisions is skipped
 [checkType](#fraudchecktype)|true| Sets how it works through the connectors
 
 ### FraudCheckType

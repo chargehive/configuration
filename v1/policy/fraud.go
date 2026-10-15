@@ -44,8 +44,8 @@ const (
 	// collected or declined. A capture is a sale or the capture of an earlier auth.
 	FraudCheckTimePostCapture FraudCheckTime = "postcapture"
 
-	// FraudCheckTimePostPayment is when RecordMIT records a merchant-initiated payment: once it has
-	// an outcome. It is set by RecordMIT rather than as a CheckTime.
+	// FraudCheckTimePostPayment is when RecordMIT sends a merchant-initiated payment: once it has
+	// completed. It is set by RecordMIT rather than as a CheckTime.
 	FraudCheckTimePostPayment FraudCheckTime = "postpayment"
 
 	// FraudCheckTimeOnDemand indicates that a fraud scan should run on demand only
@@ -70,16 +70,16 @@ type FraudPolicy struct {
 	// CheckTime is the time we should be running a fraud scan
 	CheckTime FraudCheckTime `json:"checkTime" yaml:"checkTime" validate:"oneof=preauth-first preauth-every auth-success postauth postcapture ondemand"`
 
-	// RecordMIT records merchant-initiated payments (MIT) with the policy's connectors once they
-	// have an outcome. Every sale counts as merchant-initiated.
+	// RecordMIT also sends merchant-initiated payments (MIT), such as renewals, to the policy's
+	// connectors once they complete, without requesting a decision. Every sale counts as
+	// merchant-initiated.
 	RecordMIT bool `json:"recordMIT,omitempty" yaml:"recordMIT,omitempty" validate:"excluded_if=CheckTime ondemand"`
 
 	// CheckType is the type of check that should be performed for this policy
 	CheckType FraudCheckType `json:"checkType" yaml:"checkType" validate:"oneof=all failover"`
 
-	// RecordOnly keeps the connectors informed of each payment without asking for a result to act
-	// on, so a policy with it declines nothing: DeclineOn is kept, and applies again when RecordOnly
-	// is turned off.
+	// RecordOnly sends payments to the policy's connectors without requesting a decision, so the
+	// policy declines nothing. DeclineOn is kept, and applies again when RecordOnly is turned off.
 	RecordOnly bool `json:"recordOnly,omitempty" yaml:"recordOnly,omitempty"`
 
 	DeclineOn []string `json:"declineOn" yaml:"declineOn" validate:"dive,oneof=invalid no-suggestion review deny"`
