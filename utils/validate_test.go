@@ -202,6 +202,9 @@ func TestFraudPolicyCheckTimes(t *testing.T) {
 		{"send MIT on demand", `"checkTime":"ondemand","sendMIT":true`, false},
 		{"send MIT as a check time", `"checkTime":"postpayment"`, false},
 		{"no check time", `"sendMIT":true`, false},
+		{"record only", `"checkTime":"preauth-every","recordOnly":true`, true},
+		{"record only with empty declineOn", `"checkTime":"preauth-every","recordOnly":true,"declineOn":[]`, true},
+		{"record only declining", `"checkTime":"preauth-every","recordOnly":true,"declineOn":["deny"]`, false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
