@@ -29,7 +29,7 @@ FieldName | Required | Definition
 ---:|---|:---
 connectorIDs|true|List of fraud connector IDs to apply the policy to. These must be **fraud** connectors
 [checkTime](#fraudchecktime)|true| Sets when to fraud check
-recordMIT|false| Also sends merchant-initiated payments, such as renewals, to the fraud connectors once they complete, approved or declined. No decision is requested for them. A payment captured directly from a stored payment method, without an authorisation first, counts as merchant-initiated. Cannot be used with `ondemand`
+recordMIT|false| Also sends merchant-initiated payments, such as renewals, to the fraud connectors once they complete, approved or declined. No decision is requested for them. Cannot be used with `ondemand`
 recordOnly|false| Sends payments to the fraud connectors without requesting a decision, so the policy declines nothing. `declineOn` is ignored while it is set, and applies again when it is turned off. A connector that can only give decisions is skipped
 [checkType](#fraudchecktype)|true| Sets how it works through the connectors
 
