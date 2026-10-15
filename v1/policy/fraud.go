@@ -133,6 +133,7 @@ type FraudPolicy struct {
 	CheckType FraudCheckType `json:"checkType" yaml:"checkType" validate:"oneof=all failover"`
 
 	// DeclineOn are the scan results that decline the transaction, when the policy scans before it.
+	// An on-demand policy has none.
 	DeclineOn []string `json:"declineOn" yaml:"declineOn" validate:"dive,oneof=invalid no-suggestion review deny"`
 }
 
@@ -196,14 +197,14 @@ func (t FraudTrigger) Runs(transactionType FraudTransactionType, position FraudP
 }
 
 // ValidFraudTrigger reports whether a policy's trigger fields fit together: an on-demand policy
-// has no position or attempts, every other policy has a position, and a policy does something
-// with at least one initiator's payments.
+// has no position, attempts or declineOn, every other policy has a position, and a policy does
+// something with at least one initiator's payments.
 func ValidFraudTrigger(p FraudPolicy) bool {
 	switch p.TransactionType {
 	case "":
 		return p.Position == "" && p.Attempts == "" && p.CIT == "" && p.MIT == ""
 	case FraudTransactionTypeOnDemand:
-		if p.Position != "" || p.Attempts != "" {
+		if p.Position != "" || p.Attempts != "" || len(p.DeclineOn) > 0 {
 			return false
 		}
 	default:

@@ -38,7 +38,7 @@ connectorIDs|true|List of fraud connector IDs to apply the policy to. These must
 [cit](#fraudmode)|false| What the policy does with a customer-initiated payment. Defaults to `none`
 [mit](#fraudmode)|false| What the policy does with a merchant-initiated payment, such as a renewal. Defaults to `none`
 [checkType](#fraudchecktype)|true| Sets how it works through the connectors
-declineOn|false| Scan results that decline the transaction. Used only when the policy scans before the transaction (`position` is `pre`)
+declineOn|false| Scan results that decline the transaction. Used only when the policy scans before the transaction (`position` is `pre`). Leave it out for `on-demand`
 [checkTime](#fraudchecktime)|false| Deprecated. Older policies set this instead of `transactionType`, `position`, `attempts`, `cit` and `mit`, and it cannot be combined with them
 
 At least one of `cit` and `mit` must be `scan` or `inform`.

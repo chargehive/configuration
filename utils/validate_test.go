@@ -205,6 +205,8 @@ func TestFraudPolicyCheckTimes(t *testing.T) {
 		{"no transaction type", `"position":"pre","cit":"scan"`, false},
 		{"no position", `"transactionType":"auth","cit":"scan"`, false},
 		{"on demand with attempts", `"transactionType":"on-demand","attempts":"first","cit":"scan"`, false},
+		{"on demand declining", `"transactionType":"on-demand","cit":"scan","declineOn":["deny"]`, false},
+		{"on demand with empty declineOn", `"transactionType":"on-demand","cit":"scan","declineOn":[]`, true},
 		{"on demand with a position", `"transactionType":"on-demand","position":"pre","cit":"scan"`, false},
 		{"on demand unhyphenated", `"transactionType":"ondemand","cit":"scan"`, false},
 		{"nothing for either initiator", `"transactionType":"auth","position":"pre","cit":"none"`, false},
