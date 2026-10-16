@@ -182,3 +182,44 @@ func PrettyPrint(v interface{}) (err error) {
 	}
 	return
 }
+
+func TestFraudPolicyCheckTimes(t *testing.T) {
+	configuration.Initialise()
+	policy := func(spec string) []byte {
+		return []byte(`{"kind":"PolicyFraud","metadata":{"projectId":"change-me","name":"change-me"},"specVersion":"v1","selector":{},"spec":{"connectorIDs":["fraud-kount"],"checkType":"all",` + spec + `}}`)
+	}
+	tests := []struct {
+		name  string
+		spec  string
+		valid bool
+	}{
+		{"check time", `"checkTime":"preauth-every"`, true},
+		{"check time on demand", `"checkTime":"ondemand"`, true},
+		{"set out in full", `"transactionType":"auth","position":"pre","attempts":"first","cit":"scan","mit":"inform"`, true},
+		{"after a capture", `"transactionType":"capture","position":"post","mit":"inform"`, true},
+		{"scan after a capture", `"transactionType":"capture","position":"post-success","cit":"scan"`, true},
+		{"on demand", `"transactionType":"on-demand","cit":"scan","mit":"scan"`, true},
+		{"neither", `"declineOn":[]`, false},
+		{"check time with a transaction type", `"checkTime":"preauth-every","position":"pre","transactionType":"auth","cit":"scan"`, false},
+		{"new check time value", `"checkTime":"postauth"`, false},
+		{"no transaction type", `"position":"pre","cit":"scan"`, false},
+		{"no position", `"transactionType":"auth","cit":"scan"`, false},
+		{"on demand with attempts", `"transactionType":"on-demand","attempts":"first","cit":"scan"`, false},
+		{"on demand declining", `"transactionType":"on-demand","cit":"scan","declineOn":["deny"]`, false},
+		{"on demand with empty declineOn", `"transactionType":"on-demand","cit":"scan","declineOn":[]`, true},
+		{"on demand with a position", `"transactionType":"on-demand","position":"pre","cit":"scan"`, false},
+		{"on demand unhyphenated", `"transactionType":"ondemand","cit":"scan"`, false},
+		{"nothing for either initiator", `"transactionType":"auth","position":"pre","cit":"none"`, false},
+		{"trigger fields without a position", `"checkTime":"preauth-every","cit":"inform"`, false},
+		{"unknown mode", `"transactionType":"auth","position":"pre","cit":"decide"`, false},
+		{"unknown transaction type", `"transactionType":"sale","position":"pre","cit":"scan"`, false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			errs := Validate(policy(tt.spec), "v1")
+			if (len(errs) == 0) != tt.valid {
+				t.Errorf("valid = %v, want %v: %v", len(errs) == 0, tt.valid, errs)
+			}
+		})
+	}
+}

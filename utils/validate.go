@@ -9,6 +9,7 @@ import (
 	"github.com/chargehive/configuration/object"
 	"github.com/chargehive/configuration/selector"
 	"github.com/chargehive/configuration/v1/connector"
+	"github.com/chargehive/configuration/v1/policy"
 	"github.com/go-playground/locales/en"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
@@ -45,6 +46,9 @@ func Validate(rawJson []byte, version string) map[string]string {
 	err = validate.RegisterValidation("predicate-key", PredicateKeysValidator)
 	if err == nil {
 		err = validate.RegisterValidation("connector-library", ConnectorLibraryValidator)
+	}
+	if err == nil {
+		err = validate.RegisterValidation("fraud-trigger", FraudTriggerValidator)
 	}
 	if err != nil {
 		result["validation registration"] = err.Error()
@@ -110,6 +114,12 @@ func PredicateKeysValidator(fl validator.FieldLevel) bool {
 func ConnectorLibraryValidator(fl validator.FieldLevel) bool {
 	_, ok := connectorconfig.LibraryRegister[connectorconfig.Library(fl.Field().String())]
 	return ok
+}
+
+// FraudTriggerValidator reports whether a fraud policy's trigger fields fit together.
+func FraudTriggerValidator(fl validator.FieldLevel) bool {
+	p, ok := fl.Parent().Interface().(policy.FraudPolicy)
+	return ok && policy.ValidFraudTrigger(p)
 }
 
 func validatePredicates(predicates []selector.Predicate) string {
