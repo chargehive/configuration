@@ -27,6 +27,9 @@ type BottomlineCredentials struct {
 }
 
 func (c *BottomlineCredentials) GetMID() string {
+	if c.ClientID == nil {
+		return ""
+	}
 	return *c.ClientID
 }
 

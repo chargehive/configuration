@@ -22,6 +22,9 @@ type FlexPayCredentials struct {
 }
 
 func (c *FlexPayCredentials) GetMID() string {
+	if c.ApiKey == nil {
+		return ""
+	}
 	return *c.ApiKey
 }
 

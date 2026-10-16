@@ -24,6 +24,9 @@ type NuveiCredentials struct {
 }
 
 func (c *NuveiCredentials) GetMID() string {
+	if c.MerchantID == nil {
+		return ""
+	}
 	return *c.MerchantID
 }
 
