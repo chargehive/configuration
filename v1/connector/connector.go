@@ -30,8 +30,22 @@ type Connector struct {
 	Configuration   []byte          `json:"configuration,omitempty" yaml:"configuration,omitempty" validate:"required_without=ConfigurationID"`
 	ConfigID        string          `json:"configId,omitempty" yaml:"configId,omitempty"`
 	ConfigAuth      string          `json:"configAuth,omitempty" yaml:"configAuth,omitempty"`
-	EnablePCIB      bool            `json:"enablePCIB,omitempty" yaml:"enablePCIB,omitempty"`
-	SCAConnectorID  string          `json:"scaConnectorID,omitempty" yaml:"scaConnectorID,omitempty"`
+
+	// Deprecated: EnablePCIB is ignored. PCIB is always enabled - the gate this flag
+	// controlled diverted connectors into the retired processing vault, and every
+	// reader was removed in chargehive-assemble#1715.
+	//
+	// It could not be honoured even in principle: the field is a bool tagged
+	// omitempty, so "unset" and "explicitly false" serialise identically and there is
+	// no opt-out to preserve.
+	//
+	// The declaration is retained only so configs that still carry enablePCIB keep
+	// validating - utils.Validate decodes with DisallowUnknownFields, so deleting it
+	// would fail `chive validate` and `chive apply` on those files. Do not read this
+	// field; delete it once stored configs no longer set it.
+	EnablePCIB bool `json:"enablePCIB,omitempty" yaml:"enablePCIB,omitempty"`
+
+	SCAConnectorID string `json:"scaConnectorID,omitempty" yaml:"scaConnectorID,omitempty"`
 }
 
 // GetKind returns the Connector kind

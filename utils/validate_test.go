@@ -19,6 +19,19 @@ func TestChargeLabelVariables(t *testing.T) {
 	assert.Equal(t, errs, map[string]string{})
 }
 
+// TestDeprecatedEnablePCIBStillValidates guards the reason Connector.EnablePCIB is
+// still declared. Nothing reads it any more, but Validate decodes with
+// DisallowUnknownFields, so deleting the field would fail `chive validate` and
+// `chive apply` for every stored config that still sets it. If this starts
+// reporting `json: unknown field "enablePCIB"`, the field was removed before those
+// configs were cleaned up.
+func TestDeprecatedEnablePCIBStillValidates(t *testing.T) {
+	rawJson := []byte(`{"kind":"Connector","metadata":{"projectId":"change-me","name":"change-me","displayName":"","description":"","annotations":null,"labels":null,"disabled":false},"specVersion":"v1","selector":{"priority":50,"expressions":[]},"spec":{"library":"paysafe","enablePCIB":true,"configuration":"eyJtZXJjaGFudFVybCI6ImNoYW5nZS1tZSIsImFjcXVpcmVyIjoiY2hhbmdlLW1lIiwiYWNjb3VudElEIjoiY2hhbmdlLW1lIiwiYXBpVXNlcm5hbWUiOiJjaGFuZ2UtbWUiLCJhcGlQYXNzd29yZCI6ImNoYW5nZS1tZSIsImVudmlyb25tZW50IjoiTU9DSyIsImNvdW50cnkiOiIiLCJjdXJyZW5jeSI6IlVTRCIsInVzZVZhdWx0IjpmYWxzZSwic2luZ2xlVXNlVG9rZW5QYXNzd29yZCI6IiIsInNpbmdsZVVzZVRva2VuVXNlcm5hbWUiOiIifQ=="}}`)
+	configuration.Initialise()
+	errs := Validate(rawJson, "v1")
+	assert.Equal(t, errs, map[string]string{})
+}
+
 // test for additional unknown fields
 func TestAdditionalUnknownFields(t *testing.T) {
 	rawJson := []byte(`{"Kind":"Connector","metadata":{"projectId":"change-me","bob":"cat","Name":"change-me","uuid":"","displayName":"","description":"","annotations":null,"labels":null,"disabled":true},"specVersion":"v1","selector":{"priority":50,"expressions":[{"key":"charge.amount.currency","operator":"Equal","conversion":"","values":["GBP"]}]},"spec":{"library":"paypal-websitepaymentspro","configuration":"eyJhcGlVc2VybmFtZSI6IkNIQU5HRS1NRSIsImFwaVBhc3N3b3JkIjoiQ0hBTkdFLU1FIiwiYXBpU2lnbmF0dXJlIjoiQ0hBTkdFLU1FIiwic3VwcG9ydGVkQ3VycmVuY2llcyI6WyJVU0QiXSwiY2FyZGluYWxQcm9jZXNzb3JJRCI6bnVsbCwiY2FyZGluYWxNZXJjaGFudElEIjpudWxsLCJjYXJkaW5hbFRyYW5zYWN0aW9uUHciOm51bGwsImNhcmRpbmFsVHJhbnNhY3Rpb25VUkwiOm51bGwsImNhcmRpbmFsQVBJSWRlbnRpZmllciI6bnVsbCwiY2FyZGluYWxBUElLZXkiOm51bGwsImNhcmRpbmFsT3JnVW5pdElEIjpudWxsLCJlbnZpcm9ubWVudCI6InNhbmRib3gifQ=="}}`)
