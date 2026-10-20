@@ -32,11 +32,9 @@ type TrustPaymentsCredentials struct {
 	Environment TrustPaymentsEnvironment `json:"environment" yaml:"environment" validate:"oneof=test live"`
 }
 
+// GetMID is the site reference, which is how Trust Payments names a merchant's account.
 func (c *TrustPaymentsCredentials) GetMID() string {
-	if c.Username == nil {
-		return ""
-	}
-	return *c.Username
+	return c.SiteRef
 }
 
 func (c *TrustPaymentsCredentials) GetLibrary() Library {

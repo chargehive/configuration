@@ -26,8 +26,12 @@ type EpxCredentials struct {
 	Environment             EpxEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 }
 
+// GetMID is the EPX merchant number (MERCH_NBR), the settlement level of the four-part key.
 func (c *EpxCredentials) GetMID() string {
-	return c.DbaNbr
+	if c.MerchNbr == nil {
+		return ""
+	}
+	return *c.MerchNbr
 }
 
 func (c *EpxCredentials) GetLibrary() Library {
@@ -43,7 +47,7 @@ func (c *EpxCredentials) Validate() error {
 }
 
 func (c *EpxCredentials) GetSecureFields() []*string {
-	return []*string{c.CustNbr, c.MerchNbr, c.TerminalNbr}
+	return []*string{c.CustNbr, c.TerminalNbr}
 }
 
 func (c *EpxCredentials) ToConnector() connector.Connector {
