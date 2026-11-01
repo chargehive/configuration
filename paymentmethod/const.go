@@ -126,6 +126,17 @@ const (
 	FundingTypePrepaidNonReloadable FundingType = "prepaid_non_reloadable"
 )
 
+// CardSubbrand is a product family within a card's brand, named by the brand's product
+// codes: Maestro and Cirrus (ATM only) within Mastercard, Visa Electron and V PAY within Visa.
+type CardSubbrand string
+
+const (
+	CardSubbrandMaestro      CardSubbrand = "MAESTRO"
+	CardSubbrandCirrus       CardSubbrand = "CIRRUS"
+	CardSubbrandVisaElectron CardSubbrand = "VISA_ELECTRON"
+	CardSubbrandVPay         CardSubbrand = "V_PAY"
+)
+
 // BACSReportType indicate a type of BACS direct debit report
 type BACSReportType string
 

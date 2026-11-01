@@ -189,7 +189,7 @@ const ( // Payment Method
 	KeyMethodInfoCardCommercial Key = "method.info.card.commercial" // "true" or "false"
 	KeyMethodInfoCardConsumer   Key = "method.info.card.consumer"   // "true" or "false"
 	KeyMethodInfoCardSegment    Key = "method.info.card.segment"    // "CONSUMER", "BUSINESS", "COMMERCIAL" or "GOVERNMENT"
-	KeyMethodInfoCardSubbrand   Key = "method.info.card.subbrand"   // e.g. "MAESTRO", a product family within the card's brand
+	KeyMethodInfoCardSubbrand   Key = "method.info.card.subbrand"   // a paymentmethod.CardSubbrand: "MAESTRO", "CIRRUS", "VISA_ELECTRON" or "V_PAY"
 )
 
 var KeyRegister = map[Key]bool{
