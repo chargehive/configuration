@@ -34,6 +34,7 @@ const (
 	// InfoKeyCardNetworks is the networks a card can route over, comma separated, its
 	// brand's own first, e.g. "VISA,ACCEL,STAR".
 	InfoKeyCardNetworks   InfoKey = "card_networks"
+	InfoKeyCardFunding    InfoKey = "card_funding"
 	InfoKeyCardPrepaid    InfoKey = "card_prepaid"
 	InfoKeyCardCommercial InfoKey = "card_commercial"
 	InfoKeyCardConsumer   InfoKey = "card_consumer"
@@ -119,6 +120,7 @@ const (
 	FundingTypeCredit               FundingType = "credit"
 	FundingTypeDebit                FundingType = "debit"
 	FundingTypeCharge               FundingType = "charge"
+	FundingTypeDeferredDebit        FundingType = "deferred_debit"
 	FundingTypePrepaid              FundingType = "prepaid"
 	FundingTypePrepaidReloadable    FundingType = "prepaid_reloadable"
 	FundingTypePrepaidNonReloadable FundingType = "prepaid_non_reloadable"
