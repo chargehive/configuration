@@ -180,6 +180,16 @@ const ( // Payment Method
 	KeyMethodInfoCardBrand        Key = "method.info.card.brand"         // e.g. "VISA"
 	KeyMethodInfoCardNumberLength Key = "method.info.card.number.length" // e.g. "16"
 	KeyMethodInfoCountry          Key = "method.info.country"            // e.g. "GB"
+
+	// Card keys from the bin data looked up server-side. A key whose value the bin data
+	// does not report is absent, never "false" or empty.
+	KeyMethodInfoCardNetwork    Key = "method.info.card.network"    // e.g. "VISA"; a card has several (e.g. VISA, ACCEL, STAR) and matches if any does
+	KeyMethodInfoCardFunding    Key = "method.info.card.funding"    // a paymentmethod.FundingType: "credit", "debit", "charge" or "deferred_debit"
+	KeyMethodInfoCardPrepaid    Key = "method.info.card.prepaid"    // "true" or "false"
+	KeyMethodInfoCardCommercial Key = "method.info.card.commercial" // "true" or "false"
+	KeyMethodInfoCardConsumer   Key = "method.info.card.consumer"   // "true" or "false"
+	KeyMethodInfoCardSegment    Key = "method.info.card.segment"    // "CONSUMER", "BUSINESS", "COMMERCIAL" or "GOVERNMENT"
+	KeyMethodInfoCardSubbrand   Key = "method.info.card.subbrand"   // a paymentmethod.CardSubbrand: "MAESTRO", "CIRRUS", "VISA_ELECTRON" or "V_PAY"
 )
 
 var KeyRegister = map[Key]bool{
@@ -341,4 +351,11 @@ var KeyRegister = map[Key]bool{
 	KeyMethodInfoCardBrand:                        true,
 	KeyMethodInfoCardNumberLength:                 true,
 	KeyMethodInfoCountry:                          true,
+	KeyMethodInfoCardNetwork:                      true,
+	KeyMethodInfoCardFunding:                      true,
+	KeyMethodInfoCardPrepaid:                      true,
+	KeyMethodInfoCardCommercial:                   true,
+	KeyMethodInfoCardConsumer:                     true,
+	KeyMethodInfoCardSegment:                      true,
+	KeyMethodInfoCardSubbrand:                     true,
 }

@@ -30,6 +30,15 @@ const (
 	InfoKeyNetworkTransactionID     InfoKey = "network_transaction_id"
 	InfoKeyAuthenticationCryptogram InfoKey = "authentication_cryptogram"
 	InfoKeyAuthenticationECI        InfoKey = "authentication_eci"
+
+	// InfoKeyCardNetworks is the networks a card can route over, comma separated, its
+	// brand's own first, e.g. "VISA,ACCEL,STAR".
+	InfoKeyCardNetworks   InfoKey = "card_networks"
+	InfoKeyCardFunding    InfoKey = "card_funding"
+	InfoKeyCardPrepaid    InfoKey = "card_prepaid"
+	InfoKeyCardCommercial InfoKey = "card_commercial"
+	InfoKeyCardConsumer   InfoKey = "card_consumer"
+	InfoKeyCardSegment    InfoKey = "card_segment"
 )
 
 // Scheme us a value used to indicate a payment scheme type
@@ -39,6 +48,7 @@ type Scheme string
 const (
 	// Card
 	SchemeCardUnknown            Scheme = "card_unknown"
+	SchemeCardUnbranded          Scheme = "card_unbranded" // issued without a scheme: EBT, private-label and similar rails only
 	SchemeCardAirPlus            Scheme = "card_air_plus"
 	SchemeCardAmericanExpress    Scheme = "card_american_express"
 	SchemeCardAurore             Scheme = "card_aurore"
@@ -110,9 +120,21 @@ const (
 	FundingTypeCredit               FundingType = "credit"
 	FundingTypeDebit                FundingType = "debit"
 	FundingTypeCharge               FundingType = "charge"
+	FundingTypeDeferredDebit        FundingType = "deferred_debit"
 	FundingTypePrepaid              FundingType = "prepaid"
 	FundingTypePrepaidReloadable    FundingType = "prepaid_reloadable"
 	FundingTypePrepaidNonReloadable FundingType = "prepaid_non_reloadable"
+)
+
+// CardSubbrand is a product family within a card's brand, named by the brand's product
+// codes: Maestro and Cirrus (ATM only) within Mastercard, Visa Electron and V PAY within Visa.
+type CardSubbrand string
+
+const (
+	CardSubbrandMaestro      CardSubbrand = "MAESTRO"
+	CardSubbrandCirrus       CardSubbrand = "CIRRUS"
+	CardSubbrandVisaElectron CardSubbrand = "VISA_ELECTRON"
+	CardSubbrandVPay         CardSubbrand = "V_PAY"
 )
 
 // BACSReportType indicate a type of BACS direct debit report
