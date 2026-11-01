@@ -183,13 +183,15 @@ const ( // Payment Method
 
 	// Card keys from the bin data looked up server-side. A key whose value the bin data
 	// does not report is absent, never "false" or empty.
-	KeyMethodInfoCardNetwork    Key = "method.info.card.network"    // e.g. "VISA"; a card has several (e.g. VISA, ACCEL, STAR) and matches if any does
-	KeyMethodInfoCardFunding    Key = "method.info.card.funding"    // a paymentmethod.FundingType: "credit", "debit", "charge" or "deferred_debit"
-	KeyMethodInfoCardPrepaid    Key = "method.info.card.prepaid"    // "true" or "false"
-	KeyMethodInfoCardCommercial Key = "method.info.card.commercial" // "true" or "false"
-	KeyMethodInfoCardConsumer   Key = "method.info.card.consumer"   // "true" or "false"
-	KeyMethodInfoCardSegment    Key = "method.info.card.segment"    // "CONSUMER", "BUSINESS", "COMMERCIAL" or "GOVERNMENT"
-	KeyMethodInfoCardSubbrand   Key = "method.info.card.subbrand"   // a paymentmethod.CardSubbrand: "MAESTRO", "CIRRUS", "VISA_ELECTRON" or "V_PAY"
+	KeyMethodInfoCardNetwork     Key = "method.info.card.network"      // e.g. "VISA"; a card has several (e.g. VISA, ACCEL, STAR) and matches if any does
+	KeyMethodInfoCardFunding     Key = "method.info.card.funding"      // a paymentmethod.FundingType: "credit", "debit", "charge" or "deferred_debit"
+	KeyMethodInfoCardPrepaid     Key = "method.info.card.prepaid"      // "true" or "false"
+	KeyMethodInfoCardCommercial  Key = "method.info.card.commercial"   // "true" or "false"
+	KeyMethodInfoCardConsumer    Key = "method.info.card.consumer"     // "true" or "false"
+	KeyMethodInfoCardSegment     Key = "method.info.card.segment"      // "CONSUMER", "BUSINESS", "COMMERCIAL" or "GOVERNMENT"
+	KeyMethodInfoCardSubbrand    Key = "method.info.card.subbrand"     // a paymentmethod.CardSubbrand: "MAESTRO", "CIRRUS", "VISA_ELECTRON" or "V_PAY"
+	KeyMethodInfoCardProduct     Key = "method.info.card.product"      // the card's product within its brand, e.g. "WORLD ELITE", "PLATINUM"
+	KeyMethodInfoCardProductCode Key = "method.info.card.product.code" // the brand's product code, e.g. "MWE"
 )
 
 var KeyRegister = map[Key]bool{
@@ -358,4 +360,6 @@ var KeyRegister = map[Key]bool{
 	KeyMethodInfoCardConsumer:                     true,
 	KeyMethodInfoCardSegment:                      true,
 	KeyMethodInfoCardSubbrand:                     true,
+	KeyMethodInfoCardProduct:                      true,
+	KeyMethodInfoCardProductCode:                  true,
 }

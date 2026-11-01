@@ -7,7 +7,7 @@ type InfoKey string
 const (
 	InfoKeyPaymentScheme      InfoKey = "payment_scheme"
 	InfoKeyCardBrand          InfoKey = "card_brand"
-	InfoKeyCardSubbrand       InfoKey = "card_subbrand"
+	InfoKeyCardSubbrand       InfoKey = "card_subbrand" // a CardSubbrand
 	InfoKeyIssuer             InfoKey = "issuer"
 	InfoKeyIssueNumber        InfoKey = "issue_number"
 	InfoKeyCardType           InfoKey = "card_type"
@@ -39,6 +39,10 @@ const (
 	InfoKeyCardCommercial InfoKey = "card_commercial"
 	InfoKeyCardConsumer   InfoKey = "card_consumer"
 	InfoKeyCardSegment    InfoKey = "card_segment"
+	// InfoKeyCardProduct and InfoKeyCardProductCode are the card's product within its brand
+	// (its tier, e.g. "WORLD ELITE"), by name and by the brand's code (e.g. "MWE").
+	InfoKeyCardProduct     InfoKey = "card_product"
+	InfoKeyCardProductCode InfoKey = "card_product_code"
 )
 
 // Scheme us a value used to indicate a payment scheme type
@@ -126,8 +130,10 @@ const (
 	FundingTypePrepaidNonReloadable FundingType = "prepaid_non_reloadable"
 )
 
-// CardSubbrand is a product family within a card's brand, named by the brand's product
-// codes: Maestro and Cirrus (ATM only) within Mastercard, Visa Electron and V PAY within Visa.
+// CardSubbrand is an acceptance brand within a card's brand: a mark of its own that a
+// merchant can accept or decline apart from the brand, identified by the brand's product
+// codes. Maestro and Cirrus (ATM only) within Mastercard, Visa Electron and V PAY within
+// Visa. Tiers such as Classic, Gold or Platinum are the card's product, not a subbrand.
 type CardSubbrand string
 
 const (
