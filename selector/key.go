@@ -188,6 +188,7 @@ const ( // Payment Method
 	KeyMethodInfoCardPrepaid     Key = "method.info.card.prepaid"      // "true" or "false"
 	KeyMethodInfoCardCommercial  Key = "method.info.card.commercial"   // "true" or "false"
 	KeyMethodInfoCardConsumer    Key = "method.info.card.consumer"     // "true" or "false"
+	KeyMethodInfoCardVirtual     Key = "method.info.card.virtual"      // "true" or "false"
 	KeyMethodInfoCardSegment     Key = "method.info.card.segment"      // "CONSUMER", "BUSINESS", "COMMERCIAL" or "GOVERNMENT"
 	KeyMethodInfoCardSubbrand    Key = "method.info.card.subbrand"     // a paymentmethod.CardSubbrand: "MAESTRO", "CIRRUS", "VISA_ELECTRON" or "V_PAY"
 	KeyMethodInfoCardProduct     Key = "method.info.card.product"      // the card's product within its brand, e.g. "WORLD ELITE", "PLATINUM"
@@ -358,6 +359,7 @@ var KeyRegister = map[Key]bool{
 	KeyMethodInfoCardPrepaid:                      true,
 	KeyMethodInfoCardCommercial:                   true,
 	KeyMethodInfoCardConsumer:                     true,
+	KeyMethodInfoCardVirtual:                      true,
 	KeyMethodInfoCardSegment:                      true,
 	KeyMethodInfoCardSubbrand:                     true,
 	KeyMethodInfoCardProduct:                      true,
