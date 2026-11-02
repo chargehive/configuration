@@ -38,6 +38,7 @@ const (
 	InfoKeyCardPrepaid    InfoKey = "card_prepaid"
 	InfoKeyCardCommercial InfoKey = "card_commercial"
 	InfoKeyCardConsumer   InfoKey = "card_consumer"
+	InfoKeyCardVirtual    InfoKey = "card_virtual"
 	InfoKeyCardSegment    InfoKey = "card_segment"
 	// InfoKeyCardProduct and InfoKeyCardProductCode are the card's product within its brand
 	// (its tier, e.g. "WORLD ELITE"), by name and by the brand's code (e.g. "MWE").
