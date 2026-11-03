@@ -107,8 +107,11 @@ func Validate(rawJson []byte, version string) map[string]string {
 }
 
 func PredicateKeysValidator(fl validator.FieldLevel) bool {
-	_, ok := selector.KeyRegister[selector.Key(fl.Field().String())]
-	return ok || strings.HasPrefix(fl.Field().String(), "charge.label.")
+	key := fl.Field().String()
+	_, ok := selector.KeyRegister[selector.Key(key)]
+	return ok ||
+		strings.HasPrefix(key, string(selector.KeyChargeLabel)+".") ||
+		strings.HasPrefix(key, string(selector.KeyChargeReferences)+".")
 }
 
 func ConnectorLibraryValidator(fl validator.FieldLevel) bool {
