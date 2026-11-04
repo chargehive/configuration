@@ -21,11 +21,10 @@ type FlexPayCredentials struct {
 	Environment FlexPayEnvironment `json:"environment" yaml:"environment" validate:"oneof=sandbox production"`
 }
 
+// GetMID is empty. FlexPay is a recovery agent: a transaction it recovers is prepared on
+// the gateway connector it retries, and that connector's merchant id is the one recorded.
 func (c *FlexPayCredentials) GetMID() string {
-	if c.ApiKey == nil {
-		return ""
-	}
-	return *c.ApiKey
+	return ""
 }
 
 func (c *FlexPayCredentials) GetLibrary() Library {

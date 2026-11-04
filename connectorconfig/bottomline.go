@@ -26,6 +26,7 @@ type BottomlineCredentials struct {
 	Environment   BottomlineEnvironment `json:"environment" yaml:"environment" validate:"oneof=uat sandbox production"`
 }
 
+// GetMID is the client id, which is how Bottomline names a merchant's account.
 func (c *BottomlineCredentials) GetMID() string {
 	if c.ClientID == nil {
 		return ""
@@ -46,7 +47,7 @@ func (c *BottomlineCredentials) Validate() error {
 }
 
 func (c *BottomlineCredentials) GetSecureFields() []*string {
-	return []*string{c.Username, c.Password, c.ClientID, c.ClientSUN}
+	return []*string{c.Username, c.Password, c.ClientSUN}
 }
 
 func (c *BottomlineCredentials) ToConnector() connector.Connector {
